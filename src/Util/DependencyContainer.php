@@ -66,20 +66,6 @@ class DependencyContainer
     }
 
 
-
-    public function getEventManager(): \MyDMS\Event\Manager
-    {
-        $container = $this->getContainer();
-        $cacheName = \MyDMS\Event\Manager::class;
-        if (true === $container->has($cacheName)) {
-            return $container->get($cacheName);
-        }
-        $container->set($cacheName, new \MyDMS\Event\Manager());
-
-        return $this->getEventManager();
-    }
-
-
     public function getLogger(): \Monolog\Logger
     {
         if (true === $this->getContainer()->has(\Monolog\Logger::class)) {

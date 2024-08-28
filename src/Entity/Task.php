@@ -15,7 +15,6 @@ namespace DoEveryApp\Entity;
         'engine'  => 'InnoDB',
     ],
 )]
-
 class Task
 {
     use \DoEveryApp\Entity\Share\Blame;
@@ -26,41 +25,59 @@ class Task
     public const string TABLE_NAME = 'task';
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Group::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        nullable: true,
+        onDelete: 'CASCADE'
+    )]
+    protected ?Group $group = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Worker::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        nullable: true,
+        onDelete: 'CASCADE'
+    )]
+    protected ?Worker $workingOn = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Worker $worker        = null;
+    protected ?Worker $assignee = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    public string     $name;
+    public string $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_type',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    public ?string    $intervalType  = null;
+    public ?string $intervalType = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_value',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    public ?int       $intervalValue = null;
+    public ?int $intervalValue = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
     )]
-    public int        $priority      = 100;
+    public int $priority = 100;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -71,25 +88,54 @@ class Task
     public bool $notify;
 
 
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'is_active',
+        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
+        nullable: false
+    )]
+    public bool $active;
+
+
     public static function getRepository(): Task\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
-    public function getWorker(): ?Worker
+    public function getGroup(): ?Group
     {
-        return $this->worker;
+        return $this->group;
     }
 
-
-    public function setWorker(?Worker $worker): static
+    public function setGroup(?Group $group): static
     {
-        $this->worker = $worker;
+        $this->group = $group;
 
         return $this;
     }
 
+    public function getWorkingOn(): ?Worker
+    {
+        return $this->workingOn;
+    }
+
+    public function setWorkingOn(?Worker $workingOn): static
+    {
+        $this->workingOn = $workingOn;
+
+        return $this;
+    }
+
+    public function getAssignee(): ?Worker
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee(?Worker $assignee): static
+    {
+        $this->assignee = $assignee;
+
+        return $this;
+    }
 
     public function getName(): string
     {
@@ -156,6 +202,18 @@ class Task
     public function setNotify(bool $notify): static
     {
         $this->notify = $notify;
+
+        return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

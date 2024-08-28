@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyDMS\Util;
+namespace DoEveryApp\Util;
 
 class SessionSaveHandler implements \SessionHandlerInterface
 {
@@ -18,9 +18,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
     }
 
 
-    protected function findByName(string $name): ?\MyDMS\Model\Session
+    protected function findByName(string $name): ?\DoEveryApp\Entity\Session
     {
-        return \MyDMS\Model\Session::getRepository()->findOneByName($name);
+        return \DoEveryApp\Entity\Session::getRepository()->findOneByName($name);
     }
 
 
@@ -34,7 +34,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
     {
         $entity = $this->findByName($id);
         if (null !== $entity) {
-            \MyDMS\Model\Session::getRepository()->delete($entity);
+            \DoEveryApp\Entity\Session::getRepository()->delete($entity);
             $this
                 ->entityManager
                 ->flush()
@@ -47,7 +47,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     public function gc(int $max_lifetime): int|false
     {
-        \MyDMS\Model\Session::getRepository()->garbageCollection($max_lifetime);
+        \DoEveryApp\Entity\Session::getRepository()->garbageCollection($max_lifetime);
 
         return 1;
     }
@@ -76,7 +76,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
         try {
             $existing = $this->findByName($id);
             if (null === $existing) {
-                $existing = new \MyDMS\Model\Session();
+                $existing = new \DoEveryApp\Entity\Session();
                 $existing::getRepository()->create($existing);
             }
             $existing

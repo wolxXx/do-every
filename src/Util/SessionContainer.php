@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MyDMS\Util;
+namespace DoEveryApp\Util;
 
 class SessionContainer
 {

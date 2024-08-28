@@ -8,25 +8,35 @@ $hasSomething =
     && 0 !== \DoEveryApp\Entity\Task::getRepository()->count()
     && 0 !== \DoEveryApp\Entity\Worker::getRepository()->count();
 
-\DoEveryApp\Util\Debugger::debug($hasSomething);
 
 if (true === $hasSomething) {
     echo 'nothing to do';
+    return; 
 }
 
-\DoEveryApp\Service\Worker\Creator::execute(
+$you = \DoEveryApp\Service\Worker\Creator::execute(
     (new \DoEveryApp\Service\Worker\Creator\Bag())
-        ->setName('du')
+        ->setName('you')
         ->setIsAdmin(true)
 );
+\DoEveryApp\Service\Worker\Creator::execute(
+    (new \DoEveryApp\Service\Worker\Creator\Bag())
+        ->setName('not you')
+);
 
+$groups = [];
+foreach (range(2, rand(3, 20)) as $counter) {
+    
+}
 
-$task = (new \DoEveryApp\Entity\Task())
-    ->setName('delete me!')
-    ->setPriority(\DoEveryApp\Definition\Priority::NORMAL->value)
-    ->setIntervalType(\DoEveryApp\Definition\IntervalType::HOUR->value)
-    ->setIntervalValue(100)
-    ->setNotify(true);
+foreach (range(0, 100) as $counter) {
+    \DoEveryApp\Service\Task\Creator::execute(
+        (new \DoEveryApp\Service\Task\Creator\Bag())
+        ->setName('task' . $counter)
+        ->setIntervalValue(rand(1,50))
+        ->setIntervalType(\DoEveryApp\Definition\IntervalType::DAY)
+    );
+}
 
 \DoEveryApp\Util\DependencyContainer::getInstance()
                                     ->getEntityManager()

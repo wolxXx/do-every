@@ -13,54 +13,49 @@ class Current
     public const string LANGUAGE_FRENCH  = 'fr';
 
 
-    private static function getAuthSession(): \MyDMS\Util\Session
+    private static function getAuthSession(): \DoEveryApp\Util\Session
     {
-        return \MyDMS\Util\Session::Factory(\MyDMS\Util\Session::NAMESPACE_APPLICATION);
+        return \DoEveryApp\Util\Session::Factory(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
     }
 
 
-    public static function get(): ?\MyDMS\Model\User
+    public static function get(): ?\DoEveryApp\Entity\Worker
     {
-        $session = static::getAuthSession()->get(\MyDMS\Util\Session::NAMESPACE_AUTH);
+        $session = static::getAuthSession()->get(\DoEveryApp\Util\Session::NAMESPACE_AUTH);
         if (null === $session) {
             return null;
         }
-        if (true === $session instanceof \MyDMS\Model\User) {
-            return \MyDMS\Model\User::getRepository()->find($session->getId());
+        if (true === $session instanceof \DoEveryApp\Entity\Worker) {
+            return \DoEveryApp\Entity\Worker::getRepository()->find($session->getId());
         }
 
-        return \MyDMS\Model\User::getRepository()->find($session->user->id);
+        return \DoEveryApp\Entity\Worker::getRepository()->find($session->user->id);
     }
 
 
     public static function logout(): void
     {
-        static::getAuthSession()->clear(\MyDMS\Util\Session::NAMESPACE_AUTH);
+        static::getAuthSession()->clear(\DoEveryApp\Util\Session::NAMESPACE_AUTH);
     }
 
 
-    public static function login(\MyDMS\Model\User $user): void
+    public static function login(\DoEveryApp\Entity\Worker $user): void
     {
         $userToStore           = new \stdClass();
         $userToStore->user     = new \stdClass();
         $userToStore->user->id = $user->getId();
-        static::getAuthSession()->write(\MyDMS\Util\Session::NAMESPACE_AUTH, $userToStore);
+        static::getAuthSession()->write(\DoEveryApp\Util\Session::NAMESPACE_AUTH, $userToStore);
     }
 
 
     public static function isAuthenticated(): bool
     {
-        return true === static::get() instanceof \MyDMS\Model\User;
+        return true === static::get() instanceof \DoEveryApp\Entity\Worker;
     }
 
 
     public static function getLanguage(): string
     {
-        $currentUser = static::get();
-        if (null !== $currentUser && null !== $currentUser->getLanguage()) {
-            return $currentUser->getLanguage();
-        }
-
         return 'de';
     }
 }
