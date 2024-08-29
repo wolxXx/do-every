@@ -10,27 +10,38 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
     ->setCurrentRoutePattern($currentRoutePattern)
 ;
 ?>
-<?= $menuItem
-    ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
-    ->setActiveRoutes([
-                          \DoEveryApp\Action\Cms\IndexAction::getRoutePattern(),
-                      ])
-    ->setName('START')
-?>
-
-<? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+<ul>
     <?= $menuItem
-        ->setTarget(\DoEveryApp\Action\Auth\LoginAction::getRoute())
+        ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
         ->setActiveRoutes([
-                              \DoEveryApp\Action\Auth\LoginAction::getRoutePattern(),
+                              \DoEveryApp\Action\Cms\IndexAction::getRoutePattern(),
                           ])
-        ->setName('EINLOGGEN')
+        ->setName('START')
     ?>
-<? endif ?>
-
-<? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
-    <?= $menuItem
-        ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
-        ->setName('AUSLOGGEN')
-    ?>
-<? endif ?>
+    
+    <? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Auth\LoginAction::getRoute())
+            ->setActiveRoutes([
+                                  \DoEveryApp\Action\Auth\LoginAction::getRoutePattern(),
+                              ])
+            ->setName('EINLOGGEN')
+        ?>
+    <? endif ?>
+    
+    <? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+        <li>
+            [aufgaben]
+        </li>
+        <li>
+            [worker]
+        </li>
+        <li>
+            [kalender]
+        </li>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
+            ->setName('AUSLOGGEN')
+        ?>
+    <? endif ?>
+</ul>

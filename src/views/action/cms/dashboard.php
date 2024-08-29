@@ -30,6 +30,21 @@
             <th>
                 Name
             </th>
+            <th>
+                Intervall
+            </th>
+            <th>
+                zugewiesen an 
+            </th>
+            <th>
+                arbeitet daran 
+            </th>
+            <th>
+                letzte Ausführung 
+            </th>
+            <th>
+                Aktionen 
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -74,7 +89,8 @@
                 </td>
 
                 <td>
-
+                    [E]
+                    [X]
                 </td>
             </tr>
         <? endforeach ?>

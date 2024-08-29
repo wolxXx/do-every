@@ -1,0 +1,82 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+a {
+    color: #fff;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    color: #fff;
+    background: #333;
+    border: solid 1px #ccc;
+}
+
+input[type="submit"] {
+    color: #111;
+    background: #666;
+    border: solid 1px #fff;
+}
+
+table {
+    width: 100%;
+    border: solid 1px #666;
+}
+
+td, th {
+    text-align: left;
+}
+th {
+    border-bottom: solid 3px #fff;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+    border-bottom: solid 1px #999;
+}
+
+.errors {
+    color: #f22;
+    margin: 5px;
+}
+
+#app {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+#app > * {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 30ch;
+      gap: 1rem;
+
+}
+
+#menu {
+    margin: 20px;
+    padding-right: 20px;
+    border-right: solid 1px #ccc;
+    flex-basis: 12rem;
+    flex-grow: 1;
+}
+
+#content {
+    margin: 20px;
+    flex-basis: 0;
+    flex-grow: 999;
+      min-inline-size: 50%;
+
+}
+
+#appTitle {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.5em;
+}
