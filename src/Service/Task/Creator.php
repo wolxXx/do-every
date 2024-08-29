@@ -14,6 +14,7 @@ class Creator
             ->setWorkingOn($bag->getWorkingOn())
             ->setName($bag->getName())
             ->setNotify($bag->doNotify())
+            ->setActive($bag->isActive())
             ->setPriority($bag->getPriority()->value)
             ->setIntervalType($bag->getIntervalType()->value)
             ->setIntervalValue($bag->getIntervalValue())

@@ -10,7 +10,7 @@ ini_set('xdebug.var_display_max_data', 100);
 
 
 $app = \Slim\Factory\AppFactory::create();
-$app->addErrorMiddleware(true, false, false);
+#$app->addErrorMiddleware(true, false, false);
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
@@ -26,16 +26,30 @@ $app->add(function ($request, $handler) {
     ;
 });
 
-foreach (\DoEveryApp\Entity\Execution::getRepository()->findAll() as $execution) {
-    \DoEveryApp\Util\Debugger::debug($execution->getId());
+
+$Directory = new \RecursiveDirectoryIterator(\ROOT_DIR . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'Action');
+$Iterator  = new \RecursiveIteratorIterator($Directory);
+$Regex     = new \RegexIterator($Iterator, '/^.+\.php$/i', \RegexIterator::GET_MATCH);
+foreach ($Regex as $files) {
+    foreach ($files as $file) {
+        $file  = \str_replace(\ROOT_DIR . \DIRECTORY_SEPARATOR . 'src', '\\DoEveryApp', $file);
+        $file  = \str_replace('/', '\\', $file);
+        $file  = \str_replace('.php', '', $file);
+        $class = $file;
+        if (false === \class_exists($class)) {
+            continue;
+        }
+        $reflection = new \ReflectionClass($class);
+        $attributes = $reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class);
+        foreach ($attributes as $attribute) {
+            $className = $attribute->getName();
+            $app->map($attribute->getArguments()['methods'], $attribute->getArguments()['path'], $class . ':direct');
+        }
+    }
 }
-foreach (\DoEveryApp\Entity\Notification::getRepository()->findAll() as $notification) {
-    \DoEveryApp\Util\Debugger::debug($notification->getId());
-}
-foreach (\DoEveryApp\Entity\Task::getRepository()->findAll() as $task) {
-    \DoEveryApp\Util\Debugger::debug($task->getId());
-}
-foreach (\DoEveryApp\Entity\Worker::getRepository()->findAll() as $worker) {
-    \DoEveryApp\Util\Debugger::debug($worker->getId());
-}
-\DoEveryApp\Util\Debugger::dieDebug('alive');
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new \Slim\Exception\HttpNotFoundException($request);
+});
+
+$app->run();

@@ -69,6 +69,7 @@
     "ext-simplexml": "*",
     "ext-openssl": "*",
     "ext-sodium": "*",
+    "fakerphp/faker": "@stable",
     "gedmo/doctrine-extensions": "3.*",
     "laminas/laminas-filter": "*",
     "laminas/laminas-json": "*",

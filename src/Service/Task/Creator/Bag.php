@@ -12,6 +12,7 @@ class Bag
     protected ?int                                 $intervalValue = null;
     protected \DoEveryApp\Definition\Priority      $priority      = \DoEveryApp\Definition\Priority::NORMAL;
     protected bool                                 $notify        = true;
+    protected bool                                 $active  = true;
     protected ?\DoEveryApp\Entity\Worker           $assignee      = null;
     protected ?\DoEveryApp\Entity\Worker           $workingOn     = null;
 
@@ -107,6 +108,20 @@ class Bag
     public function setWorkingOn(?\DoEveryApp\Entity\Worker $workingOn): static
     {
         $this->workingOn = $workingOn;
+
+        return $this;
+    }
+
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

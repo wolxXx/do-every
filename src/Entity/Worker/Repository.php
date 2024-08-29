@@ -10,6 +10,11 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Blameable;
 
 
+    public function findOneByEmail(string $email): ?\DoEveryApp\Entity\Worker
+    {
+        return $this->findOneBy(['email' => $email]);
+    }
+
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {
         $this

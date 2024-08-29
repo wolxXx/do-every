@@ -5,6 +5,13 @@ ENV TZ="Europe/Berlin"
 
 RUN apt update && apt install -y software-properties-common htop btop curl wget git
 
+ARG version=22
+RUN apt update -y && apt install curl unzip -y \
+&& curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir './fnm' \
+&& cp ./fnm/fnm /usr/bin && fnm install $version
+
+RUN ln -s /root/.local/share/fnm/node-versions/*/installation/bin/* /usr/local/bin/.
+
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/apache2
 

@@ -43,7 +43,7 @@ class Execution
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Worker $worker = null;
+    protected ?Worker $worker   = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'date',
@@ -51,6 +51,20 @@ class Execution
         nullable: false
     )]
     public \DateTime  $date;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'note',
+        type    : \Doctrine\DBAL\Types\Types::TEXT,
+        nullable: true
+    )]
+    public ?string    $note     = null;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'duration',
+        type    : \Doctrine\DBAL\Types\Types::INTEGER,
+        nullable: true
+    )]
+    public ?int       $duration = null;
 
 
     public static function getRepository(): Execution\Repository
@@ -96,6 +110,34 @@ class Execution
     public function setDate(\DateTime $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+
+    public function setNote(?string $note): static
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
 
         return $this;
     }

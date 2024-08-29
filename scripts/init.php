@@ -11,30 +11,64 @@ $hasSomething =
 
 if (true === $hasSomething) {
     echo 'nothing to do';
-    return; 
+
+    return;
 }
 
-$you = \DoEveryApp\Service\Worker\Creator::execute(
+$you     = \DoEveryApp\Service\Worker\Creator::execute(
     (new \DoEveryApp\Service\Worker\Creator\Bag())
         ->setName('you')
         ->setIsAdmin(true)
+        ->setEmail('login@do-every.app')
+        ->setPassword(\DoEveryApp\Util\Password::hash('password'))
 );
-\DoEveryApp\Service\Worker\Creator::execute(
-    (new \DoEveryApp\Service\Worker\Creator\Bag())
-        ->setName('not you')
-);
+$workers = [];
+foreach (range(2, rand(3, 20)) as $counter) {
+    $workers[] = \DoEveryApp\Service\Worker\Creator::execute(
+        (new \DoEveryApp\Service\Worker\Creator\Bag())
+            ->setName('worker' . $counter)
+    );
+}
 
 $groups = [];
 foreach (range(2, rand(3, 20)) as $counter) {
-    
+    $group    = \DoEveryApp\Service\Task\Group\Creator::execute(
+        (new \DoEveryApp\Service\Task\Group\Creator\Bag())
+            ->setName('group' . $counter)
+            ->setColor(rand(0, 100) > 80 ? \Faker\Factory::create()->hexColor() : null)
+    );
+    $groups[] = $group;
 }
 
+$types = [
+    \DoEveryApp\Definition\IntervalType::MINUTE,
+    \DoEveryApp\Definition\IntervalType::HOUR,
+    \DoEveryApp\Definition\IntervalType::DAY,
+    \DoEveryApp\Definition\IntervalType::MONTH,
+    \DoEveryApp\Definition\IntervalType::YEAR,
+];
+
 foreach (range(0, 100) as $counter) {
-    \DoEveryApp\Service\Task\Creator::execute(
+    $task = \DoEveryApp\Service\Task\Creator::execute(
         (new \DoEveryApp\Service\Task\Creator\Bag())
-        ->setName('task' . $counter)
-        ->setIntervalValue(rand(1,50))
-        ->setIntervalType(\DoEveryApp\Definition\IntervalType::DAY)
+            ->setGroup(rand(0, 100) > 50 ? $groups[array_rand($groups)] : null)
+            ->setAssignee(rand(0, 100) > 50 ? $workers[array_rand($workers)] : (rand(0, 100) > 50 ? $you : null))
+            ->setWorkingOn(rand(0, 100) > 50 ? $workers[array_rand($workers)] : (rand(0, 100) > 50 ? $you : null))
+            ->setName('task' . $counter)
+            ->setIntervalValue(rand(1, 50))
+            ->setIntervalType($types[array_rand($types)])
+    );
+
+    if (rand(0, 100) > 50) {
+        continue;
+    }
+    \DoEveryApp\Service\Task\Execution\Creator::execute(
+        (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
+            ->setTask($task)
+            ->setDate(\Faker\Factory::create()->dateTime)
+            ->setWorker($workers[array_rand($workers)])
+            ->setDuration(rand(1, 50))
+            ->setNote(\Faker\Factory::create()->text(500))
     );
 }
 

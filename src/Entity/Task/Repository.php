@@ -9,6 +9,18 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    public function getLastExecution(\DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Execution
+    {
+        return \DoEveryApp\Entity\Execution::getRepository()
+            ->createQueryBuilder('e')
+            ->andWhere('e.task = :task')
+            ->setParameter('task', $task)
+            ->orderBy('e.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     public function create(\DoEveryApp\Entity\Task $entity): static
     {
