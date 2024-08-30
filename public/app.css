@@ -80,3 +80,30 @@ h1 {
     text-align: center;
     font-size: 1.5em;
 }
+
+.cards {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.taskContainer, .groupContainer {
+    display: inline-block;
+    width: 300px;
+    overflow: hidden;
+    margin: 5px;
+    border: solid 1px #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.primaryButton {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    border: solid 1px #fff;
+    border-radius: 3px;
+    background: #999999;
+    color: #000;
+}

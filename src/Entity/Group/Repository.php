@@ -9,6 +9,19 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    /**
+     * @return \DoEveryApp\Entity\Group[]
+     */
+    public function findIndexed(): array
+    {
+        return $this
+            ->createQueryBuilder('g')
+            ->orderBy('g.name', 'ASC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
 
     public function create(\DoEveryApp\Entity\Group $entity): static
     {

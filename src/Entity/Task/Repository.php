@@ -12,15 +12,53 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getLastExecution(\DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Execution
     {
         return \DoEveryApp\Entity\Execution::getRepository()
-            ->createQueryBuilder('e')
-            ->andWhere('e.task = :task')
-            ->setParameter('task', $task)
-            ->orderBy('e.date', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
+                                           ->createQueryBuilder('e')
+                                           ->andWhere('e.task = :task')
+                                           ->setParameter('task', $task)
+                                           ->orderBy('e.date', 'DESC')
+                                           ->setMaxResults(1)
+                                           ->getQuery()
+                                           ->getOneOrNullResult()
+        ;
     }
+
+
+    public function getByGroup(\DoEveryApp\Entity\Group $group, ?bool $active = null): array
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('t')
+            ->andWhere('t.group = :group')
+            ->setParameter('group', $group)
+        ;
+        if (true === $active) {
+            $queryBuilder->andWhere('t.active = true');
+        }
+        if (false === $active) {
+            $queryBuilder->andWhere('t.active = false');
+        }
+
+        return $queryBuilder
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
+    public function getWithoutGroup(): array
+    {
+        return $this
+            ->createQueryBuilder('t')
+            ->andWhere('t.group IS NULL')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
 
     public function create(\DoEveryApp\Entity\Task $entity): static
     {

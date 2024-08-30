@@ -7,17 +7,40 @@
  */
 
 /**
- * @var $tasks \DoEveryApp\Entity\Task[]
- * @var $groups \DoEveryApp\Entity\Group[]
- * @var $workers \DoEveryApp\Entity\Worker[]
+ * @var $tasks             \DoEveryApp\Entity\Task[]
+ * @var $tasksWithoutGroup \DoEveryApp\Entity\Task[]
+ * @var $groups            \DoEveryApp\Entity\Group[]
+ * @var $workers           \DoEveryApp\Entity\Worker[]
  */
 ?>
 
 <h1>
     Dashboard
 </h1>
+<div class="cards">
 
+    <? foreach($groups as $group): ?>
+        <div class="groupContainer">
+            <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?><br />
+            <?= sizeof($group->getActiveTasks()) ?> aktive Aufgaben,<br />
+            <?= sizeof($group->getInActiveTasks()) ?> pausierte Aufgaben<br />
+            <br />
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
+                anzeigen
+            </a>
+        </div>
+    <? endforeach ?>
 
+    <? foreach($tasksWithoutGroup as $task): ?>
+        <div class="taskContainer">
+            <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?><br />
+            <br />
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                anzeigen
+            </a>
+        </div>
+    <? endforeach ?>
+</div>
 <table>
     <thead>
         <tr>

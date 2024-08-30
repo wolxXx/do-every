@@ -37,4 +37,32 @@ class IntervalHelper
         }
         throw new \InvalidArgumentException('??' . $task->getIntervalType() . $task->getIntervalValue());
     }
+
+
+    public static function map(\DoEveryApp\Definition\IntervalType $intervalType): string
+    {
+        switch ($intervalType->name) {
+            case \DoEveryApp\Definition\IntervalType::MINUTE->name:
+            {
+                return 'Minute';
+            }
+            case \DoEveryApp\Definition\IntervalType::HOUR->name:
+            {
+                return 'Stunde';
+            }
+            case \DoEveryApp\Definition\IntervalType::DAY->name:
+            {
+                return 'Tag';
+            }
+            case \DoEveryApp\Definition\IntervalType::MONTH->name:
+            {
+                return 'Monat';
+            }
+            case \DoEveryApp\Definition\IntervalType::YEAR->name:
+            {
+                return 'Jahr';
+            }
+        }
+        throw new \InvalidArgumentException('??' . $intervalType->name);
+    }
 }

@@ -30,14 +30,18 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
     <? endif ?>
     
     <? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
-        <li>
-            [aufgaben]
-        </li>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Task\IndexAction::getRoute())
+            ->setName('Aufgaben')
+        ?>
         <li>
             [worker]
         </li>
         <li>
             [kalender]
+        </li>
+        <li>
+            [profil]
         </li>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())

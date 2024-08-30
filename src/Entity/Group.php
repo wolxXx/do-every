@@ -44,6 +44,37 @@ class Group
         return static::getRepositoryByClassName();
     }
 
+
+    /**
+     * @return Task[]
+     */
+    public function getTasks(): array
+    {
+        return Task::getRepository()
+            ->getByGroup($this, null)
+            ;
+    }
+
+    /**
+     * @return Task[]
+     */
+    public function getActiveTasks(): array
+    {
+        return Task::getRepository()
+            ->getByGroup($this, true)
+            ;
+    }
+
+    /**
+     * @return Task[]
+     */
+    public function getInActiveTasks(): array
+    {
+        return Task::getRepository()
+            ->getByGroup($this, false)
+            ;
+    }
+
     public function getName(): string
     {
         return $this->name;

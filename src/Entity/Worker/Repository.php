@@ -15,6 +15,20 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this->findOneBy(['email' => $email]);
     }
 
+
+    /**
+     * @return \DoEveryApp\Entity\Worker[]
+     */
+    public function findIndexed(): array
+    {
+        return $this
+            ->createQueryBuilder('w')
+            ->orderBy('w.name', 'ASC')
+            ->getQuery()
+            ->execute()
+            ;
+    }
+
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
