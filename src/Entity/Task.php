@@ -101,6 +101,14 @@ class Task
         return static::getRepositoryByClassName();
     }
 
+    /**
+     * @return Execution[]
+     */
+    public function getExecutions(): array
+    {
+        return Execution::getRepository()->findIndexed($this);
+    }
+
     public function getGroup(): ?Group
     {
         return $this->group;

@@ -22,6 +22,9 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 Gruppe
             </label>
             <select name="group" id="group">
+                <option <?= false === array_key_exists('group', $data) || null === $data['group'] ? 'selected'  : '' ?>  value="">
+                    - ohne -
+                </option>
                 <? foreach($groups as $worker): ?>
                     <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
                         <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?>

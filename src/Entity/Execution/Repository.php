@@ -8,6 +8,18 @@ class Repository extends \Doctrine\ORM\EntityRepository
 {
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
+    
+    public function findIndexed(\DoEveryApp\Entity\Task $param)
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->andWhere('e.task = :task')
+            ->setParameter('task', $param)
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->execute()
+            ;
+    }
 
 
     public function create(\DoEveryApp\Entity\Execution $entity): static

@@ -141,11 +141,11 @@ abstract class AbstractAction
 
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
-        $routeContext     = \Slim\Routing\RouteContext::fromRequest($this->getRequest());
         $defaultVariables = [
             'errorStore'          => $this->getErrorStore(),
-            'currentRoute'        => $routeContext->getRoutingResults()->getUri(),
+            'currentRoute'        => \Slim\Routing\RouteContext::fromRequest($this->getRequest())->getRoutingResults()->getUri(),
             'currentRoutePattern' => static::getRoutePattern(),
+            'currentUser'         => \DoEveryApp\Util\User\Current::get(),
         ];
 
         $phpView          = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR.'src' .\DIRECTORY_SEPARATOR. 'views', $defaultVariables));
