@@ -18,7 +18,7 @@ class Creator
         }
 
         if (null !== $bag->getPassword()) {
-            $defaultWorker->setPassword($bag->getPassword());
+            $defaultWorker->setHashedPassword($bag->getPassword());
         }
 
         $defaultWorker::getRepository()->create($defaultWorker);
