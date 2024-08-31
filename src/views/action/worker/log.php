@@ -43,6 +43,9 @@
             <? foreach($data as $execution): ?>
                 <tr>
                     <td>
+                        <?= \DoEveryApp\Util\View\DateTime::getDateTime($execution->getDate()) ?>
+                    </td>
+                    <td>
                         <? if(null === $execution->getTask()->getGroup()): ?>
                             -
                         <? endif ?>
