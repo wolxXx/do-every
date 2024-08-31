@@ -61,13 +61,12 @@ class Worker
     public bool    $notify;
 
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_login',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    public ?\DateTime  $lastLogin = null;
+    public ?\DateTime $lastLogin = null;
 
 
     public static function getRepository(): Worker\Repository
@@ -110,9 +109,17 @@ class Worker
     }
 
 
-    public function setPassword(?string $password): static
+    public function setHashedPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+
+    public function setPassword(?string $password): static
+    {
+        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash($password);
 
         return $this;
     }
