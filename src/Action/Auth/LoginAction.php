@@ -38,6 +38,12 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
                 throw new \InvalidArgumentException('User not found');
             }
             \DoEveryApp\Util\User\Current::login($existing);
+            $existing->setLastLogin(\Carbon\Carbon::now());
+            $existing::getRepository()->update($existing);
+            \DoEveryApp\Util\DependencyContainer::getInstance()
+                ->getEntityManager()
+                ->flush()
+            ;
             \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . $existing->getName());
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         } catch (\Throwable $exception) {
