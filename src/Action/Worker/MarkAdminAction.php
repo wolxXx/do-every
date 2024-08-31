@@ -30,6 +30,11 @@ class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
+        if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
+            \DoEveryApp\Util\FlashMessenger::addDanger('Das bist du!');
+
+            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        }
         $worker->setIsAdmin('1' === $this->getArgumentSafe('admin'));
         $worker::getRepository()->update($worker);
         \DoEveryApp\Util\FlashMessenger::addSuccess('Admin-Flag erfolgreich gesetzt');
