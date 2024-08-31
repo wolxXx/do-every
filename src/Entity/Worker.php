@@ -61,6 +61,15 @@ class Worker
     public bool    $notify;
 
 
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'last_login',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    public ?\DateTime  $lastLogin = null;
+
+
     public static function getRepository(): Worker\Repository
     {
         return static::getRepositoryByClassName();
@@ -132,6 +141,20 @@ class Worker
     public function enableNotifications(bool $notify): static
     {
         $this->notify = $notify;
+
+        return $this;
+    }
+
+
+    public function getLastLogin(): ?\DateTime
+    {
+        return $this->lastLogin;
+    }
+
+
+    public function setLastLogin(?\DateTime $lastLogin): static
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

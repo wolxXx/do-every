@@ -41,7 +41,7 @@ class Execution
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: true,
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
     )]
     protected ?Worker $worker   = null;
 

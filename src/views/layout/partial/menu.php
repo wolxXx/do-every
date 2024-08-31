@@ -34,14 +34,12 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
             ->setTarget(\DoEveryApp\Action\Task\IndexAction::getRoute())
             ->setName('Aufgaben')
         ?>
-        <li>
-            [worker]
-        </li>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
+            ->setName('Worker')
+        ?>
         <li>
             [kalender]
-        </li>
-        <li>
-            [profil]
         </li>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())

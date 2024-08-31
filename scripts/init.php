@@ -20,7 +20,7 @@ $you     = \DoEveryApp\Service\Worker\Creator::execute(
         ->setName('you')
         ->setIsAdmin(true)
         ->setEmail('login@do-every.app')
-        ->setPassword(\DoEveryApp\Util\Password::hash('password'))
+        ->setPassword('password')
 );
 $workers = [];
 foreach (range(2, rand(3, 20)) as $counter) {

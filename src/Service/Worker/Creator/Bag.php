@@ -65,9 +65,17 @@ class Bag
     }
 
 
-    public function setPassword(?string $password): static
+    public function setHashedPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+
+    public function setPassword(?string $password): static
+    {
+        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash($password);
 
         return $this;
     }

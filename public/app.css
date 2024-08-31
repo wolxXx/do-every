@@ -15,12 +15,25 @@ input[type="text"], input[type="email"], input[type="password"] {
     border: solid 1px #ccc;
 }
 
-input[type="submit"] {
-    color: #111;
-    background: #666;
-    border: solid 1px #fff;
+textarea {
+    max-width: 400px;
+    max-height: 300px;
 }
 
+label {
+    display: inline-block;
+    margin-right: 20px;
+    min-width: 150px;
+    vertical-align: top;
+}
+label.required {
+    color: #cccccc;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+label.required:after {
+    content: "*";
+}
 table {
     width: 100%;
     border: solid 1px #666;
@@ -28,6 +41,7 @@ table {
 
 td, th {
     text-align: left;
+    vertical-align: top;
 }
 th {
     border-bottom: solid 3px #fff;
@@ -42,6 +56,51 @@ h1 {
 .errors {
     color: #f22;
     margin: 5px;
+}
+
+
+.cards {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.buttonRow > * {
+    margin-right: -4px !important;
+    margin-left: -4px !important;
+}
+
+.primaryButton, .dangerButton, .warningButton {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    color: #000;
+}
+
+.primaryButton {
+    border: solid 3px #fff;
+    background: #999999;
+}
+
+.dangerButton{
+    border: solid 3px #f00;
+    background: #f66;
+}
+
+.warningButton{
+    border: solid 3px #e8c92f;
+    background: #a19126;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+.column {
+    flex: 1;
+    justify-content: space-between;
 }
 
 #app {
@@ -60,15 +119,25 @@ h1 {
 }
 
 #menu {
-    margin: 20px;
     padding-right: 20px;
     border-right: solid 1px #ccc;
-    flex-basis: 12rem;
+    flex-basis: 6rem;
     flex-grow: 1;
+}
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+#menu ul li {
+    margin-bottom: 10px;
 }
 
 #content {
     margin: 20px;
+    margin-top: 0;
+    margin-right: 0;
     flex-basis: 0;
     flex-grow: 999;
       min-inline-size: 50%;
@@ -77,18 +146,13 @@ h1 {
 
 #appTitle {
     margin-bottom: 10px;
-    text-align: center;
+    text-align: right;
     font-size: 1.5em;
-}
-
-.cards {
-    max-width: 100%;
-    overflow: hidden;
 }
 
 .taskContainer, .groupContainer {
     display: inline-block;
-    width: 300px;
+    max-width: 300px;
     overflow: hidden;
     margin: 5px;
     border: solid 1px #fff;
@@ -96,14 +160,6 @@ h1 {
     padding: 5px;
 }
 
-.primaryButton {
-    display: inline-block;
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    text-decoration: none;
-    border: solid 1px #fff;
-    border-radius: 3px;
-    background: #999999;
-    color: #000;
+.taskContainer>a, .groupContainer>a {
+    margin-top: auto;
 }

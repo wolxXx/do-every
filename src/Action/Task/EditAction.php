@@ -3,22 +3,35 @@
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/task/add',
+    path   : '/task/edit/{id:[0-9]+}',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_POST,
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
 )]
-class AddAction extends \DoEveryApp\Action\AbstractAction
+class EditAction extends \DoEveryApp\Action\AbstractAction
 {
-    use \DoEveryApp\Action\Share\SimpleRoute;
+    use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
+        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
+        if (false === $task instanceof \DoEveryApp\Entity\Task) {
+            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
+
+            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        }
         if (true === $this->isGetRequest()) {
-            return $this->render('action/task/add', [
+            return $this->render('action/task/edit', [
+                'task' => $task,
                 'data' => [
-                    'group' => (int )$this->getFromQuery('group', 0),
+                    'name' => $task->getName(),
+                    'assignee' => $task->getAssignee()?->getId(),
+                    'group' => $task->getGroup()?->getId(),
+                    'intervalType' => $task->getIntervalType(),
+                    'intervalValue' => $task->getIntervalValue(),
+                    'priority' => $task->getPriority(),
+                    'enableNotifications' => $task->isNotify()? '1' : '0',
                 ],
             ]);
         }
@@ -26,33 +39,38 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         try {
             $data    = $this->getRequest()->getParsedBody();
             $data    = $this->filterAndValidate($data);
-            $newTask = \DoEveryApp\Service\Task\Creator::execute(
-                (new \DoEveryApp\Service\Task\Creator\Bag())
+            $task
                     ->setAssignee($data['assignee'] ? \DoEveryApp\Entity\Worker::getRepository()->find($data['assignee']) : null)
                     ->setGroup($data['group'] ? \DoEveryApp\Entity\Group::getRepository()->find($data['group']) : null)
                     ->setName($data['name'])
-                    ->setIntervalType($data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from($data['intervalType']) : null)
+                    ->setIntervalType($data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from($data['intervalType'])->value : null)
                     ->setIntervalValue($data['intervalValue'])
-                    ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority']))
-                    ->enableNotifications('1' === $data['enableNotifications'])
-                    ->setActive(true)
-            );
+                    ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority'])->value)
+                    ->setNotify('1' === $data['enableNotifications'])
+            ;
+            $task::getRepository()->update($task);
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe erstellt.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe bearbeitet.');
 
-            return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($newTask->getId()));
+            return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
         } catch (\Throwable $exception) {
-            #\var_dump($data);
+            \var_dump($data);
             #die('');
-            #throw $exception;
+            throw $exception;
         }
 
 
-        return $this->render('action/task/add', ['data' => $data]);
+        return $this->render(
+            'action/task/edit',
+            [
+                'task' => $task,
+                'data' => $data,
+            ]
+        );
     }
 
 

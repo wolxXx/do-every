@@ -29,7 +29,7 @@ class Task
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: true,
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
     )]
     protected ?Group $group = null;
 
@@ -38,7 +38,7 @@ class Task
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: true,
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
     )]
     protected ?Worker $workingOn = null;
 
@@ -47,7 +47,7 @@ class Task
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: true,
-        onDelete: 'CASCADE'
+        onDelete: 'SET NULL'
     )]
     protected ?Worker $assignee = null;
 
@@ -105,6 +105,11 @@ class Task
      * @return Execution[]
      */
     public function getExecutions(): array
+    {
+        return Execution::getRepository()->findIndexed($this);
+    }
+
+    public function getExecutionDuration(): int
     {
         return Execution::getRepository()->findIndexed($this);
     }

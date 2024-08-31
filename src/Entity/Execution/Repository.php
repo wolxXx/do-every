@@ -8,6 +8,28 @@ class Repository extends \Doctrine\ORM\EntityRepository
 {
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
+
+    public function findForWorker(\DoEveryApp\Entity\Worker $worker)
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->andWhere('e.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    public function findForIndex()
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
     
     public function findIndexed(\DoEveryApp\Entity\Task $param)
     {

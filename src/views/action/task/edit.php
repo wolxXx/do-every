@@ -8,12 +8,13 @@
 
 /**
  * @var $data array
+ * @var $task \DoEveryApp\Entity\Task
  */
 $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 
 ?>
 <h1>
-    neue Aufgabe erstellen
+    Aufgabe "<?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>" bearbeiten
 </h1>
 <form action="" method="post" novalidate>
     <? if(0 !== sizeof($groups)): ?>

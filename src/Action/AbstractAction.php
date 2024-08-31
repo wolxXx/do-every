@@ -8,11 +8,11 @@ abstract class AbstractAction
 {
     protected \Psr\Http\Message\ServerRequestInterface $request;
 
-    protected \Psr\Http\Message\ResponseInterface $response;
+    protected \Psr\Http\Message\ResponseInterface      $response;
 
-    protected mixed $args;
+    protected mixed                                    $args;
 
-    protected \DoEveryApp\Util\ErrorStore $errorStore;
+    protected \DoEveryApp\Util\ErrorStore              $errorStore;
 
 
     final public function __construct()
@@ -99,6 +99,7 @@ abstract class AbstractAction
             if (true === $attributeX->authRequired && false === \DoEveryApp\Util\User\Current::isAuthenticated()) {
                 \DoEveryApp\Util\FlashMessenger::addDanger('login required');
                 $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
+
                 return $this;
             }
         }
@@ -139,6 +140,7 @@ abstract class AbstractAction
         return $this->getResponse();
     }
 
+
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
         $defaultVariables = [
@@ -148,7 +150,7 @@ abstract class AbstractAction
             'currentUser'         => \DoEveryApp\Util\User\Current::get(),
         ];
 
-        $phpView          = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR.'src' .\DIRECTORY_SEPARATOR. 'views', $defaultVariables));
+        $phpView = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables));
         $phpView->setLayout('layout/main.php');
         $data = \array_merge($defaultVariables, $data);
 
@@ -165,6 +167,7 @@ abstract class AbstractAction
             ->newInstance()
             ->path;
     }
+
 
     public function getArgs(): mixed
     {
@@ -210,16 +213,10 @@ abstract class AbstractAction
     public function getArgumentSafe(string $argumentName = 'id'): mixed
     {
         if (false === array_key_exists($argumentName, $this->args)) {
-            throw new \InvalidArgumentException('Argument ' . $argumentName . ' is missing but needed');
+            throw new \DoEveryApp\Exception\ArgumentNoSet('Argument ' . $argumentName . ' is missing but needed');
         }
 
         return $this->args[$argumentName];
-    }
-
-
-    public function getQueryParameterOrDefault(string $parameterName, $default = null): mixed
-    {
-        return $this->getFromQuery($parameterName, $default);
     }
 
 
@@ -240,14 +237,15 @@ abstract class AbstractAction
         return 'XMLHttpRequest' === $this->getRequest()->getHeaderLine('X-Requested-With');
     }
 
+
     protected function validate(array $data, \Symfony\Component\Validator\Constraints\Collection $validators): static
     {
         $validator = \DoEveryApp\Util\DependencyContainer::getInstance()->getValidator();
         $hasErrors = false;
         foreach ($validator->validate($data, $validators) as $index => $error) {
-            $key          = $error->getPropertyPath();
-            $key          = \substr($key, 1, strlen($key) - 2);
-            $message      = $error->getMessage();
+            $key     = $error->getPropertyPath();
+            $key     = \substr($key, 1, strlen($key) - 2);
+            $message = $error->getMessage();
             $this
                 ->getErrorStore()
                 ->addError($key, $message)
@@ -256,9 +254,9 @@ abstract class AbstractAction
         }
 
         if (true === $hasErrors) {
-            throw new \InvalidArgumentException('errors detected: '.\json_encode($this->getErrorStore()->getAllErrors()));
+            throw new \InvalidArgumentException('errors detected: ' . \json_encode($this->getErrorStore()->getAllErrors()));
         }
-        
+
         return $this;
     }
 }

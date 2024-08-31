@@ -6,8 +6,12 @@ namespace DoEveryApp\Util\View;
 
 class Escaper
 {
-    public static function escape(string $value): string
+    public static function escape(?string $value = null): string
     {
+        if (null === $value) {
+            return '';
+        }
+
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 }

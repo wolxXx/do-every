@@ -14,6 +14,17 @@ declare(strict_types=1);
 <h1>
     Gruppe <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
 </h1>
+<div>
+    <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>?group=<?= $group->getId() ?>" class="primaryButton">
+        neue Aufgabe
+    </a>
+    <a href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>" class="primaryButton">
+        bearbeiten
+    </a>
+    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
+        löschen
+    </a>
+</div>
 
 <div class="cards">
     <? foreach($group->getTasks() as $task): ?>
