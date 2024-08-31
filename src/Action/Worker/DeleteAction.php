@@ -20,7 +20,7 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
-        if($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
+        if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
             \DoEveryApp\Util\FlashMessenger::addDanger('Das bist du!');
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
