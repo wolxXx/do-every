@@ -57,17 +57,18 @@ class Durations
         if (0 !== count($this->durations)) {
             $this->average = (int)\ceil(\array_sum($this->durations) / count($this->durations));
         }
+        if (0 !== sizeof($this->years)) {
+            $firstYear = \array_key_last($this->years);
+            $lastYear  = \array_key_first($this->years);
 
-        $firstYear = \array_key_last($this->years);
-        $lastYear  = \array_key_first($this->years);
-
-        foreach (range($firstYear, $lastYear) as $year) {
-            if (false === \array_key_exists($year, $this->years)) {
-                $this->years[$year] = 0;
+            foreach (range($firstYear, $lastYear) as $year) {
+                if (false === \array_key_exists($year, $this->years)) {
+                    $this->years[$year] = 0;
+                }
             }
+            \ksort($this->years, \SORT_DESC);
+            $this->years = \array_reverse($this->years, true);
         }
-        \ksort($this->years, \SORT_DESC);
-        $this->years = \array_reverse($this->years, true);
 
         if (0 !== \sizeof($this->months)) {
             $firstYearMonth = \explode('/', \array_key_last($this->months));
