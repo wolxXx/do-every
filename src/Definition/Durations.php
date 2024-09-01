@@ -89,7 +89,7 @@ class Durations
                 $begin          = \Carbon\Carbon::now()->year((int)$firstYearMonth[0])->month((int)$firstYearMonth[1]);
                 $end            = \Carbon\Carbon::now()->year((int)$lastYearMonth[0])->month((int)$lastYearMonth[1]);
 
-                return $begin <= $end;
+                return $begin <= $end ? 1 : -1;
             });
         }
 
