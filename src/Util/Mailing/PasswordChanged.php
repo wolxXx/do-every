@@ -21,7 +21,7 @@ TEXT;
         \DoEveryApp\Util\Mailer::Factory()
                                ->addRecipient($worker->getEmail(), $worker->getName())
                                ->setSubject('Neues Passwort gesetzt auf do-every*')
-                               ->setBody($body)
+                               ->setBody(\nl2br($body))
                                ->send()
         ;
     }

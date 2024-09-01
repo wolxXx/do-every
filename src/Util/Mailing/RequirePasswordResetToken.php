@@ -22,7 +22,7 @@ TEXT;
         \DoEveryApp\Util\Mailer::Factory()
                                ->addRecipient($worker->getEmail(), $worker->getName())
                                ->setSubject('Passwort verloren auf do-every*')
-                               ->setBody($body)
+                               ->setBody(\nl2br($body))
                                ->send()
         ;
     }
