@@ -10,6 +10,19 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Blameable;
 
 
+    public function findForIndex()
+    {
+        return $this
+            ->createQueryBuilder('t')
+            ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path')
+            ->leftJoin('t.group', 'g')
+            ->orderBy('path')
+            #->addOrderBy('c.group is null')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
     public function getWorkingOn(): array
     {
         return $this
