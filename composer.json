@@ -83,6 +83,7 @@
     "phing/phing": "*",
     "php": "~8.3",
     "php-di/php-di": "*",
+    "phpmailer/phpmailer": "@stable",
     "phpunit/phpunit": "*",
     "ramsey/uuid": "*",
     "slim/http": "*",
@@ -98,6 +99,7 @@
     "symfony/filesystem": "*",
     "symfony/http-kernel": "*",
     "symfony/validator": "*",
-    "symfony/yaml": "*"
+    "symfony/yaml": "*",
+    "tarikweiss/slim-attribute-router": "*"
   }
 }

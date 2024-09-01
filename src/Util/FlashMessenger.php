@@ -15,12 +15,14 @@ class FlashMessenger
     }
 
 
-    private static function get($level): array
+    private static function get(string $level, bool $reset = true): array
     {
         $session = Session::Factory(Session::NAMESPACE_APPLICATION);
 
         $messages = $session->get('messages_' . $level, []);
-        $session->write('messages_' . $level, []);
+        if (true === $reset) {
+            $session->write('messages_' . $level, []);
+        }
 
         return $messages;
     }
@@ -50,27 +52,40 @@ class FlashMessenger
     }
 
 
-    public static function getInfo(): array
+    public static function getInfo(bool $reset = true): array
     {
-        return static::get('info');
+        return static::get('info', $reset);
     }
 
 
-    public static function getSuccess(): array
+    public static function getSuccess(bool $reset = true): array
     {
-        return static::get('success');
+        return static::get('success', $reset);
     }
 
 
-    public static function getDanger(): array
+    public static function getDanger(bool $reset = true): array
     {
-        return static::get('danger');
+        return static::get('danger', $reset);
     }
 
 
-    public static function getWarning(): array
+    public static function getWarning(bool $reset = true): array
     {
-        return static::get('warning');
+        return static::get('warning', $reset);
+    }
+
+
+    public static function hasMessages(): bool
+    {
+        $data = [
+            \sizeof(\array_keys(static::getInfo(false))),
+            \sizeof(\array_keys(static::getSuccess(false))),
+            \sizeof(\array_keys(static::getDanger(false))),
+            \sizeof(\array_keys(static::getWarning(false))),
+        ];
+
+        return \array_sum($data) > 0;
     }
 
 

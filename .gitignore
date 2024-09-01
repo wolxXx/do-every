@@ -1,6 +1,11 @@
 /.idea
 /.env
 /doctrineConfiguration.php
+/mailConfiguration.php
+/test/.phpunit.cache
+/test/.phpunit.result.cache
+/test/testdocs.html
+/test/coverage
 
 /public/vendor
 /vendor

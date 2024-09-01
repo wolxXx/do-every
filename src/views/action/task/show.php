@@ -74,11 +74,11 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?> |
         Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
-        es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?> |
-        zugewiesen an: <?= null === $task->getAssignee()? 'niemand': \DoEveryApp\Util\View\Escaper::escape($task->getAssignee()->getName()) ?><br />
-        letzte Ausführung: <?= \DoEveryApp\Util\View\DateTime::getDateTime($lastExecution?->getDate()) ?>
+        es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
+        zugewiesen an: <?= null === $task->getAssignee()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
+        letzte Ausführung: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : '-' ?>
         <? if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
-            von <?= \DoEveryApp\Util\View\Escaper::escape($lastExecution->getWorker()->getName()) ?>
+            von <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
         <? endif ?>
     </div>
     <div class="column">
@@ -87,20 +87,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
             - bisher nicht ausgeführt -
         <? endif ?>
         <? if(0 !== sizeof($executions)): ?>
-            Aufwand durchschnittlich: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getAverage()) ?>,
-            insgesamt: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getTotal()) ?><br />
-
-            heute: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getDay()) ?>,
-            gestern: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastDay()) ?><br />
-
-            diese Woche: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getWeek()) ?>,
-            letzte Woche: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastWeek()) ?><br />
-
-            dieser Monat: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getMonth()) ?>,
-            letzter Monat: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastMonth()) ?><br />
-
-            dieses Jahr: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getYear()) ?>,
-            letztes Jahr: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastYear()) ?><br />
+            <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
         <? endif ?>
     </div>
 </div>
@@ -133,16 +120,16 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                 <? foreach($task->getExecutions() as $execution): ?>
                     <tr>
                         <td>
-                            <?= \DoEveryApp\Util\View\DateTime::getDateTime($execution->getDate()) ?>
+                            <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
                         </td>
                         <td>
-                            <?= null !== $execution->getWorker()? \DoEveryApp\Util\View\Escaper::escape($execution->getWorker()->getName()): '-' ?>
+                            <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
                         </td>
                         <td>
                             <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
                         </td>
                         <td>
-                            <?= null !== $execution->getNote()? nl2br(\DoEveryApp\Util\View\Escaper::escape($execution->getNote())): '-' ?>
+                            <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                         </td>
                         <td>
                             <a class="primaryButton confirm" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">

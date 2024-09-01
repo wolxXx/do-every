@@ -63,7 +63,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             </option>
             <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
                 <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
-                    <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?>
+                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
                 </option>
             <? endforeach ?>
         </select>

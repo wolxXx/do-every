@@ -44,23 +44,15 @@
                                 <? endif ?>
                             </td>
                             <td>
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                                </a>
                             </td>
                             <td>
-                                <? if(null === $task->getAssignee()): ?>
-                                    -
-                                <? endif ?>
-                                <? if(null !== $task->getAssignee()): ?>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getAssignee()->getName()) ?>
-                                <? endif ?>
+                                <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
                             </td>
                             <td>
-                                <? if(null === $task->getWorkingOn()): ?>
-                                    -
-                                <? endif ?>
-                                <? if(null !== $task->getWorkingOn()): ?>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?>
-                                <? endif ?>
+                                <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
                             </td>
                             <td>
                                 <nobr class="buttonRow">

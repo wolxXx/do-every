@@ -37,14 +37,18 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
                 $this->getErrorStore()->addError('email', 'user not found');
                 throw new \InvalidArgumentException('User not found');
             }
+
+            \DoEveryApp\Util\Mailing\Login::send($existing);
             \DoEveryApp\Util\User\Current::login($existing);
             $existing->setLastLogin(\Carbon\Carbon::now());
             $existing::getRepository()->update($existing);
             \DoEveryApp\Util\DependencyContainer::getInstance()
-                ->getEntityManager()
-                ->flush()
+                                                ->getEntityManager()
+                                                ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . $existing->getName());
+
+            \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . \DoEveryApp\Util\View\Worker::get($existing));
+
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         } catch (\Throwable $exception) {
             #\var_dump($data);
@@ -71,13 +75,13 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            'email'    => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-            'password' => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
+                                                                                  'email'    => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                                  'password' => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
 
         $this->validate($data, $validators);

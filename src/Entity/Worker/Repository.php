@@ -10,6 +10,12 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Blameable;
 
 
+    public function findOneByPasswordResetToken(string $token): ?\DoEveryApp\Entity\Worker
+    {
+        return $this->findOneBy(['passwordResetToken' => $token]);
+    }
+
+
     public function findOneByEmail(string $email): ?\DoEveryApp\Entity\Worker
     {
         return $this->findOneBy(['email' => $email]);
@@ -26,8 +32,9 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->orderBy('w.name', 'ASC')
             ->getQuery()
             ->execute()
-            ;
+        ;
     }
+
 
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {

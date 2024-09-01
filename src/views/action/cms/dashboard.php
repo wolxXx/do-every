@@ -12,6 +12,7 @@
  * @var $tasksWithoutGroup      \DoEveryApp\Entity\Task[]
  * @var $groups                 \DoEveryApp\Entity\Group[]
  * @var $workers                \DoEveryApp\Entity\Worker[]
+ * @var $workingOn                \DoEveryApp\Entity\Task[]
  */
 $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 ?>
@@ -19,30 +20,48 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 <h1>
     Dashboard
 </h1>
-<div class="cards row">
 
-    <? foreach($groups as $group): ?>
-        <div class="groupContainer column">
-            <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?><br />
-            <?= sizeof($group->getActiveTasks()) ?> aktive Aufgaben,<br />
-            <?= sizeof($group->getInActiveTasks()) ?> pausierte Aufgaben<br />
-            <br />
-            <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
-                anzeigen
-            </a>
-        </div>
-    <? endforeach ?>
+<? if(0 !== sizeof($workingOn)): ?>
+    <h3>
+        Aktuelle Arbeiten
+    </h3>
+    <table style="margin-bottom: 50px;">
+        <thead>
+            <tr>
+                <th>
+                    Aufgabe
+                </th>
+                <th>
+                    arbeitet daran
+                </th>
+                <th>
+                    zugewiesen an
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <? foreach($workingOn as $workingOnTask): ?>
+                <tr>
+                    <td>
+                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($workingOnTask->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Escaper::escape($workingOnTask->getName()) ?>
+                            <? if(null !== $workingOnTask->getGroup()): ?>
+                                (<?= \DoEveryApp\Util\View\Escaper::escape($workingOnTask->getGroup()->getName()) ?>)
+                            <? endif ?>
+                        </a>
+                    </td>
+                    <td>
+                        <?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?>
+                    </td>
+                    <td>
+                        <?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getAssignee()) ?>
+                    </td>
+                </tr>
+            <? endforeach ?>
+        </tbody>
+    </table>
+<? endif ?>
 
-    <? foreach($tasksWithoutGroup as $task): ?>
-        <div class="taskContainer column">
-            <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?><br />
-            <br />
-            <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                anzeigen
-            </a>
-        </div>
-    <? endforeach ?>
-</div>
 <table>
     <thead>
         <tr>
@@ -83,27 +102,21 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                     <? endif ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                    </a>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
                 </td>
                 <td>
-                    <? if(null === $task->getAssignee()): ?>
-                        -
-                    <? else: ?>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getAssignee()->getName()) ?>
-                    <? endif ?>
+                    <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
                 </td>
                 <td>
-                    <? if(null === $task->getWorkingOn()): ?>
-                        -
-                    <? else: ?>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?>
-                    <? endif ?>
+                    <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTime($lastExecution) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
                 </td>
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
@@ -125,11 +138,12 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 </table>
 
 <hr>
-<h2>Ausführungen</h2>
+<h2>
+    Ausführungen
+</h2>
 
 <div class="row">
     <div class="column">
-
         <table>
             <thead>
             <tr>
@@ -154,10 +168,10 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
             </tr>
             </thead>
             <tbody>
-            <? foreach($executions as $execution): ?>
+            <? foreach(array_slice($executions, 0, 10) as $execution): ?>
                 <tr>
                     <td>
-                        <?= \DoEveryApp\Util\View\DateTime::getDateTime($execution->getDate()) ?>
+                        <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
                     </td>
                     <td>
                         <? if(null === $execution->getTask()->getGroup()): ?>
@@ -168,21 +182,18 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                         <? endif?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                        </a>
                     </td>
                     <td>
                         <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
                     </td>
                     <td>
-                        <? if(null === $execution->getWorker()): ?>
-                            -
-                        <? endif?>
-                        <? if(null !== $execution->getWorker()): ?>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getWorker()->getName()) ?>
-                        <? endif?>
+                        <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
                     </td>
                     <td>
-                        <?= nl2br(\DoEveryApp\Util\View\Escaper::escape($execution->getNote())) ?>
+                        <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                     </td>
                 </tr>
             <? endforeach ?>
@@ -191,22 +202,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 
     </div>
     <div class="column">
-
-
-        Aufwand durchschnittlich: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getAverage()) ?>,
-        insgesamt: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getTotal()) ?><br />
-
-        heute: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getDay()) ?>,
-        gestern: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastDay()) ?><br />
-
-        diese Woche: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getWeek()) ?>,
-        letzte Woche: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastWeek()) ?><br />
-
-        dieser Monat: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getMonth()) ?>,
-        letzter Monat: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastMonth()) ?><br />
-
-        dieses Jahr: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getYear()) ?>,
-        letztes Jahr: <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastYear()) ?><br />
+        <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
     </div>
 </div>
 

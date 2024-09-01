@@ -62,6 +62,22 @@ class Worker
 
 
     #[\Doctrine\ORM\Mapping\Column(
+        name    : 'password_reset_token',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        nullable: true
+    )]
+    protected ?string $passwordResetToken = null;
+
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'password_reset_token_valid_until',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $tokenValidUntil = null;
+
+
+    #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_login',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
@@ -162,6 +178,34 @@ class Worker
     public function setLastLogin(?\DateTime $lastLogin): static
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+
+    public function setPasswordResetToken(?string $passwordResetToken): static
+    {
+        $this->passwordResetToken = $passwordResetToken;
+
+        return $this;
+    }
+
+
+    public function getTokenValidUntil(): ?\DateTime
+    {
+        return $this->tokenValidUntil;
+    }
+
+
+    public function setTokenValidUntil(?\DateTime $tokenValidUntil): static
+    {
+        $this->tokenValidUntil = $tokenValidUntil;
 
         return $this;
     }

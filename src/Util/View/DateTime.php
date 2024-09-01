@@ -18,12 +18,22 @@ class DateTime
     }
 
 
-    public static function getDateTime(?\DateTime $dateTime): string
+    public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime): string
     {
         if (null === $dateTime) {
             return '-';
         }
 
         return \IntlDateFormatter::create('de_DE', \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime);
+    }
+
+
+    public static function getDateTimeMediumDateShortTime(?\DateTime $dateTime): string
+    {
+        if (null === $dateTime) {
+            return '-';
+        }
+
+        return \IntlDateFormatter::create('de_DE', \IntlDateFormatter::RELATIVE_MEDIUM, \IntlDateFormatter::SHORT)->format($dateTime);
     }
 }

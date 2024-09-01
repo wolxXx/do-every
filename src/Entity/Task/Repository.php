@@ -9,6 +9,17 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+
+    public function getWorkingOn(): array
+    {
+        return $this
+            ->createQueryBuilder('t')
+            ->andWhere('t.workingOn IS NOT NULL')
+            ->getQuery()
+            ->execute()
+            ;
+    }
+
     public function getLastExecution(\DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Execution
     {
         return \DoEveryApp\Entity\Execution::getRepository()

@@ -46,7 +46,7 @@ declare(strict_types=1);
         <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
             <tr>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?>
+                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
@@ -58,7 +58,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTime($worker->getLastLogin()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastLogin()) ?>
                 </td>
                 <td>
                     <nobr class="buttonRow">

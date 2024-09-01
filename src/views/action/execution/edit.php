@@ -32,7 +32,7 @@ declare(strict_types=1);
                 </option>
                 <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
                     <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
-                        <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?>
+                        <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
                     </option>
                 <? endforeach ?>
             </select>

@@ -20,11 +20,12 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render('action/cms/dashboard', [
-            'executions'             => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
+            'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
             'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findAll(),
             'tasksWithoutGroup' => \DoEveryApp\Entity\Task::getRepository()->getWithoutGroup(),
             'groups'            => \DoEveryApp\Entity\Group::getRepository()->findAll(),
             'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findAll(),
+            'workingOn'         => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
         ]);
     }
 }

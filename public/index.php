@@ -25,7 +25,12 @@ $app->add(function ($request, $handler) {
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
     ;
 });
-
+/*
+$router = new \Tarikweiss\SlimAttributeRouter\Router(
+    [ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Action'],
+    new \Tarikweiss\SlimAttributeRouter\PublicMethodRouteTargetCreator('direct')
+);
+$router->registerRoutes($app);*/
 
 $Directory = new \RecursiveDirectoryIterator(\ROOT_DIR . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'Action');
 $Iterator  = new \RecursiveIteratorIterator($Directory);

@@ -13,7 +13,7 @@
 
 ?>
 <h1>
-    Worker "<?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?>" bearbeiten
+    Worker "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>" bearbeiten
 </h1>
 <form action="" method="post" novalidate>
     <div>
