@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 RUN apt update && apt install tzdata -y
 ENV TZ="Europe/Berlin"
 
-RUN apt update && apt install -y software-properties-common htop btop curl wget git
+RUN apt update && apt install -y software-properties-common htop btop curl wget git cron
 
 ARG version=22
 RUN apt update -y && apt install curl unzip -y \

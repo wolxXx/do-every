@@ -44,6 +44,7 @@ services:
     volumes:
       - ./docker-volumes/home:/home/docker
       - ./docker-volumes/scripts/init-app:/usr/local/bin/init-app
+      - ./docker-volumes/cron:/etc/cron.d/cron
       - ./docker-volumes/mysql/imports:/var/imports
       - ./docker-volumes/mysql/exports:/var/exports
       - ./docker-volumes/mysql/client.cnf:/etc/mysql/conf.d/client.cnf
