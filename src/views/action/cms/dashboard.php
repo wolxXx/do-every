@@ -7,12 +7,13 @@
  */
 
 /**
- * @var $executions             \DoEveryApp\Entity\Execution[]
- * @var $tasks                  \DoEveryApp\Entity\Task[]
- * @var $tasksWithoutGroup      \DoEveryApp\Entity\Task[]
- * @var $groups                 \DoEveryApp\Entity\Group[]
- * @var $workers                \DoEveryApp\Entity\Worker[]
- * @var $workingOn                \DoEveryApp\Entity\Task[]
+ * @var $executions                \DoEveryApp\Entity\Execution[]
+ * @var $dueTasks                  \DoEveryApp\Entity\Task[]
+ * @var $tasks                     \DoEveryApp\Entity\Task[]
+ * @var $tasksWithoutGroup         \DoEveryApp\Entity\Task[]
+ * @var $groups                    \DoEveryApp\Entity\Group[]
+ * @var $workers                   \DoEveryApp\Entity\Worker[]
+ * @var $workingOn                 \DoEveryApp\Entity\Task[]
  */
 $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 ?>
@@ -62,6 +63,22 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
     </table>
 <? endif ?>
 
+<? if(0 !== sizeof($dueTasks)): ?>
+    <h2>
+        Fällige Aufgaben
+    </h2>
+    <div style="margin-bottom: 50px;" class="row">
+        <? foreach($dueTasks as $task): ?>
+            <div class="column">
+                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>:
+                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                </a>
+            </div>
+        <? endforeach ?>
+    </div>
+<? endif ?>
+
 <table>
     <thead>
         <tr>
@@ -72,9 +89,6 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                 Name
             </th>
             <th>
-                Intervall
-            </th>
-            <th>
                 zugewiesen an 
             </th>
             <th>
@@ -82,6 +96,12 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
             </th>
             <th>
                 letzte Ausführung 
+            </th>
+            <th>
+                Intervall
+            </th>
+            <th>
+                Fälligkeit
             </th>
             <th>
                 Aktionen 
@@ -107,9 +127,6 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                     </a>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
-                </td>
-                <td>
                     <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
                 </td>
                 <td>
@@ -117,6 +134,12 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
                 </td>
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">

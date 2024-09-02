@@ -20,6 +20,7 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render('action/cms/dashboard', [
+            'dueTasks'          => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
             'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
             'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
             'tasksWithoutGroup' => \DoEveryApp\Entity\Task::getRepository()->getWithoutGroup(),

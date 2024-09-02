@@ -9,6 +9,25 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    public function getDueTasks(): array
+    {
+        $tasks = $this->findAll();
+        $tasks = \array_filter($tasks, function (\DoEveryApp\Entity\Task $task) {
+            $lastExecution = $this->getLastExecution($task);
+            if(null === $lastExecution) {
+                return true;
+            }
+            $dueValue = $task->getDueValue();
+            if(null === $dueValue) {
+                return true;
+            }
+            if($dueValue < 1) {
+                return true;
+            }
+        });
+        return $tasks;
+    }
+
 
     public function findForIndex()
     {

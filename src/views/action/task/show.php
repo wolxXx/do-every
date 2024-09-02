@@ -25,6 +25,9 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     <? endif ?>
 </h1>
 
+<h2>
+    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+</h2>
 
 <div>
     <? if(null === $task->getWorkingOn()): ?>

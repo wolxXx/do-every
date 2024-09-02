@@ -2,6 +2,7 @@
 /.env
 /doctrineConfiguration.php
 /mailConfiguration.php
+/structure.dump
 /test/.phpunit.cache
 /test/.phpunit.result.cache
 /test/testdocs.html
