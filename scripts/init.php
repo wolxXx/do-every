@@ -2,11 +2,11 @@
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-$hasSomething =
-    0 !== \DoEveryApp\Entity\Execution::getRepository()->count()
-    && 0 !== \DoEveryApp\Entity\Notification::getRepository()->count()
-    && 0 !== \DoEveryApp\Entity\Task::getRepository()->count()
-    && 0 !== \DoEveryApp\Entity\Worker::getRepository()->count();
+$hasSomething
+    = 0 !== \DoEveryApp\Entity\Execution::getRepository()->count()
+      && 0 !== \DoEveryApp\Entity\Notification::getRepository()->count()
+      && 0 !== \DoEveryApp\Entity\Task::getRepository()->count()
+      && 0 !== \DoEveryApp\Entity\Worker::getRepository()->count();
 
 
 if (true === $hasSomething) {
@@ -17,13 +17,13 @@ if (true === $hasSomething) {
 
 $you     = \DoEveryApp\Service\Worker\Creator::execute(
     (new \DoEveryApp\Service\Worker\Creator\Bag())
-        ->setName('you')
+        ->setName('Mazel Tov')
         ->setIsAdmin(true)
-        ->setEmail('login@do-every.app')
-        ->setPassword('password')
+        ->setEmail('do-every@kwatsh.de')
+        ->setPassword('Passwort')
 );
 $workers = [];
-foreach (range(2, rand(3, 20)) as $counter) {
+foreach (range(2, rand(3, 10)) as $counter) {
     $workers[] = \DoEveryApp\Service\Worker\Creator::execute(
         (new \DoEveryApp\Service\Worker\Creator\Bag())
             ->setName('worker' . $counter)
@@ -31,7 +31,7 @@ foreach (range(2, rand(3, 20)) as $counter) {
 }
 
 $groups = [];
-foreach (range(2, rand(3, 20)) as $counter) {
+foreach (range(2, rand(3, 10)) as $counter) {
     $group    = \DoEveryApp\Service\Task\Group\Creator::execute(
         (new \DoEveryApp\Service\Task\Group\Creator\Bag())
             ->setName('group' . $counter)
@@ -48,7 +48,7 @@ $types = [
     \DoEveryApp\Definition\IntervalType::YEAR,
 ];
 
-foreach (range(0, 100) as $counter) {
+foreach (range(0, 20) as $counter) {
     $task = \DoEveryApp\Service\Task\Creator::execute(
         (new \DoEveryApp\Service\Task\Creator\Bag())
             ->setGroup(rand(0, 100) > 50 ? $groups[array_rand($groups)] : null)
@@ -57,6 +57,7 @@ foreach (range(0, 100) as $counter) {
             ->setName('task' . $counter)
             ->setIntervalValue(rand(1, 50))
             ->setIntervalType($types[array_rand($types)])
+            ->enableNotifications(false)
     );
 
     if (rand(0, 100) > 50) {
