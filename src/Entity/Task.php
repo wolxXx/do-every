@@ -145,7 +145,7 @@ class Task
                 ;
                 $due->addMinutes($this->getIntervalValue());
                 $diff    = $now->diff($due);
-                $dueDays = $diff->i + 1;
+                $dueDays = ($diff->y * 365 * 30 * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->d * 24 * 60) +  ($diff->h * 60)  +  $diff->i + 1;
                 if ($due < $now) {
                     $dueDays = $dueDays * -1;
                 }
@@ -156,14 +156,17 @@ class Task
             case \DoEveryApp\Definition\IntervalType::HOUR->value:
             {
                 $due
+                    ->minute(0)
                     ->second(0)
                 ;
                 $now
+                    ->minute(0)
                     ->second(0)
                 ;
                 $due->addHours($this->getIntervalValue());
                 $diff    = $now->diff($due);
-                $dueDays = $diff->h + 1;
+
+                $dueDays = ($diff->y * 365 * 30 * 24) + ($diff->m * 30 * 24) + ($diff->d * 24) +  $diff->h + 1;
                 if ($due < $now) {
                     $dueDays = $dueDays * -1;
                 }
