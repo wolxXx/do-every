@@ -29,14 +29,14 @@ class Group
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    public string $name;
+    protected string $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'color',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    public ?string $color = null;
+    protected ?string $color = null;
 
 
     public static function getRepository(): Group\Repository

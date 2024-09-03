@@ -18,6 +18,7 @@ class Creator
             ->setPriority($bag->getPriority()->value)
             ->setIntervalType($bag->getIntervalType()->value)
             ->setIntervalValue($bag->getIntervalValue())
+            ->setNote($bag->getNote())
         ;
 
         $task::getRepository()->create($task);

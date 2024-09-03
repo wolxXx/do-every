@@ -36,6 +36,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority']))
                     ->enableNotifications('1' === $data['enableNotifications'])
                     ->setActive(true)
+                    ->setNote($data['note'])
             );
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
@@ -62,6 +63,11 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('name'))
+        ;
+        $data['note']                = (new \Laminas\Filter\FilterChain())
+            ->attach(new \Laminas\Filter\StringTrim())
+            ->attach(new \Laminas\Filter\ToNull())
+            ->filter($this->getFromBody('note'))
         ;
         $data['assignee']            = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
@@ -94,6 +100,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
+                                                                                  'note'                => [
+                                                                                  ],
                                                                                   'name'                => [
                                                                                       new \Symfony\Component\Validator\Constraints\NotBlank(),
                                                                                   ],

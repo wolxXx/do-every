@@ -95,6 +95,8 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     </div>
 </div>
 
+<?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+
 <hr />
 
 <div>
@@ -135,7 +137,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                         </td>
                         <td>
-                            <a class="primaryButton confirm" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
+                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
                                 bearbeiten
                             </a>
                             <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">

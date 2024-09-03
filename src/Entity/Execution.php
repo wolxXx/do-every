@@ -50,21 +50,21 @@ class Execution
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: false
     )]
-    public \DateTime  $date;
+    protected \DateTime  $date;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
         type    : \Doctrine\DBAL\Types\Types::TEXT,
         nullable: true
     )]
-    public ?string    $note     = null;
+    protected ?string    $note     = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'duration',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    public ?int       $duration = null;
+    protected ?int       $duration = null;
 
 
     public static function getRepository(): Execution\Repository

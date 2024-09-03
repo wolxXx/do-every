@@ -30,35 +30,35 @@ class Worker
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    public string  $name;
+    protected string  $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'email',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    public ?string $email    = null;
+    protected ?string $email    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'password',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    public ?string $password = null;
+    protected ?string $password = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_admin',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: false
     )]
-    public bool    $admin;
+    protected bool    $admin;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: false
     )]
-    public bool    $notify;
+    protected bool    $notify;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -82,7 +82,7 @@ class Worker
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    public ?\DateTime $lastLogin = null;
+    protected ?\DateTime $lastLogin = null;
 
 
     public static function getRepository(): Worker\Repository

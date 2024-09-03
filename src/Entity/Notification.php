@@ -50,7 +50,7 @@ class Notification
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: false
     )]
-    public \DateTime  $date;
+    protected \DateTime  $date;
 
 
     public static function getRepository(): Notification\Repository

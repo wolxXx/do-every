@@ -37,7 +37,7 @@ function checkFlashMessages() {
     container.querySelectorAll('.btn-close').forEach(function (element) {
         window.setTimeout(function () {
             element.click();
-        }, 5000)
+        }, 4000)
     });
     if (0 === container.querySelectorAll('div').length) {
         container.remove();

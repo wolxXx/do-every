@@ -165,6 +165,18 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
         </div>
     </div>
 
+    <div>
+        <label for="note">
+            Notiz
+        </label>
+        <textarea name="note" id="note" rows="10000" cols="10000"><?= array_key_exists('note', $data) ? $data['note'] : '' ?></textarea>
+        <div class="errors">
+            <? foreach ($errorStore->getErrors('note') as $error): ?>
+                <?= $error ?><br/>
+            <? endforeach ?>
+        </div>
+    </div>
+
     <div class="app-card-footer">
         <input class="primaryButton" type="submit" value="los">
     </div>

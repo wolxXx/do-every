@@ -13,7 +13,7 @@ class Due
             return 'jetzt fällig';
         }
         if ($due > 0) {
-            switch ($task->intervalType) {
+            switch ($task->getIntervalType()) {
                 case \DoEveryApp\Definition\IntervalType::MINUTE->value:
                 {
                     $unit = 1 === $due ? 'Minute' : 'Minuten';
@@ -45,7 +45,7 @@ class Due
         }
         if ($due < 1) {
             $due = abs($due);
-            switch ($task->intervalType) {
+            switch ($task->getIntervalType()) {
                 case \DoEveryApp\Definition\IntervalType::MINUTE->value:
                 {
                     $unit = 1 === $due ? 'Minute' : 'Minuten';

@@ -190,12 +190,19 @@ h1, h2, h3 {
     content: 'X';
 }
 
-.executionNote {
+.executionNote{
     border: solid 1px #fff;
     max-height: 1.1em;
     overflow: hidden;
 }
-.executionNote:hover {
+.executionNote:hover{
     max-height: 200px;
     overflow: auto;
+}
+
+.taskNote {
+    border: solid 1px #fff;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

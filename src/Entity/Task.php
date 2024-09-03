@@ -58,28 +58,28 @@ class Task
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    public string     $name;
+    protected string     $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_type',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    public ?string    $intervalType  = null;
+    protected ?string    $intervalType  = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_value',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    public ?int       $intervalValue = null;
+    protected ?int       $intervalValue = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
     )]
-    public int        $priority      = 100;
+    protected int        $priority      = 100;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -87,7 +87,7 @@ class Task
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: false
     )]
-    public bool $notify;
+    protected bool $notify;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -95,7 +95,14 @@ class Task
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: false
     )]
-    public bool $active;
+    protected bool    $active;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'note',
+        type    : \Doctrine\DBAL\Types\Types::TEXT,
+        nullable: true
+    )]
+    protected ?string $note = null;
 
 
     public static function getRepository(): Task\Repository
@@ -188,8 +195,29 @@ class Task
             }
             case \DoEveryApp\Definition\IntervalType::MONTH->value:
             {
+
+                $due
+                    ->second(0)
+                    ->minute(0)
+                    ->hour(1)
+                    ->day(1)
+                ;
+                $now
+                    ->second(0)
+                    ->minute(0)
+                    ->hour(0)
+                    ->day(1)
+                ;
                 $due->addMonths($this->getIntervalValue());
-                $due->sub($now);
+                $diff    = $now->diff($due);
+                \DoEveryApp\Util\Debugger::dieDebug($due, $diff);
+                $dueDays = $diff->d;
+                if ($due < $now) {
+                    $dueDays = $dueDays * -1;
+                }
+                $this->dueCache = $dueDays;
+
+                return $this->dueCache;
                 \DoEveryApp\Util\Debugger::dieDebug($due, $now);
                 break;
             }
@@ -340,6 +368,20 @@ class Task
     public function setActive(bool $active): static
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+
+    public function setNote(?string $note): static
+    {
+        $this->note = $note;
 
         return $this;
     }

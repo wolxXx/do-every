@@ -32,6 +32,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                     'intervalValue' => $task->getIntervalValue(),
                     'priority' => $task->getPriority(),
                     'enableNotifications' => $task->isNotify()? '1' : '0',
+                    'note' => $task->getNote(),
                 ],
             ]);
         }
@@ -47,6 +48,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                     ->setIntervalValue($data['intervalValue'])
                     ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority'])->value)
                     ->setNotify('1' === $data['enableNotifications'])
+                ->setNote($data['note'])
             ;
             $task::getRepository()->update($task);
 
@@ -81,6 +83,11 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('name'))
         ;
+        $data['note']                = (new \Laminas\Filter\FilterChain())
+            ->attach(new \Laminas\Filter\StringTrim())
+            ->attach(new \Laminas\Filter\ToNull())
+            ->filter($this->getFromBody('note'))
+        ;
         $data['assignee']            = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
@@ -112,6 +119,8 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
+                                                                                  'note'                => [
+                                                                                  ],
                                                                                   'name'                => [
                                                                                       new \Symfony\Component\Validator\Constraints\NotBlank(),
                                                                                   ],
