@@ -24,7 +24,7 @@ class Task
 
     public const string TABLE_NAME = 'task';
 
-    protected ?int    $dueCache;
+    protected ?int $dueCache;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Group::class,
@@ -33,7 +33,7 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Group  $group         = null;
+    protected ?Group $group = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class,
@@ -42,7 +42,7 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Worker $workingOn     = null;
+    protected ?Worker $workingOn = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class
@@ -51,35 +51,35 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Worker $assignee      = null;
+    protected ?Worker $assignee = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    protected string     $name;
+    protected string $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_type',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $intervalType  = null;
+    protected ?string $intervalType = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_value',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    protected ?int       $intervalValue = null;
+    protected ?int $intervalValue = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
     )]
-    protected int        $priority      = 100;
+    protected int $priority = 100;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -95,7 +95,7 @@ class Task
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: false
     )]
-    protected bool    $active;
+    protected bool $active;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
@@ -195,7 +195,6 @@ class Task
             }
             case \DoEveryApp\Definition\IntervalType::MONTH->value:
             {
-
                 $due
                     ->second(0)
                     ->minute(0)
@@ -209,24 +208,38 @@ class Task
                     ->day(1)
                 ;
                 $due->addMonths($this->getIntervalValue());
-                $diff    = $now->diff($due);
-                \DoEveryApp\Util\Debugger::dieDebug($due, $diff);
-                $dueDays = $diff->d;
+               $diff    = $now->diff($due);
+                $dueDays = (($diff->m + ($diff->y * 12)) * 30) + $diff->d;
                 if ($due < $now) {
                     $dueDays = $dueDays * -1;
                 }
                 $this->dueCache = $dueDays;
 
                 return $this->dueCache;
-                \DoEveryApp\Util\Debugger::dieDebug($due, $now);
-                break;
             }
             case \DoEveryApp\Definition\IntervalType::YEAR->value:
             {
+                $due
+                    ->second(0)
+                    ->minute(0)
+                    ->hour(1)
+                    ->day(1)
+                ;
+                $now
+                    ->second(0)
+                    ->minute(0)
+                    ->hour(0)
+                    ->day(1)
+                ;
                 $due->addYears($this->getIntervalValue());
-                $due->sub($now);
-                \DoEveryApp\Util\Debugger::dieDebug($due, $now);
-                break;
+                $diff    = $now->diff($due);
+                $dueDays = (($diff->m + ($diff->y * 12)) * 30) + $diff->d;
+                if ($due < $now) {
+                    $dueDays = $dueDays * -1;
+                }
+                $this->dueCache = $dueDays;
+
+                return $this->dueCache;
             }
         }
     }

@@ -25,18 +25,10 @@ class Due
                     break;
                 }
                 case \DoEveryApp\Definition\IntervalType::DAY->value:
-                {
-                    $unit = 1 === $due ? 'Tag' : 'Tagen';
-                    break;
-                }
                 case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                {
-                    $unit = 1 === $due ? 'Monat' : 'Monaten';
-                    break;
-                }
                 case \DoEveryApp\Definition\IntervalType::YEAR->value:
                 {
-                    $unit = 1 === $due ? 'Jahr' : 'Jahren';
+                    $unit = 1 === $due ? 'Tag' : 'Tagen';
                     break;
                 }
             }
@@ -57,18 +49,10 @@ class Due
                     break;
                 }
                 case \DoEveryApp\Definition\IntervalType::DAY->value:
-                {
-                    $unit = 1 === $due ? 'Tag' : 'Tagen';
-                    break;
-                }
                 case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                {
-                    $unit = 1 === $due ? 'Monat' : 'Monaten';
-                    break;
-                }
                 case \DoEveryApp\Definition\IntervalType::YEAR->value:
                 {
-                    $unit = 1 === $due ? 'Jahr' : 'Jahren';
+                    $unit = 1 === $due ? 'Tag' : 'Tagen';
                     break;
                 }
             }
