@@ -1,5 +1,6 @@
 /.idea
 /.env
+/app.log
 /doctrineConfiguration.php
 /mailConfiguration.php
 /structure.dump
