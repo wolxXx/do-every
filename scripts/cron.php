@@ -7,3 +7,8 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
     ->debug('bar');
 
 echo "foo";
+echo "foo";
+echo "foo";
+echo "foo";
+
+\DoEveryApp\Util\Debugger::debug('asdf');
