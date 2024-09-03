@@ -98,10 +98,10 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                 letzte Ausführung 
             </th>
             <th>
-                Intervall
+                Fälligkeit
             </th>
             <th>
-                Fälligkeit
+                Intervall
             </th>
             <th>
                 Aktionen 
@@ -136,10 +136,10 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                    <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
                 </td>
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
