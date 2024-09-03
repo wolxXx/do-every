@@ -44,7 +44,6 @@ services:
     volumes:
       - ./docker-volumes/home:/home/docker
       - ./docker-volumes/scripts/init-app:/usr/local/bin/init-app
-      - ./docker-volumes/cron:/etc/cron.d/cron
       - ./docker-volumes/mysql/imports:/var/imports
       - ./docker-volumes/mysql/exports:/var/exports
       - ./docker-volumes/mysql/client.cnf:/etc/mysql/conf.d/client.cnf
@@ -57,6 +56,22 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - do-every-network
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.datecron.schedule: "@every 300s"
+      ofelia.job-exec.datecron.command: "php /var/www/scripts/cron.php"
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: "do-every-${INSTANCE}-php83-ofelia"
+    depends_on:
+      - web
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-local.my-test-job.schedule: "@every 300s"
+      ofelia.job-local.my-test-job.command: "date"
 
 networks:
   do-every-network:
