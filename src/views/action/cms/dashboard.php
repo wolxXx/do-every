@@ -3,6 +3,7 @@
 /**
  * @var $this         \Slim\Views\PhpRenderer
  * @var $errorStore   \DoEveryApp\Util\ErrorStore
+ * @var $currentUser   \DoEveryApp\Entity\Worker
  * @var $currentRoute string
  */
 
@@ -21,6 +22,17 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 <h1>
     Dashboard
 </h1>
+
+<? if(true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange($currentUser)): ?>
+    <h2>Achtung!</h2>
+    <? if(null !== $currentUser->getLastPasswordChange()): ?>
+        Du hast dein Passwort lange nicht geändert. Das letzte mal <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange()) ?>.
+    <? endif ?>
+    Du solltest dein Passwort ändern.
+    <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
+        los
+    </a>
+<? endif ?>
 
 <? if(0 !== sizeof($workingOn)): ?>
     <h3>
