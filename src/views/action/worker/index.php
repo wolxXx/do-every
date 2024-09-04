@@ -38,6 +38,9 @@ declare(strict_types=1);
                 letzter Login
             </th>
             <th>
+                letzte Passwortänderung
+            </th>
+            <th>
                 Aktionen
             </th>
         </tr>
@@ -59,6 +62,9 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastLogin()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastPasswordChange()) ?>
                 </td>
                 <td>
                     <nobr class="buttonRow">
