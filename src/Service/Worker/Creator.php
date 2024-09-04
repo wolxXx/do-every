@@ -18,7 +18,10 @@ class Creator
         }
 
         if (null !== $bag->getPassword()) {
-            $defaultWorker->setHashedPassword($bag->getPassword());
+            $defaultWorker
+                ->setHashedPassword($bag->getPassword())
+                ->setLastPasswordChange(\Carbon\Carbon::now())
+            ;
         }
 
         $defaultWorker::getRepository()->create($defaultWorker);

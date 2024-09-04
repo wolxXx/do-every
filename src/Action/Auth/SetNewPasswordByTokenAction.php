@@ -56,6 +56,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
             $existing
                 ->setPassword($data['password'])
+                ->setLastPasswordChange(\Carbon\Carbon::now())
                 ->setTokenValidUntil(null)
                 ->setPasswordResetToken(null)
             ;

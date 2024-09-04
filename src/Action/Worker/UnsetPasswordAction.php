@@ -25,7 +25,10 @@ class UnsetPasswordAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
-        $worker->setPassword(null);
+        $worker
+            ->setPassword(null)
+            ->setLastPasswordChange(null)
+        ;
         $worker::getRepository()->update($worker);
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getEntityManager()

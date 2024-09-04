@@ -43,7 +43,10 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
 
             ;
             if(null !== $data['password']) {
-                $worker->setPassword($data['password']);
+                $worker
+                    ->setPassword($data['password'])
+                    ->setLastPasswordChange(\Carbon\Carbon::now())
+                ;
             }
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
