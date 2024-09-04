@@ -1,3 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @var $this                \Slim\Views\PhpRenderer
+ * @var $errorStore          \DoEveryApp\Util\ErrorStore
+ * @var $currentRoute        string
+ * @var $currentRoutePattern string
+ * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ */
+?>
 <? if(true === \DoEveryApp\Util\FlashMessenger::hasMessages()): ?>
     <div id="messageContainer">
         <? foreach(\DoEveryApp\Util\FlashMessenger::getDanger() as $message): ?>
