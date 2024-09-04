@@ -85,6 +85,14 @@ class Worker
     protected ?\DateTime $lastLogin = null;
 
 
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'last_password_change',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $lastPasswordChange = null;
+
+
     public static function getRepository(): Worker\Repository
     {
         return static::getRepositoryByClassName();
@@ -206,6 +214,20 @@ class Worker
     public function setTokenValidUntil(?\DateTime $tokenValidUntil): static
     {
         $this->tokenValidUntil = $tokenValidUntil;
+
+        return $this;
+    }
+
+
+    public function getLastPasswordChange(): ?\DateTime
+    {
+        return $this->lastPasswordChange;
+    }
+
+
+    public function setLastPasswordChange(?\DateTime $lastPasswordChange): static
+    {
+        $this->lastPasswordChange = $lastPasswordChange;
 
         return $this;
     }
