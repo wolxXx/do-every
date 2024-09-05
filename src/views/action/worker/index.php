@@ -37,6 +37,12 @@ declare(strict_types=1);
                 ist Admin?
             </th>
             <th>
+                Logins benachrichtigen?
+            </th>
+            <th>
+                Fälligkeiten benachrichtigen?
+            </th>
+            <th>
                 letzter Login
             </th>
             <th>
@@ -57,10 +63,29 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
                 </td>
                 <td>
+                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
+                        <?= $this->fetchTemplate('icon/trash.php') ?>
+                    </a>
                     <?= \DoEveryApp\Util\View\Boolean::get(null !== $worker->getPassword()) ?>
                 </td>
                 <td>
+                    <? if(true === $worker->isAdmin()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false  ) ?>">
+                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                        </a>
+                    <? endif ?>
+                    <? if(false === $worker->isAdmin()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
+                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                        </a>
+                    <? endif ?>
                     <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotifyLogin()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotify()) ?>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastLogin()) ?>
@@ -76,19 +101,7 @@ declare(strict_types=1);
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
                             bearbeiten
 
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
-                            Passwort löschen
-                        </a>
-                        <? if(true === $worker->isAdmin()): ?>
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false  ) ?>">
-                                kein admin mehr
-                            </a>
-                        <? endif ?>
-                        <? if(false === $worker->isAdmin()): ?>
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
-                                ist admin
-                            </a>
-                        <? endif ?>
+
                         <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
                             löschen
                         </a>
