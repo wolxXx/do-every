@@ -15,7 +15,10 @@ namespace DoEveryApp\Entity;
         'engine'  => 'InnoDB',
     ],
 )]
-
+#[\Doctrine\ORM\Mapping\UniqueConstraint(
+    name   : 'email',
+    columns: ['email']
+)]
 class Worker
 {
     use \DoEveryApp\Entity\Share\Blame;
