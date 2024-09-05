@@ -14,7 +14,7 @@ class DateTime
             return '-';
         }
 
-        return \IntlDateFormatter::create('de_DE', \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE)->format($dateTime);
+        return '<nobr>' . \IntlDateFormatter::create('de_DE', \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE)->format($dateTime) . '</nobr>';
     }
 
 
@@ -24,7 +24,7 @@ class DateTime
             return '-';
         }
 
-        return \IntlDateFormatter::create('de_DE', \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime);
+        return '<nobr>' . \IntlDateFormatter::create('de_DE', \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime) . '</nobr>';
     }
 
 
@@ -34,6 +34,6 @@ class DateTime
             return '-';
         }
 
-        return \IntlDateFormatter::create('de_DE', \IntlDateFormatter::RELATIVE_MEDIUM, \IntlDateFormatter::SHORT)->format($dateTime);
+        return '<nobr>' . \IntlDateFormatter::create('de_DE', \IntlDateFormatter::RELATIVE_MEDIUM, \IntlDateFormatter::SHORT)->format($dateTime) . '</nobr>';
     }
 }
