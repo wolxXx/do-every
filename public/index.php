@@ -10,7 +10,7 @@ ini_set('xdebug.var_display_max_data', 100);
 
 
 $app = \Slim\Factory\AppFactory::create();
-#$app->addErrorMiddleware(true, false, false);
+$app->addErrorMiddleware(false, true, true, \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger());
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;

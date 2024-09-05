@@ -8,7 +8,8 @@ class Registry
 {
     public const string KEY_ADMIN_USER = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
 
-    public const string KEY_LAST_CRON  = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+    public const string KEY_LAST_CRON = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+    public const string KEY_MAX_USERS = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
 
 
     public function getRow(string $key): ?\DoEveryApp\Entity\Registry
@@ -27,8 +28,7 @@ class Registry
     {
         if (false === $this->rowExists($key)) {
             $registry = (new \DoEveryApp\Entity\Registry())
-                ->setKey($key)
-            ;
+                ->setKey($key);
             $registry::getRepository()->create($registry);
 
             return $registry;
@@ -42,9 +42,8 @@ class Registry
     {
         $registry::getRepository()->update($registry);
         DependencyContainer::getInstance()
-                           ->getEntityManager()
-                           ->flush()
-        ;
+            ->getEntityManager()
+            ->flush();
 
         return $this;
     }
@@ -54,8 +53,7 @@ class Registry
     {
         return $this
             ->getRow(self::KEY_ADMIN_USER)
-            ?->getWorkerCascade()
-        ;
+            ?->getWorkerCascade();
     }
 
 
@@ -73,8 +71,7 @@ class Registry
     {
         return $this
             ->getRow(self::KEY_LAST_CRON)
-            ?->getDateValue()
-        ;
+            ?->getDateValue();
     }
 
 
@@ -84,6 +81,24 @@ class Registry
             $this
                 ->getOrCreateRow(self::KEY_LAST_CRON)
                 ->setDateValue($lastCron)
+        );
+    }
+
+
+    public function getMaxUsers(): ?int
+    {
+        return $this
+            ->getRow(self::KEY_LAST_CRON)
+            ?->getIntValue();
+    }
+
+
+    public function setMaxUsers(?int $maxUsers): static
+    {
+        return $this->updateRow(
+            $this
+                ->getOrCreateRow(self::KEY_MAX_USERS)
+                ->setIntValue($maxUsers)
         );
     }
 }
