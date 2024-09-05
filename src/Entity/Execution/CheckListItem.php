@@ -54,7 +54,7 @@ class CheckListItem
             "default" => 0,
         ],
     )]
-    protected int                                    $position;
+    protected int                                    $position = 0;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
@@ -75,7 +75,10 @@ class CheckListItem
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'checked',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false
+        nullable: false,
+        options : [
+            "default" => 0,
+        ],
     )]
     protected bool $checked = false;
 
