@@ -21,7 +21,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
 </h1>
 
 <? if(0 === sizeof($data)): ?>
-    - bisher kein Beitrag geleistet -
+    - <?= \DoEveryApp\Util\View\Worker::get($worker) ?> hat bisher kein Beitrag geleistet -
 <? endif ?>
 <? if(0 !== sizeof($data)): ?>
     <div class="row">
