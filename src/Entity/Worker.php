@@ -52,16 +52,22 @@ class Worker
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_admin',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false
+        nullable: false,
+        options : [
+            "default" => 0,
+        ],
     )]
-    protected bool    $admin;
+    protected bool    $admin    = false;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false
+        nullable: false,
+        options : [
+            "default" => 1,
+        ],
     )]
-    protected bool    $notify;
+    protected bool    $notify = true;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -86,6 +92,17 @@ class Worker
         nullable: true
     )]
     protected ?\DateTime $lastLogin = null;
+
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'notify_login',
+        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
+        nullable: false,
+        options : [
+            "default" => 1,
+        ],
+    )]
+    protected bool $notifyLogin = true;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -231,6 +248,20 @@ class Worker
     public function setLastPasswordChange(?\DateTime $lastPasswordChange): static
     {
         $this->lastPasswordChange = $lastPasswordChange;
+
+        return $this;
+    }
+
+
+    public function doNotifyLogin(): bool
+    {
+        return $this->notifyLogin;
+    }
+
+
+    public function setNotifyLogin(bool $notifyLogin): static
+    {
+        $this->notifyLogin = $notifyLogin;
 
         return $this;
     }
