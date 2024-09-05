@@ -85,17 +85,23 @@ class Task
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false
+        nullable: false,
+        options : [
+            "default" => 0,
+        ],
     )]
-    protected bool $notify;
+    protected bool $notify = false;
 
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_active',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false
+        nullable: false,
+        options : [
+            "default" => 1,
+        ],
     )]
-    protected bool $active;
+    protected bool $active = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
