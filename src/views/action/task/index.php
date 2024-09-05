@@ -18,6 +18,7 @@ declare(strict_types=1);
         Aufgaben
         <br/>
         <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">
+            <?= $this->fetchTemplate('icon/add.php') ?>
             neue Aufgabe
         </a>
         <div>
@@ -90,6 +91,7 @@ declare(strict_types=1);
         Gruppen
         <br />
         <a href="<?= \DoEveryApp\Action\Group\AddAction::getRoute() ?>" class="primaryButton">
+            <?= $this->fetchTemplate('icon/add.php') ?>
             neue Gruppe
         </a>
         <div>
@@ -111,15 +113,17 @@ declare(strict_types=1);
                             <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
                         </td>
                         <td>
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
-                                anzeigen
-                            </a>
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>">
-                                bearbeiten
-                            </a>
-                            <a class="primaryButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
-                                löschen
-                            </a>
+                            <div class="buttonRow">
+                                <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
+                                    anzeigen
+                                </a>
+                                <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>">
+                                    bearbeiten
+                                </a>
+                                <a class="primaryButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
+                                    löschen
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <? endforeach ?>
