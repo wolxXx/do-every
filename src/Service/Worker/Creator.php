@@ -12,6 +12,7 @@ class Creator
             ->setName($bag->getName())
             ->setIsAdmin($bag->isAdmin())
             ->enableNotifications($bag->doNotify())
+            ->setNotifyLogin($bag->doNotifyLogins())
         ;
         if (null !== $bag->getEmail()) {
             $defaultWorker->setEmail($bag->getEmail());

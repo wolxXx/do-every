@@ -8,13 +8,15 @@ class Bag
 {
     protected string  $name;
 
-    protected bool    $admin    = false;
+    protected bool    $admin        = false;
 
-    protected ?string $email    = null;
+    protected ?string $email        = null;
 
-    protected ?string $password = null;
+    protected ?string $password     = null;
 
-    protected bool    $notify   = false;
+    protected bool    $notify       = false;
+
+    protected bool    $notifyLogins = false;
 
 
     public function getName(): string
@@ -90,6 +92,20 @@ class Bag
     public function enableNotifications(bool $notify): static
     {
         $this->notify = $notify;
+
+        return $this;
+    }
+
+
+    public function doNotifyLogins(): bool
+    {
+        return $this->notifyLogins;
+    }
+
+
+    public function enableLoginNotifications(bool $notifyLogins): static
+    {
+        $this->notifyLogins = $notifyLogins;
 
         return $this;
     }
