@@ -40,28 +40,28 @@ class Registry
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    protected ?int       $intValue         = null;
+    protected ?int       $intValue          = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'bool_value',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
         nullable: true
     )]
-    protected ?bool      $boolValue        = null;
+    protected ?bool      $boolValue         = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'string_value',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $stringValue      = null;
+    protected ?string    $stringValue       = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'date_value',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $dateValue        = null;
+    protected ?\DateTime $dateValue         = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Execution::class,
@@ -71,7 +71,7 @@ class Registry
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Execution $executionSetNull = null;
+    protected ?Execution $executionSetNull  = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Execution::class,
@@ -81,7 +81,17 @@ class Registry
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Execution $executionCascade = null;
+    protected ?Execution $executionCascade  = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Execution::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        name    : 'execution_reference_restrict',
+        nullable: true,
+        onDelete: 'RESTRICT'
+    )]
+    protected ?Execution $executionRestrict = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Group::class,
@@ -91,7 +101,7 @@ class Registry
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Group     $groupSetNull     = null;
+    protected ?Group     $groupSetNull      = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Group::class,
@@ -101,7 +111,17 @@ class Registry
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Group     $groupCascade     = null;
+    protected ?Group     $groupCascade      = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Group::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        name    : 'group_reference_restrict',
+        nullable: true,
+        onDelete: 'RESTRICT'
+    )]
+    protected ?Group     $groupRestrict     = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Task::class,
@@ -111,7 +131,7 @@ class Registry
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Task      $taskSetNull      = null;
+    protected ?Task      $taskSetNull       = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Task::class,
@@ -121,7 +141,17 @@ class Registry
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Task      $taskCascade      = null;
+    protected ?Task      $taskCascade       = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Task::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        name    : 'task_reference_restrict',
+        nullable: true,
+        onDelete: 'RESTRICT'
+    )]
+    protected ?Task      $taskRestrict      = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class,
@@ -131,7 +161,7 @@ class Registry
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Worker    $workerSetNull    = null;
+    protected ?Worker    $workerSetNull     = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class,
@@ -141,7 +171,17 @@ class Registry
         nullable: true,
         onDelete: 'CASCADE'
     )]
-    protected ?Worker    $workerCascade    = null;
+    protected ?Worker    $workerCascade     = null;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: Worker::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        name    : 'worker_reference_restrict',
+        nullable: true,
+        onDelete: 'RESTRICT'
+    )]
+    protected ?Worker    $workerRestrict    = null;
 
 
     public static function getRepository(): Registry\Repository
@@ -327,6 +367,62 @@ class Registry
     public function setWorkerCascade(?Worker $workerCascade): static
     {
         $this->workerCascade = $workerCascade;
+
+        return $this;
+    }
+
+
+    public function getExecutionRestrict(): ?Execution
+    {
+        return $this->executionRestrict;
+    }
+
+
+    public function setExecutionRestrict(?Execution $executionRestrict): static
+    {
+        $this->executionRestrict = $executionRestrict;
+
+        return $this;
+    }
+
+
+    public function getGroupRestrict(): ?Group
+    {
+        return $this->groupRestrict;
+    }
+
+
+    public function setGroupRestrict(?Group $groupRestrict): static
+    {
+        $this->groupRestrict = $groupRestrict;
+
+        return $this;
+    }
+
+
+    public function getTaskRestrict(): ?Task
+    {
+        return $this->taskRestrict;
+    }
+
+
+    public function setTaskRestrict(?Task $taskRestrict): static
+    {
+        $this->taskRestrict = $taskRestrict;
+
+        return $this;
+    }
+
+
+    public function getWorkerRestrict(): ?Worker
+    {
+        return $this->workerRestrict;
+    }
+
+
+    public function setWorkerRestrict(?Worker $workerRestrict): static
+    {
+        $this->workerRestrict = $workerRestrict;
 
         return $this;
     }
