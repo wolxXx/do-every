@@ -3,12 +3,14 @@
 /app.log
 /doctrineConfiguration.php
 /mailConfiguration.php
+/stan.log
 /structure.dump
 /test/.phpunit.cache
 /test/.phpunit.result.cache
 /test/testdocs.html
 /test/coverage
 
+/docker-volumes/backups
 /log
 /public/vendor
 /vendor
