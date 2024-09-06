@@ -16,8 +16,8 @@ namespace DoEveryApp\Entity;
     ],
 )]
 #[\Doctrine\ORM\Mapping\UniqueConstraint(
-    name: 'key',
-    columns: ['key']
+    name: 'key_name',
+    columns: ['key_name']
 )]
 class Registry
 {
@@ -29,7 +29,7 @@ class Registry
     public const string TABLE_NAME = 'registry';
 
     #[\Doctrine\ORM\Mapping\Column(
-        name: 'key',
+        name: 'key_name',
         type: \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]

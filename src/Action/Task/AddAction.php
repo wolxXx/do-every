@@ -33,6 +33,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     ->setName($data['name'])
                     ->setIntervalType($data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from($data['intervalType']) : null)
                     ->setIntervalValue($data['intervalValue'])
+                    ->setElapsingCronType('1' === $data['elapsingCronType'])
                     ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority']))
                     ->enableNotifications('1' === $data['enableNotifications'])
                     ->setActive(true)
@@ -89,6 +90,10 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('intervalValue'))
         ;
+        $data['elapsingCronType']    = (new \Laminas\Filter\FilterChain())
+            ->attach(new \Laminas\Filter\StringTrim())
+            ->filter($this->getFromBody('elapsingCronType'))
+        ;
         $data['priority']            = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
@@ -100,6 +105,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
+                                                                                  'elapsingCronType'    => [
+                                                                                  ],
                                                                                   'note'                => [
                                                                                   ],
                                                                                   'name'                => [

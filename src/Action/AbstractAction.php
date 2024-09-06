@@ -57,7 +57,7 @@ abstract class AbstractAction
     }
 
 
-    final public function direct(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $arguments): \Psr\Http\Message\ResponseInterface
+    final public function direct(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, mixed $arguments): \Psr\Http\Message\ResponseInterface
     {
         return $this
             ->setRequest($request)
@@ -141,6 +141,9 @@ abstract class AbstractAction
     }
 
 
+    /**
+     * @param array<mixed>  $data
+     */
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
         $defaultVariables = [

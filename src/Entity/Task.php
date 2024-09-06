@@ -75,6 +75,16 @@ class Task
     protected ?int $intervalValue = null;
 
     #[\Doctrine\ORM\Mapping\Column(
+        name    : 'is_elapsing_cron_type',
+        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
+        nullable: false,
+        options : [
+            "default" => 1,
+        ],
+    )]
+    protected bool $elapsingCronType = true;
+
+    #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
@@ -251,6 +261,8 @@ class Task
                 return $this->dueCache;
             }
         }
+
+        throw new \RuntimeException('WTF?');
     }
 
 
@@ -404,6 +416,20 @@ class Task
     public function setNote(?string $note): static
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+
+    public function isElapsingCronType(): bool
+    {
+        return $this->elapsingCronType;
+    }
+
+
+    public function setElapsingCronType(bool $elapsingCronType): static
+    {
+        $this->elapsingCronType = $elapsingCronType;
 
         return $this;
     }

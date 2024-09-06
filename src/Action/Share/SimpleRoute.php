@@ -12,5 +12,7 @@ trait SimpleRoute
         foreach ($reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class) as $attribute) {
             return $attribute->getArguments()['path'];
         }
+
+        throw new \RuntimeException('Could not determine route path');
     }
 }

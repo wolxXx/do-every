@@ -18,6 +18,7 @@ class Creator
             ->setPriority($bag->getPriority()->value)
             ->setIntervalType($bag->getIntervalType()->value)
             ->setIntervalValue($bag->getIntervalValue())
+            ->setElapsingCronType($bag->isElapsingCronType())
             ->setNote($bag->getNote())
         ;
 

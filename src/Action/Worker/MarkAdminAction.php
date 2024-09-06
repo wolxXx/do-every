@@ -19,6 +19,8 @@ class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
 
             return $route;
         }
+
+        throw new \RuntimeException('Could not determine route path');
     }
 
 

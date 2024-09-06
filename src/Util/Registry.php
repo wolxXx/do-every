@@ -4,25 +4,33 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Util;
 
-class Registry
+final class Registry
 {
-    private const string KEY_ADMIN_USER = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
+    private const string KEY_ADMIN_USER   = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
 
-    private const string KEY_LAST_CRON  = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+    private const string KEY_LAST_BACKUP  = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
 
-    private const string KEY_MAX_GROUPS = 'e15e9173-2776-4848-9419-0dfc0112db62';
+    private const string KEY_CRON_LOCK    = '84c29c0a-cbd9-4bc6-8532-feb785f4c59d';
 
-    private const string KEY_MAX_TASKS  = 'd5a3211d-7e3f-4db8-98f0-339036409289';
+    private const string KEY_CRON_STARTED = '05226812-dcf8-4e36-89ac-1dccc3e06047';
 
-    private const string KEY_MAX_USERS  = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
+    private const string KEY_LAST_CRON    = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+
+    private const string KEY_MAX_GROUPS   = 'e15e9173-2776-4848-9419-0dfc0112db62';
+
+    private const string KEY_MAX_TASKS    = 'd5a3211d-7e3f-4db8-98f0-339036409289';
+
+    private const string KEY_MAX_USERS    = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
 
     private static Registry $instance;
 
+
     public static function getInstance(): static
     {
-        if (null === static::$instance) {
+        if (false === isset(static::$instance)) {
             static::$instance = new static();
         }
+
         return static::$instance;
     }
 
@@ -85,6 +93,8 @@ class Registry
     }
 
 
+    #region crons
+
     public function getLastCron(): ?\DateTime
     {
         return $this
@@ -100,6 +110,66 @@ class Registry
             $this
                 ->getOrCreateRow(self::KEY_LAST_CRON)
                 ->setDateValue($lastCron)
+        );
+    }
+
+
+    public function getCronStarted(): ?\DateTime
+    {
+        return $this
+            ->getRow(self::KEY_CRON_STARTED)
+            ?->getDateValue()
+        ;
+    }
+
+
+    public function setCronStarted(\DateTime $cronStarted): static
+    {
+        return $this->updateRow(
+            $this
+                ->getOrCreateRow(self::KEY_CRON_STARTED)
+                ->setDateValue($cronStarted)
+        );
+    }
+
+
+    public function isCronRunning(): bool
+    {
+        return true === $this
+                ->getRow(self::KEY_CRON_LOCK)
+                ?->getBoolValue()
+        ;
+    }
+
+
+    public function setCronRunning(bool $cronRunning): static
+    {
+        return $this->updateRow(
+            $this
+                ->getOrCreateRow(self::KEY_CRON_LOCK)
+                ->setBoolValue($cronRunning)
+        );
+    }
+
+
+    #endregion crons
+
+
+    public function getLastBackup(): ?\DateTime
+    {
+        return $this
+            ->getRow(self::KEY_LAST_BACKUP)
+            ?->getDateValue()
+        ;
+    }
+
+
+    public function setLastBackup(\DateTime $lastBackup): static
+    {
+        return $this->updateRow(
+            $this
+                ->getOrCreateRow(self::KEY_LAST_BACKUP)
+                ->setDateValue($lastBackup)
         );
     }
 
@@ -159,4 +229,5 @@ class Registry
                 ->setIntValue($maxGroups)
         );
     }
+
 }

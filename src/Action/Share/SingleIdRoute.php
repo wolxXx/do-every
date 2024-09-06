@@ -12,5 +12,7 @@ trait SingleIdRoute
         foreach ($reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class) as $attribute) {
             return \str_replace('{id:[0-9]+}', '' . $id, $attribute->getArguments()['path']);
         }
+
+        throw new \RuntimeException('Could not determine route path');
     }
 }

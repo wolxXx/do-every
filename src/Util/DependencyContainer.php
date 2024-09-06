@@ -95,7 +95,7 @@ class DependencyContainer
 
                     public function getLocale(): string
                     {
-                        return \MyDMS\Util\User\Current::getLanguage();
+                        return 'de_DE';
                     }
                 }
             ),

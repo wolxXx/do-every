@@ -44,7 +44,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         } catch (\Throwable $exception) {
             #\var_dump($data);
             #die('');
-            throw $exception;
+            #throw $exception;
         }
 
 

@@ -6,25 +6,27 @@ namespace DoEveryApp\Service\Task\Creator;
 
 class Bag
 {
-    protected ?\DoEveryApp\Entity\Group            $group         = null;
+    protected ?\DoEveryApp\Entity\Group            $group            = null;
 
     protected string                               $name;
 
-    protected ?\DoEveryApp\Definition\IntervalType $intervalType  = null;
+    protected ?\DoEveryApp\Definition\IntervalType $intervalType     = null;
 
-    protected ?int                                 $intervalValue = null;
+    protected ?int                                 $intervalValue    = null;
 
-    protected \DoEveryApp\Definition\Priority      $priority      = \DoEveryApp\Definition\Priority::NORMAL;
+    protected \DoEveryApp\Definition\Priority      $priority         = \DoEveryApp\Definition\Priority::NORMAL;
 
-    protected bool                                 $notify        = true;
+    protected bool                                 $notify           = true;
 
-    protected bool                                 $active        = true;
+    protected bool                                 $active           = true;
 
-    protected ?\DoEveryApp\Entity\Worker           $assignee      = null;
+    protected bool                                 $elapsingCronType = true;
 
-    protected ?\DoEveryApp\Entity\Worker           $workingOn     = null;
+    protected ?\DoEveryApp\Entity\Worker           $assignee         = null;
 
-    protected ?string                              $note          = null;
+    protected ?\DoEveryApp\Entity\Worker           $workingOn        = null;
+
+    protected ?string                              $note             = null;
 
 
     public function getGroup(): ?\DoEveryApp\Entity\Group
@@ -162,6 +164,20 @@ class Bag
     public function setNote(?string $note): static
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+
+    public function isElapsingCronType(): bool
+    {
+        return $this->elapsingCronType;
+    }
+
+
+    public function setElapsingCronType(bool $elapsingCronType): static
+    {
+        $this->elapsingCronType = $elapsingCronType;
 
         return $this;
     }

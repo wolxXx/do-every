@@ -32,6 +32,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                     'intervalValue' => $task->getIntervalValue(),
                     'priority' => $task->getPriority(),
                     'enableNotifications' => $task->isNotify()? '1' : '0',
+                    'elapsingCronType' => $task->isElapsingCronType()? '1' : '0',
                     'note' => $task->getNote(),
                 ],
             ]);
@@ -48,6 +49,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                     ->setIntervalValue($data['intervalValue'])
                     ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority'])->value)
                     ->setNotify('1' === $data['enableNotifications'])
+                    ->setElapsingCronType('1' === $data['elapsingCronType'])
                 ->setNote($data['note'])
             ;
             $task::getRepository()->update($task);
@@ -117,8 +119,14 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             ->attach(new \Laminas\Filter\StringTrim())
             ->filter($this->getFromBody('enableNotifications'))
         ;
+        $data['elapsingCronType'] = (new \Laminas\Filter\FilterChain())
+            ->attach(new \Laminas\Filter\StringTrim())
+            ->filter($this->getFromBody('elapsingCronType'))
+        ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
+                                                                                  'elapsingCronType'                => [
+                                                                                  ],
                                                                                   'note'                => [
                                                                                   ],
                                                                                   'name'                => [
