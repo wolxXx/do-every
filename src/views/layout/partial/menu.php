@@ -68,9 +68,10 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
             ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setName('Worker')
         ?>
-        <li>
-            [kalender]
-        </li>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Cms\DebugAction::getRoute())
+            ->setName('debug')
+        ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
             ->setName('ausloggen')

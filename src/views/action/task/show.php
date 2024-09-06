@@ -76,7 +76,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         <?= $task->isNotify() ? 'wird benachrichtigt' : 'wird nicht benachrichtigt' ?><br />
 
 
-        Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?> |
+        Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?> (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)  |
         Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
         es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |

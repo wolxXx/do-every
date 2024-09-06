@@ -155,6 +155,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+                    (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
                 </td>
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">

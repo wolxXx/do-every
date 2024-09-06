@@ -6,13 +6,27 @@ namespace DoEveryApp\Util\View;
 
 class IntervalHelper
 {
+
+    public static function getElapsingTypeByTask(\DoEveryApp\Entity\Task $task): string
+    {
+        return static::getElapsingTypeByBoolean($task->isElapsingCronType());
+    }
+
+    public static function getElapsingTypeByBoolean(bool $elapsing): string
+    {
+        if (true === $elapsing) {
+            return 'relativ';
+        }
+        return 'hart zyklisch';
+    }
+
     public static function get(\DoEveryApp\Entity\Task $task): string
     {
         if (null === $task->getIntervalType()) {
             return '-';
         }
         $intervalValue = $task->getIntervalValue();
-        $isPlural      = $intervalValue !== 1;
+        $isPlural = $intervalValue !== 1;
         switch ($task->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {

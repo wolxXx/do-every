@@ -17,6 +17,6 @@ declare(strict_types=1);
  */
 ?>
 <h1>
-    Aufgabe "<?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>" bearbeiten
+    Aufgabe "<a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>"><?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?></a>" bearbeiten
 </h1>
 <?= $this->fetchTemplate('action/task/partial/addEdit.php', ['data' => $data]) ?>

@@ -134,14 +134,14 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 <div class="column">
                     <div>
                         <label for="elapsingCronType">
-                            elapsingCronType?
+                            Intervall-Modus
                         </label>
                         <select name="elapsingCronType" id="elapsingCronType">
                             <option <?= false === array_key_exists('elapsingCronType', $data) || $data['elapsingCronType'] == '1' ? 'selected'  : '' ?>  value="1">
-                                ja
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(true) ?>
                             </option>
                             <option <?= array_key_exists('elapsingCronType', $data) && $data['elapsingCronType'] == '0' ? 'selected'  : '' ?>  value="0">
-                                nein
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(false) ?>
                             </option>
                         </select>
                         <div class="errors">
