@@ -47,9 +47,8 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </div>
                 <? endif ?>
                 <div class="column">
-
                     <div>
-                        <label for="name">
+                        <label for="name" class="required">
                             Name
                         </label>
                         <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
@@ -127,6 +126,26 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                         <input id="intervalValue" type="number" name="intervalValue" value="<?= array_key_exists('intervalValue', $data) ? $data['intervalValue'] : '' ?>"/>
                         <div class="errors">
                             <? foreach ($errorStore->getErrors('intervalValue') as $error): ?>
+                                <?= $error ?><br/>
+                            <? endforeach ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div>
+                        <label for="elapsingCronType">
+                            elapsingCronType?
+                        </label>
+                        <select name="elapsingCronType" id="elapsingCronType">
+                            <option <?= false === array_key_exists('elapsingCronType', $data) || $data['elapsingCronType'] == '1' ? 'selected'  : '' ?>  value="1">
+                                ja
+                            </option>
+                            <option <?= array_key_exists('elapsingCronType', $data) && $data['elapsingCronType'] == '0' ? 'selected'  : '' ?>  value="0">
+                                nein
+                            </option>
+                        </select>
+                        <div class="errors">
+                            <? foreach ($errorStore->getErrors('elapsingCronType') as $error): ?>
                                 <?= $error ?><br/>
                             <? endforeach ?>
                         </div>

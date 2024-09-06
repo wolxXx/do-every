@@ -44,23 +44,26 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
-    </div>
+        <div class="column">
 
-
-
-
-
-    <div>
-        <label for="password">
-            Passwort
-        </label>
-        <input id="password" type="password" name="password" value="<?= array_key_exists('password', $data) ? $data['password'] : '' ?>"/>
-        <div class="errors">
-            <? foreach ($errorStore->getErrors('password') as $error): ?>
-                <?= $error ?><br/>
-            <? endforeach ?>
+            <div>
+                <label for="password">
+                    Passwort
+                </label>
+                <input id="password" type="password" name="password" value="<?= array_key_exists('password', $data) ? $data['password'] : '' ?>"/>
+                <div class="errors">
+                    <? foreach ($errorStore->getErrors('password') as $error): ?>
+                        <?= $error ?><br/>
+                    <? endforeach ?>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
+
 
 
     <div class="row">
