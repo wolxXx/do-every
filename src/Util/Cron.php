@@ -8,6 +8,9 @@ class Cron
 {
     public function __construct()
     {
+        if (true === Registry::getInstance()->isCronRunning()) {
+            return;
+        }
         $now      = \Carbon\Carbon::now();
         $lastCron = \DoEveryApp\Util\Registry::getInstance()
                                              ->getLastCron()
@@ -19,6 +22,10 @@ class Cron
                 return;
             }
         }
+        Registry::getInstance()
+                ->setCronRunning(true)
+                ->setCronStarted(\Carbon\Carbon::now())
+        ;
 
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getLogger()
@@ -31,8 +38,17 @@ class Cron
         echo "foo";
 
         \DoEveryApp\Util\Debugger::debug('asdf');
+
+        \Amp\async(function () {
+            new \DoEveryApp\Util\Cron\Backup();
+        });
+
+        \Revolt\EventLoop::run();
+
+
         Registry::getInstance()
                 ->setLastCron(\Carbon\Carbon::now())
         ;
+        Registry::getInstance()->setCronRunning(false);
     }
 }
