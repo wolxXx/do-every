@@ -6,10 +6,10 @@ namespace DoEveryApp\Util\View;
 
 class Escaper
 {
-    public static function escape(?string $value = null): string
+    public static function escape(?string $value = null, ?string $nullRepresenting = ''): string
     {
         if (null === $value) {
-            return '';
+            return $nullRepresenting;
         }
 
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
