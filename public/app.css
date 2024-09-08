@@ -20,10 +20,8 @@ select {
 }
 
 textarea {
-    max-width: 400px;
-    max-height: 300px;
-    min-height: 100px;
-    height: auto;
+    height: 70px;
+    max-width: 200px;
 }
 
 label {
@@ -39,6 +37,10 @@ label.required:after {
 table {
     width: 100%;
     border: solid 1px #666;
+}
+
+tr:hover {
+    background: #333;
 }
 
 td, th {
@@ -66,12 +68,18 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
+.buttonRow {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .buttonRow > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
     margin-right: -4px !important;
     margin-left: -4px !important;
 }
 
-.primaryButton, .dangerButton, .warningButton, .btn-close {
+.primaryButton, .dangerButton, .warningButton, .btn-close, .rowAdder {
     display: inline-block;
     padding: 5px;
     margin: 5px;
@@ -82,7 +90,7 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-.primaryButton, .btn-close {
+.primaryButton, .btn-close, .rowAdder {
     border: solid 3px #fff;
     background: #999999;
 }
