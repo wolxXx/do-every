@@ -52,7 +52,7 @@ services:
       - ./:/var/www
       - ./docker-volumes/logs/xdebug:/tmp/xdebug/
     ports:
-      - "__WEB_PORT__:80"
+      - "127.0.0.1:__WEB_PORT__:80"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
