@@ -28,13 +28,13 @@ class CheckListItem
 
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
-        targetEntity: \DoEveryApp\Entity\Task::class
+        targetEntity: \DoEveryApp\Entity\Execution::class
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         nullable: false,
         onDelete: 'CASCADE'
     )]
-    protected \DoEveryApp\Entity\Task $task;
+    protected \DoEveryApp\Entity\Execution $execution;
 
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
@@ -54,7 +54,7 @@ class CheckListItem
             "default" => 0,
         ],
     )]
-    protected int                                    $position = 0;
+    protected int                                    $position      = 0;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
@@ -89,15 +89,15 @@ class CheckListItem
     }
 
 
-    public function getTask(): \DoEveryApp\Entity\Task
+    public function getExecution(): \DoEveryApp\Entity\Execution
     {
-        return $this->task;
+        return $this->execution;
     }
 
 
-    public function setTask(\DoEveryApp\Entity\Task $task): static
+    public function setExecution(\DoEveryApp\Entity\Execution $execution): static
     {
-        $this->task = $task;
+        $this->execution = $execution;
 
         return $this;
     }
