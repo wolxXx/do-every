@@ -12,53 +12,44 @@ class Due
         if ($due === 0 || $due === null) {
             return 'jetzt fällig';
         }
-        if ($due > 0) {
-            switch ($task->getIntervalType()) {
-                case \DoEveryApp\Definition\IntervalType::MINUTE->value:
-                {
-                    $unit = 1 === $due ? 'Minute' : 'Minuten';
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::HOUR->value:
-                {
-                    $unit = 1 === $due ? 'Stunde' : 'Stunden';
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::DAY->value:
-                case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                case \DoEveryApp\Definition\IntervalType::YEAR->value:
-                {
-                    $unit = 1 === $due ? 'Tag' : 'Tagen';
-                    break;
-                }
-            }
+        $numberFormatter = \NumberFormatter::create('de_DE', \NumberFormatter::PATTERN_DECIMAL);
 
-            return 'fällig in ' . $due . ' ' . $unit;
+        $seitIn = 'in';
+        if ($due < 0) {
+            $seitIn = 'seit';
+            $due    = abs($due);
         }
-        if ($due < 1) {
-            $due = abs($due);
-            switch ($task->getIntervalType()) {
-                case \DoEveryApp\Definition\IntervalType::MINUTE->value:
-                {
-                    $unit = 1 === $due ? 'Minute' : 'Minuten';
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::HOUR->value:
-                {
-                    $unit = 1 === $due ? 'Stunde' : 'Stunden';
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::DAY->value:
-                case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                case \DoEveryApp\Definition\IntervalType::YEAR->value:
-                {
-                    $unit = 1 === $due ? 'Tag' : 'Tagen';
-                    break;
-                }
-            }
+        $due = $numberFormatter->format(\round($due, \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue()));
 
-            return 'fällig seit  ' . $due . ' ' . $unit;
+        switch ($task->getDueUnit()) {
+            case \DoEveryApp\Definition\IntervalType::MINUTE->value:
+            {
+                $unit = '1' === $due ? 'Minute' : 'Minuten';
+                break;
+            }
+            case \DoEveryApp\Definition\IntervalType::HOUR->value:
+            {
+                $unit = '1' === $due ? 'Stunde' : 'Stunden';
+                break;
+            }
+            case \DoEveryApp\Definition\IntervalType::DAY->value:
+            {
+                $unit = '1' === $due ? 'Tag' : 'Tagen';
+                break;
+            }
+            case \DoEveryApp\Definition\IntervalType::MONTH->value:
+            {
+                $unit = '1' === $due ? 'Monat' : 'Monaten';
+                break;
+            }
+            case \DoEveryApp\Definition\IntervalType::YEAR->value:
+            {
+                $unit = '1' === $due ? 'Jahr' : 'Jahren';
+                break;
+            }
         }
+
+        return 'fällig ' . $seitIn . ' ' . $due . ' ' . $unit;
     }
 
 }
