@@ -1,6 +1,7 @@
 /.idea
 /.env
 /app.log
+/docker-compose.yml
 /doctrineConfiguration.php
 /mailConfiguration.php
 /stan.log

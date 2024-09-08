@@ -2,7 +2,7 @@ version: '3.5'
 
 volumes:
   vol-database-mariadb:
-    name: "do-every-${INSTANCE}-php83-db-mariadb-volume"
+    name: "do-every-__INSTANCE__-php83-db-mariadb-volume"
 
 services:
   mysql:
@@ -11,9 +11,9 @@ services:
     security_opt:
       - "seccomp=unconfined"
     restart: always
-    container_name: "do-every-${INSTANCE}-php83-db"
+    container_name: "do-every-__INSTANCE__-php83-db"
     ports:
-      - "127.0.0.1:${DB_PORT}:3306"
+      - "127.0.0.1:__DB_PORT__:3306"
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_USER: root
@@ -37,7 +37,7 @@ services:
   web:
     build: ./
     restart: always
-    container_name: "do-every-${INSTANCE}-php83-web"
+    container_name: "do-every-__INSTANCE__-php83-web"
     depends_on:
       mysql:
         condition: service_healthy
@@ -52,28 +52,28 @@ services:
       - ./:/var/www
       - ./docker-volumes/logs/xdebug:/tmp/xdebug/
     ports:
-      - "${WEB_PORT}:80"
+      - "__WEB_PORT__:80"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
       - do-every-network
     labels:
       ofelia.enabled: "true"
-      "ofelia.job-exec.${INSTANCE}_datecron.schedule": "@every 30s"
-      "ofelia.job-exec.${INSTANCE}_datecron.command": "php /var/www/scripts/cron.php"
+      "ofelia.job-exec.__INSTANCE___datecron.schedule": "@every 10s"
+      "ofelia.job-exec.__INSTANCE___datecron.command": "php /var/www/scripts/cron.php"
 
   ofelia:
     image: mcuadros/ofelia:latest
-    container_name: "do-every-${INSTANCE}-php83-ofelia"
+    container_name: "do-every-__INSTANCE__-php83-ofelia"
     depends_on:
       - web
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      "ofelia.job-local.${INSTANCE}_my-test-job.schedule": "@every 300s"
-      "ofelia.job-local.${INSTANCE}_my-test-job.command": "date"
+      "ofelia.job-local.__INSTANCE___my-test-job.schedule": "@every 10s"
+      "ofelia.job-local.__INSTANCE___my-test-job.command": "date"
 
 networks:
   do-every-network:
-    name: "do-every-${INSTANCE}-php83-network"
+    name: "do-every-__INSTANCE__-php83-network"
