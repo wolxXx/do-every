@@ -8,7 +8,9 @@ class Cron
 {
     public function __construct()
     {
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug('start cron object');
         if (true === Registry::getInstance()->isCronRunning()) {
+            DependencyContainer::getInstance()->getLogger()->debug('Cron is already running.');
             return;
         }
         $now      = \Carbon\Carbon::now();
@@ -17,8 +19,9 @@ class Cron
         ;
         if (null !== $lastCron) {
             $lastCron = \Carbon\Carbon::create($lastCron);
-            $lastCron->addMinutes(10);
-            if ($lastCron->lt($now)) {
+            $lastCron->addMinutes(5);
+            if ($lastCron->gt($now)) {
+                DependencyContainer::getInstance()->getLogger()->debug('Cron has no due...');
                 return;
             }
         }
@@ -41,6 +44,9 @@ class Cron
 
         \Amp\async(function () {
             new \DoEveryApp\Util\Cron\Backup();
+        });
+        \Amp\async(function () {
+            new \DoEveryApp\Util\Cron\BackupRotation();
         });
 
         \Revolt\EventLoop::run();
