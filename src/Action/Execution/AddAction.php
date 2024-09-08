@@ -23,12 +23,25 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         }
 
         if (true === $this->isGetRequest()) {
+            $checkListItemData = [];
+            foreach ($task->getCheckListItems() as $checkListItem) {
+                $checkListItemData[] = [
+                    'id'            => null,
+                    'reference'     => $checkListItem->getId(),
+                    'referenceNote' => $checkListItem->getNote(),
+                    'name'          => $checkListItem->getName(),
+                    'note'          => null,
+                    'checked'       => false,
+                ];
+            }
+
             return $this->render(
                 'action/execution/add',
                 [
                     'data' => [
-                        'date'   => (new \DateTime())->format('Y-m-d H:i:s'),
-                        'worker' => \DoEveryApp\Util\User\Current::get()->getId(),
+                        'date'           => (new \DateTime())->format('Y-m-d H:i:s'),
+                        'worker'         => \DoEveryApp\Util\User\Current::get()->getId(),
+                        'checkListItems' => $checkListItemData,
                     ],
                     'task' => $task,
                 ]
@@ -40,7 +53,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $data = $this->getRequest()->getParsedBody();
             $data = $this->filterAndValidate($data);
 
-            \DoEveryApp\Service\Task\Execution\Creator::execute(
+
+            $execution = \DoEveryApp\Service\Task\Execution\Creator::execute(
                 (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
                     ->setTask($task)
                     ->setDuration($data['duration'])
@@ -48,6 +62,18 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     ->setNote($data['note'])
                     ->setWorker($data['worker'] ? \DoEveryApp\Entity\Worker::getRepository()->find($data['worker']) : null)
             );
+            foreach ($data['checkListItems'] ?? [] as $item) {
+                $checkListItemReference = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find($item['reference']);
+                $checkListItem          = (new \DoEveryApp\Entity\Execution\CheckListItem())
+                    ->setExecution($execution)
+                    ->setChecked('1' === $item['checked'])
+                    ->setNote($item['note'])
+                    ->setCheckListItem($checkListItemReference)
+                    ->setName($checkListItemReference->getName())
+                    ->setPosition($checkListItemReference->getPosition())
+                ;
+                $checkListItem::getRepository()->create($checkListItem);
+            }
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
@@ -74,6 +100,29 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
+        $constraints = [
+            'duration' => [
+            ],
+            'note'     => [
+            ],
+            'date'     => [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ],
+            'worker'   => [
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                    if (null === $value) {
+                        return;
+                    }
+                    $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
+                    if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
+                        throw new \InvalidArgumentException('worker not found');
+                    }
+                }),
+            ],
+
+        ];
+
+
         $data['duration'] = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
@@ -95,30 +144,47 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             ->filter($this->getFromBody('worker'))
         ;
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  'duration' => [
-                                                                                  ],
-                                                                                  'note'     => [
-                                                                                  ],
-                                                                                  'date'     => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                                  'worker'   => [
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                          $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
-                                                                                          if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
-                                                                                              throw new \InvalidArgumentException('worker not found');
-                                                                                          }
-                                                                                      }),
-                                                                                  ],
+        foreach ($data['checkListItems'] ?? [] as $index => $item) {
+            $data['checkListItems'][$index]['id']                   = (new \Laminas\Filter\FilterChain())
+                ->attach(new \Laminas\Filter\StringTrim())
+                ->attach(new \Laminas\Filter\ToNull())
+                ->filter($item['id'])
+            ;
+            $data['checkListItems_' . $index . '_id']               = $data['checkListItems'][$index]['id'];
+            $constraints['checkListItems']                          = [];
+            $constraints['checkListItems_' . $index . '_id']        = [
 
-                                                                              ]);
+            ];
+            $data['checkListItems'][$index]['checked']              = (new \Laminas\Filter\FilterChain())
+                ->attach(new \Laminas\Filter\StringTrim())
+                ->attach(new \Laminas\Filter\ToNull())
+                ->filter($item['checked'])
+            ;
+            $data['checkListItems_' . $index . '_checked']          = $data['checkListItems'][$index]['checked'];
+            $constraints['checkListItems_' . $index . '_checked']   = [
 
+            ];
+            $data['checkListItems'][$index]['note']                 = (new \Laminas\Filter\FilterChain())
+                ->attach(new \Laminas\Filter\StringTrim())
+                ->attach(new \Laminas\Filter\ToNull())
+                ->filter($item['note'])
+            ;
+            $data['checkListItems_' . $index . '_note']             = $data['checkListItems'][$index]['note'];
+            $constraints['checkListItems_' . $index . '_note']      = [
 
-        $this->validate($data, $validators);
+            ];
+            $data['checkListItems'][$index]['reference']            = (new \Laminas\Filter\FilterChain())
+                ->attach(new \Laminas\Filter\StringTrim())
+                ->attach(new \Laminas\Filter\ToNull())
+                ->filter($item['reference'])
+            ;
+            $data['checkListItems_' . $index . '_reference']        = $data['checkListItems'][$index]['reference'];
+            $constraints['checkListItems_' . $index . '_reference'] = [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ];
+        }
+
+        $this->validate($data, new \Symfony\Component\Validator\Constraints\Collection($constraints));
 
         return $data;
     }
