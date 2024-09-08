@@ -14,17 +14,18 @@ class Repository extends \Doctrine\ORM\EntityRepository
         $tasks = $this->findAll();
         $tasks = \array_filter($tasks, function (\DoEveryApp\Entity\Task $task) {
             $lastExecution = $this->getLastExecution($task);
-            if(null === $lastExecution) {
+            if (null === $lastExecution) {
                 return true;
             }
             $dueValue = $task->getDueValue();
-            if(null === $dueValue) {
+            if (null === $dueValue) {
                 return true;
             }
-            if($dueValue < 1) {
+            if ($dueValue < 1) {
                 return true;
             }
         });
+
         return $tasks;
     }
 
@@ -42,6 +43,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
+
     public function getWorkingOn(): array
     {
         return $this
@@ -49,8 +51,9 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->andWhere('t.workingOn IS NOT NULL')
             ->getQuery()
             ->execute()
-            ;
+        ;
     }
+
 
     public function getLastExecution(\DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Execution
     {
