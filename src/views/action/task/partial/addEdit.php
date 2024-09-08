@@ -62,28 +62,84 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             </div>
 
 
+            <div class="row">
+                <div class="column">
 
 
-            <div>
-                <label for="assignee">
-                    zugewiesen an
-                </label>
-                <select name="assignee" id="assignee">
-                    <option <?= false === array_key_exists('assignee', $data) || null === $data['assignee'] ? 'selected'  : '' ?>  value="">
-                        - niemand -
-                    </option>
-                    <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
-                        <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
-                            <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
-                        </option>
-                    <? endforeach ?>
-                </select>
-                <div class="errors">
-                    <? foreach ($errorStore->getErrors('assignee') as $error): ?>
-                        <?= $error ?><br/>
-                    <? endforeach ?>
+                    <div>
+                        <label for="assignee">
+                            zugewiesen an
+                        </label>
+                        <select name="assignee" id="assignee">
+                            <option <?= false === array_key_exists('assignee', $data) || null === $data['assignee'] ? 'selected'  : '' ?>  value="">
+                                - niemand -
+                            </option>
+                            <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+                                <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
+                                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                                </option>
+                            <? endforeach ?>
+                        </select>
+                        <div class="errors">
+                            <? foreach ($errorStore->getErrors('assignee') as $error): ?>
+                                <?= $error ?><br/>
+                            <? endforeach ?>
+                        </div>
+                    </div>
                 </div>
+                <div class="column">
+
+                    <div>
+                        <label for="enableNotifications">
+                            benachrichtigen?
+                        </label>
+                        <select name="enableNotifications" id="enableNotifications">
+                            <option <?= array_key_exists('enableNotifications', $data) && $data['enableNotifications'] == '1' ? 'selected'  : '' ?>  value="1">
+                                ja
+                            </option>
+                            <option <?=  false === array_key_exists('enableNotifications', $data) || $data['enableNotifications'] == '0' ? 'selected'  : '' ?>  value="0">
+                                nein
+                            </option>
+                        </select>
+                        <div class="errors">
+                            <? foreach ($errorStore->getErrors('priority') as $error): ?>
+                                <?= $error ?><br/>
+                            <? endforeach ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+
+                    <div>
+                        <label for="priority">
+                            Priorität
+                        </label>
+                        <select name="priority" id="priority">
+                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::LOW->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::LOW->value ?>">
+                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::LOW) ?>
+                            </option>
+                            <option <?= false === array_key_exists('priority', $data) || $data['priority'] == \DoEveryApp\Definition\Priority::NORMAL->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::NORMAL->value ?>">
+                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::NORMAL) ?>
+                            </option>
+                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::HIGH->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::HIGH->value ?>">
+                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::HIGH) ?>
+                            </option>
+                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::URGENT->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::URGENT->value ?>">
+                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::URGENT) ?>
+                            </option>
+                        </select>
+                        <div class="errors">
+                            <? foreach ($errorStore->getErrors('priority') as $error): ?>
+                                <?= $error ?><br/>
+                            <? endforeach ?>
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div>
+
 
             <div class="row">
                 <div class="column">
@@ -152,51 +208,6 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </div>
                 </div>
             </div>
-
-            <div>
-                <label for="priority">
-                    Priorität
-                </label>
-                <select name="priority" id="priority">
-                    <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::LOW->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::LOW->value ?>">
-                        <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::LOW) ?>
-                    </option>
-                    <option <?= false === array_key_exists('priority', $data) || $data['priority'] == \DoEveryApp\Definition\Priority::NORMAL->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::NORMAL->value ?>">
-                        <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::NORMAL) ?>
-                    </option>
-                    <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::HIGH->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::HIGH->value ?>">
-                        <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::HIGH) ?>
-                    </option>
-                    <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::URGENT->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::URGENT->value ?>">
-                        <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::URGENT) ?>
-                    </option>
-                </select>
-                <div class="errors">
-                    <? foreach ($errorStore->getErrors('priority') as $error): ?>
-                        <?= $error ?><br/>
-                    <? endforeach ?>
-                </div>
-            </div>
-
-
-            <div>
-                <label for="enableNotifications">
-                    benachrichtigen?
-                </label>
-                <select name="enableNotifications" id="enableNotifications">
-                    <option <?= array_key_exists('enableNotifications', $data) && $data['enableNotifications'] == '1' ? 'selected'  : '' ?>  value="1">
-                        ja
-                    </option>
-                    <option <?=  false === array_key_exists('enableNotifications', $data) || $data['enableNotifications'] == '0' ? 'selected'  : '' ?>  value="0">
-                        nein
-                    </option>
-                </select>
-                <div class="errors">
-                    <? foreach ($errorStore->getErrors('priority') as $error): ?>
-                        <?= $error ?><br/>
-                    <? endforeach ?>
-                </div>
-            </div>
         </div>
         <div class="column">
 
@@ -214,11 +225,76 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
         </div>
     </div>
 
+    <div>
+        <h3>
+            Steps
+        </h3>
+        <div>
+            Welche Steps sollen ausgeführt werden?
+        </div>
+        <i class="rowAdder">
+            <?= $this->fetchTemplate('icon/add.php') ?>
+            hinzufügen
+        </i>
+        <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+            <? foreach ($data['checkListItem']??[] as $index => $item): ?>
+                <div class="row" draggable="true">
+                    <div class="column">
+                        <span class="dangerButton rowRemover">
+                        <i class="fa fa-minus"></i>
+                    </span>
+                    </div>
+                    <div class="column">
+                        <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
+                        <label for="<?= $id ?>">
+                            Step
+                        </label>
+                        <input type="hidden" readonly name="checkListItem[<?= $index ?>][id]" value="<?= $item['id'] ?? '' ?>" />
+                        <input type="hidden" readonly name="checkListItem[<?= $index ?>][position]" value="<?= $item['position'] ?? '' ?>" />
+                        <input id="<?= $id ?>" type="text" name="checkListItem[<?= $index ?>][name]" value="<?= $item['name'] ?>" />
+                    </div>
+                    <div class="column">
+                        <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
+                        <label for="<?= $id ?>">
+                            Hinweis
+                        </label>
+                        <textarea id="<?= $id ?>" rows="1000" cols="1000" name="checkListItem[<?= $index ?>][note]"><?= $item['note'] ?? '' ?></textarea>
+                    </div>
+                </div>
+            <? endforeach ?>
+        </div>
+        <template>
+            <div class="row" draggable="true">
+                <div class="column">
+                    <span class="dangerButton rowRemover">
+                        <i class="fa fa-minus"></i>
+                    </span>
+                </div>
+                <div class="column">
+                    <label for="newRow__INDEX__Name">
+                        Step
+                    </label>
+                    <input type="hidden" readonly name="checkListItem[__INDEX__][id]" />
+                    <input type="hidden" readonly name="checkListItem[__INDEX__][position]" />
+                    <input id="newRow__INDEX__Name" type="text" name="checkListItem[__INDEX__][name]" />
+                </div>
+                <div class="column">
+                    <label for="newRow__INDEX__Note">
+                        Hinweis
+                    </label>
+                    <textarea id="newRow__INDEX__Note" rows="1000" cols="1000" name="checkListItem[__INDEX__][note]"></textarea>
+                </div>
+            </div>
+
+
+
+        </template>
+    </div>
+
 
 
     <div class="app-card-footer">
-        <input class="primaryButton" type="submit" value="los">
+        <input class="primaryButton" type="submit" value="speichern">
     </div>
 
 </form>
-

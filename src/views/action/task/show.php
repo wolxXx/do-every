@@ -76,7 +76,12 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         <?= $task->isNotify() ? 'wird benachrichtigt' : 'wird nicht benachrichtigt' ?><br />
 
 
-        Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?> (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)  |
+        Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+        <? if(null !== $task->getIntervalType()): ?>
+            (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
+        <? endif ?>
+        |
+
         Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
         es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
@@ -97,7 +102,44 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     </div>
 </div>
 
-<?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+<div class="row">
+    <div class="column">
+        <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+    </div>
+    <? if(0 !== sizeof($task->getCheckListItems())): ?>
+        <div class="column">
+            <h3>
+                Aufgabenliste
+            </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Step
+                        </th>
+                        <th>
+                            Hinweis
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <? foreach($task->getCheckListItems() as $checkListItem): ?>
+                        <tr>
+                            <td>
+                                <?= \DoEveryApp\Util\View\Escaper::escape($checkListItem->getName()) ?>
+                            </td>
+                            <td>
+                                <?= \DoEveryApp\Util\View\CheckListItemNote::byTaskCheckListItem($checkListItem) ?>
+                            </td>
+                        </tr>
+                    <? endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    <? endif ?>
+</div>
+
+
 
 <hr />
 
@@ -115,6 +157,11 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                     <th>
                         Dauer
                     </th>
+                    <? if(0 !== sizeof($task->getCheckListItems())): ?>
+                        <th>
+                            Steps
+                        </th>
+                    <? endif ?>
                     <th>
                         Notiz
                     </th>
@@ -135,16 +182,35 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                         <td>
                             <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
                         </td>
+                        <? if(0 !== sizeof($task->getCheckListItems())): ?>
+                            <td>
+
+                                <? foreach($execution->getCheckListItems() as $checkListItem): ?>
+
+                                    <div class="row">
+                                        <div class="column">
+                                            <?= \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem($checkListItem) ?>
+                                        </div>
+                                        <div class="column">
+                                            <?= \DoEveryApp\Util\View\ExecutionNote::byValue($checkListItem->getNote()) ?>
+                                        </div>
+                                    </div>
+                                <? endforeach ?>
+                            </td>
+                        <? endif ?>
+
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                         </td>
                         <td>
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
-                                bearbeiten
-                            </a>
-                            <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">
-                                löschen
-                            </a>
+                            <div class="buttonRow">
+                                <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
+                                    bearbeiten
+                                </a>
+                                <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">
+                                    löschen
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <? endforeach ?>
