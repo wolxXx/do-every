@@ -24,7 +24,9 @@ class Task
 
     public const string TABLE_NAME = 'task';
 
-    protected ?int $dueCache;
+    protected int|float|null    $dueCacheValue;
+
+    protected string|float|null $dueCacheUnit     = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Group::class,
@@ -33,7 +35,7 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Group $group = null;
+    protected ?Group            $group            = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class,
@@ -42,7 +44,7 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Worker $workingOn = null;
+    protected ?Worker           $workingOn        = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class
@@ -51,28 +53,36 @@ class Task
         nullable: true,
         onDelete: 'SET NULL'
     )]
-    protected ?Worker $assignee = null;
+    protected ?Worker           $assignee         = null;
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Task\CheckListItem::class,
+        mappedBy    : 'task',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
+
+    protected                   $checkListItems;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    protected string $name;
+    protected string            $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_type',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string $intervalType = null;
+    protected ?string           $intervalType     = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'interval_value',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    protected ?int $intervalValue = null;
+    protected ?int              $intervalValue    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_elapsing_cron_type',
@@ -82,14 +92,14 @@ class Task
             "default" => 1,
         ],
     )]
-    protected bool $elapsingCronType = true;
+    protected bool              $elapsingCronType = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
     )]
-    protected int $priority = 100;
+    protected int               $priority         = 100;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -111,14 +121,20 @@ class Task
             "default" => 1,
         ],
     )]
-    protected bool $active = true;
+    protected bool    $active = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
         type    : \Doctrine\DBAL\Types\Types::TEXT,
         nullable: true
     )]
-    protected ?string $note = null;
+    protected ?string $note   = null;
+
+
+    public function __construct()
+    {
+        $this->checkListItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     public static function getRepository(): Task\Repository
@@ -127,142 +143,133 @@ class Task
     }
 
 
-    public function getDueValue(): ?int
+    public function getDueUnit(): ?string
     {
-        if (true === isset($this->dueCache)) {
-            return $this->dueCache;
+        return $this->dueCacheUnit;
+    }
+
+
+    public function getDueValue(): int|float|null
+    {
+        if (true === isset($this->dueCacheValue)) {
+            return $this->dueCacheValue;
         }
         $lastExecution = $this::getRepository()->getLastExecution($this);
         if (null === $lastExecution) {
-            $this->dueCache = null;
+            $this->dueCacheValue = null;
 
-            return $this->dueCache;
+            return $this->dueCacheValue;
         }
         if (null === $lastExecution->getDate()) {
-            $this->dueCache = null;
+            $this->dueCacheValue = null;
 
-            return $this->dueCache;
+            return $this->dueCacheValue;
         }
         if (null === $this->getIntervalType()) {
-            $this->dueCache = null;
+            $this->dueCacheValue = null;
 
-            return $this->dueCache;
+            return $this->dueCacheValue;
         }
         $due = \Carbon\Carbon::create($lastExecution->getDate());
         $now = \Carbon\Carbon::now();
         switch ($this->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {
-                $due
-                    ->second(0)
-                ;
-                $now
-                    ->second(0)
-                ;
-                $due->addMinutes($this->getIntervalValue());
-                $diff    = $now->diff($due);
-                $dueDays = ($diff->y * 365 * 30 * 24 * 60) + ($diff->m * 30 * 24 * 60) + ($diff->d * 24 * 60) +  ($diff->h * 60)  +  $diff->i + 1;
-                if ($due < $now) {
-                    $dueDays = $dueDays * -1;
-                }
-                $this->dueCache = $dueDays;
-
-                return $this->dueCache;
+                return $this->calculateDue($due->addMinutes($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::HOUR->value:
             {
-                $due
-                    ->minute(0)
-                    ->second(0)
-                ;
-                $now
-                    ->minute(0)
-                    ->second(0)
-                ;
-                $due->addHours($this->getIntervalValue());
-                $diff    = $now->diff($due);
-
-                $dueDays = ($diff->y * 365 * 30 * 24) + ($diff->m * 30 * 24) + ($diff->d * 24) +  $diff->h + 1;
-                if ($due < $now) {
-                    $dueDays = $dueDays * -1;
-                }
-                $this->dueCache = $dueDays;
-
-                return $this->dueCache;
+                return $this->calculateDue($due->addHours($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::DAY->value:
             {
-                $due
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(0)
-                ;
-                $now
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(0)
-                ;
-                $due->addDays($this->getIntervalValue());
-                $diff    = $now->diff($due);
-                $dueDays = $diff->d;
-                if ($due < $now) {
-                    $dueDays = $dueDays * -1;
-                }
-                $this->dueCache = $dueDays;
-
-                return $this->dueCache;
+                return $this->calculateDue($due->addDays($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::MONTH->value:
             {
-                $due
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(1)
-                    ->day(1)
-                ;
-                $now
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(0)
-                    ->day(1)
-                ;
-                $due->addMonths($this->getIntervalValue());
-               $diff    = $now->diff($due);
-                $dueDays = (($diff->m + ($diff->y * 12)) * 30) + $diff->d;
-                if ($due < $now) {
-                    $dueDays = $dueDays * -1;
-                }
-                $this->dueCache = $dueDays;
-
-                return $this->dueCache;
+                return $this->calculateDue($due->addMonths($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::YEAR->value:
             {
-                $due
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(1)
-                    ->day(1)
-                ;
-                $now
-                    ->second(0)
-                    ->minute(0)
-                    ->hour(0)
-                    ->day(1)
-                ;
-                $due->addYears($this->getIntervalValue());
-                $diff    = $now->diff($due);
-                $dueDays = (($diff->m + ($diff->y * 12)) * 30) + $diff->d;
-                if ($due < $now) {
-                    $dueDays = $dueDays * -1;
-                }
-                $this->dueCache = $dueDays;
-
-                return $this->dueCache;
+                return $this->calculateDue($due->addYears($this->getIntervalValue()));
             }
         }
 
         throw new \RuntimeException('WTF?');
+    }
+
+
+    protected function calculateDue(?\Carbon\Carbon $due): int|null|float
+    {
+        if (null === $due) {
+            return null;
+        }
+        $now  = \Carbon\Carbon::now();
+        $diff = $now->diff($due);
+        if (0 !== $diff->y) {
+            $dueDays = $diff->y + ($diff->m / 12);
+            if ($due < $now) {
+                $dueDays = $dueDays * -1;
+            }
+            $this->dueCacheValue = $dueDays;
+            $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::YEAR->value;
+
+            return $this->dueCacheValue;
+        }
+        if (0 !== $diff->m) {
+            $dueDays = $diff->m + ($diff->d / 30);
+            if ($due < $now) {
+                $dueDays = $dueDays * -1;
+            }
+            $this->dueCacheValue = $dueDays;
+            $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MONTH->value;
+
+            return $this->dueCacheValue;
+        }
+        if (0 !== $diff->d) {
+            $dueDays = $diff->d + ($diff->h / 24);
+            if ($due < $now) {
+                $dueDays = $dueDays * -1;
+            }
+            $this->dueCacheValue = $dueDays;
+            $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::DAY->value;
+
+            return $this->dueCacheValue;
+        }
+        if (0 !== $diff->h) {
+            $dueDays = $diff->h + ($diff->i / 60);
+            if ($due < $now) {
+                $dueDays = $dueDays * -1;
+            }
+            $this->dueCacheValue = $dueDays;
+            $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::HOUR->value;
+
+            return $this->dueCacheValue;
+        }
+        if (0 !== $diff->i) {
+            $dueDays = $diff->i + ($diff->s / 60);
+            if ($due < $now) {
+                $dueDays = $dueDays * -1;
+            }
+            $this->dueCacheValue = $dueDays;
+            $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MINUTE->value;
+
+            return $this->dueCacheValue;
+        }
+        $this->dueCacheValue = null;
+        $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MINUTE->value;
+
+
+        return $this->dueCacheValue;
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Task\CheckListItem[]
+     */
+    public function getCheckListItems(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    {
+        return $this->checkListItems;
     }
 
 
@@ -433,4 +440,5 @@ class Task
 
         return $this;
     }
+
 }
