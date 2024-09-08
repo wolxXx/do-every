@@ -1,14 +1,18 @@
-FROM ubuntu:24.04
+ARG ubuntuVersion="24.04"
+
+FROM ubuntu:$ubuntuVersion
+
+ARG nodeVersion="22"
+ARG phpVersion="8.3"
 
 RUN apt update && apt install tzdata -y
 ENV TZ="Europe/Berlin"
 
-RUN apt update && apt install -y software-properties-common htop btop curl wget git cron
+RUN apt update && apt install -y software-properties-common htop btop curl wget git cron wget curl git vim net-tools bash-completion inetutils-ping unzip
 
-ARG version=22
-RUN apt update -y && apt install curl unzip -y \
-&& curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir './fnm' \
-&& cp ./fnm/fnm /usr/bin && fnm install $version
+
+RUN curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir './fnm' \
+&& cp ./fnm/fnm /usr/bin && fnm install $nodeVersion
 
 RUN ln -s /root/.local/share/fnm/node-versions/*/installation/bin/* /usr/local/bin/.
 
@@ -18,13 +22,14 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/apache2
 RUN apt update
 RUN apt dist-upgrade -y
 
-
-RUN apt install -y php8.3 libapache2-mod-php8.3 php8.3-common php8.3-mysql php8.3-gmp php8.3-ldap php8.3-curl \
-    wget curl git vim net-tools bash-completion inetutils-ping \
+RUN apt install -y \
     apache2 apache2-dev apache2-utils apachetop mysql-client mycli \
-    php8.3-xml php8.3-cli php8.3-intl \
-    php8.3-mbstring php8.3-xmlrpc php8.3-gd php8.3-bcmath \
-    php8.3-zip  php8.3 php8.3-bcmath php8.3-cli php8.3-curl php8.3-dev php8.3-gd php8.3-imap php8.3-intl php8.3-mbstring php8.3-mysql php8.3-opcache php8.3-readline php8.3-soap php8.3-tidy php8.3-xml php8.3-xsl php8.3-zip php-xdebug php-imagick unzip
+    php$phpVersion libapache2-mod-php$phpVersion php$phpVersion-common php$phpVersion-mysql php$phpVersion-gmp php$phpVersion-ldap php$phpVersion-curl \
+    php$phpVersion-xml php$phpVersion-cli php$phpVersion-intl \
+    php$phpVersion-mbstring php$phpVersion-xmlrpc php$phpVersion-gd php$phpVersion-bcmath \
+    php$phpVersion-zip  php$phpVersion php$phpVersion-bcmath php$phpVersion-cli php$phpVersion-curl php$phpVersion-dev php$phpVersion-gd \
+    php$phpVersion-imap php$phpVersion-intl php$phpVersion-mbstring php$phpVersion-mysql php$phpVersion-opcache php$phpVersion-readline \
+    php$phpVersion-soap php$phpVersion-tidy php$phpVersion-xml php$phpVersion-xsl php$phpVersion-zip php$phpVersion-xdebug php-xdebug php-imagick
 
 RUN a2enmod headers
 RUN a2enmod rewrite
