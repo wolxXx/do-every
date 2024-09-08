@@ -36,6 +36,16 @@ class Execution
     protected Task $task;
 
 
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Execution\CheckListItem::class,
+        mappedBy    : 'execution',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
+
+    protected         $checkListItems;
+
+
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class
     )]
@@ -67,9 +77,23 @@ class Execution
     protected ?int       $duration = null;
 
 
+    public function __construct()
+    {
+        $this->checkListItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public static function getRepository(): Execution\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Execution\CheckListItem[]
+     */
+    public function getCheckListItems(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    {
+        return $this->checkListItems;
     }
 
 
