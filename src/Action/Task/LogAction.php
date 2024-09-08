@@ -6,8 +6,7 @@ namespace DoEveryApp\Action\Task;
     path        : '/log',
     methods     : [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
-    ],
-    authRequired: false
+    ]
 )]
 class LogAction extends \DoEveryApp\Action\AbstractAction
 {
