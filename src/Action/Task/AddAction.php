@@ -105,6 +105,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
+                                                                                  'checkListItem'    => [
+                                                                                  ],
                                                                                   'elapsingCronType'    => [
                                                                                   ],
                                                                                   'note'                => [
