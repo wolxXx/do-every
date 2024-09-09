@@ -8,10 +8,12 @@ class DisplayValue
 {
     public static function do(mixed $value): string
     {
-        if (\is_null($value)) {
-            return '-null-';
-        }
+
         switch (true) {
+            case \is_null($value):
+            {
+                return '-null-';
+            }
             case \is_bool($value):
             {
                 return Boolean::get($value);
