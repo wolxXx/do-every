@@ -59,7 +59,7 @@ services:
       - do-every-network
     labels:
       ofelia.enabled: "true"
-      "ofelia.job-exec.__INSTANCE___datecron.schedule": "@every 10s"
+      "ofelia.job-exec.__INSTANCE___datecron.schedule": "@every 30s"
       "ofelia.job-exec.__INSTANCE___datecron.command": "php /var/www/scripts/cron.php"
 
   ofelia:
@@ -71,7 +71,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      "ofelia.job-local.__INSTANCE___my-test-job.schedule": "@every 10s"
+      "ofelia.job-local.__INSTANCE___my-test-job.schedule": "@every 30s"
       "ofelia.job-local.__INSTANCE___my-test-job.command": "date"
 
 networks:
