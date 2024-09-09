@@ -69,6 +69,10 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
             ->setName('Worker')
         ?>
         <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Cms\ShowSettingsAction::getRoute())
+            ->setName('Einstellungen')
+        ?>
+        <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\DebugAction::getRoute())
             ->setName('debug')
         ?>
