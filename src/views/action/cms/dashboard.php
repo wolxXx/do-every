@@ -20,6 +20,7 @@ declare(strict_types=1);
  * @var $workingOn                 \DoEveryApp\Entity\Task[]
  */
 $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
+$tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 ?>
 
 <h1>
@@ -159,19 +160,21 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                         (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
                     <? endif ?>
                 </td>
-                <td>
-                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                        [S]
-                    </a>
-                    <a href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
-                        [T]
-                    </a>
-                    <a href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
-                        [E]
-                    </a>
-                    <a class="confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
-                        [X]
-                    </a>
+                <td class="pullRight">
+                    <nobr class="buttonRow">
+                        <a class="primaryButton" title="anzeigen" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                            <?= $this->fetchTemplate('icon/show.php') ?>
+                        </a>
+                        <a class="primaryButton" title="Ausführung eintragen" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
+                            <?= $this->fetchTemplate('icon/add.php') ?>
+                        </a>
+                        <a class="warningButton" title="bearbeiten" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+                            <?= $this->fetchTemplate('icon/edit.php') ?>
+                        </a>
+                        <a class="dangerButton confirm" title="löschen" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+                            <?= $this->fetchTemplate('icon/trash.php') ?>
+                        </a>
+                    </nobr>
                 </td>
             </tr>
         <? endforeach ?>

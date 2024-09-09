@@ -48,7 +48,7 @@ declare(strict_types=1);
             <th>
                 letzte Passwortänderung
             </th>
-            <th>
+            <th class="pullRight">
                 Aktionen
             </th>
         </tr>
@@ -93,15 +93,13 @@ declare(strict_types=1);
                 <td>
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastPasswordChange()) ?>
                 </td>
-                <td>
+                <td class="pullRight">
                     <nobr class="buttonRow">
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($worker->getId()) ?>">
                             Log
                         </a>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
                             bearbeiten
-
-
                         <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
                             löschen
                         </a>

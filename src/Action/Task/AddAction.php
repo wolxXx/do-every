@@ -11,6 +11,7 @@ namespace DoEveryApp\Action\Task;
 )]
 class AddAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Task\Share\AddEdit;
     use \DoEveryApp\Action\Share\SimpleRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
@@ -39,6 +40,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     ->setActive(true)
                     ->setNote($data['note'])
             );
+            $this->handleCheckListItems($newTask, $data);
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
@@ -48,134 +50,12 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($newTask->getId()));
         } catch (\Throwable $exception) {
-            #\var_dump($data);
+            \var_dump($data);
             #die('');
-            #throw $exception;
+            throw $exception;
         }
 
 
         return $this->render('action/task/add', ['data' => $data]);
-    }
-
-
-    protected function filterAndValidate(array &$data): array
-    {
-        $data['name']                = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('name'))
-        ;
-        $data['note']                = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('note'))
-        ;
-        $data['assignee']            = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('assignee'))
-        ;
-        $data['group']               = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('group'))
-        ;
-        $data['intervalType']        = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('intervalType'))
-        ;
-        $data['intervalValue']       = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('intervalValue'))
-        ;
-        $data['elapsingCronType']    = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->filter($this->getFromBody('elapsingCronType'))
-        ;
-        $data['priority']            = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('priority'))
-        ;
-        $data['enableNotifications'] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->filter($this->getFromBody('enableNotifications'))
-        ;
-
-        $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  'checkListItem'    => [
-                                                                                  ],
-                                                                                  'elapsingCronType'    => [
-                                                                                  ],
-                                                                                  'note'                => [
-                                                                                  ],
-                                                                                  'name'                => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                                  'assignee'            => [
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                          $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
-                                                                                          if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
-                                                                                              throw new \InvalidArgumentException('worker not found');
-                                                                                          }
-                                                                                      }),
-                                                                                  ],
-                                                                                  'group'               => [
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                          $group = \DoEveryApp\Entity\Group::getRepository()->find($value);
-                                                                                          if (false === $group instanceof \DoEveryApp\Entity\Group) {
-                                                                                              throw new \InvalidArgumentException('group not found');
-                                                                                          }
-                                                                                      }),
-                                                                                  ],
-                                                                                  'intervalType'        => [
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                          \DoEveryApp\Definition\IntervalType::from($value);
-                                                                                      }),
-                                                                                  ],
-                                                                                  'intervalValue'       => [
-                                                                                      new \Symfony\Component\Validator\Constraints\GreaterThan(0),
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                      }),
-                                                                                  ],
-                                                                                  'priority'            => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return;
-                                                                                          }
-                                                                                          \DoEveryApp\Definition\Priority::from($value);
-                                                                                      }),
-                                                                                  ],
-                                                                                  'enableNotifications' => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                      new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
-                                                                                          if (null === $value) {
-                                                                                              return $value;
-                                                                                          }
-
-                                                                                          return $value === '1' || $value === '0';
-                                                                                      }),
-                                                                                  ],
-                                                                              ]);
-
-
-        $this->validate($data, $validators);
-
-        return $data;
     }
 }

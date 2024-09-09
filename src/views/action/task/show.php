@@ -34,36 +34,44 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 <div>
     <? if(null === $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId(), $currentUser->getId()) ?>">
+            <?= $this->fetchTemplate('icon/hand.php') ?>
             ich arbeite daran
         </a>
     <? endif ?>
     <? if(null !== $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId()) ?>">
+            <?= $this->fetchTemplate('icon/cross.php') ?>
             niemand arbeitet daran
         </a>
     <? endif ?>
 
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
+        <?= $this->fetchTemplate('icon/add.php') ?>
         Ausführung eintragen
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+        <?= $this->fetchTemplate('icon/edit.php') ?>
         bearbeiten
     </a>
     <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
+        <?= $this->fetchTemplate('icon/refresh.php') ?>
         reset
     </a>
     <? if(true === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
+            <?= $this->fetchTemplate('icon/off.php') ?>
             deaktivieren
         </a>
     <? endif ?>
     <? if(false === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
+            <?= $this->fetchTemplate('icon/on.php') ?>
             aktivieren
         </a>
     <? endif ?>
 
     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+        <?= $this->fetchTemplate('icon/trash.php') ?>
         löschen
     </a>
 </div>
@@ -145,7 +153,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 
 <div>
     <? if(0 !== sizeof($executions)): ?>
-            <table>
+        <table>
             <thead>
                 <tr>
                     <th>
@@ -165,7 +173,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                     <th>
                         Notiz
                     </th>
-                    <th>
+                    <th class="pullRight">
                         Aktionen
                     </th>
                 </tr>
@@ -202,12 +210,14 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                         </td>
-                        <td>
+                        <td class="pullRight">
                             <div class="buttonRow">
                                 <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
+                                    <?= $this->fetchTemplate('icon/edit.php') ?>
                                     bearbeiten
                                 </a>
                                 <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">
+                                    <?= $this->fetchTemplate('icon/trash.php') ?>
                                     löschen
                                 </a>
                             </div>

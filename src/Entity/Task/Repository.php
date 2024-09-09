@@ -30,6 +30,9 @@ class Repository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
     public function findForIndex()
     {
         return $this

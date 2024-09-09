@@ -16,7 +16,7 @@ declare(strict_types=1);
     Debug
 </h1>
 
-<table>
+<table class="keyValue">
     <thead>
 
     </thead>
