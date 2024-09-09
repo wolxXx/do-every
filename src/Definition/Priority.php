@@ -8,11 +8,11 @@ namespace DoEveryApp\Definition;
 
 enum Priority: int
 {
-    case LOW    = 0;
+    case LOW    = 50;
 
     case NORMAL = 100;
 
-    case HIGH   = 200;
+    case HIGH   = 150;
 
-    case URGENT = 300;
+    case URGENT = 200;
 }
