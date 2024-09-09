@@ -9,7 +9,7 @@ a {
     color: #fff;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"],input[type="number"], textarea, select {
     color: #fff;
     background: #333;
     border: solid 1px #ccc;
@@ -49,6 +49,17 @@ td, th {
 }
 th {
     border-bottom: solid 3px #fff;
+}
+
+table.withActions tr td:last-child, td.pullRight {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.keyValue tr td:first-child {
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 10px;
 }
 
 h1, h2, h3 {
@@ -94,15 +105,30 @@ h1, h2, h3 {
     border: solid 3px #fff;
     background: #999999;
 }
+.primaryButton:hover {
+    color: #333;
+    background: #fff;
+    border: solid 3px #ccc;
+}
 
 .dangerButton{
     border: solid 3px #f00;
     background: #f66;
 }
+.dangerButton:hover {
+    color: #fff;
+    background: #f00;
+    border: solid 3px #833;
+}
 
 .warningButton{
     border: solid 3px #e8c92f;
     background: #a19126;
+}
+.warningButton:hover{
+    color: #000;
+    background: #ff0;
+    border: solid 3px #ae9809;
 }
 
 .row {
@@ -112,6 +138,10 @@ h1, h2, h3 {
 .column {
     flex: 1;
     justify-content: space-between;
+}
+
+.pullRight {
+    text-align: right;
 }
 
 #app {
@@ -158,7 +188,13 @@ h1, h2, h3 {
 #appTitle {
     margin-bottom: 10px;
     text-align: right;
-    font-size: 1.5em;
+    font-size: 2em;
+}
+#appTitle, h1 {
+    background: -webkit-linear-gradient(#eee, #333);
+    background-position-y: 10px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .taskContainer, .groupContainer {
