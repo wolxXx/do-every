@@ -6,25 +6,27 @@ namespace DoEveryApp\Util;
 
 final class Registry
 {
-    private const string KEY_ADMIN_USER     = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
+    private const string KEY_ADMIN_USER       = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
 
-    private const string KEY_CRON_LOCK      = '84c29c0a-cbd9-4bc6-8532-feb785f4c59d';
+    private const string KEY_CRON_LOCK        = '84c29c0a-cbd9-4bc6-8532-feb785f4c59d';
 
-    private const string KEY_CRON_STARTED   = '05226812-dcf8-4e36-89ac-1dccc3e06047';
+    private const string KEY_CRON_STARTED     = '05226812-dcf8-4e36-89ac-1dccc3e06047';
 
-    private const string KEY_FILL_TIME_LINE = '49a4421b-b6f4-458e-a7cd-5253a78305db';
+    private const string KEY_FILL_TIME_LINE   = '49a4421b-b6f4-458e-a7cd-5253a78305db';
 
-    private const string KEY_LAST_BACKUP    = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
+    private const string KEY_KEEP_BACKUP_DAYS = 'fbc976e8-629c-4f49-b17c-88a82482def3';
 
-    private const string KEY_LAST_CRON      = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+    private const string KEY_LAST_BACKUP      = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
 
-    private const string KEY_MAX_GROUPS     = 'e15e9173-2776-4848-9419-0dfc0112db62';
+    private const string KEY_LAST_CRON        = '449b1579-5540-4d06-b076-dfcfea73ff3c';
 
-    private const string KEY_MAX_TASKS      = 'd5a3211d-7e3f-4db8-98f0-339036409289';
+    private const string KEY_MAX_GROUPS       = 'e15e9173-2776-4848-9419-0dfc0112db62';
 
-    private const string KEY_MAX_WORKERS    = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
+    private const string KEY_MAX_TASKS        = 'd5a3211d-7e3f-4db8-98f0-339036409289';
 
-    private const string KEY_PRECISION_DUE  = '902069d4-7b4a-4c04-9af5-0d1432ac105d';
+    private const string KEY_MAX_WORKERS      = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
+
+    private const string KEY_PRECISION_DUE    = '902069d4-7b4a-4c04-9af5-0d1432ac105d';
 
     private static Registry $instance;
 
@@ -159,6 +161,25 @@ final class Registry
     #endregion crons
 
 
+    public function getKeepBackupDays(): int
+    {
+        return $this
+            ->getRow(self::KEY_KEEP_BACKUP_DAYS)
+            ?->getIntValue()
+            ?: 30
+        ;
+    }
+
+
+    public function setKeepBackupDays(?int $days): static
+    {
+        return $this->updateRow(
+            $this
+                ->getOrCreateRow(self::KEY_KEEP_BACKUP_DAYS)
+                ->setIntValue($days)
+        );
+    }
+
     public function getLastBackup(): ?\DateTime
     {
         return $this
@@ -252,6 +273,7 @@ final class Registry
                 ->setIntValue($precisionDue)
         );
     }
+
 
     public function doFillTimeLine(): bool
     {
