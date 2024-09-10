@@ -65,6 +65,14 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
+                backup tage:
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Fälligkeitpräzision:
             </td>
             <td>
