@@ -48,5 +48,13 @@ declare(strict_types=1);
                 <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
             </td>
         </tr>
+        <tr>
+            <td>
+                Backups aufheben (Tage)
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+            </td>
+        </tr>
     </tbody>
 </table>

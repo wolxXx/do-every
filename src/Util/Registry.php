@@ -166,7 +166,7 @@ final class Registry
         return $this
             ->getRow(self::KEY_KEEP_BACKUP_DAYS)
             ?->getIntValue()
-            ?: 30
+            ?? 30
         ;
     }
 
@@ -261,7 +261,7 @@ final class Registry
         return $this
             ->getRow(self::KEY_PRECISION_DUE)
             ?->getIntValue()
-            ?: 3;
+            ?? 3;
     }
 
 
