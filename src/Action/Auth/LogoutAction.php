@@ -3,8 +3,8 @@
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/auth/logout',
-    methods: [
+    path        : '/auth/logout',
+    methods     : [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
     authRequired: false

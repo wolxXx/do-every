@@ -49,10 +49,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe erstellt.');
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($newTask->getId()));
-        } catch (\Throwable $exception) {
-            \var_dump($data);
-            #die('');
-            throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
 

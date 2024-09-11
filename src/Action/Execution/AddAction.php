@@ -82,10 +82,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess('Ausführung registriert.');
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
-        } catch (\Throwable $exception) {
-            \var_dump($data);
-            #die('');
-            throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render(

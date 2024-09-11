@@ -14,6 +14,10 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
+    public const string FORM_FIELD_PASSWORD         = 'password';
+
+    public const string FORM_FIELD_PASSWORD_CONFIRM = 'confirm_password';
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $session = \DoEveryApp\Util\Session::Factory('passwordReset');
@@ -32,7 +36,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
                 throw new \RuntimeException('user not found by token');
             }
-            if(\Carbon\Carbon::createFromDate($started)->addMinutes(10) < \Carbon\Carbon::now()) {
+            if (\Carbon\Carbon::createFromDate($started)->addMinutes(10) < \Carbon\Carbon::now()) {
                 throw new \RuntimeException('took too long');
             }
         } catch (\Throwable $exception) {
@@ -46,33 +50,30 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
         }
         $data = [];
         try {
-            $data     = $this->getRequest()->getParsedBody();
-            $data     = $this->filterAndValidate($data);
+            $data = $this->getRequest()->getParsedBody();
+            $data = $this->filterAndValidate($data);
 
-            if($data['password'] !== $data['confirm_password']) {
+            if ($data[static::FORM_FIELD_PASSWORD] !== $data[static::FORM_FIELD_PASSWORD_CONFIRM]) {
                 $this->getErrorStore()->addError('password', 'Passwortkontrolle fehlgeschlagen');
                 throw new \InvalidArgumentException('password mismatch');
             }
 
             $existing
-                ->setPassword($data['password'])
+                ->setPassword($data[static::FORM_FIELD_PASSWORD])
                 ->setLastPasswordChange(\Carbon\Carbon::now())
                 ->setTokenValidUntil(null)
                 ->setPasswordResetToken(null)
             ;
             $existing::getRepository()->update($existing);
             \DoEveryApp\Util\DependencyContainer::getInstance()
-                ->getEntityManager()
-                ->flush()
+                                                ->getEntityManager()
+                                                ->flush()
             ;
             \DoEveryApp\Util\Mailing\PasswordChanged::send($existing);
 
             \DoEveryApp\Util\FlashMessenger::addSuccess('Passwort geändert.');
             return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
-        } catch (\Throwable $exception) {
-            #\var_dump($data);
-            #die('');
-            #throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render('action/auth/applyNewPassword', ['data' => $data]);
@@ -81,26 +82,25 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data['password'] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD]         = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('password'))
+            ->filter($this->getFromBody(static::FORM_FIELD_PASSWORD))
         ;
-        $data['confirm_password'] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('confirm_password'))
+            ->filter($this->getFromBody(static::FORM_FIELD_PASSWORD_CONFIRM))
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  'password' => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                                  'confirm_password' => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                              ]);
-
+            static::FORM_FIELD_PASSWORD         => [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ],
+            static::FORM_FIELD_PASSWORD_CONFIRM => [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ],
+        ]);
 
         $this->validate($data, $validators);
 

@@ -257,7 +257,7 @@ abstract class AbstractAction
         }
 
         if (true === $hasErrors) {
-            throw new \InvalidArgumentException('errors detected: ' . \json_encode($this->getErrorStore()->getAllErrors()));
+            throw new \DoEveryApp\Exception\FormValidationFailed('errors detected: ' . \json_encode($this->getErrorStore()->getAllErrors()));
         }
 
         return $this;

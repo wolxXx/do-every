@@ -24,9 +24,9 @@ declare(strict_types=1);
         <label for="password">
             Passwort
         </label>
-        <input id="password" type="password" name="password" value="<?= array_key_exists('password', $data) ? $data['password'] : '' ?>"/>
+        <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD] : '' ?>"/>
         <div class="errors">
-            <?foreach ($errorStore->getErrors('password') as $error): ?>
+            <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD) as $error): ?>
                 <?= $error ?><br/>
             <? endforeach ?>
         </div>
@@ -36,9 +36,9 @@ declare(strict_types=1);
         <label for="confirm_password">
             Passwort bestätigen
         </label>
-        <input id="confirm_password" type="password" name="confirm_password" value="<?= array_key_exists('confirm_password', $data) ? $data['confirm_password'] : '' ?>"/>
+        <input id="confirm_password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM] : '' ?>"/>
         <div class="errors">
-            <?foreach ($errorStore->getErrors('confirm_password') as $error): ?>
+            <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM) as $error): ?>
                 <?= $error ?><br/>
             <? endforeach ?>
         </div>

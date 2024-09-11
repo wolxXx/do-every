@@ -50,10 +50,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess('Gruppe bearbeitet.');
 
             return $this->redirect(\DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()));
-        } catch (\Throwable $exception) {
-            \var_dump($data);
-            #die('');
-            throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render(

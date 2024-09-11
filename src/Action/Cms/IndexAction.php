@@ -24,8 +24,8 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
             'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
             'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
             'tasksWithoutGroup' => \DoEveryApp\Entity\Task::getRepository()->getWithoutGroup(),
-            'groups'            => \DoEveryApp\Entity\Group::getRepository()->findAll(),
-            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findAll(),
+            'groups'            => \DoEveryApp\Entity\Group::getRepository()->findIndexed(),
+            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
             'workingOn'         => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
         ]);
     }

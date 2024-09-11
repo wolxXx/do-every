@@ -2,8 +2,6 @@
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-$viewPaths = [];
-
 $newHeader = <<<PHP
 <?php
 
@@ -21,10 +19,8 @@ $directoryIterator = new \RecursiveDirectoryIterator(ROOT_DIR . DIRECTORY_SEPARA
 $iterator          = new \RecursiveIteratorIterator($directoryIterator);
 $regexIterator     = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
 foreach ($regexIterator as $current) {
-    $file        = $current[0];
-    $viewPaths[] = realpath($file);
-}
-foreach ($viewPaths as $path) {
+    $file    = $current[0];
+    $path    = realpath($file);
     $content = file_get_contents($path);
     $until   = ' */';
     while (true) {
@@ -41,7 +37,6 @@ foreach ($viewPaths as $path) {
     }
 
     $content = $newHeader . PHP_EOL . $until . PHP_EOL . $content;
-
 
     file_put_contents($path, $content);
 }
