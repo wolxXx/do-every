@@ -64,6 +64,7 @@ services:
 
   ofelia:
     image: mcuadros/ofelia:latest
+    restart: always
     container_name: "do-every-__INSTANCE__-php83-ofelia"
     depends_on:
       - web
