@@ -43,23 +43,18 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
                 throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
             }
 
-            if (true === $existing->doNotifyLogin()) {
-                \DoEveryApp\Util\Mailing\Login::send($existing);
-            }
-            \DoEveryApp\Util\User\Current::login($existing);
-            $existing->setLastLogin(\Carbon\Carbon::now());
-            $existing::getRepository()->update($existing);
-            \DoEveryApp\Util\DependencyContainer::getInstance()
-                                                ->getEntityManager()
-                                                ->flush()
-            ;
+            if (null !== $existing->getTwoFactorSecret()) {
+                $session = \DoEveryApp\Util\Session::Factory('2faValidate');
+                $session->write('user', $existing->getId());
 
-            \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . \DoEveryApp\Util\View\Worker::get($existing));
+                return $this->redirect(\DoEveryApp\Action\Auth\AuthenticateAction::getRoute());
+            }
+
+            \DoEveryApp\Util\User\Current::login($existing);
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
-
 
         return $this->render('action/auth/login', ['data' => $data]);
     }

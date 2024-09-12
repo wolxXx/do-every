@@ -22,11 +22,16 @@ declare(strict_types=1);
     Ausführung bearbeiten
 </h1>
 
-    <div>
+<div>
+    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
         Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-        <? if(null !== $task->getGroup()): ?>
-            | Gruppe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
-        <? endif ?>
-    </div>
+    </a>
+    <? if(null !== $task->getGroup()): ?>
+        |  Gruppe:
+        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
+            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+        </a>
+    <? endif ?>
+</div>
 
 <?= $this->fetchTemplate('action/execution/partial/addEdit.php', ['data' => $data]) ?>

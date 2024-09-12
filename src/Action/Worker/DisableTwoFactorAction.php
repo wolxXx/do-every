@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
+
 namespace DoEveryApp\Action\Worker;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/worker/delete/{id:[0-9]+}',
+    path   : '/worker/disable-two-factor/{id:[0-9]+}',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
 )]
-class DeleteAction extends \DoEveryApp\Action\AbstractAction
+class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
@@ -22,19 +23,24 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
-        if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das bist du!');
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
-        }
-
-        $worker::getRepository()->delete($worker);
+        $worker
+            ->setTwoFactorSecret(null)
+            ->setTwoFactorRecoverCode1(null)
+            ->setTwoFactorRecoverCode2(null)
+            ->setTwoFactorRecoverCode3(null)
+            ->setTwoFactorRecoverCode1UsedAt(null)
+            ->setTwoFactorRecoverCode2UsedAt(null)
+            ->setTwoFactorRecoverCode3UsedAt(null)
+        ;
+        $worker::getRepository()->update($worker);
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getEntityManager()
                                             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Worker gelöscht.');
+        \DoEveryApp\Util\FlashMessenger::addSuccess('Zwei-Faktor-Authentifizierung erfolgreich entfernt.');
 
         return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }
+

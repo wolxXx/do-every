@@ -42,6 +42,18 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     </fieldset>
 <? endif ?>
 
+<? if(null === $currentUser->getTwoFactorSecret()): ?>
+    <fieldset>
+        <legend>
+            Achtung!
+        </legend>
+        Du solltest einen zweiten Faktor für den Login einrichten.
+        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($currentUser->getId()) ?>">
+            los
+        </a>
+    </fieldset>
+<? endif ?>
+
 <? if(0 !== sizeof($workingOn)): ?>
     <fieldset>
         <legend>

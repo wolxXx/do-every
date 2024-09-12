@@ -30,11 +30,14 @@ declare(strict_types=1);
     </a>
 </div>
 
-<div class="cards">
+<div class="grid">
     <? foreach($group->getTasks() as $task): ?>
-        <div class="taskContainer">
+        <div class="column card">
             <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?><br />
-            <br />
+            <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+            <? if(null !== $task->getWorkingOn()): ?>
+                <?= \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?> arbeitet daran<br />
+            <? endif ?>
             <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                 anzeigen
             </a>

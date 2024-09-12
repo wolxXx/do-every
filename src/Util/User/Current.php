@@ -45,6 +45,18 @@ class Current
         $userToStore->user     = new \stdClass();
         $userToStore->user->id = $user->getId();
         static::getAuthSession()->write(\DoEveryApp\Util\Session::NAMESPACE_AUTH, $userToStore);
+
+        if (true === $user->doNotifyLogin()) {
+            \DoEveryApp\Util\Mailing\Login::send($user);
+        }
+        $user->setLastLogin(\Carbon\Carbon::now());
+        $user::getRepository()->update($user);
+        \DoEveryApp\Util\DependencyContainer::getInstance()
+                                            ->getEntityManager()
+                                            ->flush()
+        ;
+
+        \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . \DoEveryApp\Util\View\Worker::get($user));
     }
 
 

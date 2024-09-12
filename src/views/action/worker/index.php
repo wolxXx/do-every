@@ -118,6 +118,17 @@ declare(strict_types=1);
                         </a>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
                             bearbeiten
+                        </a>
+                        <? if(null === $worker->getTwoFactorSecret()): ?>
+                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()) ?>">
+                                +2fa
+                            </a>
+                        <? endif ?>
+                        <? if(null !== $worker->getTwoFactorSecret()): ?>
+                            <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute($worker->getId()) ?>">
+                                -2fa
+                            </a>
+                        <? endif ?>
                         <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
                             löschen
                         </a>

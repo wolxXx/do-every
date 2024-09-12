@@ -115,9 +115,11 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 <hr>
 
 <div class="row">
-    <div class="column">
-        <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
-    </div>
+    <? if(null !== $task->getNote()): ?>
+        <div class="column">
+            <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+        </div>
+    <? endif ?>
     <? if(0 !== sizeof($task->getCheckListItems())): ?>
         <div class="column">
             <fieldset>

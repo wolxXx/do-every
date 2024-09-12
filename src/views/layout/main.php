@@ -35,7 +35,9 @@ declare(strict_types=1);
             </div>
 
             <div id="appTitle">
-                *DoEvery*
+                <nobr>
+                    * DoEvery *
+                </nobr>
             </div>
             <?= $this->fetchTemplate('layout/partial/menu.php') ?>
         </div>

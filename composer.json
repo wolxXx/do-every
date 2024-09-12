@@ -81,7 +81,8 @@
     "mouf/nodejs-installer": "*",
     "opis/string": "*",
     "phing/phing": "*",
-
+    "pragmarx/google2fa": "*",
+    "endroid/qr-code": "*",
     "php-di/php-di": "*",
     "phpmailer/phpmailer": "*",
     "phpunit/phpunit": "*",

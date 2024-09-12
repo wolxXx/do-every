@@ -22,9 +22,14 @@ declare(strict_types=1);
     Ausführung hinzufügen
 </h1>
 <div>
-    Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+        Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+    </a>
     <? if(null !== $task->getGroup()): ?>
-        |  Gruppe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+        |  Gruppe:
+        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
+            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+        </a>
     <? endif ?>
 </div>
 
