@@ -28,14 +28,18 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 </h1>
 
 <? if(true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange($currentUser)): ?>
-    <h2>Achtung!</h2>
-    <? if(null !== $currentUser->getLastPasswordChange()): ?>
-        Du hast dein Passwort lange nicht geändert. Das letzte mal <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange()) ?>.
-    <? endif ?>
-    Du solltest dein Passwort ändern.
-    <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
-        los
-    </a>
+    <fieldset>
+        <legend>
+            Achtung!
+        </legend>
+        <? if(null !== $currentUser->getLastPasswordChange()): ?>
+            Du hast dein Passwort lange nicht geändert. Das letzte mal <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange()) ?>.<br />
+        <? endif ?>
+        Du solltest dein Passwort ändern.
+        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
+            los
+        </a>
+    </fieldset>
 <? endif ?>
 
 <? if(0 !== sizeof($workingOn)): ?>
@@ -88,9 +92,9 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
         <legend>
             Fällige Aufgaben
         </legend>
-        <div style="margin-bottom: 50px;" class="row">
+        <div style="margin-bottom: 50px;" class="grid">
             <? foreach($dueTasks as $task): ?>
-                <div class="column">
+                <div class="column card">
                     <nobr>
                         <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
