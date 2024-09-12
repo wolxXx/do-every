@@ -28,6 +28,14 @@ class Worker
 
     public const string TABLE_NAME = 'worker';
 
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Task::class,
+        mappedBy    : 'workingOn',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["name" => "ASC"])]
+    protected         $tasksWorkingOn;
+
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
@@ -67,7 +75,7 @@ class Worker
             "default" => 1,
         ],
     )]
-    protected bool    $notify = true;
+    protected bool    $notify   = true;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -113,9 +121,24 @@ class Worker
     protected ?\DateTime $lastPasswordChange = null;
 
 
+    public function __construct()
+    {
+        $this->tasksWorkingOn = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     public static function getRepository(): Worker\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
+    public function getTasksWorkingOn(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    {
+        return $this->tasksWorkingOn;
     }
 
 
