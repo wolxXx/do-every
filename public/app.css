@@ -49,6 +49,20 @@ td, th {
 }
 th {
     border-bottom: solid 3px #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+}
+
+fieldset > legend {
+    margin-left: 10px;
+    border: solid 1px #fff;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 table.withActions tr td:last-child, td.pullRight {
@@ -65,7 +79,7 @@ table.keyValue tr td:first-child {
 h1, h2, h3 {
     margin: 0;
     margin-bottom: 20px;
-    border-bottom: solid 1px #999;
+    border-bottom: solid 1px rgba(200,200,200,0.1);
 }
 
 .errors {
@@ -144,6 +158,22 @@ h1, h2, h3 {
     text-align: right;
 }
 
+.form-footer {
+    margin-top: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 2px rgba(200,200,200,0.1);
+    border-bottom: solid 2px rgba(200,200,200,0.1);
+ }
+
+.pageButtons {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+form > .row {
+    margin-bottom: 20px;
+}
 #app {
     margin: 20px;
     display: flex;
@@ -161,7 +191,7 @@ h1, h2, h3 {
 
 #menu {
     padding-right: 20px;
-    border-right: solid 1px #ccc;
+    border-right: solid 1px rgba(200,200,200,0.1);
     flex-basis: 10rem;
     flex-grow: 1;
 }
@@ -189,9 +219,10 @@ h1, h2, h3 {
     margin-bottom: 10px;
     text-align: right;
     font-size: 2em;
+    border-bottom: solid 1px rgba(200,200,200,0.1);
 }
 #appTitle, h1 {
-    background: -webkit-linear-gradient(#eee, #333);
+    background: #fff -webkit-linear-gradient(#eee, #333);
     background-position-y: 10px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -250,6 +281,5 @@ h1, h2, h3 {
 .taskNote {
     border: solid 1px #fff;
     padding: 15px;
-    margin-top: 20px;
     margin-bottom: 20px;
 }
