@@ -10,17 +10,30 @@ declare(strict_types=1);
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
  */
 
+/**
+ * @var $debugFiles array
+ */
 ?>
 
 <h1>
     Debug
 </h1>
-
-<table class="keyValue">
-    <thead>
-
-    </thead>
-    <tbody>
+<fieldset>
+    <legend>
+        Einstellungen
+    </legend>
+    <table class="keyValue">
+        <thead>
+        <tr>
+            <th>
+                Was
+            </th>
+            <th>
+                Wert
+            </th>
+        </tr>
+        </thead>
+        <tbody>
 
         <tr>
             <td>
@@ -111,10 +124,16 @@ declare(strict_types=1);
                 <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), '-') ?>
             </td>
         </tr>
-    </tbody>
-</table>
-<table>
-    <thead>
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>
+        Datenbank-Registry
+    </legend>
+    <table>
+        <thead>
         <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
                 <? foreach((array) $entry as $key => $value): ?>
@@ -125,8 +144,8 @@ declare(strict_types=1);
             </tr>
             <? break ?>
         <? endforeach ?>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
                 <? foreach((array) $entry as $key => $value): ?>
@@ -136,5 +155,19 @@ declare(strict_types=1);
                 <? endforeach ?>
             </tr>
         <? endforeach ?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>
+        Backup-Dateien
+    </legend>
+    <? foreach($debugFiles as $debugFile): ?>
+        <?= \DoEveryApp\Util\View\Escaper::escape($debugFile) ?>
+        (<?= filesize($debugFile) ?> byte)
+        <br />
+    <? endforeach ?>
+</fieldset>
