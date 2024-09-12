@@ -60,10 +60,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess('Worker bearbeitet.');
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
-        } catch (\Throwable $exception) {
-            #\var_dump($data);
-            #die('');
-            #throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
 

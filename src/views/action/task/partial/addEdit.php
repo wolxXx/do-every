@@ -285,15 +285,10 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <textarea id="newRow__INDEX__Note" rows="1000" cols="1000" name="checkListItem[__INDEX__][note]"></textarea>
                 </div>
             </div>
-
-
-
         </template>
     </div>
 
-
-
-    <div class="app-card-footer">
+    <div class="form-footer">
         <input class="primaryButton" type="submit" value="speichern">
     </div>
 

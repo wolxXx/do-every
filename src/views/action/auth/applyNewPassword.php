@@ -44,7 +44,7 @@ declare(strict_types=1);
         </div>
     </div>
 
-    <div class="app-card-footer">
+    <div class="form-footer">
         <input class="primaryButton" type="submit" value="los">
     </div>
 

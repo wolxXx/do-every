@@ -19,60 +19,75 @@ declare(strict_types=1);
 </h1>
 
 <form action="" method="post" novalidate>
-    <div>
-        <label for="fillTimeLine">
-            Zeitlinie auffüllen?
-        </label>
-        <select name="fillTimeLine" id="fillTimeLine">
-            <option <?= array_key_exists('fillTimeLine', $data) && $data['fillTimeLine'] == '1' ? 'selected'  : '' ?>  value="1">
-                ja
-            </option>
-            <option <?=  false === array_key_exists('fillTimeLine', $data) || $data['fillTimeLine'] == '0' ? 'selected'  : '' ?>  value="0">
-                nein
-            </option>
-        </select>
-        <div class="errors">
-            <? foreach ($errorStore->getErrors('fillTimeLine') as $error): ?>
-                <?= $error ?><br/>
-            <? endforeach ?>
+    <div class="row">
+        <div class="column">
+            <div>
+                <label for="fillTimeLine">
+                    Zeitlinie auffüllen?
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE ?>" id="fillTimeLine">
+                    <option <?= array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE, $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE] == '1' ? 'selected'  : '' ?>  value="1">
+                        ja
+                    </option>
+                    <option <?=  false === array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE, $data) || $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE] == '0' ? 'selected'  : '' ?>  value="0">
+                        nein
+                    </option>
+                </select>
+                <div class="errors">
+                    <? foreach ($errorStore->getErrors(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE) as $error): ?>
+                        <?= $error ?><br/>
+                    <? endforeach ?>
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <label for="precisionDue">
-            Fälligkeitpräzision
-        </label>
-        <select name="precisionDue" id="precisionDue">
-            <? foreach(range(0, 5) as $precision): ?>
-                <option <?= array_key_exists('precisionDue', $data) && $data['precisionDue'] == ''.$precision ? 'selected'  : '' ?>  value="<?= $precision ?>">
-                    <?= $precision ?>
-                </option>
-            <? endforeach ?>
-        </select>
-        <div class="errors">
-            <? foreach ($errorStore->getErrors('precisionDue') as $error): ?>
-                <?= $error ?><br/>
-            <? endforeach ?>
+    <div class="row">
+        <div class="column">
+            <div>
+                <label for="precisionDue">
+                    Fälligkeitpräzision
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_PRECISION_DUE ?>" id="precisionDue">
+                    <? foreach(range(0, 5) as $precision): ?>
+                        <option <?= array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_PRECISION_DUE, $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_PRECISION_DUE] == ''.$precision ? 'selected'  : '' ?>  value="<?= $precision ?>">
+                            <?= $precision ?>
+                        </option>
+                    <? endforeach ?>
+                </select>
+                <div class="errors">
+                    <? foreach ($errorStore->getErrors(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_PRECISION_DUE) as $error): ?>
+                        <?= $error ?><br/>
+                    <? endforeach ?>
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <label for="keepBackups">
-            Backups aufheben (Tage)
-        </label>
-        <select name="keepBackups" id="keepBackups">
-            <? foreach(range(0, 90) as $precision): ?>
-                <option <?= array_key_exists('keepBackups', $data) && $data['keepBackups'] == ''.$precision ? 'selected'  : '' ?>  value="<?= $precision ?>">
-                    <?= $precision ?>
-                </option>
-            <? endforeach ?>
-        </select>
-        <div class="errors">
-            <? foreach ($errorStore->getErrors('keepBackups') as $error): ?>
-                <?= $error ?><br/>
-            <? endforeach ?>
+    <div class="row">
+        <div class="column">
+            <div>
+                <label for="keepBackups">
+                    Backups aufheben (Tage)
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_KEEP_BACKUPS ?>" id="keepBackups">
+                    <? foreach(range(0, 90) as $precision): ?>
+                        <option <?= array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_KEEP_BACKUPS, $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_KEEP_BACKUPS] == ''.$precision ? 'selected'  : '' ?>  value="<?= $precision ?>">
+                            <?= $precision ?>
+                        </option>
+                    <? endforeach ?>
+                </select>
+                <div class="errors">
+                    <? foreach ($errorStore->getErrors(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_KEEP_BACKUPS) as $error): ?>
+                        <?= $error ?><br/>
+                    <? endforeach ?>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="app-card-footer">
+
+
+
+    <div class="form-footer">
         <input class="primaryButton" type="submit" value="speichern">
     </div>
 </form>

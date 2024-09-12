@@ -76,10 +76,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe bearbeitet.');
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
-        } catch (\Throwable $exception) {
-            \var_dump($data);
-            #die('');
-            throw $exception;
+        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
 

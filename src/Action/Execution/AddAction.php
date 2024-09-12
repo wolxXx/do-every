@@ -13,6 +13,29 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
+    public const string FORM_FIELD_DURATION                       = 'duration';
+
+    public const string FORM_FIELD_NOTE                           = 'note';
+
+    public const string FORM_FIELD_DATE                           = 'date';
+
+    public const string FORM_FIELD_WORKER                         = 'worker';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEMS               = 'checkListItems';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_ID             = 'id';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_CHECKED        = 'checked';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_NAME           = 'name';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_NOTE           = 'note';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_REFERENCE      = 'reference';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_REFERENCE_NOTE = 'referenceNote';
+
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
@@ -26,12 +49,12 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $checkListItemData = [];
             foreach ($task->getCheckListItems() as $checkListItem) {
                 $checkListItemData[] = [
-                    'id'            => null,
-                    'reference'     => $checkListItem->getId(),
-                    'referenceNote' => $checkListItem->getNote(),
-                    'name'          => $checkListItem->getName(),
-                    'note'          => null,
-                    'checked'       => false,
+                    static::FORM_FIELD_CHECK_LIST_ITEM_ID             => null,
+                    static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE      => $checkListItem->getId(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE_NOTE => $checkListItem->getNote(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_NAME           => $checkListItem->getName(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_NOTE           => null,
+                    static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED        => false,
                 ];
             }
 
@@ -39,9 +62,9 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                 'action/execution/add',
                 [
                     'data' => [
-                        'date'           => (new \DateTime())->format('Y-m-d H:i:s'),
-                        'worker'         => \DoEveryApp\Util\User\Current::get()->getId(),
-                        'checkListItems' => $checkListItemData,
+                        static::FORM_FIELD_DATE             => (new \DateTime())->format('Y-m-d H:i:s'),
+                        static::FORM_FIELD_WORKER           => \DoEveryApp\Util\User\Current::get()->getId(),
+                        static::FORM_FIELD_CHECK_LIST_ITEMS => $checkListItemData,
                     ],
                     'task' => $task,
                 ]
@@ -53,21 +76,20 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $data = $this->getRequest()->getParsedBody();
             $data = $this->filterAndValidate($data);
 
-
             $execution = \DoEveryApp\Service\Task\Execution\Creator::execute(
                 (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
                     ->setTask($task)
-                    ->setDuration($data['duration'])
-                    ->setDate(new \DateTime($data['date']))
-                    ->setNote($data['note'])
-                    ->setWorker($data['worker'] ? \DoEveryApp\Entity\Worker::getRepository()->find($data['worker']) : null)
+                    ->setDuration($data[static::FORM_FIELD_DURATION])
+                    ->setDate(new \DateTime($data[static::FORM_FIELD_DATE]))
+                    ->setNote($data[static::FORM_FIELD_NOTE])
+                    ->setWorker($data[static::FORM_FIELD_WORKER] ? \DoEveryApp\Entity\Worker::getRepository()->find($data[static::FORM_FIELD_WORKER]) : null)
             );
-            foreach ($data['checkListItems'] ?? [] as $item) {
-                $checkListItemReference = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find($item['reference']);
+            foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEMS] ?? [] as $item) {
+                $checkListItemReference = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find($item[static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE]);
                 $checkListItem          = (new \DoEveryApp\Entity\Execution\CheckListItem())
                     ->setExecution($execution)
-                    ->setChecked('1' === $item['checked'])
-                    ->setNote($item['note'])
+                    ->setChecked('1' === $item[static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED])
+                    ->setNote($item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
                     ->setCheckListItem($checkListItemReference)
                     ->setName($checkListItemReference->getName())
                     ->setPosition($checkListItemReference->getPosition())
@@ -98,14 +120,14 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
     protected function filterAndValidate(array &$data): array
     {
         $constraints = [
-            'duration' => [
+            static::FORM_FIELD_DURATION => [
             ],
-            'note'     => [
+            static::FORM_FIELD_NOTE     => [
             ],
-            'date'     => [
+            static::FORM_FIELD_DATE     => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
-            'worker'   => [
+            static::FORM_FIELD_WORKER   => [
                 new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
                     if (null === $value) {
                         return;
@@ -120,63 +142,63 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         ];
 
 
-        $data['duration'] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_DURATION] = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('duration'))
+            ->filter($this->getFromBody(static::FORM_FIELD_DURATION))
         ;
-        $data['note']     = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_NOTE]     = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('note'))
+            ->filter($this->getFromBody(static::FORM_FIELD_NOTE))
         ;
-        $data['date']     = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_DATE]     = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('date'))
+            ->filter($this->getFromBody(static::FORM_FIELD_DATE))
         ;
-        $data['worker']   = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_WORKER]   = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('worker'))
+            ->filter($this->getFromBody(static::FORM_FIELD_WORKER))
         ;
 
-        foreach ($data['checkListItems'] ?? [] as $index => $item) {
-            $data['checkListItems'][$index]['id']                   = (new \Laminas\Filter\FilterChain())
+        foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEMS] ?? [] as $index => $item) {
+            $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID] = (new \Laminas\Filter\FilterChain())
                 ->attach(new \Laminas\Filter\StringTrim())
                 ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item['id'])
+                ->filter($item[static::FORM_FIELD_CHECK_LIST_ITEM_ID])
             ;
-            $data['checkListItems_' . $index . '_id']               = $data['checkListItems'][$index]['id'];
-            $constraints['checkListItems']                          = [];
-            $constraints['checkListItems_' . $index . '_id']        = [
+            $data['checkListItems_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_ID]           = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID];
+            $constraints[static::FORM_FIELD_CHECK_LIST_ITEMS]                                         = [];
+            $constraints['checkListItems_' . $index . '_id']                                          = [
 
             ];
-            $data['checkListItems'][$index]['checked']              = (new \Laminas\Filter\FilterChain())
+            $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['checked']                             = (new \Laminas\Filter\FilterChain())
                 ->attach(new \Laminas\Filter\StringTrim())
                 ->attach(new \Laminas\Filter\ToNull())
                 ->filter($item['checked'])
             ;
-            $data['checkListItems_' . $index . '_checked']          = $data['checkListItems'][$index]['checked'];
-            $constraints['checkListItems_' . $index . '_checked']   = [
+            $data['checkListItems_' . $index . '_checked']                                            = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['checked'];
+            $constraints['checkListItems_' . $index . '_checked']                                     = [
 
             ];
-            $data['checkListItems'][$index]['note']                 = (new \Laminas\Filter\FilterChain())
+            $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['note']                                = (new \Laminas\Filter\FilterChain())
                 ->attach(new \Laminas\Filter\StringTrim())
                 ->attach(new \Laminas\Filter\ToNull())
                 ->filter($item['note'])
             ;
-            $data['checkListItems_' . $index . '_note']             = $data['checkListItems'][$index]['note'];
-            $constraints['checkListItems_' . $index . '_note']      = [
+            $data['checkListItems_' . $index . '_note']                                               = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['note'];
+            $constraints['checkListItems_' . $index . '_note']                                        = [
 
             ];
-            $data['checkListItems'][$index]['reference']            = (new \Laminas\Filter\FilterChain())
+            $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['reference']                           = (new \Laminas\Filter\FilterChain())
                 ->attach(new \Laminas\Filter\StringTrim())
                 ->attach(new \Laminas\Filter\ToNull())
                 ->filter($item['reference'])
             ;
-            $data['checkListItems_' . $index . '_reference']        = $data['checkListItems'][$index]['reference'];
-            $constraints['checkListItems_' . $index . '_reference'] = [
+            $data['checkListItems_' . $index . '_reference']                                          = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index]['reference'];
+            $constraints['checkListItems_' . $index . '_reference']                                   = [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ];
         }

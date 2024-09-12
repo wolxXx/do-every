@@ -15,10 +15,13 @@ declare(strict_types=1);
     Einstellungen
 </h1>
 
-<a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\EditSettingsAction::getRoute() ?>">
-    <?= $this->fetchTemplate('icon/wrench.php') ?>
-    Einstellungen bearbeiten
-</a>
+<div class="pageButtons">
+    <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\EditSettingsAction::getRoute() ?>">
+        <?= $this->fetchTemplate('icon/wrench.php') ?>
+        Einstellungen bearbeiten
+    </a>
+</div>
+
 
 <table class="keyValue">
     <thead>

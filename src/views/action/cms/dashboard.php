@@ -87,8 +87,8 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
         <? foreach($dueTasks as $task): ?>
             <div class="column">
                 <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>:
-                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
+                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
                 </a>
             </div>
         <? endforeach ?>

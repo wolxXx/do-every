@@ -35,11 +35,11 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
             $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail($data[static::FORM_FIELD_EMAIL]);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
                 $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, 'user not found');
-                throw new \InvalidArgumentException('User not found');
+                throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
             }
             if (false === \DoEveryApp\Util\Password::verify($data[static::FORM_FIELD_PASSWORD], $existing->getPassword())) {
                 $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, 'user not found');
-                throw new \InvalidArgumentException('User not found');
+                throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
             }
 
             \DoEveryApp\Util\Mailing\Login::send($existing);

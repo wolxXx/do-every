@@ -31,7 +31,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
 </h2>
 
-<div>
+<div class="pageButtons buttonRow">
     <? if(null === $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId(), $currentUser->getId()) ?>">
             <?= $this->fetchTemplate('icon/hand.php') ?>
@@ -109,18 +109,19 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         <? endif ?>
     </div>
 </div>
-
+<hr>
 <div class="row">
     <div class="column">
         <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
     </div>
     <? if(0 !== sizeof($task->getCheckListItems())): ?>
         <div class="column">
-            <h3>
-                Aufgabenliste
-            </h3>
-            <table>
-                <thead>
+            <fieldset>
+                <legend>
+                    Aufgabenliste
+                </legend>
+                <table>
+                    <thead>
                     <tr>
                         <th>
                             Step
@@ -129,8 +130,8 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                             Hinweis
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <? foreach($task->getCheckListItems() as $checkListItem): ?>
                         <tr>
                             <td>
@@ -141,8 +142,11 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                             </td>
                         </tr>
                     <? endforeach ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </fieldset>
+
+
         </div>
     <? endif ?>
 </div>

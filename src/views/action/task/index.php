@@ -16,11 +16,12 @@ declare(strict_types=1);
         <h1>
             Aufgaben
         </h1>
-        <br/>
-        <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">
-            <?= $this->fetchTemplate('icon/add.php') ?>
-            neue Aufgabe
-        </a>
+        <div class="pageButtons">
+            <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">
+                <?= $this->fetchTemplate('icon/add.php') ?>
+                neue Aufgabe
+            </a>
+        </div>
         <div>
             <table>
                 <thead>
@@ -111,11 +112,12 @@ declare(strict_types=1);
         <h1>
             Gruppen
         </h1>
-        <br />
-        <a href="<?= \DoEveryApp\Action\Group\AddAction::getRoute() ?>" class="primaryButton">
-            <?= $this->fetchTemplate('icon/add.php') ?>
-            neue Gruppe
-        </a>
+        <div class="pageButtons">
+            <a href="<?= \DoEveryApp\Action\Group\AddAction::getRoute() ?>" class="primaryButton">
+                <?= $this->fetchTemplate('icon/add.php') ?>
+                neue Gruppe
+            </a>
+        </div>
         <div>
             <table>
                 <thead>

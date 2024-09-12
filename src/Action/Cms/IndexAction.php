@@ -20,13 +20,13 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render('action/cms/dashboard', [
-            'dueTasks'          => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
             'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
+            'groups'            => \DoEveryApp\Entity\Group::getRepository()->findIndexed(),
+            'dueTasks'          => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
             'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
             'tasksWithoutGroup' => \DoEveryApp\Entity\Task::getRepository()->getWithoutGroup(),
-            'groups'            => \DoEveryApp\Entity\Group::getRepository()->findIndexed(),
-            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
             'workingOn'         => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
+            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
         ]);
     }
 }
