@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 <h1>Workers</h1>
 
-<div>
+<div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddAction::getRoute() ?>">
         <?= $this->fetchTemplate('icon/add.php') ?>
         neu
@@ -26,6 +26,9 @@ declare(strict_types=1);
         <tr>
             <th>
                 Name
+            </th>
+            <th>
+                arbeitet an
             </th>
             <th>
                 Email
@@ -58,6 +61,21 @@ declare(strict_types=1);
             <tr>
                 <td>
                     <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                </td>
+                <td>
+                    <ul>
+                    <? foreach($worker->getTasksWorkingOn() as $task): ?>
+                        <li>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                                <? if(null !== $task->getGroup()): ?>
+                                    (<?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>)
+                                <? endif ?>
+                            </a>
+                        </li>
+
+                    <? endforeach ?>
+                    </ul>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
