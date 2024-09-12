@@ -60,12 +60,6 @@ declare(strict_types=1);
         </div>
     </div>
 
-
-
-
-
-
-
     <div class="row">
         <div class="column">
             <div>
@@ -89,7 +83,7 @@ declare(strict_types=1);
         </div>
         <div class="column">
             <div>
-                <label for="is_admin">
+                <label for="do_notify_logins">
                     Logins benachrichtigen?
                 </label>
                 <select name="do_notify_logins" id="do_notify_logins">
@@ -109,7 +103,7 @@ declare(strict_types=1);
         </div>
         <div class="column">
             <div>
-                <label for="is_admin">
+                <label for="do_notify">
                     Fälligkeiten benachrichtigen?
                 </label>
                 <select name="do_notify" id="do_notify">
@@ -129,12 +123,7 @@ declare(strict_types=1);
         </div>
     </div>
 
-
-
-
-
-
-    <div class="app-card-footer">
+    <div class="form-footer">
         <input class="primaryButton" type="submit" value="los">
     </div>
 </form>
