@@ -18,6 +18,7 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
 
     public const string FORM_FIELD_PASSWORD = 'password';
 
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $currentUser = \DoEveryApp\Util\User\Current::get();
@@ -42,7 +43,9 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
                 throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
             }
 
-            \DoEveryApp\Util\Mailing\Login::send($existing);
+            if (true === $existing->doNotifyLogin()) {
+                \DoEveryApp\Util\Mailing\Login::send($existing);
+            }
             \DoEveryApp\Util\User\Current::login($existing);
             $existing->setLastLogin(\Carbon\Carbon::now());
             $existing::getRepository()->update($existing);
@@ -76,13 +79,13 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            static::FORM_FIELD_EMAIL    => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-            static::FORM_FIELD_PASSWORD => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
+                                                                                  static::FORM_FIELD_EMAIL    => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                                  static::FORM_FIELD_PASSWORD => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
 
         $this->validate($data, $validators);
