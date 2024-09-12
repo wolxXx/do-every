@@ -86,6 +86,7 @@ function dragoverHandler(ev) {
     ev.preventDefault();
     ev.dataTransfer.dropEffect = "move";
 }
+
 function dropHandler(ev) {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
@@ -93,7 +94,18 @@ function dropHandler(ev) {
     ev.target.appendChild(document.getElementById(data));
 }
 
+function reactOnScroll() {
+    let menu = document.getElementById('menu');
+    menu.style.top = (window.scrollY - 20) + 'px';
+}
+
+addEventListener("scroll", (event) => {
+    reactOnScroll();
+});
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
+    reactOnScroll();
     captureElements();
     initRowRemover();
     document.querySelectorAll('.rowAdder').forEach(function (element) {
