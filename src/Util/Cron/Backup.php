@@ -25,7 +25,7 @@ class Backup
 
         $now = \Carbon\Carbon::now();
 
-        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . $now->month . DIRECTORY_SEPARATOR . $now->day . \DIRECTORY_SEPARATOR;
+        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad('' . $now->month, 2, '0', STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad('' . $now->day, 2, '0', STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
         if (false === \is_dir($path)) {
             mkdir($path, 0777, true);
         }
