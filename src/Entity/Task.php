@@ -60,7 +60,6 @@ class Task
         mappedBy    : 'task',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
-
     protected                   $checkListItems;
 
     #[\Doctrine\ORM\Mapping\Column(
