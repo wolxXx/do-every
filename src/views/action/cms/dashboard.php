@@ -86,10 +86,18 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <div style="margin-bottom: 50px;" class="row">
         <? foreach($dueTasks as $task): ?>
             <div class="column">
-                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
-                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-                </a>
+                <nobr>
+                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                        <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
+                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                        <? foreach($workingOn as $workingOnTask): ?>
+                            <? if($workingOnTask->getId() === $task->getId()): ?>
+                                <br>
+                                (<?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?> arbeitet daran)
+                            <? endif ?>
+                        <? endforeach ?>
+                    </a>
+                </nobr>
             </div>
         <? endforeach ?>
     </div>
