@@ -30,8 +30,12 @@ declare(strict_types=1);
 <body>
     <div id="app">
         <div id="menu">
+            <div style="text-align: right">
+                <img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">
+            </div>
+
             <div id="appTitle">
-                DoEvery*
+                *DoEvery*
             </div>
             <?= $this->fetchTemplate('layout/partial/menu.php') ?>
         </div>
