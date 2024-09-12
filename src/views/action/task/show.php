@@ -80,36 +80,40 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 
 <div class="row">
     <div class="column">
-        Status: <?= $task->isActive()? 'aktiv': 'pausiert' ?> |
-        <?= $task->isNotify() ? 'wird benachrichtigt' : 'wird nicht benachrichtigt' ?><br />
+        <fieldset>
+            <legend>
+                Info
+            </legend>
+            Status: <?= $task->isActive()? 'aktiv': 'pausiert' ?> |
+            <?= $task->isNotify() ? 'wird benachrichtigt' : 'wird nicht benachrichtigt' ?><br />
 
 
-        Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
-        <? if(null !== $task->getIntervalType()): ?>
-            (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
-        <? endif ?>
-        |
+            Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+            <? if(null !== $task->getIntervalType()): ?>
+                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
+            <? endif ?>
+            |
 
-        Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
+            Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
-        es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
-        zugewiesen an: <?= null === $task->getAssignee()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
-        letzte Ausführung: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : '-' ?>
-        <? if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
-            von <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
-        <? endif ?>
+            es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
+            zugewiesen an: <?= null === $task->getAssignee()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
+            letzte Ausführung: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : '-' ?>
+            <? if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
+                von <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
+            <? endif ?>
+        </fieldset>
+
     </div>
-    <div class="column">
-
-        <? if(0 === sizeof($executions)): ?>
-            - bisher nicht ausgeführt -
-        <? endif ?>
-        <? if(0 !== sizeof($executions)): ?>
+    <? if(0 !== sizeof($executions)): ?>
+        <div class="column">
             <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
-        <? endif ?>
-    </div>
+        </div>
+    <? endif ?>
 </div>
+
 <hr>
+
 <div class="row">
     <div class="column">
         <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
@@ -153,10 +157,12 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 
 
 
-<hr />
 
-<div>
-    <? if(0 !== sizeof($executions)): ?>
+<? if(0 !== sizeof($executions)): ?>
+    <hr />
+    <fieldset>
+        <legend>Ausführungen</legend>
+
         <table>
             <thead>
                 <tr>
@@ -230,6 +236,5 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                 <? endforeach ?>
             </tbody>
         </table>
-    <? endif ?>
-
-</div>
+    </fieldset>
+<? endif ?>

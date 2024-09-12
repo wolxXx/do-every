@@ -57,7 +57,12 @@ td {
     padding-bottom: 3px;
     margin-bottom: 3px;
 }
-
+fieldset {
+    border-left: solid 1px rgba(200,200,200,0.6);
+    border-right: solid 1px rgba(200,200,200,0.6);
+    border-bottom: solid 1px rgba(200,200,200,0.6);
+    margin-bottom: 30px;
+}
 fieldset > legend {
     margin-left: 10px;
     border: solid 1px #fff;
@@ -80,6 +85,15 @@ h1, h2, h3 {
     margin: 0;
     margin-bottom: 20px;
     border-bottom: solid 1px rgba(200,200,200,0.1);
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border: solid 1px rgba(200,200,200,0.2);
+    color: rgba(200,200,200,0.1);
+    background: rgba(200,200,200,0.1);
+    display: block;
 }
 
 .errors {
@@ -203,6 +217,15 @@ form > .row {
 }
 #menu ul li {
     margin-bottom: 10px;
+}
+#menu ul li a{
+    display: block;
+    text-decoration: none;
+    padding-right: 20px;
+}
+#menu ul li a.active{
+    text-decoration: underline;
+    padding-right: 0;
 }
 
 #content {

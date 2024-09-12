@@ -58,26 +58,53 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Task\IndexAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Task\IndexAction::getRoutePattern(),
+                \DoEveryApp\Action\Task\AddAction::getRoutePattern(),
+                \DoEveryApp\Action\Task\EditAction::getRoutePattern(),
+                \DoEveryApp\Action\Task\ShowAction::getRoutePattern(),
+                \DoEveryApp\Action\Execution\AddAction::getRoutePattern(),
+                \DoEveryApp\Action\Execution\EditAction::getRoutePattern(),
+                \DoEveryApp\Action\Group\AddAction::getRoutePattern(),
+                \DoEveryApp\Action\Group\EditAction::getRoutePattern(),
+                \DoEveryApp\Action\Group\ShowAction::getRoutePattern(),
+            ])
             ->setName('Aufgaben')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Task\LogAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Task\LogAction::getRoutePattern(),
+            ])
             ->setName('Log')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Worker\IndexAction::getRoutePattern(),
+            ])
             ->setName('Worker')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\ShowSettingsAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Cms\ShowSettingsAction::getRoutePattern(),
+                \DoEveryApp\Action\Cms\EditSettingsAction::getRoutePattern(),
+            ])
             ->setName('Einstellungen')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\DebugAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Cms\DebugAction::getRoutePattern(),
+            ])
             ->setName('debug')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
+            ->setActiveRoutes([
+                \DoEveryApp\Action\Auth\LogoutAction::getRoutePattern(),
+            ])
             ->setName('ausloggen')
         ?>
     <? endif ?>

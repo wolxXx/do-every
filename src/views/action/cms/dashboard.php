@@ -39,11 +39,13 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 <? endif ?>
 
 <? if(0 !== sizeof($workingOn)): ?>
-    <h3>
-        Aktuelle Arbeiten
-    </h3>
-    <table style="margin-bottom: 50px;">
-        <thead>
+    <fieldset>
+        <legend>
+            Aktuelle Arbeiten
+        </legend>
+
+        <table style="margin-bottom: 50px;">
+            <thead>
             <tr>
                 <th>
                     Aufgabe
@@ -55,8 +57,8 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     zugewiesen an
                 </th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <? foreach($workingOn as $workingOnTask): ?>
                 <tr>
                     <td>
@@ -75,183 +77,199 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     </td>
                 </tr>
             <? endforeach ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </fieldset>
+
 <? endif ?>
 
 <? if(0 !== sizeof($dueTasks)): ?>
-    <h2>
-        Fällige Aufgaben
-    </h2>
-    <div style="margin-bottom: 50px;" class="row">
-        <? foreach($dueTasks as $task): ?>
-            <div class="column">
-                <nobr>
-                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                        <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-                        <? foreach($workingOn as $workingOnTask): ?>
-                            <? if($workingOnTask->getId() === $task->getId()): ?>
-                                <br>
-                                (<?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?> arbeitet daran)
-                            <? endif ?>
-                        <? endforeach ?>
-                    </a>
-                </nobr>
-            </div>
-        <? endforeach ?>
-    </div>
-<? endif ?>
-
-<table>
-    <thead>
-        <tr>
-            <th>
-                Gruppe
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                zugewiesen an 
-            </th>
-            <th>
-                arbeitet daran 
-            </th>
-            <th>
-                letzte Ausführung 
-            </th>
-            <th>
-                Fälligkeit
-            </th>
-            <th>
-                Intervall
-            </th>
-            <th>
-                Aktionen 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <? foreach($tasks as $task): ?>
-            <?
-            $lastExecution = $task::getRepository()->getLastExecution($task)?->getDate();
-            ?>
-            <tr>
-                <td>
-                    <? if(null === $task->getGroup()): ?>
-                        -
-                    <? else: ?>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
-                    <? endif ?>
-                </td>
-                <td>
-                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-                    </a>
-                </td>
-                <td>
-                    <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
-                </td>
-                <td>
-                    <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
-                </td>
-                <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
-                </td>
-                <td>
-                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
-                </td>
-                <td>
-                    <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
-                    <? if(null !== $task->getIntervalType()): ?>
-                        (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
-                    <? endif ?>
-                </td>
-                <td class="pullRight">
-                    <nobr class="buttonRow">
-                        <a class="primaryButton" title="anzeigen" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                            <?= $this->fetchTemplate('icon/show.php') ?>
-                        </a>
-                        <a class="primaryButton" title="Ausführung eintragen" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
-                            <?= $this->fetchTemplate('icon/add.php') ?>
-                        </a>
-                        <a class="warningButton" title="bearbeiten" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
-                            <?= $this->fetchTemplate('icon/edit.php') ?>
-                        </a>
-                        <a class="dangerButton confirm" title="löschen" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
-                            <?= $this->fetchTemplate('icon/trash.php') ?>
+    <fieldset>
+        <legend>
+            Fällige Aufgaben
+        </legend>
+        <div style="margin-bottom: 50px;" class="row">
+            <? foreach($dueTasks as $task): ?>
+                <div class="column">
+                    <nobr>
+                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
+                            <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                            <? foreach($workingOn as $workingOnTask): ?>
+                                <? if($workingOnTask->getId() === $task->getId()): ?>
+                                    <br>
+                                    (<?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?> arbeitet daran)
+                                <? endif ?>
+                            <? endforeach ?>
                         </a>
                     </nobr>
-                </td>
-            </tr>
-        <? endforeach ?>
-    </tbody>
-</table>
+                </div>
+            <? endforeach ?>
+        </div>
+    </fieldset>
+<? endif ?>
 
-<hr>
-<h2>
-    Ausführungen
-</h2>
+<? if(0 !== sizeof($tasks)): ?>
+    <fieldset>
+        <legend>
+            Aufgaben
+        </legend>
 
-<div class="row">
-    <div class="column">
         <table>
             <thead>
             <tr>
                 <th>
-                    Datum
-                </th>
-                <th>
                     Gruppe
                 </th>
                 <th>
-                    Aufgabe
+                    Name
                 </th>
                 <th>
-                    Aufwand
+                    zugewiesen an
                 </th>
                 <th>
-                    Worker
+                    arbeitet daran
                 </th>
                 <th>
-                    Notiz
+                    letzte Ausführung
+                </th>
+                <th>
+                    Fälligkeit
+                </th>
+                <th>
+                    Intervall
+                </th>
+                <th>
+                    Aktionen
                 </th>
             </tr>
             </thead>
             <tbody>
-            <? foreach(array_slice($executions, 0, 10) as $execution): ?>
+            <? foreach($tasks as $task): ?>
+                <?
+                $lastExecution = $task::getRepository()->getLastExecution($task)?->getDate();
+                ?>
                 <tr>
                     <td>
-                        <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
-                    </td>
-                    <td>
-                        <? if(null === $execution->getTask()->getGroup()): ?>
+                        <? if(null === $task->getGroup()): ?>
                             -
-                        <? endif?>
-                        <? if(null !== $execution->getTask()->getGroup()): ?>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
-                        <? endif?>
+                        <? else: ?>
+                            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+                        <? endif ?>
                     </td>
                     <td>
-                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
-                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
                         </a>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
+                        <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
+                        <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
+                        <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
+                    </td>
+                    <td>
+                        <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                    </td>
+                    <td>
+                        <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+                        <? if(null !== $task->getIntervalType()): ?>
+                            (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
+                        <? endif ?>
+                    </td>
+                    <td class="pullRight">
+                        <nobr class="buttonRow">
+                            <a class="primaryButton" title="anzeigen" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                                <?= $this->fetchTemplate('icon/show.php') ?>
+                            </a>
+                            <a class="primaryButton" title="Ausführung eintragen" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
+                                <?= $this->fetchTemplate('icon/add.php') ?>
+                            </a>
+                            <a class="warningButton" title="bearbeiten" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+                                <?= $this->fetchTemplate('icon/edit.php') ?>
+                            </a>
+                            <a class="dangerButton confirm" title="löschen" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+                                <?= $this->fetchTemplate('icon/trash.php') ?>
+                            </a>
+                        </nobr>
                     </td>
                 </tr>
             <? endforeach ?>
             </tbody>
         </table>
+    </fieldset>
+<? endif ?>
 
+
+<hr>
+
+
+<div class="row">
+    <div class="column">
+
+        <fieldset>
+            <legend>
+                Ausführungen
+            </legend>
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        Datum
+                    </th>
+                    <th>
+                        Gruppe
+                    </th>
+                    <th>
+                        Aufgabe
+                    </th>
+                    <th>
+                        Aufwand
+                    </th>
+                    <th>
+                        Worker
+                    </th>
+                    <th>
+                        Notiz
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <? foreach(array_slice($executions, 0, 10) as $execution): ?>
+                    <tr>
+                        <td>
+                            <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
+                        </td>
+                        <td>
+                            <? if(null === $execution->getTask()->getGroup()): ?>
+                                -
+                            <? endif?>
+                            <? if(null !== $execution->getTask()->getGroup()): ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
+                            <? endif?>
+                        </td>
+                        <td>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
+                        </td>
+                    </tr>
+                <? endforeach ?>
+                </tbody>
+            </table>
+        </fieldset>
     </div>
     <div class="column">
         <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>

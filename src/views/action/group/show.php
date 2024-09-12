@@ -18,7 +18,7 @@ declare(strict_types=1);
 <h1>
     Gruppe <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
 </h1>
-<div>
+<div class="pageButtons buttonRow">
     <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>?group=<?= $group->getId() ?>" class="primaryButton">
         neue Aufgabe
     </a>
