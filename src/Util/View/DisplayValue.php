@@ -22,6 +22,10 @@ class DisplayValue
             {
                 return (string)$value;
             }
+            case \is_float($value):
+            {
+                return \NumberFormatter::create('de_DE',  \NumberFormatter::PATTERN_DECIMAL)->format($value);
+            }
             case \is_a($value, \DateTime::class):
             {
                 return DateTime::getDateTimeMediumDateMediumTime($value);
