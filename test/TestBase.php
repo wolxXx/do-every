@@ -1,6 +1,6 @@
 <?php
 
-namespace DoEveryAppTest\Test;
+namespace DoEveryAppTest;
 
 abstract class TestBase extends \PHPUnit\Framework\TestCase
 {
@@ -12,17 +12,9 @@ abstract class TestBase extends \PHPUnit\Framework\TestCase
     }
 
 
-    /**
-     * @return array
-     */
-    public function __sleep()
+    public function __sleep(): array
     {
         return [];
     }
 
-
-    protected function getEntityManager(): \Doctrine\ORM\EntityManager
-    {
-        return \DoEveryApp\Util\DependencyContainer::getInstance()->getEntityManager();
-    }
 }
