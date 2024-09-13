@@ -86,6 +86,7 @@
     "php-di/php-di": "*",
     "phpmailer/phpmailer": "*",
     "phpunit/phpunit": "*",
+    "ergebnis/phpunit-slow-test-detector": "*",
     "phpstan/phpstan": "*",
     "ramsey/uuid": "*",
     "slim/http": "*",
