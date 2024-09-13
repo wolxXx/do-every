@@ -55,7 +55,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
             if ($data[static::FORM_FIELD_PASSWORD] !== $data[static::FORM_FIELD_PASSWORD_CONFIRM]) {
                 $this->getErrorStore()->addError('password', 'Passwortkontrolle fehlgeschlagen');
-                throw new \InvalidArgumentException('password mismatch');
+                throw new \DoEveryApp\Exception\FormValidationFailed('password mismatch');
             }
 
             $existing
