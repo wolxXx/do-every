@@ -19,15 +19,16 @@ class CheckListItem
         if (true === $checked) {
             require ROOT_DIR . DIRECTORY_SEPARATOR . 'src/views/icon/check.php';
             $color = '#154709';
-
         }
         if (false === $checked) {
             require ROOT_DIR . DIRECTORY_SEPARATOR . 'src/views/icon/cross.php';
             $color = '#f00';
         }
-        $icon = ob_get_clean();
-        $icon = '<span style="color: '.$color.';">'.$icon.'</span>';
+        $icon   = \ob_get_clean();
+        $icon   = '<span style="color: ' . $color . ';">' . $icon . '</span>';
+        $result = '<span title="' . $note . '">' . $icon . ' ' . Escaper::escape($name) . '</span>';
+        $result = \str_replace(\PHP_EOL, '', $result);
 
-        return '<span title="' . $note . '">' . $icon . ' ' . Escaper::escape($name) . '</span>';
+        return $result;
     }
 }
