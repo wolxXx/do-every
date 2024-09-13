@@ -14,20 +14,20 @@ class DebugAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-
-        $debugFiles = [];
-        $path      = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
-        $Directory = new \RecursiveDirectoryIterator($path);
-        $Iterator  = new \RecursiveIteratorIterator($Directory);
-        $Regex     = new \RegexIterator($Iterator, '/^.+\.sql/i', \RegexIterator::GET_MATCH);
+        $backupFiles = [];
+        $path        = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
+        $Directory   = new \RecursiveDirectoryIterator($path);
+        $Iterator    = new \RecursiveIteratorIterator($Directory);
+        $Regex       = new \RegexIterator($Iterator, '/^.+\.sql/i', \RegexIterator::GET_MATCH);
         foreach ($Regex as $files) {
             foreach ($files as $file) {
-                $realPath = \realpath($file);
-                $debugFiles[] = $realPath;
+                $realPath               = \realpath($file);
+                $realPath               = \str_replace(\realpath(\ROOT_DIR), '', $realPath);
+                $backupFiles[$realPath] = \filesize(\realpath($file));
             }
         }
-        sort($debugFiles);
+        \krsort($backupFiles);
 
-        return $this->render('action/cms/debug', ['debugFiles' => $debugFiles]);
+        return $this->render('action/cms/debug', ['backupFiles' => $backupFiles]);
     }
 }

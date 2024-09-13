@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 /**
- * @var $debugFiles array
+ * @var $backupFiles array
  */
 ?>
 
@@ -128,6 +128,59 @@ declare(strict_types=1);
     </table>
 </fieldset>
 
+
+<? if(0 !== sizeof($backupFiles)): ?>
+
+    <fieldset>
+        <legend>
+            Backup-Dateien
+        </legend>
+        <div class="pageButtons">
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(base64_encode('all')) ?>">
+                alle herunterladen
+            </a>
+        </div>
+        <table class="withActions">
+            <thead>
+                <tr>
+                    <th>
+                        Datum
+                    </th>
+                    <th>
+                        Größe
+                    </th>
+                    <th class="pullRight">
+                        Aktion
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <? foreach($backupFiles as $debugFile => $fileSize): ?>
+                    <tr>
+                        <td>
+
+                            <?
+                            $date = str_replace(['backup_', '.sql', '_'], ['','', ' '], basename($debugFile));
+                            $dateSplit = explode(' ', $date);
+                            $date = $dateSplit[0] . ' '. str_replace('-', ':', $dateSplit[1]);
+                            ?>
+                            <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(new \DateTime($date)) ?>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\FileSize::humanReadable($fileSize) ?>
+                        </td>
+                        <td class="pullRight">
+                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(base64_encode($debugFile)) ?>">
+                                herunterladen
+                            </a>
+                        </td>
+                    </tr>
+                <? endforeach ?>
+            </tbody>
+        </table>
+    </fieldset>
+<? endif ?>
+
 <fieldset>
     <legend>
         Datenbank-Registry
@@ -159,15 +212,3 @@ declare(strict_types=1);
     </table>
 </fieldset>
 
-
-
-<fieldset>
-    <legend>
-        Backup-Dateien
-    </legend>
-    <? foreach($debugFiles as $debugFile): ?>
-        <?= \DoEveryApp\Util\View\Escaper::escape($debugFile) ?>
-        (<?= filesize($debugFile) ?> byte)
-        <br />
-    <? endforeach ?>
-</fieldset>
