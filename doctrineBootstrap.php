@@ -7,6 +7,14 @@ $config = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration(
     isDevMode: true,
 );
 $config->addCustomStringFunction('MATCH', \DoctrineExtensions\Query\Mysql\MatchAgainst::class);
+if (false === defined('IS_IN_TEST_ENV') || false === IS_IN_TEST_ENV) {
+    $config->setMiddlewares([
+                                new \Doctrine\DBAL\Logging\Middleware(new \DoEveryApp\Util\QueryLogger())
+                            ]);
+
+    $config->setQueryCache(new \Symfony\Component\Cache\Adapter\PhpFilesAdapter(namespace: 'doctrine_queries', directory: realpath(ROOT_DIR) . DIRECTORY_SEPARATOR . 'cache'));
+    $config->setResultCache(new \Symfony\Component\Cache\Adapter\PhpFilesAdapter(namespace: 'doctrine_results', directory: realpath(ROOT_DIR) . DIRECTORY_SEPARATOR . 'cache'));
+}
 
 $dbParams   = require __DIR__ . DIRECTORY_SEPARATOR . 'doctrineConfiguration.php';
 $connection = \Doctrine\DBAL\DriverManager::getConnection($dbParams, $config);
