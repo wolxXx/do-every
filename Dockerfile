@@ -36,6 +36,9 @@ RUN a2enmod rewrite
 
 RUN wget https://raw.githubusercontent.com/wolxXx/toolz/main/fixPHP.sh && chmod +x fixPHP.sh && ./fixPHP.sh
 
+RUN sed -i '/opcache.enable=/c\opcache.enable = 1' "/etc/php/$phpVersion/apache2/php.ini"
+
+
 WORKDIR /var/www
 
 CMD ["apachectl", "-D", "FOREGROUND"]
