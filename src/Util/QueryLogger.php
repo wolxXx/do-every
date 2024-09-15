@@ -58,9 +58,8 @@ class QueryLogger implements \Psr\Log\LoggerInterface
         foreach (static::$queries as $query) {
             $rawQuery    = $query['sql'];
             $queryString = $sqlFormatter->format($rawQuery);
-
+            $params = [];
             if (\array_key_exists('params', $query)) {
-                $params = [];
                 foreach ($query['params'] as $index => $param) {
                     $param    = $this->mapType($query['types'][$index]) . ' ' . \DoEveryApp\Util\View\DisplayValue::do($param);
                     $param    = '<span style="color: #f00;   font-style: oblique;">' . $param . '</span>';
