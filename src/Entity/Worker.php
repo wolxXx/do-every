@@ -34,28 +34,35 @@ class Worker
         mappedBy    : 'workingOn',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["name" => "ASC"])]
-    protected         $tasksWorkingOn;
+    protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $tasksWorkingOn;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    protected string  $name;
+    protected string                                       $name;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'language',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        nullable: true
+    )]
+    protected ?string                                      $language = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'email',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string $email    = null;
+    protected ?string                                      $email    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'password',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string $password = null;
+    protected ?string                                      $password = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_admin',
@@ -65,7 +72,7 @@ class Worker
             "default" => 0,
         ],
     )]
-    protected bool    $admin    = false;
+    protected bool                                         $admin    = false;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
@@ -75,7 +82,7 @@ class Worker
             "default" => 1,
         ],
     )]
-    protected bool    $notify   = true;
+    protected bool                                         $notify   = true;
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -432,6 +439,20 @@ class Worker
     public function setTwoFactorRecoverCode3UsedAt(?\DateTime $twoFactorRecoverCode3UsedAt): static
     {
         $this->twoFactorRecoverCode3UsedAt = $twoFactorRecoverCode3UsedAt;
+
+        return $this;
+    }
+
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+
+    public function setLanguage(?string $language): static
+    {
+        $this->language = $language;
 
         return $this;
     }
