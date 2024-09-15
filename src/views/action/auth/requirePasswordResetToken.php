@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -33,6 +34,6 @@ declare(strict_types=1);
     </div>
 
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="los">
+        <input class="primaryButton" type="submit" value="<?= $translator->go() ?>">
     </div>
 </form>

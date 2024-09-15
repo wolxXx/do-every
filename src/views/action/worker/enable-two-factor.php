@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -21,7 +22,7 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    2FA für Worker <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?> einrichten
+    2FA für <?= $translator->worker() ?> <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?> einrichten
 </h1>
 <form action="" method="post" novalidate>
     <div class="row">

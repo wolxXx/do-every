@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -31,6 +32,7 @@ declare(strict_types=1);
             <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
         </a>
     <? endif ?>
+    <hr />
 </div>
 
 <?= $this->fetchTemplate('action/execution/partial/addEdit.php', ['data' => $data]) ?>

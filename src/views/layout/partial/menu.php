@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 $menuItem = (new \DoEveryApp\Util\View\MenuItem())
     ->setCurrentRoute($currentRoute)
@@ -15,9 +16,8 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
 ;
 ?>
 <ul>
-    
-    <? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
 
+    <? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
             ->setActiveRoutes([
@@ -47,65 +47,65 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
             ->setName('Code eingeben')
         ?>
     <? endif ?>
-    
+
     <? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
             ->setActiveRoutes([
                                   \DoEveryApp\Action\Cms\IndexAction::getRoutePattern(),
                               ])
-            ->setName('Dashboard')
+            ->setName($translator->dashboard())
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Task\IndexAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Task\IndexAction::getRoutePattern(),
-                \DoEveryApp\Action\Task\AddAction::getRoutePattern(),
-                \DoEveryApp\Action\Task\EditAction::getRoutePattern(),
-                \DoEveryApp\Action\Task\ShowAction::getRoutePattern(),
-                \DoEveryApp\Action\Execution\AddAction::getRoutePattern(),
-                \DoEveryApp\Action\Execution\EditAction::getRoutePattern(),
-                \DoEveryApp\Action\Group\AddAction::getRoutePattern(),
-                \DoEveryApp\Action\Group\EditAction::getRoutePattern(),
-                \DoEveryApp\Action\Group\ShowAction::getRoutePattern(),
-            ])
-            ->setName('Aufgaben')
+                                  \DoEveryApp\Action\Task\IndexAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Task\AddAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Task\EditAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Task\ShowAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Execution\AddAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Execution\EditAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Group\AddAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Group\EditAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Group\ShowAction::getRoutePattern(),
+                              ])
+            ->setName($translator->tasks())
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Task\LogAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Task\LogAction::getRoutePattern(),
-            ])
+                                  \DoEveryApp\Action\Task\LogAction::getRoutePattern(),
+                              ])
             ->setName('Log')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Worker\IndexAction::getRoutePattern(),
-            ])
-            ->setName('Worker')
+                                  \DoEveryApp\Action\Worker\IndexAction::getRoutePattern(),
+                              ])
+            ->setName($translator->workers())
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\ShowSettingsAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Cms\ShowSettingsAction::getRoutePattern(),
-                \DoEveryApp\Action\Cms\EditSettingsAction::getRoutePattern(),
-            ])
-            ->setName('Einstellungen')
+                                  \DoEveryApp\Action\Cms\ShowSettingsAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Cms\EditSettingsAction::getRoutePattern(),
+                              ])
+            ->setName($translator->settings())
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\DebugAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Cms\DebugAction::getRoutePattern(),
-            ])
+                                  \DoEveryApp\Action\Cms\DebugAction::getRoutePattern(),
+                              ])
             ->setName('debug')
         ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
             ->setActiveRoutes([
-                \DoEveryApp\Action\Auth\LogoutAction::getRoutePattern(),
-            ])
-            ->setName('ausloggen')
+                                  \DoEveryApp\Action\Auth\LogoutAction::getRoutePattern(),
+                              ])
+            ->setName($translator->logout())
         ?>
     <? endif ?>
 </ul>

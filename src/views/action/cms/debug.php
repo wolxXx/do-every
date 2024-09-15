@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -20,7 +21,7 @@ declare(strict_types=1);
 </h1>
 <fieldset>
     <legend>
-        Einstellungen
+        <?= $translator->settings() ?>
     </legend>
     <table class="keyValue">
         <thead>

@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -232,17 +233,17 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
         <div>
             Welche Steps sollen ausgeführt werden?
         </div>
-        <i class="rowAdder">
+        <i class="rowAdder primaryButton">
             <?= $this->fetchTemplate('icon/add.php') ?>
             hinzufügen
         </i>
         <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
             <? foreach ($data['checkListItem']??[] as $index => $item): ?>
-                <div class="row" draggable="true">
+                <div class="rowSimple" draggable="true">
                     <div class="column">
                         <span class="dangerButton rowRemover">
-                        <i class="fa fa-minus"></i>
-                    </span>
+                            <i class="fa fa-minus"></i>
+                        </span>
                     </div>
                     <div class="column">
                         <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
@@ -264,7 +265,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             <? endforeach ?>
         </div>
         <template>
-            <div class="row" draggable="true">
+            <div class="rowSimple" draggable="true">
                 <div class="column">
                     <span class="dangerButton rowRemover">
                         <i class="fa fa-minus"></i>

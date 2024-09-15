@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -17,12 +18,12 @@ declare(strict_types=1);
 
 ?>
 <h1>
-    Neues Passwort setzen
+    <?= $translator->pageTitleSetNewPassword() ?>
 </h1>
 <form action="" method="post" novalidate>
     <div>
         <label for="password">
-            Passwort
+            <?= $translator->password() ?>
         </label>
         <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD] : '' ?>"/>
         <div class="errors">
@@ -34,7 +35,7 @@ declare(strict_types=1);
 
     <div>
         <label for="confirm_password">
-            Passwort bestätigen
+            <?= $translator->confirmPassword() ?>
         </label>
         <input id="confirm_password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM] : '' ?>"/>
         <div class="errors">
@@ -45,7 +46,7 @@ declare(strict_types=1);
     </div>
 
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="los">
+        <input class="primaryButton" type="submit" value="<?= \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->go() ?>">
     </div>
 
 </form>

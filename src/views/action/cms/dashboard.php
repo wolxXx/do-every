@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -24,20 +25,20 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 ?>
 
 <h1>
-    Dashboard
+    <?= $translator->dashboard() ?>
 </h1>
 
 <? if(true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange($currentUser)): ?>
     <fieldset>
         <legend>
-            Achtung!
+            <?= $translator->attention() ?>
         </legend>
         <? if(null !== $currentUser->getLastPasswordChange()): ?>
             Du hast dein Passwort lange nicht geändert. Das letzte mal <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange()) ?>.<br />
         <? endif ?>
         Du solltest dein Passwort ändern.
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
-            los
+            <?= $translator->go() ?>
         </a>
     </fieldset>
 <? endif ?>
@@ -45,11 +46,11 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 <? if(null === $currentUser->getTwoFactorSecret()): ?>
     <fieldset>
         <legend>
-            Achtung!
+            <?= $translator->attention() ?>
         </legend>
         Du solltest einen zweiten Faktor für den Login einrichten.
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($currentUser->getId()) ?>">
-            los
+            <?= $translator->go() ?>
         </a>
     </fieldset>
 <? endif ?>
@@ -128,7 +129,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 <? if(0 !== sizeof($tasks)): ?>
     <fieldset>
         <legend>
-            Aufgaben
+            <?= $translator->tasks() ?>
         </legend>
 
         <table>
@@ -246,7 +247,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                         Aufwand
                     </th>
                     <th>
-                        Worker
+                        <?= $translator->worker() ?>
                     </th>
                     <th>
                         Notiz

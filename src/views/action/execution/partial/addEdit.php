@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -19,7 +20,7 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="worker">
-                    Worker
+                    <?= $translator->worker() ?>
                 </label>
                 <select name="worker" id="worker">
                     <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected'  : '' ?>  value="">

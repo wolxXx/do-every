@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -17,7 +18,7 @@ declare(strict_types=1);
 $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
 ?>
 <h1>
-    Arbeitsnachweis für Worker "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>"
+    Arbeitsnachweis für <?= $translator->worker() ?> "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>"
 </h1>
 
 <? if(0 === sizeof($data)): ?>

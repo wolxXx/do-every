@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 ?>
 <!DOCTYPE HTML>
@@ -40,6 +41,8 @@ declare(strict_types=1);
                 </nobr>
             </div>
             <?= $this->fetchTemplate('layout/partial/menu.php') ?>
+            <?= $this->fetchTemplate('layout/partial/language.php') ?>
+
         </div>
         <div class="" id="content">
             <?= $this->fetchTemplate('layout/partial/messages.php') ?>

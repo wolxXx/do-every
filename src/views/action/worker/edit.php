@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -17,7 +18,7 @@ declare(strict_types=1);
 
 ?>
 <h1>
-    Worker "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>" bearbeiten
+    <?= $translator->worker() ?> "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>" bearbeiten
 </h1>
 
 <?= $this->fetchTemplate('action/worker/partial/addEdit.php', ['data' => $data]) ?>

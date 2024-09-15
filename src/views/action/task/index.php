@@ -8,13 +8,14 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 ?>
 
 <div class="row">
     <div class="column">
         <h1>
-            Aufgaben
+            <?= $translator->tasks() ?>
         </h1>
         <div class="pageButtons">
             <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">

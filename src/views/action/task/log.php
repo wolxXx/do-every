@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @var $currentRoute        string
  * @var $currentRoutePattern string
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
+ * @var $translator          \DoEveryApp\Util\Translator
  */
 
 /**
@@ -43,7 +44,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                     Aufwand
                 </th>
                 <th>
-                    Worker
+                    <?= $translator->worker() ?>
                 </th>
                 <th>
                     Notiz
