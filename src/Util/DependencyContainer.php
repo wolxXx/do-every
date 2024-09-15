@@ -84,6 +84,7 @@ class DependencyContainer
         return match (\DoEveryApp\Util\User\Current::getLanguage()) {
             Translator::LANGUAGE_GERMAN => new \DoEveryApp\Util\Translator\German(),
             Translator::LANGUAGE_ENGLISH => new \DoEveryApp\Util\Translator\English(),
+            Translator::LANGUAGE_MAORI => new \DoEveryApp\Util\Translator\Nothing(),
         };
     }
 
