@@ -58,4 +58,82 @@ interface Translator
 
 
     public function confirmPassword(): string;
+
+
+    public function dashboardLastPasswordChange(): string;
+
+
+    public function dashboardChangePassword(): string;
+
+
+    public function dashboardAddTwoFactor(): string;
+
+
+    public function currentWorks(): string;
+
+
+    public function task(): string;
+
+
+    public function currentlyWorkingOn(): string;
+
+
+    public function assignedTo(): string;
+
+
+    public function tasksWithDue():string;
+
+
+    public function isCurrentlyWorkingOn():string;
+
+
+    public function group():string;
+
+
+    public function name():string;
+
+
+    public function lastExecution():string;
+
+
+    public function due():string;
+
+
+    public function interval():string;
+
+
+    public function actions():string;
+
+
+    public function show():string;
+
+
+    public function addExecution():string;
+
+
+    public function edit():string;
+
+
+    public function delete():string;
+
+
+    public function executions():string;
+
+
+    public function date():string;
+
+
+    public function effort():string;
+
+
+    public function note():string;
+
+
+    public function statistics():string;
+
+
+    public function averageEffort():string;
+
+
+    public function totalEffort(): string;
 }
