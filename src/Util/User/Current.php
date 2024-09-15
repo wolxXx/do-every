@@ -68,6 +68,11 @@ class Current
 
     public static function getLanguage(): string
     {
-        return 'de';
+        return $_COOKIE['lang'] ?? 'de';
+    }
+
+    public static function setLanguage(?string $language): void
+    {
+        $_COOKIE['lang'] = $language;
     }
 }
