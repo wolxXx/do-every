@@ -151,6 +151,7 @@ abstract class AbstractAction
             'currentRoute'        => \Slim\Routing\RouteContext::fromRequest($this->getRequest())->getRoutingResults()->getUri(),
             'currentRoutePattern' => static::getRoutePattern(),
             'currentUser'         => \DoEveryApp\Util\User\Current::get(),
+            'translator'          => \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator(),
         ];
 
         $phpView = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables));
