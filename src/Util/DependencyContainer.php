@@ -42,7 +42,6 @@ class DependencyContainer
     }
 
 
-
     public function getContainer(): \DI\Container
     {
         return $this->container;
@@ -79,6 +78,16 @@ class DependencyContainer
         return $this->getLogger();
     }
 
+
+    public function getTranslator(): Translator
+    {
+        return match (\DoEveryApp\Util\User\Current::getLanguage()) {
+            Translator::LANGUAGE_GERMAN => new \DoEveryApp\Util\Translator\German(),
+            Translator::LANGUAGE_ENGLISH => new \DoEveryApp\Util\Translator\English(),
+        };
+    }
+
+
     public function getValidator(): \Symfony\Component\Validator\Validator\RecursiveValidator
     {
         return new \Symfony\Component\Validator\Validator\RecursiveValidator(
@@ -87,15 +96,16 @@ class DependencyContainer
 
                     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
                     {
-                        #\var_dump(func_get_args());
-                        #throw new \InvalidArgumentException('translate me!');
-                        return $id;
+                        return DependencyContainer::getInstance()
+                                                  ->getTranslator()
+                                                  ->translate($id, $parameters, $domain, $locale)
+                        ;
                     }
 
 
                     public function getLocale(): string
                     {
-                        return 'de_DE';
+                        return \DoEveryApp\Util\User\Current::getLanguage();
                     }
                 }
             ),
