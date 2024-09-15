@@ -1,254 +1,256 @@
 <?php
 
+
 declare(strict_types=1);
 
 namespace DoEveryApp\Util\Translator;
 
-class English implements \DoEveryApp\Util\Translator
+class Nothing implements \DoEveryApp\Util\Translator
 {
+
+    protected function debug(): string
+    {
+        return '..';
+    }
+
 
     public function translate($what, ...$args): string
     {
-        switch ($what) {
-            case 'This value should not be blank.': {
-                return 'This value should not be blank.';
-            }
-        }
-        \var_dump($what, ...$args);
-        return $what;
+        return $this->debug();
     }
 
 
     public function dashboard(): string
     {
-        return 'dashboard';
+        return $this->debug();
     }
 
 
     public function attention(): string
     {
-        return 'Attention!';
+        return $this->debug();
     }
 
 
     public function go(): string
     {
-        return 'go';
+        return $this->debug();
     }
 
 
     public function settings(): string
     {
-        return 'settings';
+        return $this->debug();
     }
 
 
     public function logout(): string
     {
-        return 'logout';
+        return $this->debug();
     }
 
 
     public function worker(): string
     {
-        return 'bee';
+        return $this->debug();
     }
 
 
     public function workers(): string
     {
-        return 'bees';
+        return $this->debug();
     }
 
 
     public function login(): string
     {
-        return 'login';
+        return $this->debug();
     }
 
 
     public function eMail(): string
     {
-        return 'e-mail';
+        return $this->debug();
     }
 
 
     public function password(): string
     {
-        return 'password';
+        return $this->debug();
     }
 
 
     public function tasks(): string
     {
-        return 'tasks';
+        return $this->debug();
     }
 
 
     public function pageTitleSetNewPassword(): string
     {
-        return 'set new password';
+        return $this->debug();
     }
 
 
     public function confirmPassword(): string
     {
-        // TODO: Implement confirmPassword() method.
+        return $this->debug();
     }
 
 
     public function dashboardLastPasswordChange(): string
     {
-        return 'last password change';
+        return $this->debug();
     }
 
 
     public function dashboardChangePassword(): string
     {
-        return 'change password';
+        return $this->debug();
     }
 
 
     public function dashboardAddTwoFactor(): string
     {
-        return 'You should enable the two factor authentication.';
+        return $this->debug();
     }
 
 
     public function currentWorks(): string
     {
-        return 'current works';
+        return $this->debug();
     }
 
 
     public function task(): string
     {
-        return 'task';
+        return $this->debug();
     }
 
 
     public function currentlyWorkingOn(): string
     {
-        return 'currently working on';
+        return $this->debug();
     }
 
 
     public function assignedTo(): string
     {
-        return 'assigned to';
+        return $this->debug();
     }
 
 
     public function tasksWithDue(): string
     {
-        return 'tasks';
+        return $this->debug();
     }
 
 
     public function isCurrentlyWorkingOn(): string
     {
-        return '%s is working on';
+        return $this->debug();
     }
 
 
     public function group(): string
     {
-        return 'group';
+        return $this->debug();
     }
 
 
     public function name(): string
     {
-        return 'name';
+        return $this->debug();
     }
 
 
     public function lastExecution(): string
     {
-        return 'last execution';
+        return $this->debug();
     }
 
 
     public function due(): string
     {
-        return 'due';
+        return $this->debug();
     }
 
 
     public function interval(): string
     {
-        return 'interval';
+        return $this->debug();
     }
 
 
     public function actions(): string
     {
-        return 'actions';
+        return $this->debug();
     }
 
 
     public function show(): string
     {
-        return 'show';
+        return $this->debug();
     }
 
 
     public function addExecution(): string
     {
-        return 'add execution';
+        return $this->debug();
     }
 
 
     public function edit(): string
     {
-        return 'edit';
+        return $this->debug();
     }
 
 
     public function delete(): string
     {
-        return 'delete';
+        return $this->debug();
     }
 
 
     public function executions(): string
     {
-        return 'executions';
+        return $this->debug();
     }
 
 
     public function date(): string
     {
-        return 'date';
+        return $this->debug();
     }
 
 
     public function effort(): string
     {
-        return 'effort';
+        return $this->debug();
     }
 
 
     public function note(): string
     {
-        return 'note';
+        return $this->debug();
     }
 
 
     public function statistics(): string
     {
-        return 'statistics';
+        return $this->debug();
     }
 
 
     public function averageEffort(): string
     {
-        return 'average';
+        return $this->debug();
     }
 
 
     public function totalEffort(): string
     {
-        return 'total';
+        return $this->debug();
     }
 }
+
