@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+defined('DISABLE_DOCTRINE_TOOLS') || define('DISABLE_DOCTRINE_TOOLS', true);
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'doctrineBootstrap.php';
 \Doctrine\ORM\Tools\Console\ConsoleRunner::run(
     new \Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider($entityManager)

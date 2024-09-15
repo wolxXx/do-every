@@ -7,7 +7,7 @@ $config = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration(
     isDevMode: true,
 );
 $config->addCustomStringFunction('MATCH', \DoctrineExtensions\Query\Mysql\MatchAgainst::class);
-if (false === defined('IS_IN_TEST_ENV') || false === IS_IN_TEST_ENV) {
+if ((false === defined('IS_IN_TEST_ENV') || false === IS_IN_TEST_ENV) && (true === defined('DISABLE_DOCTRINE_TOOLS') && false === DISABLE_DOCTRINE_TOOLS)) {
     $config->setMiddlewares([
                                 new \Doctrine\DBAL\Logging\Middleware(new \DoEveryApp\Util\QueryLogger())
                             ]);
