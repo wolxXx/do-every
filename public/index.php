@@ -8,6 +8,15 @@ ini_set('xdebug.var_display_max_depth', 10);
 ini_set('xdebug.var_display_max_children', 100);
 ini_set('xdebug.var_display_max_data', 100);
 
+ini_set('opcache.memory_consumption', 2048);
+ini_set('opcache.interned_strings_buffer', 8);
+ini_set('opcache.max_accelerated_files', 4000);
+ini_set('opcache.revalidate_freq', 60);
+ini_set('opcache.enable_cli', 1);
+//ini_set('opcache.enable', 0);
+ini_set('opcache.max_file_size', 1000);
+ini_set('opcache.file_cache_only', 1);
+ini_set('opcache.file_cache', ROOT_DIR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . '.opcache');
 
 $app = \Slim\Factory\AppFactory::create();
 $app->addErrorMiddleware(true, true, true, \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger());
