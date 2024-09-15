@@ -68,6 +68,7 @@
     "beberlei/doctrineextensions": "*",
     "nesbot/carbon": "*",
     "codeception/codeception": "*",
+    "doctrine/sql-formatter": "*",
     "doctrine/migrations": "*",
     "doctrine/orm": "*",
     "fakerphp/faker": "*",
