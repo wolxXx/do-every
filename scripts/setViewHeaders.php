@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @var \$currentRoute        string
  * @var \$currentRoutePattern string
  * @var \$currentUser         \DoEveryApp\Entity\Worker|null
+ * @var \$translator          \DoEveryApp\Util\Translator
 PHP;
 
 $directoryIterator = new \RecursiveDirectoryIterator(ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views');
