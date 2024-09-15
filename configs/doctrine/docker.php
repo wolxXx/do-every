@@ -4,6 +4,8 @@ if (true === defined('IS_IN_TEST_ENV') && true === IS_IN_TEST_ENV) {
     $dbName .= '_test';
 }
 
+defined('DISABLE_DOCTRINE_TOOLS') || define('DISABLE_DOCTRINE_TOOLS', false);
+
 return [
     'table_prefix'  => 'do_every_',
     'driver'        => 'pdo_mysql',
