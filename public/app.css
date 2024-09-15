@@ -157,10 +157,21 @@ hr {
     border: solid 3px #ae9809;
 }
 
+.rowRemover {
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 0;
+}
+
 .row {
     display: flex;
     gap: 20px;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+}
+.rowSimple {
+    display: flex;
+    gap: 20px;
 }
 .grid {
     /**
@@ -362,4 +373,14 @@ h1:before,h1:after {
     border: solid 1px #fff;
     padding: 15px;
     margin-bottom: 20px;
+}
+
+#debug {
+    background: #000;
+    z-index: 1000;
+    position: absolute;
+    border-top: solid 3px #fff;
+    margin-top: 250px;
+    width: 100%;
+    right: 0;
 }
