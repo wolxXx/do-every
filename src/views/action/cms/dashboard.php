@@ -34,9 +34,9 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
             <?= $translator->attention() ?>
         </legend>
         <? if(null !== $currentUser->getLastPasswordChange()): ?>
-            Du hast dein Passwort lange nicht geändert. Das letzte mal <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange()) ?>.<br />
+            <?= sprintf($translator->dashboardLastPasswordChange(), \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange())) ?><br />
         <? endif ?>
-        Du solltest dein Passwort ändern.
+        <?= $translator->dashboardChangePassword() ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
             <?= $translator->go() ?>
         </a>
@@ -48,7 +48,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
         <legend>
             <?= $translator->attention() ?>
         </legend>
-        Du solltest einen zweiten Faktor für den Login einrichten.
+        <?= $translator->dashboardAddTwoFactor() ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($currentUser->getId()) ?>">
             <?= $translator->go() ?>
         </a>
@@ -58,20 +58,20 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 <? if(0 !== sizeof($workingOn)): ?>
     <fieldset>
         <legend>
-            Aktuelle Arbeiten
+            <?= $translator->currentWorks() ?>
         </legend>
 
         <table style="margin-bottom: 50px;">
             <thead>
             <tr>
                 <th>
-                    Aufgabe
+                    <?= $translator->task() ?>
                 </th>
                 <th>
-                    arbeitet daran
+                    <?= $translator->currentlyWorkingOn() ?>
                 </th>
                 <th>
-                    zugewiesen an
+                    <?= $translator->assignedTo() ?>
                 </th>
             </tr>
             </thead>
@@ -103,7 +103,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 <? if(0 !== sizeof($dueTasks)): ?>
     <fieldset>
         <legend>
-            Fällige Aufgaben
+            <?= $translator->tasksWithDue() ?>
         </legend>
         <div style="margin-bottom: 50px;" class="grid">
             <? foreach($dueTasks as $task): ?>
@@ -115,7 +115,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                             <? foreach($workingOn as $workingOnTask): ?>
                                 <? if($workingOnTask->getId() === $task->getId()): ?>
                                     <br>
-                                    (<?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?> arbeitet daran)
+                                    (<?= sprintf($translator->isCurrentlyWorkingOn(), \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn())) ?>)
                                 <? endif ?>
                             <? endforeach ?>
                         </a>
@@ -136,28 +136,28 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
             <thead>
             <tr>
                 <th>
-                    Gruppe
+                    <?= $translator->group() ?>
                 </th>
                 <th>
-                    Name
+                    <?= $translator->name() ?>
                 </th>
                 <th>
-                    zugewiesen an
+                    <?= $translator->assignedTo() ?>
                 </th>
                 <th>
-                    arbeitet daran
+                    <?= $translator->currentlyWorkingOn() ?>
                 </th>
                 <th>
-                    letzte Ausführung
+                    <?= $translator->lastExecution() ?>
                 </th>
                 <th>
-                    Fälligkeit
+                    <?= $translator->due() ?>
                 </th>
                 <th>
-                    Intervall
+                    <?= $translator->interval() ?>
                 </th>
                 <th>
-                    Aktionen
+                    <?= $translator->actions() ?>
                 </th>
             </tr>
             </thead>
@@ -199,16 +199,16 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     </td>
                     <td class="pullRight">
                         <nobr class="buttonRow">
-                            <a class="primaryButton" title="anzeigen" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                            <a class="primaryButton" title="<?= $translator->show() ?>" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                                 <?= $this->fetchTemplate('icon/show.php') ?>
                             </a>
-                            <a class="primaryButton" title="Ausführung eintragen" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
+                            <a class="primaryButton" title="<?= $translator->addExecution() ?>" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
                                 <?= $this->fetchTemplate('icon/add.php') ?>
                             </a>
-                            <a class="warningButton" title="bearbeiten" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+                            <a class="warningButton" title="<?= $translator->edit() ?>" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
                                 <?= $this->fetchTemplate('icon/edit.php') ?>
                             </a>
-                            <a class="dangerButton confirm" title="löschen" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+                            <a class="dangerButton confirm" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
                                 <?= $this->fetchTemplate('icon/trash.php') ?>
                             </a>
                         </nobr>
@@ -226,31 +226,30 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 
 <div class="row">
     <div class="column">
-
         <fieldset>
             <legend>
-                Ausführungen
+                <?= $translator->executions() ?>
             </legend>
             <table>
                 <thead>
                 <tr>
                     <th>
-                        Datum
+                        <?= $translator->date() ?>
                     </th>
                     <th>
-                        Gruppe
+                        <?= $translator->group() ?>
                     </th>
                     <th>
-                        Aufgabe
+                        <?= $translator->task() ?>
                     </th>
                     <th>
-                        Aufwand
+                        <?= $translator->effort() ?>
                     </th>
                     <th>
                         <?= $translator->worker() ?>
                     </th>
                     <th>
-                        Notiz
+                        <?= $translator->note() ?>
                     </th>
                 </tr>
                 </thead>

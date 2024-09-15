@@ -17,14 +17,14 @@ declare(strict_types=1);
 ?>
 <fieldset>
     <legend>
-        Statistik
+        <?= $translator->statistics() ?>
     </legend>
 
     <div class="row">
         <div class="column">
             <div class="row">
                 <div class="column">
-                    <nobr>Aufwand durchschnittlich:</nobr>
+                    <nobr><?= $translator->averageEffort() ?>:</nobr>
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getAverage()) ?>
@@ -34,7 +34,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    insgesamt:
+                    <?= $translator->totalEffort() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getTotal()) ?>
