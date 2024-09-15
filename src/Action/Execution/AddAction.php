@@ -15,11 +15,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
     use \DoEveryApp\Action\Execution\Share\AddEdit;
 
 
-
-
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-
         $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
         if (false === $task instanceof \DoEveryApp\Entity\Task) {
             \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
@@ -67,6 +64,13 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     ->setWorker($data[static::FORM_FIELD_WORKER] ? \DoEveryApp\Entity\Worker::getRepository()->find($data[static::FORM_FIELD_WORKER]) : null)
             );
             $this->handleCheckListItems($execution, $data);
+
+            $now      = \Carbon\Carbon::now();
+            $executed = \Carbon\Carbon::create($execution->getDate());
+            if (\abs($now->unix() - $executed->unix()) < 120) {
+                $task->setWorkingOn(null);
+                $task::getRepository()->update($task);
+            }
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
