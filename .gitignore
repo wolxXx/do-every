@@ -11,6 +11,7 @@
 /test/testdocs.html
 /test/coverage
 
+/cache
 /docker-volumes/backups
 /log
 /public/vendor
