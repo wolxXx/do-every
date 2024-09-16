@@ -13,7 +13,7 @@ class QueryLogger implements \Psr\Log\LoggerInterface
 
     public function log($level, string|\Stringable $message, array $context = []): void
     {
-        if (false === \strstr($message, 'Executing statement') && false === \strstr($message, 'Executing query')) {
+        if (false === str_contains($message, 'Executing statement') && false === str_contains($message, 'Executing query')) {
             return;
         }
         $exception = new \InvalidArgumentException();
@@ -25,7 +25,7 @@ class QueryLogger implements \Psr\Log\LoggerInterface
             $blahFoo = \str_replace(\realpath(\ROOT_DIR) . \DIRECTORY_SEPARATOR, '', $traceItem['file']);
             if (false === \str_starts_with($blahFoo, 'vendor')) {
                 $paths[] = trim($blahFoo . '::' . $traceItem['line']) . ' ' . $traceItem['function'] . '()';
-                if (\sizeof($paths) > 4) {
+                if (\sizeof($paths) > 5) {
                     break;
                 }
             }
@@ -42,7 +42,6 @@ class QueryLogger implements \Psr\Log\LoggerInterface
             return;
         }
         \ob_start();
-        echo sizeof(self::$queries) . ' queries executed.<br> <br>';
         $sqlFormatter = new \Doctrine\SqlFormatter\SqlFormatter(new \Doctrine\SqlFormatter\HtmlHighlighter([
                                                                                                                \Doctrine\SqlFormatter\HtmlHighlighter::HIGHLIGHT_QUOTE          => 'style="color: blue;"',
                                                                                                                \Doctrine\SqlFormatter\HtmlHighlighter::HIGHLIGHT_BACKTICK_QUOTE => 'style="color: purple;"',
@@ -76,7 +75,11 @@ class QueryLogger implements \Psr\Log\LoggerInterface
             echo $queryString;
         }
         $foo = \ob_get_clean();
-        echo '<div id="debug">' . $foo . '</div>';
+        $end = microtime(true);
+        echo '<div id="debug">';
+        echo \number_format((($end - \STARTED) * 1000), 0). 'ms execution time<br>';
+        echo sizeof(self::$queries) . ' queries executed.<br> <br>';
+        echo  $foo . '</div>';
     }
 
 
