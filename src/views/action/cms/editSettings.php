@@ -16,7 +16,7 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    Einstellungen bearbeiten
+    <?= $translator->editSettings() ?>
 </h1>
 
 <form action="" method="post" novalidate>
@@ -24,14 +24,14 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="fillTimeLine">
-                    Zeitlinie auffüllen?
+                    <?= $translator->fillTimeLineQuestion() ?>
                 </label>
                 <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE ?>" id="fillTimeLine">
                     <option <?= array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE, $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE] == '1' ? 'selected'  : '' ?>  value="1">
-                        ja
+                        <?= $translator->yes() ?>
                     </option>
                     <option <?=  false === array_key_exists(\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE, $data) || $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE] == '0' ? 'selected'  : '' ?>  value="0">
-                        nein
+                        <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
@@ -46,7 +46,7 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="precisionDue">
-                    Fälligkeitpräzision
+                    <?= $translator->duePrecision() ?>
                 </label>
                 <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_PRECISION_DUE ?>" id="precisionDue">
                     <? foreach(range(0, 5) as $precision): ?>
@@ -67,7 +67,7 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="keepBackups">
-                    Backups aufheben (Tage)
+                    <?= $translator->keepBackupDays() ?>
                 </label>
                 <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_KEEP_BACKUPS ?>" id="keepBackups">
                     <? foreach(range(0, 90) as $precision): ?>
@@ -89,6 +89,6 @@ declare(strict_types=1);
 
 
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="speichern">
+        <input class="primaryButton" type="submit" value="<?= $translator->save() ?>">
     </div>
 </form>

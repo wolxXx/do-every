@@ -19,7 +19,7 @@ declare(strict_types=1);
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\EditSettingsAction::getRoute() ?>">
         <?= $this->fetchTemplate('icon/wrench.php') ?>
-        Einstellungen bearbeiten
+        <?= $translator->editSettings() ?>
     </a>
 </div>
 
@@ -28,17 +28,17 @@ declare(strict_types=1);
     <thead>
         <tr>
             <th>
-                Schlüssel
+                <?= $translator->what() ?>
             </th>
             <th>
-                Wert
+                <?= $translator->value() ?>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>
-                Zeitlinie auffüllen?
+                <?= $translator->fillTimeLineQuestion() ?>
             </td>
             <td>
                 <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
@@ -46,7 +46,7 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
-                Fälligkeitpräzision
+                <?= $translator->duePrecision() ?>
             </td>
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
@@ -54,7 +54,7 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
-                Backups aufheben (Tage)
+                <?= $translator->keepBackupDays() ?>
             </td>
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>

@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 ?>
 
-<h1>Workers</h1>
+<h1>
+    <?= $translator->workers() ?>
+</h1>
 
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddAction::getRoute() ?>">
         <?= $this->fetchTemplate('icon/add.php') ?>
-        neu
+        <?= $translator->new() ?>
     </a>
 </div>
 
@@ -26,34 +28,34 @@ declare(strict_types=1);
     <thead>
         <tr>
             <th>
-                Name
+                <?= $translator->name() ?>
             </th>
             <th>
-                arbeitet an
+                <?= $translator->currentlyWorkingOn() ?>
             </th>
             <th>
-                Email
+                <?= $translator->eMail() ?>
             </th>
             <th>
-                hat Passwort?
+                <?= $translator->hasPasswordQuestion() ?>
             </th>
             <th>
-                ist Admin?
+                <?= $translator->isAdminQuestion() ?>
             </th>
             <th>
-                Logins benachrichtigen?
+                <?= $translator->doNotifyLoginsQuestion() ?>
             </th>
             <th>
-                Fälligkeiten benachrichtigen?
+                <?= $translator->doNotifyDueTasksQuestion() ?>
             </th>
             <th>
-                letzter Login
+                <?= $translator->lastLogin() ?>
             </th>
             <th>
-                letzte Passwortänderung
+                <?= $translator->lastPasswordChange() ?>
             </th>
             <th class="pullRight">
-                Aktionen
+                <?= $translator->actions() ?>
             </th>
         </tr>
     </thead>

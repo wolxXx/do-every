@@ -46,7 +46,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    heute:
+                    <?= $translator->today() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getDay()) ?>
@@ -56,7 +56,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    gestern:
+                    <?= $translator->yesterday() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastDay()) ?>
@@ -68,7 +68,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    diese Woche:
+                    <?= $translator->thisWeek() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getWeek()) ?>
@@ -78,7 +78,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    letzte Woche:
+                    <?= $translator->lastWeek() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastWeek()) ?>
@@ -90,7 +90,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    dieser Monat:
+                    <?= $translator->thisMonth() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getMonth()) ?>
@@ -100,7 +100,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    letzter Monat:
+                    <?= $translator->lastMonth() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastMonth()) ?>
@@ -112,7 +112,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    dieses Jahr:
+                    <?= $translator->thisYear() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getYear()) ?>
@@ -122,7 +122,7 @@ declare(strict_types=1);
         <div class="column">
             <div class="row">
                 <div class="column">
-                    letztes Jahr:
+                    <?= $translator->lastYear() ?>:
                 </div>
                 <div class="column">
                     <?= \DoEveryApp\Util\View\Duration::byValue($durations->getLastYear()) ?>
@@ -132,7 +132,9 @@ declare(strict_types=1);
     </div>
     <div class="row">
         <div class="column">
-            <h3>Nach Monaten</h3>
+            <h3>
+                <?= $translator->byMonth() ?>
+            </h3>
             <? foreach($durations->getMonths() as $month => $duration): ?>
                 <div class="row">
                     <div class="column">
@@ -145,7 +147,9 @@ declare(strict_types=1);
             <? endforeach ?>
         </div>
         <div class="column">
-            <h3>Nach Jahren</h3>
+            <h3>
+                <?= $translator->byYear() ?>
+            </h3>
             <? foreach($durations->getYears() as $year => $duration): ?>
                 <div class="row">
                     <div class="column">

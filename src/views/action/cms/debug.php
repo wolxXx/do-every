@@ -27,10 +27,10 @@ declare(strict_types=1);
         <thead>
         <tr>
             <th>
-                Was
+                <?= $translator->what() ?>
             </th>
             <th>
-                Wert
+                <?= $translator->value() ?>
             </th>
         </tr>
         </thead>
