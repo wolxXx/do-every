@@ -10,19 +10,18 @@ declare(strict_types=1);
  * @var $currentUser         \DoEveryApp\Entity\Worker|null
  * @var $translator          \DoEveryApp\Util\Translator
  */
-
-$current = \DoEveryApp\Util\User\Current::getLanguage();
+return;
+$current = \DoEveryApp\Util\User\Current::getLanguage();;
 ?>
-
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let links = document.querySelectorAll(".languageSwitcher");
         links.forEach(function (link) {
             link.addEventListener("click", function (e) {
                 e.preventDefault();
-                document.cookie = "lang=" + link.dataset.language;
-                if(true === confirm('reload?')) {
+                Cookies.set('lang', link.dataset.language, { expires: 7, path: '' })
+                console.log(document.cookie);
+                if (true === confirm('reload?')) {
                     location.reload();
                 }
             });

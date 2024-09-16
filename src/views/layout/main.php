@@ -18,6 +18,7 @@ declare(strict_types=1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/app.css?t=<?= filemtime('public/app.css') ?>" media="screen" rel="stylesheet" type="text/css"/>
     <script src="/app.js?t=<?= filemtime('public/app.js') ?>"></script>
+    <script src="/cookie.js?t=<?= filemtime('public/cookie.js') ?>"></script>
 
     <script src="/vendor/fontawesome/js/all.js?t=<?= filemtime('public/vendor/fontawesome/js/all.js') ?>"></script>
     <link href="/vendor/fontawesome/css/all.css?t=<?= filemtime('public/vendor/fontawesome/css/all.css') ?>" media="screen" rel="stylesheet" type="text/css"/>

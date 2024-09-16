@@ -17,8 +17,6 @@ declare(strict_types=1);
 $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 ?>
 
-
-
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
@@ -27,11 +25,11 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <div class="column">
                         <div>
                             <label for="group">
-                                Gruppe
+                                <?= $translator->group() ?>
                             </label>
                             <select name="group" id="group">
                                 <option <?= false === array_key_exists('group', $data) || null === $data['group'] ? 'selected'  : '' ?>  value="">
-                                    - ohne -
+                                    - <?= $translator->without() ?> -
                                 </option>
                                 <? foreach($groups as $group): ?>
                                     <option <?= array_key_exists('group', $data) && $data['group'] == $group->getId() ? 'selected'  : '' ?> value="<?= $group->getId() ?>">
@@ -50,7 +48,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 <div class="column">
                     <div>
                         <label for="name" class="required">
-                            Name
+                            <?= $translator->name() ?>
                         </label>
                         <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
                         <div class="errors">
@@ -65,15 +63,13 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 
             <div class="row">
                 <div class="column">
-
-
                     <div>
                         <label for="assignee">
-                            zugewiesen an
+                            <?= $translator->assignedTo() ?>
                         </label>
                         <select name="assignee" id="assignee">
                             <option <?= false === array_key_exists('assignee', $data) || null === $data['assignee'] ? 'selected'  : '' ?>  value="">
-                                - niemand -
+                                - <?= $translator->nobody() ?> -
                             </option>
                             <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
                                 <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
@@ -89,17 +85,16 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </div>
                 </div>
                 <div class="column">
-
                     <div>
                         <label for="enableNotifications">
-                            benachrichtigen?
+                            <?= $translator->doNotifyDueTasksQuestion() ?>
                         </label>
                         <select name="enableNotifications" id="enableNotifications">
                             <option <?= array_key_exists('enableNotifications', $data) && $data['enableNotifications'] == '1' ? 'selected'  : '' ?>  value="1">
-                                ja
+                                <?= $translator->yes() ?>
                             </option>
                             <option <?=  false === array_key_exists('enableNotifications', $data) || $data['enableNotifications'] == '0' ? 'selected'  : '' ?>  value="0">
-                                nein
+                                <?= $translator->no() ?>
                             </option>
                         </select>
                         <div class="errors">
@@ -113,7 +108,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 
                     <div>
                         <label for="priority">
-                            Priorität
+                            <?= $translator->priority() ?>
                         </label>
                         <select name="priority" id="priority">
                             <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::LOW->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::LOW->value ?>">
@@ -135,22 +130,18 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                             <? endforeach ?>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
-
 
             <div class="row">
                 <div class="column">
                     <div>
                         <label for="intervalType">
-                            Intervaltyp
+                            <?= $translator->intervalType() ?>
                         </label>
                         <select name="intervalType" id="intervalType">
                             <option <?= false === array_key_exists('intervalType', $data) || null === $data['intervalType'] ? 'selected'  : '' ?>  value="">
-                                - ohne -
+                                - <?= $translator->without() ?> -
                             </option>
                             <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::MINUTE->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::MINUTE->value ?>">
                                 <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::MINUTE) ?>
@@ -178,7 +169,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 <div class="column">
                     <div>
                         <label for="intervalValue">
-                            Intervalwert
+                            <?= $translator->intervalValue() ?>
                         </label>
                         <input id="intervalValue" type="number" name="intervalValue" value="<?= array_key_exists('intervalValue', $data) ? $data['intervalValue'] : '' ?>"/>
                         <div class="errors">
@@ -191,7 +182,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 <div class="column">
                     <div>
                         <label for="elapsingCronType">
-                            Intervall-Modus
+                            <?= $translator->intervalMode() ?>
                         </label>
                         <select name="elapsingCronType" id="elapsingCronType">
                             <option <?= false === array_key_exists('elapsingCronType', $data) || $data['elapsingCronType'] == '1' ? 'selected'  : '' ?>  value="1">
@@ -211,10 +202,9 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             </div>
         </div>
         <div class="column">
-
             <div>
                 <label for="note">
-                    Notiz
+                    <?= $translator->notice() ?>
                 </label>
                 <textarea name="note" id="note" rows="10000" cols="10000"><?= array_key_exists('note', $data) ? $data['note'] : '' ?></textarea>
                 <div class="errors">
@@ -228,14 +218,14 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 
     <div>
         <h3>
-            Steps
+            <?= $translator->steps() ?>
         </h3>
         <div>
-            Welche Steps sollen ausgeführt werden?
+            <?= $translator->stepsQuestion() ?>
         </div>
         <i class="rowAdder primaryButton">
             <?= $this->fetchTemplate('icon/add.php') ?>
-            hinzufügen
+            <?= $translator->add() ?>
         </i>
         <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
             <? foreach ($data['checkListItem']??[] as $index => $item): ?>
@@ -248,7 +238,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <div class="column">
                         <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
                         <label for="<?= $id ?>">
-                            Step
+                            <?= $translator->step() ?>
                         </label>
                         <input type="hidden" readonly name="checkListItem[<?= $index ?>][id]" value="<?= $item['id'] ?? '' ?>" />
                         <input type="hidden" readonly name="checkListItem[<?= $index ?>][position]" value="<?= $item['position'] ?? '' ?>" />
@@ -257,7 +247,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <div class="column">
                         <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
                         <label for="<?= $id ?>">
-                            Hinweis
+                            <?= $translator->notice() ?>
                         </label>
                         <textarea id="<?= $id ?>" rows="1000" cols="1000" name="checkListItem[<?= $index ?>][note]"><?= $item['note'] ?? '' ?></textarea>
                     </div>
@@ -273,7 +263,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 </div>
                 <div class="column">
                     <label for="newRow__INDEX__Name">
-                        Step
+                        <?= $translator->step() ?>
                     </label>
                     <input type="hidden" readonly name="checkListItem[__INDEX__][id]" />
                     <input type="hidden" readonly name="checkListItem[__INDEX__][position]" />
@@ -281,7 +271,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                 </div>
                 <div class="column">
                     <label for="newRow__INDEX__Note">
-                        Hinweis
+                        <?= $translator->notice() ?>
                     </label>
                     <textarea id="newRow__INDEX__Note" rows="1000" cols="1000" name="checkListItem[__INDEX__][note]"></textarea>
                 </div>
@@ -290,7 +280,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
     </div>
 
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="speichern">
+        <input class="primaryButton" type="submit" value="<?= $translator->save() ?>">
     </div>
 
 </form>

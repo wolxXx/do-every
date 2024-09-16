@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 ?>
 <h1>
-    <?= $translator->worker() ?> "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>" bearbeiten
+    <?= sprintf($translator->editWorker(), \DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 
 <?= $this->fetchTemplate('action/worker/partial/addEdit.php', ['data' => $data]) ?>

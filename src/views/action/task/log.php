@@ -23,7 +23,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 ?>
 
 <h1>
-    Ausführungen
+    <?= $translator->executions() ?>
 </h1>
 
 <div class="row">
@@ -32,22 +32,22 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
             <thead>
             <tr>
                 <th>
-                    Datum
+                    <?= $translator->date() ?>
                 </th>
                 <th>
-                    Gruppe
+                    <?= $translator->group() ?>
                 </th>
                 <th>
-                    Aufgabe
+                    <?= $translator->task() ?>
                 </th>
                 <th>
-                    Aufwand
+                    <?= $translator->effort() ?>
                 </th>
                 <th>
                     <?= $translator->worker() ?>
                 </th>
                 <th>
-                    Notiz
+                    <?= $translator->note() ?>
                 </th>
             </tr>
             </thead>

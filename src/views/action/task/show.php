@@ -20,7 +20,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 ?>
 
 <h1>
-    Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+    <?= $translator->task() ?>: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
     <? if (null !== $task->getGroup()): ?>
         <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
             (<?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>)
@@ -36,44 +36,45 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     <? if(null === $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId(), $currentUser->getId()) ?>">
             <?= $this->fetchTemplate('icon/hand.php') ?>
-            ich arbeite daran
+            <?= $translator->iAmWorkingOn() ?>
         </a>
     <? endif ?>
     <? if(null !== $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId()) ?>">
             <?= $this->fetchTemplate('icon/cross.php') ?>
-            niemand arbeitet daran
+            <?= $translator->nobodyIsWorkingOn() ?>
         </a>
     <? endif ?>
 
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
         <?= $this->fetchTemplate('icon/add.php') ?>
-        Ausführung eintragen
+        <?= $translator->addExecution() ?>
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
         <?= $this->fetchTemplate('icon/edit.php') ?>
-        bearbeiten
+        <?= $translator->edit() ?>
     </a>
     <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
         <?= $this->fetchTemplate('icon/refresh.php') ?>
-        reset
+        <?= $translator->reset() ?>
+
     </a>
     <? if(true === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
             <?= $this->fetchTemplate('icon/off.php') ?>
-            deaktivieren
+            <?= $translator->deactivate() ?>
         </a>
     <? endif ?>
     <? if(false === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
             <?= $this->fetchTemplate('icon/on.php') ?>
-            aktivieren
+            <?= $translator->activate() ?>
         </a>
     <? endif ?>
 
     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
         <?= $this->fetchTemplate('icon/trash.php') ?>
-        löschen
+        <?= $translator->delete() ?>
     </a>
 </div>
 
@@ -83,25 +84,25 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
     <div class="column">
         <fieldset>
             <legend>
-                Info
+                <?= $translator->info() ?>
             </legend>
-            Status: <?= $task->isActive()? 'aktiv': 'pausiert' ?> |
-            <?= $task->isNotify() ? 'wird benachrichtigt' : 'wird nicht benachrichtigt' ?><br />
+            <?= $translator->status() ?>: <?= $task->isActive()? $translator->active(): $translator->paused() ?> |
+            <?= $task->isNotify() ? $translator->willBeNotified() : $translator->willNotBeNotified() ?><br />
 
 
-            Interval: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+            <?= $translator->interval() ?>: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
             <? if(null !== $task->getIntervalType()): ?>
                 (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
             <? endif ?>
             |
 
-            Priorität: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
+            <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
-            es arbeitet gerade daran: <?= null === $task->getWorkingOn()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
-            zugewiesen an: <?= null === $task->getAssignee()? 'niemand': \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
-            letzte Ausführung: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : '-' ?>
+            <?= $translator->currentlyWorkingOn() ?>: <?= null === $task->getWorkingOn()? $translator->nobody(): \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
+            <?= $translator->assignedTo() ?>: <?= null === $task->getAssignee()? $translator->nobody(): \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
+            <?= $translator->lastExecution() ?>: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : $translator->noValue() ?>
             <? if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
-                von <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
+                <?= $translator->by() ?> <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
             <? endif ?>
         </fieldset>
 
@@ -125,16 +126,16 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         <div class="column">
             <fieldset>
                 <legend>
-                    Aufgabenliste
+                    <?= $translator->taskList() ?>
                 </legend>
                 <table>
                     <thead>
                     <tr>
                         <th>
-                            Step
+                            <?= $translator->step() ?>
                         </th>
                         <th>
-                            Hinweis
+                            <?= $translator->notice() ?>
                         </th>
                     </tr>
                     </thead>
@@ -164,30 +165,32 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 <? if(0 !== sizeof($executions)): ?>
     <hr />
     <fieldset>
-        <legend>Ausführungen</legend>
+        <legend>
+            <?= $translator->executions() ?>
+        </legend>
 
         <table>
             <thead>
                 <tr>
                     <th>
-                        Datum
+                        <?= $translator->date() ?>
                     </th>
                     <th>
                         <?= $translator->worker() ?>
                     </th>
                     <th>
-                        Dauer
+                        <?= $translator->effort() ?>
                     </th>
                     <? if(0 !== sizeof($task->getCheckListItems())): ?>
                         <th>
-                            Steps
+                            <?= $translator->steps() ?>
                         </th>
                     <? endif ?>
                     <th>
-                        Notiz
+                        <?= $translator->notice() ?>
                     </th>
                     <th class="pullRight">
-                        Aktionen
+                        <?= $translator->actions() ?>
                     </th>
                 </tr>
             </thead>
@@ -227,11 +230,11 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                             <div class="buttonRow">
                                 <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
                                     <?= $this->fetchTemplate('icon/edit.php') ?>
-                                    bearbeiten
+                                    <?= $translator->edit() ?>
                                 </a>
                                 <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">
                                     <?= $this->fetchTemplate('icon/trash.php') ?>
-                                    löschen
+                                    <?= $translator->delete() ?>
                                 </a>
                             </div>
                         </td>

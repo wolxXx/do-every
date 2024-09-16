@@ -18,11 +18,11 @@ declare(strict_types=1);
 $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
 ?>
 <h1>
-    Arbeitsnachweis für <?= $translator->worker() ?> "<?= \DoEveryApp\Util\View\Worker::get($worker) ?>"
+    <?= sprintf($translator->logFor(), \DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 
 <? if(0 === sizeof($data)): ?>
-    - <?= \DoEveryApp\Util\View\Worker::get($worker) ?> hat bisher kein Beitrag geleistet -
+    <?= sprintf($translator->workerDidNothing(), \DoEveryApp\Util\View\Worker::get($worker)) ?>
 <? endif ?>
 <? if(0 !== sizeof($data)): ?>
     <div class="row">
@@ -31,19 +31,19 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
                 <thead>
                 <tr>
                     <th>
-                        Datum
+                        <?= $translator->date() ?>
                     </th>
                     <th>
-                        Gruppe
+                        <?= $translator->group() ?>
                     </th>
                     <th>
-                        Aufgabe
+                        <?= $translator->task() ?>
                     </th>
                     <th>
-                        Dauer
+                        <?= $translator->effort() ?>
                     </th>
                     <th>
-                        Notiz
+                        <?= $translator->note() ?>
                     </th>
                 </tr>
                 </thead>
@@ -55,7 +55,7 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
                         </td>
                         <td>
                             <? if(null === $execution->getTask()->getGroup()): ?>
-                                -
+                                <?= $translator->noValue() ?>
                             <? endif ?>
                             <? if(null !== $execution->getTask()->getGroup()): ?>
                                 <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
@@ -81,6 +81,4 @@ $durations    = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
             <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
         </div>
     </div>
-
-
 <? endif ?>

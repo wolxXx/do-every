@@ -22,7 +22,7 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    2FA für <?= $translator->worker() ?> <?= \DoEveryApp\Util\View\Escaper::escape($worker->getName()) ?> einrichten
+    <?= sprintf($translator->enableTwoFactorForWorker(),\DoEveryApp\Util\View\Worker::get($worker) ) ?>
 </h1>
 <form action="" method="post" novalidate>
     <div class="row">
@@ -32,44 +32,22 @@ declare(strict_types=1);
         <div class="column">
             <fieldset>
                 <legend>
-                    Hinweis
+                    <?= $translator->notice() ?>
                 </legend>
-                Scanne den QR-Code links mit deiner Authenticator-App (bspw. Google Authenticator). <br />
-                Speichere dir an einem sicheren Ort die drei Codes, mit denen du ins System kommst,
-                sollte deine Authenticator-App mal nicht zur Hand sein.<br /><br />
-                Drücke im Anschluss den Speichern-Knopf, um den Vorgang abzuschließen und den Datensatz
-                digital zu speichern.
-            </fieldset>
+                <?= $translator->twoFactorNotice() ?>
 
-            <table class="keyValue">
-                <thead>
-                    <tr>
-                        <th>
-                            Code
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($code1) ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($code2) ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($code3) ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <?= $translator->codes() ?>
+                </legend>
+                <?= \DoEveryApp\Util\View\Escaper::escape($code1) ?><br />
+                <?= \DoEveryApp\Util\View\Escaper::escape($code2) ?><br />
+                <?= \DoEveryApp\Util\View\Escaper::escape($code3) ?><br />
+            </fieldset>
         </div>
     </div>
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="speichern" />
+        <input class="primaryButton" type="submit" value="<?= $translator->save() ?>" />
     </div>
 </form>

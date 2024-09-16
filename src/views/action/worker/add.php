@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 ?>
 <h1>
-    neuen Worker erstellen
+    <?= $translator->addWorker() ?>
 </h1>
 
 <?= $this->fetchTemplate('action/worker/partial/addEdit.php', ['data' => $data]) ?>

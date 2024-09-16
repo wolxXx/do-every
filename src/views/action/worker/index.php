@@ -117,23 +117,23 @@ declare(strict_types=1);
                 <td class="pullRight">
                     <nobr class="buttonRow">
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($worker->getId()) ?>">
-                            Log
+                            <?= $translator->log() ?>
                         </a>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
-                            bearbeiten
+                            <?= $translator->edit() ?>
                         </a>
                         <? if(null === $worker->getTwoFactorSecret()): ?>
                             <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()) ?>">
-                                +2fa
+                                <?= $translator->addTwoFactor() ?>
                             </a>
                         <? endif ?>
                         <? if(null !== $worker->getTwoFactorSecret()): ?>
                             <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute($worker->getId()) ?>">
-                                -2fa
+                                <?= $translator->removeTwoFactor() ?>
                             </a>
                         <? endif ?>
                         <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
-                            löschen
+                            <?= $translator->delete() ?>
                         </a>
                     </nobr>
                 </td>

@@ -16,13 +16,12 @@ declare(strict_types=1);
  */
 ?>
 
-
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
             <div>
                 <label for="name">
-                    Name
+                    <?= $translator->name() ?>
                 </label>
                 <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
                 <div class="errors">
@@ -35,7 +34,7 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="email">
-                    E-Mail
+                    <?= $translator->eMail() ?>
                 </label>
                 <input id="email" type="email" name="email" value="<?= array_key_exists('email', $data) ? $data['email'] : '' ?>"/>
                 <div class="errors">
@@ -46,10 +45,9 @@ declare(strict_types=1);
             </div>
         </div>
         <div class="column">
-
             <div>
                 <label for="password">
-                    Passwort
+                    <?= $translator->password() ?>
                 </label>
                 <input id="password" type="password" name="password" value="<?= array_key_exists('password', $data) ? $data['password'] : '' ?>"/>
                 <div class="errors">
@@ -65,14 +63,14 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="is_admin">
-                    ist Admin?
+                    <?= $translator->isAdminQuestion() ?>
                 </label>
                 <select name="is_admin" id="is_admin">
                     <option <?= array_key_exists('is_admin', $data) && $data['is_admin'] == '1' ? 'selected'  : '' ?>  value="1">
-                        ja
+                        <?= $translator->yes() ?>
                     </option>
                     <option <?=  false === array_key_exists('is_admin', $data) || $data['is_admin'] == '0' ? 'selected'  : '' ?>  value="0">
-                        nein
+                        <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
@@ -85,14 +83,14 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="do_notify_logins">
-                    Logins benachrichtigen?
+                    <?= $translator->doNotifyLoginsQuestion() ?>
                 </label>
                 <select name="do_notify_logins" id="do_notify_logins">
                     <option <?= array_key_exists('do_notify_logins', $data) && $data['do_notify_logins'] == '1' ? 'selected'  : '' ?>  value="1">
-                        ja
+                        <?= $translator->yes() ?>
                     </option>
                     <option <?= false === array_key_exists('do_notify_logins', $data) || $data['do_notify_logins'] == '0' ? 'selected'  : '' ?>  value="0">
-                        nein
+                        <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
@@ -105,14 +103,14 @@ declare(strict_types=1);
         <div class="column">
             <div>
                 <label for="do_notify">
-                    Fälligkeiten benachrichtigen?
+                    <?= $translator->doNotifyDueTasksQuestion() ?>
                 </label>
                 <select name="do_notify" id="do_notify">
                     <option <?= array_key_exists('do_notify', $data) && $data['do_notify'] == '1' ? 'selected'  : '' ?>  value="1">
-                        ja
+                        <?= $translator->yes() ?>
                     </option>
                     <option <?= false === array_key_exists('do_notify', $data) || $data['do_notify'] == '0' ? 'selected'  : '' ?>  value="0">
-                        nein
+                        <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">

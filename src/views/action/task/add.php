@@ -18,6 +18,6 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 
 ?>
 <h1>
-    neue Aufgabe erstellen
+    <?= $translator->addTask() ?>
 </h1>
 <?= $this->fetchTemplate('action/task/partial/addEdit.php', ['data' => $data]) ?>

@@ -81,7 +81,11 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setActiveRoutes([
+                                  \DoEveryApp\Action\Worker\AddAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Worker\EditAction::getRoutePattern(),
                                   \DoEveryApp\Action\Worker\IndexAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Worker\LogAction::getRoutePattern(),
+                                  \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoutePattern(),
                               ])
             ->setName($translator->workers())
         ?>
