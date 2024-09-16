@@ -14,6 +14,7 @@ class DebugAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
+        \opcache_reset();
         $backupFiles = [];
         $path        = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
         $Directory   = new \RecursiveDirectoryIterator($path);
