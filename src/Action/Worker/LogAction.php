@@ -12,23 +12,21 @@ namespace DoEveryApp\Action\Worker;
 )]
 class LogAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Worker;
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe());
-        if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Worker nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
+            return $worker;
         }
-
 
         return $this->render(
             'action/worker/log',
             [
                 'worker' => $worker,
-                'data' => \DoEveryApp\Entity\Execution::getRepository()->findForWorker($worker)
-            ]);
+                'data'   => \DoEveryApp\Entity\Execution::getRepository()->findForWorker($worker),
+            ]
+        );
     }
 }

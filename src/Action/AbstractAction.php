@@ -9,11 +9,17 @@ use DoEveryApp\Util\DependencyContainer;
 abstract class AbstractAction
 {
     protected \Psr\Http\Message\ServerRequestInterface $request;
+
     protected \Psr\Http\Message\ResponseInterface      $response;
+
     protected mixed                                    $args;
+
     protected \DoEveryApp\Util\ErrorStore              $errorStore;
+
     protected \DoEveryApp\Util\DependencyContainer     $dependencyContainer;
+
     protected \Doctrine\ORM\EntityManager              $entityManager;
+
     protected \DoEveryApp\Util\Translator              $translator;
 
 
@@ -159,11 +165,9 @@ abstract class AbstractAction
             'translator'          => $this->translator,
         ];
 
-        $phpView = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables));
-        $phpView->setLayout('layout/main.php');
-        $data = \array_merge($defaultVariables, $data);
-
-        return $phpView->render($this->getResponse(), $script . '.php', $data);
+        return (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables, 'layout/main.php'))
+            ->render($this->getResponse(), $script . '.php', \array_merge($defaultVariables, $data))
+        ;
     }
 
 

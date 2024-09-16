@@ -13,15 +13,13 @@ namespace DoEveryApp\Action\Worker;
 )]
 class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Worker;
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe());
-        if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Worker nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
+            return $worker;
         }
 
         $worker
@@ -34,11 +32,11 @@ class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
             ->setTwoFactorRecoverCode3UsedAt(null)
         ;
         $worker::getRepository()->update($worker);
-        \DoEveryApp\Util\DependencyContainer::getInstance()
-                                            ->getEntityManager()
-                                            ->flush()
+        $this
+            ->entityManager
+            ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Zwei-Faktor-Authentifizierung erfolgreich entfernt.');
+        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->twoFactorDisabled());
 
         return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
     }

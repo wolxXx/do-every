@@ -12,18 +12,16 @@ namespace DoEveryApp\Action\Worker;
 )]
 class UnsetPasswordAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Worker;
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe());
-        if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Worker nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
+            return $worker;
         }
-        if($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das bist du!');
+        if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
+            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->itIsYou());
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
@@ -32,11 +30,11 @@ class UnsetPasswordAction extends \DoEveryApp\Action\AbstractAction
             ->setLastPasswordChange(null)
         ;
         $worker::getRepository()->update($worker);
-        \DoEveryApp\Util\DependencyContainer::getInstance()
-                                            ->getEntityManager()
-                                            ->flush()
+        $this
+            ->entityManager
+            ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Passwort gelöscht.');
+        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->passwordDeleted());
 
         return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
     }

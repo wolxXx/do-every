@@ -13,16 +13,14 @@ namespace DoEveryApp\Action\Worker;
 )]
 class EditAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Worker;
     use \DoEveryApp\Action\Worker\Share\AddEdit;
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe());
-        if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Worker nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
+            return $worker;
         }
         if (true === $this->isGetRequest()) {
             return $this->render('action/worker/edit', [
@@ -55,16 +53,15 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 ;
             }
 
-            \DoEveryApp\Util\DependencyContainer::getInstance()
-                                                ->getEntityManager()
-                                                ->flush()
+            $this
+                ->entityManager
+                ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Worker bearbeitet.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->workerEdited());
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
-
 
         return $this->render(
             'action/worker/edit',
@@ -73,62 +70,5 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 'data'   => $data,
             ]
         );
-    }
-
-
-    protected function filterAndValidate(array &$data): array
-    {
-        $data['name']             = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('name'))
-        ;
-        $data['email']            = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('email'))
-        ;
-        $data['password']         = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('password'))
-        ;
-        $data['is_admin']         = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('is_admin'))
-        ;
-        $data['do_notify']        = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('do_notify'))
-        ;
-        $data['do_notify_logins'] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('do_notify_logins'))
-        ;
-
-        $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            'email'            => [
-            ],
-            'is_admin'         => [
-            ],
-            'do_notify'        => [
-            ],
-            'do_notify_logins' => [
-            ],
-            'password'         => [
-            ],
-            'name'             => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-
-        ]);
-
-
-        $this->validate($data, $validators);
-
-        return $data;
     }
 }
