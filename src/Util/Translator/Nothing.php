@@ -10,7 +10,7 @@ class Nothing implements \DoEveryApp\Util\Translator
 
     protected function debug(): string
     {
-        return '..';
+        return \Faker\Factory::create()->word();
     }
 
 
@@ -249,6 +249,354 @@ class Nothing implements \DoEveryApp\Util\Translator
 
 
     public function totalEffort(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function today(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function yesterday(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function thisWeek(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function lastWeek(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function thisMonth(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function lastMonth(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function thisYear(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function lastYear(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function byMonth(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function byYear(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function what(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function value(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function editSettings(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function fillTimeLineQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function yes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function no(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function duePrecision(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function keepBackupDays(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function save(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function new(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function hasPasswordQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function isAdminQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function doNotifyLoginsQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function doNotifyDueTasksQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function lastLogin(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function lastPasswordChange(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsNow(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsInFuture(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsInPast(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function minute(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function minutes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function hour(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function hours(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function day(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function days(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function month(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function months(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function year(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function years(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueAdverb(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function noValue(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function oneMinute(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function twoMinutes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function threeMinutes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function fourMinutes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function fiveMinutes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function intervalTypeRelative(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function intervalTypeCyclic(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEvery(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEveryMinute(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEveryHour(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEveryDay(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEveryMonth(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function dueIsEveryYear(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function priorityLow(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function priorityNormal(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function priorityHigh(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function priorityUrgent(): string
     {
         return $this->debug();
     }

@@ -53,13 +53,13 @@ class German implements \DoEveryApp\Util\Translator
 
     public function worker(): string
     {
-        return 'Biene';
+        return 'fleißiges Bienchen';
     }
 
 
     public function workers(): string
     {
-        return 'Bienen';
+        return 'fleißige Bienchen';
     }
 
 
@@ -252,5 +252,353 @@ class German implements \DoEveryApp\Util\Translator
     public function totalEffort(): string
     {
         return 'insgesamt';
+    }
+
+
+    public function today(): string
+    {
+        return 'heute';
+    }
+
+
+    public function yesterday(): string
+    {
+        return 'gestern';
+    }
+
+
+    public function thisWeek(): string
+    {
+        return 'diese Woche';
+    }
+
+
+    public function lastWeek(): string
+    {
+        return 'letzte Woche';
+    }
+
+
+    public function thisMonth(): string
+    {
+        return 'dieser Monat';
+    }
+
+
+    public function lastMonth(): string
+    {
+        return 'letzter Monat';
+    }
+
+
+    public function thisYear(): string
+    {
+        return 'dieses Jahr';
+    }
+
+
+    public function lastYear(): string
+    {
+        return 'letztes Jahr';
+    }
+
+
+    public function byMonth(): string
+    {
+        return 'Nach Monaten';
+    }
+
+
+    public function byYear(): string
+    {
+        return 'Nach Jahren';
+    }
+
+
+    public function what(): string
+    {
+        return 'Was';
+    }
+
+
+    public function value(): string
+    {
+        return 'Wert';
+    }
+
+
+    public function editSettings(): string
+    {
+        return 'Einstellungen bearbeiten';
+    }
+
+
+    public function fillTimeLineQuestion(): string
+    {
+        return 'Zeitlinie auffüllen?';
+    }
+
+
+    public function yes(): string
+    {
+        return 'ja';
+    }
+
+
+    public function no(): string
+    {
+        return 'nein';
+    }
+
+
+    public function duePrecision(): string
+    {
+        return 'Fälligkeitspräzision';
+    }
+
+
+    public function keepBackupDays(): string
+    {
+        return 'Backups aufheben (Tage)';
+    }
+
+
+    public function save(): string
+    {
+        return 'speichern';
+    }
+
+
+    public function new(): string
+    {
+        return 'neu';
+    }
+
+
+    public function hasPasswordQuestion(): string
+    {
+        return 'hat Passwort?';
+    }
+
+
+    public function isAdminQuestion(): string
+    {
+        return 'ist Admin?';
+    }
+
+
+    public function doNotifyLoginsQuestion(): string
+    {
+        return 'Logins benachrichtigen?';
+    }
+
+
+    public function doNotifyDueTasksQuestion(): string
+    {
+        return 'Fälligkeiten benachrichtigen?';
+    }
+
+
+    public function lastLogin(): string
+    {
+        return 'letzter Login';
+    }
+
+
+    public function lastPasswordChange(): string
+    {
+        return 'letzte Passwortänderung';
+    }
+
+
+    public function dueIsNow(): string
+    {
+        return 'jetzt fällig';
+    }
+
+
+    public function dueIsInFuture(): string
+    {
+        return 'in';
+    }
+
+
+    public function dueIsInPast(): string
+    {
+        return 'seit';
+    }
+
+
+    public function minute(): string
+    {
+        return 'Minute';
+    }
+
+
+    public function minutes(): string
+    {
+        return 'Minuten';
+    }
+
+
+    public function hour(): string
+    {
+        return 'Stunde';
+    }
+
+
+    public function hours(): string
+    {
+        return 'Stunden';
+    }
+
+
+    public function day(): string
+    {
+        return 'Tag';
+    }
+
+
+    public function days(): string
+    {
+        return 'Tagen';
+    }
+
+
+    public function month(): string
+    {
+        return 'Monat';
+    }
+
+
+    public function months(): string
+    {
+        return 'Monaten';
+    }
+
+
+    public function year(): string
+    {
+        return 'Jahr';
+    }
+
+
+    public function years(): string
+    {
+        return 'Jahren';
+    }
+
+
+    public function dueAdverb(): string
+    {
+        return 'fällig';
+    }
+
+
+    public function noValue(): string
+    {
+        return '-';
+    }
+
+
+    public function oneMinute(): string
+    {
+        return 'eine Minute';
+    }
+
+
+    public function twoMinutes(): string
+    {
+        return 'zwei Minuten';
+    }
+
+
+    public function threeMinutes(): string
+    {
+        return 'drei Minuten';
+    }
+
+
+    public function fourMinutes(): string
+    {
+        return 'vier Minuten';
+    }
+
+
+    public function fiveMinutes(): string
+    {
+        return 'fünf Minuten';
+    }
+
+
+    public function intervalTypeRelative(): string
+    {
+        return 'relativ';
+    }
+
+
+    public function intervalTypeCyclic(): string
+    {
+        return 'hart zyklisch';
+    }
+
+
+    public function dueIsEvery(): string
+    {
+        return 'alle';
+    }
+
+
+    public function dueIsEveryMinute(): string
+    {
+        return 'jede Minute';
+    }
+
+
+    public function dueIsEveryHour(): string
+    {
+        return 'jede Stunde';
+    }
+
+
+    public function dueIsEveryDay(): string
+    {
+        return 'jeden Tag';
+    }
+
+
+    public function dueIsEveryMonth(): string
+    {
+        return 'jeden Monat';
+    }
+
+
+    public function dueIsEveryYear(): string
+    {
+        return 'jedes Jahr';
+    }
+
+
+    public function priorityLow(): string
+    {
+        return 'gering';
+    }
+
+
+    public function priorityNormal(): string
+    {
+        return 'normal';
+    }
+
+
+    public function priorityHigh(): string
+    {
+        return 'hoch';
+    }
+
+
+    public function priorityUrgent(): string
+    {
+        return 'dringend';
     }
 }
