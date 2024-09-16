@@ -602,128 +602,439 @@ class German implements \DoEveryApp\Util\Translator
         return 'dringend';
     }
 
+
     public function codeNotValid(): string
     {
         return 'Code ungültig.';
     }
+
 
     public function defaultErrorMessage(): string
     {
         return 'Das hat nicht geklappt.';
     }
 
+
     public function userNotFound(): string
     {
         return 'Nutzer nicht gefunden';
     }
+
 
     public function codeSent(): string
     {
         return 'Code verschickt.';
     }
 
+
     public function passwordConfirmFailed(): string
     {
         return 'Passwortkontrolle fehlgeschlagen';
     }
+
 
     public function passwordChanged(): string
     {
         return 'Passwort geändert.';
     }
 
+
     public function settingsSaved(): string
     {
         return 'Einstellungen gespeichert.';
     }
+
 
     public function workerNotFound(): string
     {
         return 'Biene nicht gefunden';
     }
 
+
     public function taskNotFound(): string
     {
         return 'Aufgabe nicht gefunden';
     }
+
 
     public function executionAdded(): string
     {
         return 'Ausführung registriert.';
     }
 
+
     public function executionNotFound(): string
     {
         return 'Ausführung nicht gefunden.';
     }
+
 
     public function executionDeleted(): string
     {
         return 'Ausführung gelöscht.';
     }
 
+
     public function executionEdited(): string
     {
         return 'Ausführung bearbeitet.';
     }
+
 
     public function groupAdded(): string
     {
         return 'Gruppe erstellt.';
     }
 
+
     public function groupNotFound(): string
     {
         return 'Gruppe nicht gefunden.';
     }
+
 
     public function groupDeleted(): string
     {
         return 'Gruppe gelöscht.';
     }
 
+
     public function groupEdited(): string
     {
         return 'Gruppe bearbeitet.';
     }
+
 
     public function taskAdded(): string
     {
         return 'Aufgabe erstellt.';
     }
 
+
     public function taskDeleted(): string
     {
         return 'Aufgabe gelöscht.';
     }
+
 
     public function taskEdited(): string
     {
         return 'Aufgabe bearbeitet.';
     }
 
+
     public function statusSet(): string
     {
         return 'Status erfolgreich gesetzt';
     }
+
 
     public function workerAssigned(): string
     {
         return 'Markierung erfolgreich gesetzt';
     }
 
+
     public function assignmentRemoved(): string
     {
         return 'Markierung erfolgreich entfernt.';
     }
+
 
     public function taskReset(): string
     {
         return 'Aufgabe zurückgesetzt.';
     }
 
+
     public function workerAdded(): string
     {
-        return 'Worker erstellt.';
+        return 'Biene erstellt.';
+    }
+
+
+    public function itIsYou(): string
+    {
+        return 'Das bist du!';
+    }
+
+
+    public function workerDeleted(): string
+    {
+        return 'Biene gelöscht.';
+    }
+
+
+    public function twoFactorDisabled(): string
+    {
+        return 'Zwei-Faktor-Authentifizierung erfolgreich entfernt.';
+    }
+
+
+    public function workerEdited(): string
+    {
+        return 'Biene bearbeitet.';
+    }
+
+
+    public function twoFactorEnabled(): string
+    {
+        return 'Zwei-Faktor-Authentifizierung erfolgreich eingerichtet.';
+    }
+
+
+    public function setAdminFlag(): string
+    {
+        return 'Admin-Flag erfolgreich gesetzt.';
+    }
+
+
+    public function passwordDeleted(): string
+    {
+        return 'Passwort gelöscht.';
+    }
+
+
+    public function iAmWorkingOn(): string
+    {
+        return 'ich arbeite daran';
+    }
+
+
+    public function nobodyIsWorkingOn(): string
+    {
+        return 'niemand arbeitet daran';
+    }
+
+
+    public function reset(): string
+    {
+        return 'reset';
+    }
+
+
+    public function deactivate(): string
+    {
+        return 'deaktivieren';
+    }
+
+
+    public function activate(): string
+    {
+        return 'aktivieren';
+    }
+
+
+    public function info(): string
+    {
+        return 'Info';
+    }
+
+
+    public function status(): string
+    {
+        return 'Status';
+    }
+
+
+    public function active(): string
+    {
+        return 'aktiv';
+    }
+
+
+    public function paused(): string
+    {
+        return 'pausiert';
+    }
+
+
+    public function willBeNotified(): string
+    {
+        return 'wird benachrichtigt';
+    }
+
+
+    public function willNotBeNotified(): string
+    {
+        return 'wird nicht benachrichtigt';
+    }
+
+
+    public function priority(): string
+    {
+        return 'Priorität';
+    }
+
+
+    public function nobody(): string
+    {
+        return 'niemand';
+    }
+
+
+    public function by(): string
+    {
+        return 'von';
+    }
+
+
+    public function taskList(): string
+    {
+        return 'Aufgabenliste';
+    }
+
+
+    public function step(): string
+    {
+        return 'Schritt';
+    }
+
+
+    public function notice(): string
+    {
+        return 'Hinweis';
+    }
+
+
+    public function steps(): string
+    {
+        return 'Schritte';
+    }
+
+
+    public function without(): string
+    {
+        return 'ohne';
+    }
+
+
+    public function intervalType(): string
+    {
+        return 'Interval-Typ';
+    }
+
+
+    public function intervalValue(): string
+    {
+        return 'Interval-Wert';
+    }
+
+
+    public function intervalMode(): string
+    {
+        return 'Intervall-Modus';
+    }
+
+
+    public function stepsQuestion(): string
+    {
+        return 'Welche Schritte sollen ausgeführt werden?';
+    }
+
+
+    public function add(): string
+    {
+        return 'hinzufügen';
+    }
+
+
+    public function addTask(): string
+    {
+        return 'neue Aufgabe erstellen';
+    }
+
+
+    public function editTask(): string
+    {
+        return 'Aufgabe %s bearbeiten';
+    }
+
+
+    public function groups(): string
+    {
+        return 'Gruppen';
+    }
+
+
+    public function addGroup(): string
+    {
+        return 'neue Gruppe';
+    }
+
+
+    public function addWorker(): string
+    {
+        return 'neue Biene erstellen';
+    }
+
+
+    public function editWorker(): string
+    {
+        return 'Biene %s bearbeiten';
+    }
+
+
+    public function enableTwoFactorForWorker(): string
+    {
+        return '2FA für Biene %s einrichten';
+    }
+
+
+    public function twoFactorNotice(): string
+    {
+        return 'Scanne den QR-Code links mit deiner Authenticator-App (bspw. Google Authenticator). <br />
+                Speichere dir an einem sicheren Ort die drei Codes, mit denen du ins System kommst,
+                sollte deine Authenticator-App mal nicht zur Hand sein.<br /><br />
+                Drücke im Anschluss den Speichern-Knopf, um den Vorgang abzuschließen und den Datensatz
+                digital zu speichern.';
+    }
+
+
+    public function code(): string
+    {
+        return 'Code';
+    }
+
+
+    public function codes(): string
+    {
+        return 'Codes';
+    }
+
+
+    public function log(): string
+    {
+        return 'log';
+    }
+
+
+    public function addTwoFactor(): string
+    {
+        return '+2fa';
+    }
+
+
+    public function removeTwoFactor(): string
+    {
+        return '-2fa';
+    }
+
+
+    public function logFor(): string
+    {
+        return 'Arbeitsnachweis für Biene "%s"';
+    }
+
+
+    public function workerDidNothing(): string
+    {
+        return '- %s hat bisher kein Beitrag geleistet -';
+    }
+
+
+    public function needEmailForThisAction(): string
+    {
+        return 'dafür wird eine e-Mail-Adresse benötigt.';
     }
 }

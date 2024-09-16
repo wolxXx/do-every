@@ -311,53 +311,219 @@ interface Translator
 
     public function priorityUrgent(): string;
 
+
     public function codeNotValid(): string;
+
 
     public function defaultErrorMessage(): string;
 
+
     public function userNotFound(): string;
+
 
     public function codeSent(): string;
 
+
     public function passwordConfirmFailed(): string;
+
 
     public function passwordChanged(): string;
 
+
     public function settingsSaved(): string;
+
 
     public function workerNotFound(): string;
 
+
     public function taskNotFound(): string;
+
 
     public function executionAdded(): string;
 
+
     public function executionNotFound(): string;
+
 
     public function executionDeleted(): string;
 
+
     public function executionEdited(): string;
+
 
     public function groupAdded(): string;
 
+
     public function groupNotFound(): string;
+
 
     public function groupDeleted(): string;
 
+
     public function groupEdited(): string;
+
 
     public function taskAdded(): string;
 
+
     public function taskDeleted(): string;
+
 
     public function taskEdited(): string;
 
+
     public function statusSet(): string;
+
 
     public function workerAssigned(): string;
 
+
     public function assignmentRemoved(): string;
+
 
     public function taskReset(): string;
 
-    public function workerAdded():string;
+
+    public function workerAdded(): string;
+
+
+    public function itIsYou(): string;
+
+
+    public function workerDeleted(): string;
+
+
+    public function twoFactorDisabled(): string;
+
+
+    public function workerEdited(): string;
+
+
+    public function twoFactorEnabled(): string;
+
+
+    public function setAdminFlag(): string;
+
+
+    public function passwordDeleted(): string;
+
+
+    public function iAmWorkingOn(): string;
+
+
+    public function nobodyIsWorkingOn(): string;
+
+
+    public function reset(): string;
+
+
+    public function deactivate(): string;
+
+
+    public function activate(): string;
+
+
+    public function info(): string;
+
+
+    public function status(): string;
+
+
+    public function active(): string;
+
+
+    public function paused(): string;
+
+
+    public function willBeNotified(): string;
+
+
+    public function willNotBeNotified(): string;
+
+
+    public function priority(): string;
+
+
+    public function nobody(): string;
+
+
+    public function by(): string;
+
+
+    public function taskList(): string;
+
+
+    public function step(): string;
+
+
+    public function steps(): string;
+
+
+    public function notice(): string;
+
+
+    public function without(): string;
+
+
+    public function intervalType(): string;
+
+
+    public function intervalValue(): string;
+
+
+    public function intervalMode(): string;
+
+
+    public function stepsQuestion(): string;
+
+
+    public function add(): string;
+
+
+    public function addTask(): string;
+
+
+    public function editTask(): string;
+
+
+    public function groups(): string;
+
+
+    public function addGroup(): string;
+
+
+    public function addWorker(): string;
+
+
+    public function editWorker(): string;
+
+
+    public function enableTwoFactorForWorker(): string;
+
+
+    public function twoFactorNotice(): string;
+
+
+    public function code(): string;
+
+
+    public function codes(): string;
+
+
+    public function log(): string;
+
+
+    public function addTwoFactor(): string;
+
+
+    public function removeTwoFactor(): string;
+
+
+    public function logFor(): string;
+
+
+    public function workerDidNothing(): string;
+
+
+    public function needEmailForThisAction(): string;
 }

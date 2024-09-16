@@ -7,9 +7,10 @@ namespace DoEveryApp\Util\Translator;
 
 class Nothing implements \DoEveryApp\Util\Translator
 {
-
     protected function debug(): string
     {
+        #return '.';
+        return (new \InvalidArgumentException())->getTrace()[1]['function'].'()';
         return \Faker\Factory::create()->word();
     }
 
@@ -600,5 +601,436 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
-}
 
+
+    public function codeNotValid(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function defaultErrorMessage(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function userNotFound(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function codeSent(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function passwordConfirmFailed(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function passwordChanged(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function settingsSaved(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerNotFound(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskNotFound(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function executionAdded(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function executionNotFound(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function executionDeleted(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function executionEdited(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function groupAdded(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function groupNotFound(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function groupDeleted(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function groupEdited(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskAdded(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskDeleted(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskEdited(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function statusSet(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerAssigned(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function assignmentRemoved(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskReset(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerAdded(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function itIsYou(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerDeleted(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function twoFactorDisabled(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerEdited(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function twoFactorEnabled(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function setAdminFlag(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function passwordDeleted(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function iAmWorkingOn(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function nobodyIsWorkingOn(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function reset(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function deactivate(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function activate(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function info(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function status(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function active(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function paused(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function willBeNotified(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function willNotBeNotified(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function priority(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function nobody(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function by(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function taskList(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function step(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function notice(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function steps(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function without(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function intervalType(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function intervalValue(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function intervalMode(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function stepsQuestion(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function add(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function addTask(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function editTask(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function groups(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function addGroup(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function addWorker(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function editWorker(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function enableTwoFactorForWorker(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function twoFactorNotice(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function code(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function codes(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function log(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function addTwoFactor(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function removeTwoFactor(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function logFor(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function workerDidNothing(): string
+    {
+        return $this->debug();
+    }
+
+
+    public function needEmailForThisAction(): string
+    {
+        return $this->debug();
+    }
+}

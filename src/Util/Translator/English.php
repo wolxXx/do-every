@@ -599,4 +599,441 @@ class English implements \DoEveryApp\Util\Translator
     {
         return 'urgent';
     }
+
+
+    public function codeNotValid(): string
+    {
+        return 'code not valid';
+    }
+
+
+    public function defaultErrorMessage(): string
+    {
+        return 'an error occurred';
+    }
+
+
+    public function userNotFound(): string
+    {
+        return 'user not found';
+    }
+
+
+    public function codeSent(): string
+    {
+        return 'code sent';
+    }
+
+
+    public function passwordConfirmFailed(): string
+    {
+        return 'password confirm failed';
+    }
+
+
+    public function passwordChanged(): string
+    {
+        return 'password changed';
+    }
+
+
+    public function settingsSaved(): string
+    {
+        return 'settings saved';
+    }
+
+
+    public function workerNotFound(): string
+    {
+        return 'worker not found';
+    }
+
+
+    public function taskNotFound(): string
+    {
+        return 'task not found';
+    }
+
+
+    public function executionAdded(): string
+    {
+        return 'execution added';
+    }
+
+
+    public function executionNotFound(): string
+    {
+        return 'execution not found';
+    }
+
+
+    public function executionDeleted(): string
+    {
+        return 'execution deleted';
+    }
+
+
+    public function executionEdited(): string
+    {
+        return 'execution edited';
+    }
+
+
+    public function groupAdded(): string
+    {
+        return 'group added';
+    }
+
+
+    public function groupNotFound(): string
+    {
+        return 'group not found';
+    }
+
+
+    public function groupDeleted(): string
+    {
+        return 'group deleted';
+    }
+
+
+    public function groupEdited(): string
+    {
+        return 'group edited';
+    }
+
+
+    public function taskAdded(): string
+    {
+        return 'task added';
+    }
+
+
+    public function taskDeleted(): string
+    {
+        return 'task deleted';
+    }
+
+
+    public function taskEdited(): string
+    {
+        return 'task edited';
+    }
+
+
+    public function statusSet(): string
+    {
+        return 'status set';
+    }
+
+
+    public function workerAssigned(): string
+    {
+        return 'worker assigned';
+    }
+
+
+    public function assignmentRemoved(): string
+    {
+        return 'removed assignment';
+    }
+
+
+    public function taskReset(): string
+    {
+        return 'task reset';
+    }
+
+
+    public function workerAdded(): string
+    {
+        return 'worker added';
+    }
+
+
+    public function itIsYou(): string
+    {
+        return 'this is you!';
+    }
+
+
+    public function workerDeleted(): string
+    {
+        return 'worker deleted';
+    }
+
+
+    public function twoFactorDisabled(): string
+    {
+        return 'two-factor authentication disabled';
+    }
+
+
+    public function workerEdited(): string
+    {
+        return 'worker edited';
+    }
+
+
+    public function twoFactorEnabled(): string
+    {
+        return 'two-factor authentication enabled';
+    }
+
+
+    public function setAdminFlag(): string
+    {
+        return 'admin flag saved';
+    }
+
+
+    public function passwordDeleted(): string
+    {
+        return 'password deleted';
+    }
+
+
+    public function iAmWorkingOn(): string
+    {
+        return 'i am working on it';
+    }
+
+
+    public function nobodyIsWorkingOn(): string
+    {
+        return 'nobody is working on it';
+    }
+
+
+    public function reset(): string
+    {
+        return 'reset';
+    }
+
+
+    public function deactivate(): string
+    {
+        return 'deactivate';
+    }
+
+
+    public function activate(): string
+    {
+        return 'activate';
+    }
+
+
+    public function info(): string
+    {
+        return 'info';
+    }
+
+
+    public function status(): string
+    {
+        return 'status';
+    }
+
+
+    public function active(): string
+    {
+        return 'active';
+    }
+
+
+    public function paused(): string
+    {
+        return 'paused';
+    }
+
+
+    public function willBeNotified(): string
+    {
+        return 'will be notified';
+    }
+
+
+    public function willNotBeNotified(): string
+    {
+        return 'will not be not notified';
+    }
+
+
+    public function priority(): string
+    {
+        return 'priority';
+    }
+
+
+    public function nobody(): string
+    {
+        return 'nobody';
+    }
+
+
+    public function by(): string
+    {
+        return 'by';
+    }
+
+
+    public function taskList(): string
+    {
+        return 'task list';
+    }
+
+
+    public function step(): string
+    {
+        return 'step';
+    }
+
+
+    public function notice(): string
+    {
+        return 'notice';
+    }
+
+
+    public function steps(): string
+    {
+        return 'steps';
+    }
+
+
+    public function without(): string
+    {
+        return 'without';
+    }
+
+
+    public function intervalType(): string
+    {
+        return 'interval type';
+    }
+
+
+    public function intervalValue(): string
+    {
+        return 'interval value';
+    }
+
+
+    public function intervalMode(): string
+    {
+        return 'intervall mode';
+    }
+
+
+    public function stepsQuestion(): string
+    {
+        return 'Which steps shall be done?';
+    }
+
+
+    public function add(): string
+    {
+        return 'add';
+    }
+
+
+    public function addTask(): string
+    {
+        return 'add task';
+    }
+
+
+    public function editTask(): string
+    {
+        return 'edit task %s';
+    }
+
+
+    public function groups(): string
+    {
+        return 'groups';
+    }
+
+
+    public function addGroup(): string
+    {
+        return 'mew group';
+    }
+
+
+    public function addWorker(): string
+    {
+        return 'add new worker';
+    }
+
+
+    public function editWorker(): string
+    {
+        return 'edit worker %s';
+    }
+
+
+    public function enableTwoFactorForWorker(): string
+    {
+        return 'enable 2FA for worker %s';
+    }
+
+
+    public function twoFactorNotice(): string
+    {
+        return 'Scan the QR code on the left side with your authenticator app (e.g., Google Authenticator). <br />
+Securely store the three access codes so you can access the system even without the authenticator app.<br /><br />
+Then click the "Save" button to complete the process and digitally secure the data.';
+        return 'Scanne den QR-Code auf der linken Seite mit deiner Authenticator-App (z.B. Google Authenticator). <br />
+Bewahre die drei Zugangscodes sicher auf, damit du auch ohne die Authenticator-App Zugriff auf das System hast.<br /><br />
+Klicke anschließend auf die Schaltfläche "Speichern", um den Vorgang abzuschließen und die Daten digital zu sichern.';
+    }
+
+
+    public function code(): string
+    {
+        return 'Code';
+    }
+
+
+    public function codes(): string
+    {
+        return 'Codes';
+    }
+
+
+    public function log(): string
+    {
+        return 'log';
+    }
+
+
+    public function addTwoFactor(): string
+    {
+        return '+2fa';
+    }
+
+
+    public function removeTwoFactor(): string
+    {
+        return '-2fa';
+    }
+
+
+    public function logFor(): string
+    {
+        return 'Arbeitsnachweis für Biene "%s"';
+    }
+
+
+    public function workerDidNothing(): string
+    {
+        return '- %s hat bisher kein Beitrag geleistet -';
+    }
+
+
+    public function needEmailForThisAction(): string
+    {
+        return 'an e-Mail-address is required.';
+    }
 }
