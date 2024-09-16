@@ -68,11 +68,24 @@ class Current
 
     public static function getLanguage(): string
     {
-        return $_COOKIE['lang'] ?? 'de';
+        return $_COOKIE['lang'] ?? \DoEveryApp\Util\Translator::LANGUAGE_GERMAN;
     }
+
 
     public static function setLanguage(?string $language): void
     {
         $_COOKIE['lang'] = $language;
+    }
+
+
+    public static function getLocale(): string
+    {
+        return match (static::getLanguage()) {
+            \DoEveryApp\Util\Translator::LANGUAGE_FRENCH  => 'fr_FR',
+            \DoEveryApp\Util\Translator::LANGUAGE_ENGLISH => 'en_US',
+            \DoEveryApp\Util\Translator::LANGUAGE_POLISH  => 'pl_PL',
+            \DoEveryApp\Util\Translator::LANGUAGE_MAORI   => 'mi_NZ',
+            default                                       => 'de_DE',
+        };
     }
 }
