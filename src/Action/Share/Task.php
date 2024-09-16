@@ -10,7 +10,7 @@ trait Task
     {
         $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe($argumentName));
         if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskNotFound());
+            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->taskNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
