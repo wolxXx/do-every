@@ -1,5 +1,5 @@
 <?php
-
+define('STARTED', microtime(true));
 require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 chdir(dirname(__DIR__));
 defined('ROOT_DIR') || define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..');
