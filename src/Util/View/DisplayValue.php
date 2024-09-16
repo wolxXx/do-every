@@ -24,7 +24,7 @@ class DisplayValue
             }
             case \is_float($value):
             {
-                return \NumberFormatter::create('de_DE',  \NumberFormatter::PATTERN_DECIMAL)->format($value);
+                return \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(),  \NumberFormatter::PATTERN_DECIMAL)->format($value);
             }
             case \is_a($value, \DateTime::class):
             {

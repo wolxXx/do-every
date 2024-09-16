@@ -9,7 +9,7 @@ class Worker
     public static function get(?\DoEveryApp\Entity\Worker $worker): string
     {
         if (null === $worker) {
-            return '-';
+            return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->noValue();
         }
 
         return \DoEveryApp\Util\View\Escaper::escape($worker->getName());

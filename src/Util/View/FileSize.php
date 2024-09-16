@@ -13,7 +13,7 @@ class FileSize
         }
         $i    = floor(log($size, 1024));
         $size = round($size / pow(1024, $i), [0, 0, 2, 2, 3][$i]);
-        $size = \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLanguage() ?? 'de_DE', \NumberFormatter::PATTERN_DECIMAL)->format($size);
+        $size = \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \NumberFormatter::PATTERN_DECIMAL)->format($size);
         
         return $size .' '. ['B', 'kB', 'MB', 'GB', 'TB'][$i];
     }

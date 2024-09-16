@@ -17,31 +17,31 @@ class Duration
         switch ($duration) {
             case null:
             {
-                return '-';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->noValue();
             }
             case 1:
             {
-                return 'eine Minute';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->oneMinute();
             }
             case 2:
             {
-                return 'zwei Minuten';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->twoMinutes();
             }
             case 3:
             {
-                return 'drei Minuten';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->threeMinutes();
             }
             case 4:
             {
-                return 'vier Minuten';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->fourMinutes();
             }
             case 5:
             {
-                return 'fünf Minuten';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->fiveMinutes();
             }
             default:
             {
-                return $duration . ' Minuten';
+                return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->minutes();
             }
         }
     }

@@ -8,25 +8,7 @@ class PriorityMap
 {
     public static function getByTask(\DoEveryApp\Entity\Task $task): string
     {
-        switch ($task->getPriority()) {
-            case \DoEveryApp\Definition\Priority::LOW->value:
-            {
-                return 'gering';
-            }
-            case \DoEveryApp\Definition\Priority::NORMAL->value:
-            {
-                return 'normal';
-            }
-            case \DoEveryApp\Definition\Priority::HIGH->value:
-            {
-                return 'hoch';
-            }
-            case \DoEveryApp\Definition\Priority::URGENT->value:
-            {
-                return 'dringend';
-            }
-        }
-        throw new \InvalidArgumentException('??' . $task->getPriority());
+        return static::mapName(\DoEveryApp\Definition\Priority::from($task->getPriority()));
     }
 
 
@@ -35,19 +17,19 @@ class PriorityMap
         switch ($priority->name) {
             case \DoEveryApp\Definition\Priority::LOW->name:
             {
-                return 'gering';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->priorityLow();
             }
             case \DoEveryApp\Definition\Priority::NORMAL->name:
             {
-                return 'normal';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->priorityNormal();
             }
             case \DoEveryApp\Definition\Priority::HIGH->name:
             {
-                return 'hoch';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->priorityHigh();
             }
             case \DoEveryApp\Definition\Priority::URGENT->name:
             {
-                return 'dringend';
+                return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->priorityUrgent();
             }
         }
         throw new \InvalidArgumentException('??' . $priority->name);
