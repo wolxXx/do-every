@@ -15,7 +15,6 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
         if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
             return $task;
         }
