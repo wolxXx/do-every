@@ -984,9 +984,6 @@ class English implements \DoEveryApp\Util\Translator
         return 'Scan the QR code on the left side with your authenticator app (e.g., Google Authenticator). <br />
 Securely store the three access codes so you can access the system even without the authenticator app.<br /><br />
 Then click the "Save" button to complete the process and digitally secure the data.';
-        return 'Scanne den QR-Code auf der linken Seite mit deiner Authenticator-App (z.B. Google Authenticator). <br />
-Bewahre die drei Zugangscodes sicher auf, damit du auch ohne die Authenticator-App Zugriff auf das System hast.<br /><br />
-Klicke anschließend auf die Schaltfläche "Speichern", um den Vorgang abzuschließen und die Daten digital zu sichern.';
     }
 
 
@@ -1010,25 +1007,25 @@ Klicke anschließend auf die Schaltfläche "Speichern", um den Vorgang abzuschli
 
     public function addTwoFactor(): string
     {
-        return '+2fa';
+        return '+2FA';
     }
 
 
     public function removeTwoFactor(): string
     {
-        return '-2fa';
+        return '-2FA';
     }
 
 
     public function logFor(): string
     {
-        return 'Arbeitsnachweis für Biene "%s"';
+        return 'work log for "%s"';
     }
 
 
     public function workerDidNothing(): string
     {
-        return '- %s hat bisher kein Beitrag geleistet -';
+        return '- %s did not contribute yet -';
     }
 
 
