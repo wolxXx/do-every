@@ -4,22 +4,27 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Action;
 
+use DoEveryApp\Util\DependencyContainer;
+
 abstract class AbstractAction
 {
     protected \Psr\Http\Message\ServerRequestInterface $request;
-
     protected \Psr\Http\Message\ResponseInterface      $response;
-
     protected mixed                                    $args;
-
     protected \DoEveryApp\Util\ErrorStore              $errorStore;
+    protected \DoEveryApp\Util\DependencyContainer     $dependencyContainer;
+    protected \Doctrine\ORM\EntityManager              $entityManager;
+    protected \DoEveryApp\Util\Translator              $translator;
 
 
     final public function __construct()
     {
         \DoEveryApp\Util\Session::Factory(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
         new \DoEveryApp\Util\SessionContainer(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
-        $this->errorStore = new \DoEveryApp\Util\ErrorStore();
+        $this->errorStore          = new \DoEveryApp\Util\ErrorStore();
+        $this->dependencyContainer = DependencyContainer::getInstance();
+        $this->entityManager       = $this->dependencyContainer->getEntityManager();
+        $this->translator          = $this->dependencyContainer->getTranslator();
     }
 
 
@@ -142,7 +147,7 @@ abstract class AbstractAction
 
 
     /**
-     * @param array<mixed>  $data
+     * @param array<mixed> $data
      */
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
@@ -151,7 +156,7 @@ abstract class AbstractAction
             'currentRoute'        => \Slim\Routing\RouteContext::fromRequest($this->getRequest())->getRoutingResults()->getUri(),
             'currentRoutePattern' => static::getRoutePattern(),
             'currentUser'         => \DoEveryApp\Util\User\Current::get(),
-            'translator'          => \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator(),
+            'translator'          => $this->translator,
         ];
 
         $phpView = (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables));

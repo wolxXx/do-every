@@ -13,6 +13,10 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
+    public const string FORM_FIELD_NAME  = 'name';
+
+    public const string FORM_FIELD_COLOR = 'color';
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (true === $this->isGetRequest()) {
@@ -24,15 +28,15 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $data     = $this->filterAndValidate($data);
             $newGroup = \DoEveryApp\Service\Task\Group\Creator::execute(
                 (new \DoEveryApp\Service\Task\Group\Creator\Bag())
-                    ->setName($data['name'])
-                    ->setColor($data['color'])
+                    ->setName($data[static::FORM_FIELD_NAME])
+                    ->setColor($data[static::FORM_FIELD_COLOR])
             );
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Gruppe erstellt.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupAdded());
 
             return $this->redirect(\DoEveryApp\Action\Group\ShowAction::getRoute($newGroup->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
@@ -45,27 +49,25 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data['name']  = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_NAME]  = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('name'))
+            ->filter($this->getFromBody(static::FORM_FIELD_NAME))
         ;
-        $data['color'] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_COLOR] = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('color'))
+            ->filter($this->getFromBody(static::FORM_FIELD_COLOR))
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  'color' => [
+            static::FORM_FIELD_COLOR => [
 
-                                                                                  ],
-                                                                                  'name'  => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-
-                                                                              ]);
-
+            ],
+            static::FORM_FIELD_NAME  => [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ],
+        ]);
 
         $this->validate($data, $validators);
 

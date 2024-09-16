@@ -18,7 +18,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
     {
         $execution = \DoEveryApp\Entity\Execution::getRepository()->find($this->getArgumentSafe());
         if (false === $execution instanceof \DoEveryApp\Entity\Execution) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Ausführung nicht gefunden');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
@@ -79,7 +79,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Ausführung bearbeitet  .');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionEdited());
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {

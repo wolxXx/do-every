@@ -57,14 +57,14 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
                 \unlink($filename);
                 return $this->getResponse();
             } catch (\Exception $exception) {
-                \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+                \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
                 return $this->redirect(IndexAction::getRoute());
             }
         }
 
         $filePath = \ROOT_DIR . $requestedFile;
         if (false === \file_exists($filePath)) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
             return $this->redirect(IndexAction::getRoute());
         }
 
@@ -83,7 +83,7 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
             $this->setResponse($response);
             return $this->getResponse();
         } catch (\Exception $exception) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
             return $this->redirect(IndexAction::getRoute());
         }
     }

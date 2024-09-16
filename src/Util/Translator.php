@@ -310,4 +310,54 @@ interface Translator
 
 
     public function priorityUrgent(): string;
+
+    public function codeNotValid(): string;
+
+    public function defaultErrorMessage(): string;
+
+    public function userNotFound(): string;
+
+    public function codeSent(): string;
+
+    public function passwordConfirmFailed(): string;
+
+    public function passwordChanged(): string;
+
+    public function settingsSaved(): string;
+
+    public function workerNotFound(): string;
+
+    public function taskNotFound(): string;
+
+    public function executionAdded(): string;
+
+    public function executionNotFound(): string;
+
+    public function executionDeleted(): string;
+
+    public function executionEdited(): string;
+
+    public function groupAdded(): string;
+
+    public function groupNotFound(): string;
+
+    public function groupDeleted(): string;
+
+    public function groupEdited(): string;
+
+    public function taskAdded(): string;
+
+    public function taskDeleted(): string;
+
+    public function taskEdited(): string;
+
+    public function statusSet(): string;
+
+    public function workerAssigned(): string;
+
+    public function assignmentRemoved(): string;
+
+    public function taskReset(): string;
+
+    public function workerAdded():string;
 }

@@ -24,7 +24,7 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
         $session = \DoEveryApp\Util\Session::Factory('2faValidate');
         $userId  = $session->get('user');
         if (null === $userId || false === \DoEveryApp\Entity\Worker::getRepository()->find($userId) instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
             $session->reset();
 
             return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
@@ -44,7 +44,7 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                 $verified         = $twoFactorUtility->verify($code, $worker->getTwoFactorSecret());
                 if (false === $verified) {
                     $session->reset();
-                    \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+                    \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
 
                     return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
                 }
@@ -100,14 +100,14 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                     }
                 } catch (\Throwable) {
                     $session->reset();
-                    \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+                    \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
 
                     return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
                 }
             }
 
             $session->reset();
-            \DoEveryApp\Util\FlashMessenger::addDanger('Das hat nicht geklappt.');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
 
             return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {

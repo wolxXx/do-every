@@ -16,7 +16,7 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
     {
         $execution = \DoEveryApp\Entity\Execution::getRepository()->find($this->getArgumentSafe());
         if (false === $execution instanceof \DoEveryApp\Entity\Execution) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Ausführung nicht gefunden');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
@@ -26,7 +26,7 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
                                             ->getEntityManager()
                                             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Ausführung gelöscht.');
+        \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionDeleted());
 
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }

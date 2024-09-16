@@ -40,7 +40,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
                 throw new \RuntimeException('took too long');
             }
         } catch (\Throwable $exception) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Code ungültig.');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
             $session->reset();
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
@@ -54,8 +54,8 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             $data = $this->filterAndValidate($data);
 
             if ($data[static::FORM_FIELD_PASSWORD] !== $data[static::FORM_FIELD_PASSWORD_CONFIRM]) {
-                $this->getErrorStore()->addError('password', 'Passwortkontrolle fehlgeschlagen');
-                throw new \DoEveryApp\Exception\FormValidationFailed('password mismatch');
+                $this->getErrorStore()->addError('password', \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordConfirmFailed());
+                throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
             $existing
@@ -71,7 +71,8 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             ;
             \DoEveryApp\Util\Mailing\PasswordChanged::send($existing);
 
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Passwort geändert.');
+
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordChanged());
             return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }

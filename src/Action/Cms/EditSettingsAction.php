@@ -47,7 +47,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Einstellungen gespeichert.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->settingsSaved());
 
             return $this->redirect(ShowSettingsAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
@@ -76,13 +76,13 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  static::FORM_FIELD_KEEP_BACKUPS   => [
-                                                                                  ],
-                                                                                  static::FORM_FIELD_FILL_TIME_LINE => [
-                                                                                  ],
-                                                                                  static::FORM_FIELD_PRECISION_DUE  => [
-                                                                                  ],
-                                                                              ]);
+            static::FORM_FIELD_KEEP_BACKUPS   => [
+            ],
+            static::FORM_FIELD_FILL_TIME_LINE => [
+            ],
+            static::FORM_FIELD_PRECISION_DUE  => [
+            ],
+        ]);
 
 
         $this->validate($data, $validators);

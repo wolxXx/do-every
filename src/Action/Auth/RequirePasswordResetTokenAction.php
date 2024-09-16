@@ -27,7 +27,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
             $data     = $this->filterAndValidate($data);
             $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail($data[self::FORM_FIELD_EMAIL]);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\FlashMessenger::addSuccess('Code verschickt.');
+                \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
 
                 return $this->redirect(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
             }
@@ -42,7 +42,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
                                                 ->flush()
             ;
             \DoEveryApp\Util\Mailing\RequirePasswordResetToken::send($existing);
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Code verschickt.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
 
             return $this->redirect(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {

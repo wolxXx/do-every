@@ -13,6 +13,7 @@ namespace DoEveryApp\Action\Worker;
 )]
 class EditAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Worker\Share\AddEdit;
     use \DoEveryApp\Action\Share\SingleIdRoute;
 
     public function run(): \Psr\Http\Message\ResponseInterface
@@ -26,31 +27,30 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         if (true === $this->isGetRequest()) {
             return $this->render('action/worker/edit', [
                 'worker' => $worker,
-                'data' => [
-                    'name' => $worker->getName(),
-                    'email' => $worker->getEmail(),
-                    'is_admin' => $worker->isAdmin()? '1' : '0',
-                    'do_notify' => $worker->doNotify()? '1' : '0',
-                    'do_notify_logins' => $worker->doNotifyLogin()? '1' : '0',
-                    'password' => ''
+                'data'   => [
+                    static::FORM_FIELD_NAME             => $worker->getName(),
+                    static::FORM_FIELD_EMAIL            => $worker->getEmail(),
+                    static::FORM_FIELD_IS_ADMIN         => $worker->isAdmin() ? '1' : '0',
+                    static::FORM_FIELD_DO_NOTIFY        => $worker->doNotify() ? '1' : '0',
+                    static::FORM_FIELD_DO_NOTIFY_LOGINS => $worker->doNotifyLogin() ? '1' : '0',
+                    static::FORM_FIELD_PASSWORD         => '',
                 ],
             ]);
         }
         $data = [];
         try {
-            $data    = $this->getRequest()->getParsedBody();
-            $data    = $this->filterAndValidate($data);
+            $data = $this->getRequest()->getParsedBody();
+            $data = $this->filterAndValidate($data);
             $worker
-                    ->setName($data['name'])
-                    ->setIsAdmin('1' === $data['is_admin'])
-                    ->enableNotifications('1' === $data['do_notify'])
-                    ->setNotifyLogin('1' === $data['do_notify_logins'])
-                    ->setEmail($data['email'])
-
+                ->setName($data[static::FORM_FIELD_NAME])
+                ->setIsAdmin('1' === $data[static::FORM_FIELD_IS_ADMIN])
+                ->enableNotifications('1' === $data[static::FORM_FIELD_DO_NOTIFY])
+                ->setNotifyLogin('1' === $data[static::FORM_FIELD_DO_NOTIFY_LOGINS])
+                ->setEmail($data[static::FORM_FIELD_EMAIL])
             ;
-            if(null !== $data['password']) {
+            if (null !== $data[static::FORM_FIELD_PASSWORD]) {
                 $worker
-                    ->setPassword($data['password'])
+                    ->setPassword($data[static::FORM_FIELD_PASSWORD])
                     ->setLastPasswordChange(\Carbon\Carbon::now())
                 ;
             }
@@ -70,34 +70,35 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             'action/worker/edit',
             [
                 'worker' => $worker,
-                'data' => $data
-            ]);
+                'data'   => $data,
+            ]
+        );
     }
 
 
     protected function filterAndValidate(array &$data): array
     {
-        $data['name']     = (new \Laminas\Filter\FilterChain())
+        $data['name']             = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('name'))
         ;
-        $data['email']    = (new \Laminas\Filter\FilterChain())
+        $data['email']            = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('email'))
         ;
-        $data['password'] = (new \Laminas\Filter\FilterChain())
+        $data['password']         = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('password'))
         ;
-        $data['is_admin'] = (new \Laminas\Filter\FilterChain())
+        $data['is_admin']         = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('is_admin'))
         ;
-        $data['do_notify'] = (new \Laminas\Filter\FilterChain())
+        $data['do_notify']        = (new \Laminas\Filter\FilterChain())
             ->attach(new \Laminas\Filter\StringTrim())
             ->attach(new \Laminas\Filter\ToNull())
             ->filter($this->getFromBody('do_notify'))
@@ -109,21 +110,21 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-                                                                                  'email'    => [
-                                                                                  ],
-                                                                                  'is_admin' => [
-                                                                                  ],
-                                                                                  'do_notify' => [
-                                                                                  ],
-                                                                                  'do_notify_logins' => [
-                                                                                  ],
-                                                                                  'password' => [
-                                                                                  ],
-                                                                                  'name'     => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                               
-                                                                              ]);
+            'email'            => [
+            ],
+            'is_admin'         => [
+            ],
+            'do_notify'        => [
+            ],
+            'do_notify_logins' => [
+            ],
+            'password'         => [
+            ],
+            'name'             => [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ],
+
+        ]);
 
 
         $this->validate($data, $validators);

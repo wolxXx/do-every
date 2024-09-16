@@ -19,7 +19,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
     {
         $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
         if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
@@ -76,7 +76,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Ausführung registriert.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionAdded());
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {

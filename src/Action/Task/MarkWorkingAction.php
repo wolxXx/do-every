@@ -10,6 +10,7 @@ namespace DoEveryApp\Action\Task;
 )]
 class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Task;
     public static function getRoute(int $id, ?int $workingOn = null): string
     {
         $reflection = new \ReflectionClass(__CLASS__);
@@ -28,28 +29,29 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
-        if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
+            return $task;
         }
         try {
             $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe('worker'));
             if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\FlashMessenger::addDanger('Mitarbeiter nicht gefunden');
+                \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->workerNotFound());
 
                 return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
             $task->setWorkingOn($worker);
             \DoEveryApp\Entity\Task::getRepository()->update($task);
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Mitarbeiter erfolgreich zugewiesen');
+            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->workerAssigned());
         } catch (\DoEveryApp\Exception\ArgumentNoSet $exception) {
             // ok, argument was not set...
             $task->setWorkingOn(null);
             \DoEveryApp\Entity\Task::getRepository()->update($task);
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Markierung erfolgreich entfernt');
+            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->assignmentRemoved());
         }
+        $this
+            ->entityManager
+            ->flush()
+        ;
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }
 }

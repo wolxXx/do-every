@@ -63,7 +63,7 @@ trait  AddEdit
                     }
                     $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
                     if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
-                        throw new \InvalidArgumentException('worker not found');
+                        throw new \InvalidArgumentException(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->workerNotFound());
                     }
                 }),
             ],

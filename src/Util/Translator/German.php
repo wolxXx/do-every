@@ -601,4 +601,129 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'dringend';
     }
+
+    public function codeNotValid(): string
+    {
+        return 'Code ungültig.';
+    }
+
+    public function defaultErrorMessage(): string
+    {
+        return 'Das hat nicht geklappt.';
+    }
+
+    public function userNotFound(): string
+    {
+        return 'Nutzer nicht gefunden';
+    }
+
+    public function codeSent(): string
+    {
+        return 'Code verschickt.';
+    }
+
+    public function passwordConfirmFailed(): string
+    {
+        return 'Passwortkontrolle fehlgeschlagen';
+    }
+
+    public function passwordChanged(): string
+    {
+        return 'Passwort geändert.';
+    }
+
+    public function settingsSaved(): string
+    {
+        return 'Einstellungen gespeichert.';
+    }
+
+    public function workerNotFound(): string
+    {
+        return 'Biene nicht gefunden';
+    }
+
+    public function taskNotFound(): string
+    {
+        return 'Aufgabe nicht gefunden';
+    }
+
+    public function executionAdded(): string
+    {
+        return 'Ausführung registriert.';
+    }
+
+    public function executionNotFound(): string
+    {
+        return 'Ausführung nicht gefunden.';
+    }
+
+    public function executionDeleted(): string
+    {
+        return 'Ausführung gelöscht.';
+    }
+
+    public function executionEdited(): string
+    {
+        return 'Ausführung bearbeitet.';
+    }
+
+    public function groupAdded(): string
+    {
+        return 'Gruppe erstellt.';
+    }
+
+    public function groupNotFound(): string
+    {
+        return 'Gruppe nicht gefunden.';
+    }
+
+    public function groupDeleted(): string
+    {
+        return 'Gruppe gelöscht.';
+    }
+
+    public function groupEdited(): string
+    {
+        return 'Gruppe bearbeitet.';
+    }
+
+    public function taskAdded(): string
+    {
+        return 'Aufgabe erstellt.';
+    }
+
+    public function taskDeleted(): string
+    {
+        return 'Aufgabe gelöscht.';
+    }
+
+    public function taskEdited(): string
+    {
+        return 'Aufgabe bearbeitet.';
+    }
+
+    public function statusSet(): string
+    {
+        return 'Status erfolgreich gesetzt';
+    }
+
+    public function workerAssigned(): string
+    {
+        return 'Markierung erfolgreich gesetzt';
+    }
+
+    public function assignmentRemoved(): string
+    {
+        return 'Markierung erfolgreich entfernt.';
+    }
+
+    public function taskReset(): string
+    {
+        return 'Aufgabe zurückgesetzt.';
+    }
+
+    public function workerAdded(): string
+    {
+        return 'Worker erstellt.';
+    }
 }

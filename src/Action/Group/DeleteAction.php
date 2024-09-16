@@ -16,7 +16,7 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
     {
         $group = \DoEveryApp\Entity\Group::getRepository()->find($this->getArgumentSafe());
         if (false === $group instanceof \DoEveryApp\Entity\Group) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Gruppe nicht gefunden');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
@@ -27,7 +27,7 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
                                             ->getEntityManager()
                                             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Gruppe gelöscht.');
+        \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupDeleted());
 
         return $this->redirect(\DoEveryApp\Action\Task\IndexAction::getRoute());
     }

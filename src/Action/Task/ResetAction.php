@@ -11,14 +11,12 @@ namespace DoEveryApp\Action\Task;
 class ResetAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
+    use \DoEveryApp\Action\Share\Task;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
-        if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
+            return $task;
         }
         foreach ($task->getExecutions() as $execution) {
             $execution::getRepository()->delete($execution);
@@ -29,7 +27,11 @@ class ResetAction extends \DoEveryApp\Action\AbstractAction
             ->setWorkingOn(null)
         ;
         \DoEveryApp\Entity\Task::getRepository()->update($task);
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe zurückgesetzt.');
+        $this
+            ->entityManager
+            ->flush()
+        ;
+        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->taskReset());
 
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }

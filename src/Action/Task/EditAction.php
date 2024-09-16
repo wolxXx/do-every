@@ -13,14 +13,12 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Task\Share\AddEdit;
     use \DoEveryApp\Action\Share\SingleIdRoute;
+    use \DoEveryApp\Action\Share\Task;
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
-        if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
+            return $task;
         }
         if (true === $this->isGetRequest()) {
             $checkListItems = [];
@@ -73,7 +71,8 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe bearbeitet.');
+
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskEdited());
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
@@ -88,6 +87,4 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             ]
         );
     }
-
-
 }

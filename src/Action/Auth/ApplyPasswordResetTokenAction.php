@@ -30,12 +30,12 @@ class ApplyPasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
             $existing = \DoEveryApp\Entity\Worker::getRepository()
                 ->findOneByPasswordResetToken($data[static::FORM_FIELD_TOKEN]);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\FlashMessenger::addDanger('Code ungültig.');
+                \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
 
                 return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
             if (null === $existing->getTokenValidUntil() || $existing->getTokenValidUntil() < \Carbon\Carbon::now()) {
-                \DoEveryApp\Util\FlashMessenger::addDanger('Code ungültig.');
+                \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
 
                 return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
             }

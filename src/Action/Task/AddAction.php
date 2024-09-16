@@ -46,7 +46,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess('Aufgabe erstellt.');
+            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskAdded());
 
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($newTask->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {

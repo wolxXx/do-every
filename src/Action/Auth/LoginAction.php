@@ -35,12 +35,12 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
             $data     = $this->filterAndValidate($data);
             $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail($data[static::FORM_FIELD_EMAIL]);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, 'user not found');
-                throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
+                $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->userNotFound());
+                throw new \DoEveryApp\Exception\FormValidationFailed();
             }
             if (false === \DoEveryApp\Util\Password::verify($data[static::FORM_FIELD_PASSWORD], $existing->getPassword())) {
-                $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, 'user not found');
-                throw new \DoEveryApp\Exception\FormValidationFailed('User not found');
+                $this->getErrorStore()->addError(static::FORM_FIELD_EMAIL, \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->userNotFound());
+                throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
             if (null !== $existing->getTwoFactorSecret()) {

@@ -10,6 +10,7 @@ namespace DoEveryApp\Action\Task;
 )]
 class MarkActiveAction extends \DoEveryApp\Action\AbstractAction
 {
+    use \DoEveryApp\Action\Share\Task;
     public static function getRoute(int $id, bool $active = true): string
     {
         $reflection = new \ReflectionClass(__CLASS__);
@@ -26,15 +27,16 @@ class MarkActiveAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $task = \DoEveryApp\Entity\Task::getRepository()->find($this->getArgumentSafe());
-        if (false === $task instanceof \DoEveryApp\Entity\Task) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Aufgabe nicht gefunden');
-
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
+            return $task;
         }
         $task->setActive('1' === $this->getArgumentSafe('active'));
         \DoEveryApp\Entity\Task::getRepository()->update($task);
-        \DoEveryApp\Util\FlashMessenger::addSuccess('Status erfolgreich gesetzt');
+        \DoEveryApp\Util\DependencyContainer::getInstance()
+            ->getEntityManager()
+            ->flush()
+        ;
+        \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->statusSet());
 
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }

@@ -16,7 +16,7 @@ class ShowAction extends \DoEveryApp\Action\AbstractAction
     {
         $group = \DoEveryApp\Entity\Group::getRepository()->find($this->getArgumentSafe());
         if (false === $group instanceof \DoEveryApp\Entity\Group) {
-            \DoEveryApp\Util\FlashMessenger::addDanger('Gruppe nicht gefunden');
+            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
