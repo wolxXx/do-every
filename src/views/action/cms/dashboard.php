@@ -189,7 +189,8 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                        <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+                        (<?= $task->isNotify()? $translator->willBeNotified() : $translator->willNotBeNotified() ?>)
                     </td>
                     <td>
                         <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
