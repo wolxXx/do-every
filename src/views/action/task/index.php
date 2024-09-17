@@ -39,6 +39,9 @@ declare(strict_types=1);
                         <th>
                             <?= $translator->currentlyWorkingOn() ?>
                         </th>
+                        <th>
+                            <?= $translator->info() ?>
+                        </th>
                         <th class="pullRight">
                             <?= $translator->actions() ?>
                         </th>
@@ -81,6 +84,11 @@ declare(strict_types=1);
                                 <? if(null === $task->getWorkingOn()): ?>
                                     <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
                                 <? endif ?>
+                            </td>
+                            <td>
+                                <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
+                                <?= $translator->doNotifyDueTasksQuestion() ?> <?= \DoEveryApp\Util\View\Boolean::get($task->isNotify()) ?><br />
+                                <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
                             </td>
                             <td class="pullRight">
                                 <nobr class="buttonRow">
