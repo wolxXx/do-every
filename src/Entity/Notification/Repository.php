@@ -9,6 +9,72 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    /**
+     * @return \DoEveryApp\Entity\Notification[]
+     */
+    public function getForWorker(\DoEveryApp\Entity\Worker $worker): array
+    {
+        return $this
+            ->createQueryBuilder('n')
+            ->andWhere('n.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->orderBy('n.createdAt', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+
+    public function getLastForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Notification
+    {
+        return $this
+            ->createQueryBuilder('n')
+            ->andWhere('n.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->orderBy('n.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Notification[]
+     */
+    public function getForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): array
+    {
+        return $this
+            ->createQueryBuilder('n')
+            ->andWhere('n.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->andWhere('n.task = :task')
+            ->setParameter('task', $task)
+            ->orderBy('n.createdAt', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Notification[]
+     */
+    public function getLastForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Notification
+    {
+        return $this
+            ->createQueryBuilder('n')
+            ->andWhere('n.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->andWhere('n.task = :task')
+            ->setParameter('task', $task)
+            ->orderBy('n.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 
     public function create(\DoEveryApp\Entity\Notification $entity): static
     {
