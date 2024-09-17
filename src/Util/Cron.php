@@ -48,6 +48,9 @@ class Cron
         \Amp\async(function () {
             new \DoEveryApp\Util\Cron\BackupRotation();
         });
+        \Amp\async(function () {
+            new \DoEveryApp\Util\Cron\Notify();
+        });
 
         \Revolt\EventLoop::run();
 
