@@ -6,6 +6,9 @@ namespace DoEveryApp\Util\View;
 
 class TaskSortByDue
 {
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
     public static function sort($tasks): array
     {
         usort($tasks, function (\DoEveryApp\Entity\Task $a, \DoEveryApp\Entity\Task $b) {
@@ -19,50 +22,29 @@ class TaskSortByDue
             if (null === $dueB) {
                 return 1;
             }
-            switch ($dueUnitA) {
-                case \DoEveryApp\Definition\IntervalType::HOUR->value:
-                {
-                    $dueA = $dueA * 60;
-                    break;
+            $foo  = function (float|int $a, string $b): int|float {
+                switch ($b) {
+                    case \DoEveryApp\Definition\IntervalType::HOUR->value:
+                    {
+                        return $a * 60;
+                    }
+                    case \DoEveryApp\Definition\IntervalType::DAY->value:
+                    {
+                        return $a * 60 * 24;
+                    }
+                    case \DoEveryApp\Definition\IntervalType::MONTH->value:
+                    {
+                        return $a * 60 * 24 * 30;
+                    }
+                    case \DoEveryApp\Definition\IntervalType::YEAR->value:
+                    {
+                        return $a * 60 * 24 * 30 * 12;
+                    }
+                    default: return $a;
                 }
-                case \DoEveryApp\Definition\IntervalType::DAY->value:
-                {
-                    $dueA = $dueA * 60 * 24;
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                {
-                    $dueA = $dueA * 60 * 24 * 30;
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::YEAR->value:
-                {
-                    $dueA = $dueA * 60 * 24 * 30 * 12;
-                    break;
-                }
-            }
-            switch ($dueUnitB) {
-                case \DoEveryApp\Definition\IntervalType::HOUR->value:
-                {
-                    $dueB = $dueB * 60;
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::DAY->value:
-                {
-                    $dueB = $dueB * 60 * 24;
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::MONTH->value:
-                {
-                    $dueB = $dueB * 60 * 24 * 30;
-                    break;
-                }
-                case \DoEveryApp\Definition\IntervalType::YEAR->value:
-                {
-                    $dueB = $dueB * 60 * 24 * 30 * 12;
-                    break;
-                }
-            }
+            };
+            $dueA = $foo($dueA, $dueUnitA);
+            $dueB = $foo($dueB, $dueUnitB);
 
             return $dueA > $dueB ? 1 : -1;
         });
