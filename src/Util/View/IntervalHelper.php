@@ -81,7 +81,10 @@ class IntervalHelper
             {
                 return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->year();
             }
+            default:
+            {
+                throw new \InvalidArgumentException('??' . $intervalType->name);
+            }
         }
-        throw new \InvalidArgumentException('??' . $intervalType->name);
     }
 }
