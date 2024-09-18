@@ -3,22 +3,21 @@
 declare(strict_types=1);
 
 /**
- * @var $this                \Slim\Views\PhpRenderer
- * @var $errorStore          \DoEveryApp\Util\ErrorStore
- * @var $currentRoute        string
- * @var $currentRoutePattern string
- * @var $currentUser         \DoEveryApp\Entity\Worker|null
- * @var $translator          \DoEveryApp\Util\Translator
+ * @var \Slim\Views\PhpRenderer        $this
+ * @var \DoEveryApp\Util\ErrorStore    $errorStore
+ * @var string                         $currentRoute
+ * @var string                         $currentRoutePattern
+ * @var \DoEveryApp\Entity\Worker|null $currentUser
+ * @var \DoEveryApp\Util\Translator    $translator
  */
 
 /**
- * @var $image string
- * @var $code1 string
- * @var $code2 string
- * @var $code3 string
- * @var $worker \DoEveryApp\Entity\Worker
+ * @var string                    $image
+ * @var string                    $code1
+ * @var string                    $code2
+ * @var string                    $code3
+ * @var \DoEveryApp\Entity\Worker $worker
  */
-
 ?>
 
 <h1>

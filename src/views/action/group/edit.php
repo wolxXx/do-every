@@ -3,19 +3,18 @@
 declare(strict_types=1);
 
 /**
- * @var $this                \Slim\Views\PhpRenderer
- * @var $errorStore          \DoEveryApp\Util\ErrorStore
- * @var $currentRoute        string
- * @var $currentRoutePattern string
- * @var $currentUser         \DoEveryApp\Entity\Worker|null
- * @var $translator          \DoEveryApp\Util\Translator
+ * @var \Slim\Views\PhpRenderer        $this
+ * @var \DoEveryApp\Util\ErrorStore    $errorStore
+ * @var string                         $currentRoute
+ * @var string                         $currentRoutePattern
+ * @var \DoEveryApp\Entity\Worker|null $currentUser
+ * @var \DoEveryApp\Util\Translator    $translator
  */
 
 /**
- * @var $data array
- * @var $group \DoEveryApp\Entity\Group
+ * @var array                    $data
+ * @var \DoEveryApp\Entity\Group $group
  */
-
 ?>
 <h1>
     Gruppe "<?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>" bearbeiten

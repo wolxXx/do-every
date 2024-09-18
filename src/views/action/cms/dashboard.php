@@ -3,22 +3,22 @@
 declare(strict_types=1);
 
 /**
- * @var $this                \Slim\Views\PhpRenderer
- * @var $errorStore          \DoEveryApp\Util\ErrorStore
- * @var $currentRoute        string
- * @var $currentRoutePattern string
- * @var $currentUser         \DoEveryApp\Entity\Worker|null
- * @var $translator          \DoEveryApp\Util\Translator
+ * @var \Slim\Views\PhpRenderer        $this
+ * @var \DoEveryApp\Util\ErrorStore    $errorStore
+ * @var string                         $currentRoute
+ * @var string                         $currentRoutePattern
+ * @var \DoEveryApp\Entity\Worker|null $currentUser
+ * @var \DoEveryApp\Util\Translator    $translator
  */
 
 /**
- * @var $executions                \DoEveryApp\Entity\Execution[]
- * @var $dueTasks                  \DoEveryApp\Entity\Task[]
- * @var $tasks                     \DoEveryApp\Entity\Task[]
- * @var $tasksWithoutGroup         \DoEveryApp\Entity\Task[]
- * @var $groups                    \DoEveryApp\Entity\Group[]
- * @var $workers                   \DoEveryApp\Entity\Worker[]
- * @var $workingOn                 \DoEveryApp\Entity\Task[]
+ * @var \DoEveryApp\Entity\Execution[] $executions
+ * @var \DoEveryApp\Entity\Task[]      $dueTasks
+ * @var \DoEveryApp\Entity\Task[]      $tasks
+ * @var \DoEveryApp\Entity\Task[]      $tasksWithoutGroup
+ * @var \DoEveryApp\Entity\Group[]     $groups
+ * @var \DoEveryApp\Entity\Worker[]    $workers
+ * @var \DoEveryApp\Entity\Task[]      $workingOn
  */
 $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
