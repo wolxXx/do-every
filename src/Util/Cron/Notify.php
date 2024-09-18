@@ -75,7 +75,9 @@ class Notify
             \DoEveryApp\Util\Debugger::debug($task->getName() . '->' . $task->getDueValue() . ' ' . $task->getDueUnit() . ' ' . \DoEveryApp\Util\View\Due::getByTask($task));
         }
         \DoEveryApp\Util\Debugger::debug($this->hasSomethingToDo());
-        $this->notify();
+        if (0 !== \sizeof($this->tasks)) {
+            $this->notify();
+        }
         \DoEveryApp\Util\Registry::getInstance()->setNotifierRunning(false);
         \DoEveryApp\Util\Registry::getInstance()->setNotifierLastRun(\Carbon\Carbon::now());
         \DoEveryApp\Util\DependencyContainer::getInstance()->getEntityManager()->flush();
