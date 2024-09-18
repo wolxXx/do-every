@@ -1,0 +1,80 @@
+version: '3.5'
+
+volumes:
+  vol-database-mariadb:
+    name: "do-every-__INSTANCE__-php83-db-mariadb-volume"
+
+services:
+  mysql:
+    image: mariadb:11.3
+    platform: linux/amd64
+    security_opt:
+      - "seccomp=unconfined"
+    restart: always
+    container_name: "do-every-__INSTANCE__-php83-db"
+    ports:
+      - "127.0.0.1:__DB_PORT__:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: root
+      MARIADB_PASSWORD: root
+    volumes:
+      - vol-database-mariadb:/var/lib/mysql/
+      - ./docker-volumes/mysql/conf.d:/etc/mysql/conf.d
+      - ./docker-volumes/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker-volumes/mysql/client.cnf:/etc/mysql/client.cnf
+      - ./docker-volumes/mysql/initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - do-every-network
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "--defaults-file=/etc/mysql/client.cnf", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+
+  web:
+    build: ./
+    restart: always
+    container_name: "do-every-__INSTANCE__-php83-web"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./docker-volumes/backups:/var/www/backups
+      - ./docker-volumes/home:/home/docker
+      - ./docker-volumes/scripts/init-app:/usr/local/bin/init-app
+      - ./docker-volumes/mysql/imports:/var/imports
+      - ./docker-volumes/mysql/exports:/var/exports
+      - ./docker-volumes/mysql/client.cnf:/etc/mysql/conf.d/client.cnf
+      - ./docker-volumes/apache/conf:/etc/apache2/sites-available/000-default.conf
+      - ./:/var/www
+      - ./docker-volumes/logs/xdebug:/tmp/xdebug/
+    ports:
+      - "127.0.0.1:__WEB_PORT__:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - do-every-network
+    labels:
+      ofelia.enabled: "true"
+      "ofelia.job-exec.__INSTANCE___datecron.schedule": "@every 30s"
+      "ofelia.job-exec.__INSTANCE___datecron.command": "php /var/www/scripts/cron.php"
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    restart: always
+    container_name: "do-every-__INSTANCE__-php83-ofelia"
+    depends_on:
+      - web
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      "ofelia.job-local.__INSTANCE___my-test-job.schedule": "@every 30s"
+      "ofelia.job-local.__INSTANCE___my-test-job.command": "date"
+
+networks:
+  do-every-network:
+    name: "do-every-__INSTANCE__-php83-network"

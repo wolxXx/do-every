@@ -1,0 +1,30 @@
+do every
+
+task
+ - name
+ - interval_value
+ - interval_type
+ - priority
+
+execution
+ - task_id
+ - date
+
+worker
+ - name
+ - email
+ - password
+ - notify
+
+executor
+ - task_id
+ - worker_id
+
+notification
+ - task_id
+ - worker_id
+ - date
+
+
+call /cron via web cron
+run scripts/cron.php via shell cron

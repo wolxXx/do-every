@@ -1,0 +1,388 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+a {
+    color: #fff;
+}
+
+input[type="text"], input[type="email"], input[type="password"],input[type="number"], textarea, select {
+    color: #fff;
+    background: #333;
+    border: solid 1px #ccc;
+}
+select {
+    display: block;
+    min-width: 200px;
+}
+
+textarea {
+    height: 70px;
+    max-width: 200px;
+}
+
+label {
+    display: block;
+}
+label.required {
+    color: #eee;
+    font-weight: bolder;
+}
+label.required:after {
+    content: "*";
+}
+table {
+    width: 100%;
+    border: solid 1px #666;
+}
+
+tr:hover {
+    background: #333;
+}
+
+td, th {
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    border-bottom: solid 3px #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+}
+fieldset {
+    border: solid 1px rgba(200,200,200,0.4);
+    margin-bottom: 30px;
+}
+fieldset > legend {
+    margin-left: 10px;
+    border: solid 1px #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+table.withActions tr td:last-child, td.pullRight {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.keyValue tr td:first-child {
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    margin-bottom: 20px;
+    border-bottom: solid 1px rgba(200,200,200,0.1);
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border: solid 1px rgba(200,200,200,0.2);
+    color: rgba(200,200,200,0.1);
+    background: rgba(200,200,200,0.1);
+    display: block;
+}
+
+.errors {
+    color: #f22;
+    margin: 5px;
+}
+
+
+.cards {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.buttonRow {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.buttonRow > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-right: -4px !important;
+    margin-left: -4px !important;
+}
+
+.primaryButton, .dangerButton, .warningButton, .btn-close, .rowAdder {
+    display: inline-block;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+}
+
+.primaryButton, .btn-close, .rowAdder {
+    border: solid 3px #fff;
+    background: #999999;
+}
+.primaryButton:hover {
+    color: #333;
+    background: #fff;
+    border: solid 3px #ccc;
+}
+
+.dangerButton{
+    border: solid 3px #f00;
+    background: #f66;
+}
+.dangerButton:hover {
+    color: #fff;
+    background: #f00;
+    border: solid 3px #833;
+}
+
+.warningButton{
+    border: solid 3px #e8c92f;
+    background: #a19126;
+}
+.warningButton:hover{
+    color: #000;
+    background: #ff0;
+    border: solid 3px #ae9809;
+}
+
+.rowRemover {
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 0;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+}
+.rowSimple {
+    display: flex;
+    gap: 20px;
+}
+.grid {
+    /**
+     * User input values.
+     */
+    --grid-layout-gap: 20px;
+    --grid-column-count: 4;
+    --grid-item--min-width: 200px;
+
+    /**
+     * Calculated values.
+     */
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+    grid-gap: var(--grid-layout-gap);
+}
+
+.grid > .column {
+    flex: 1;
+    justify-content: space-between;
+    max-width: 300px;
+}
+.row > .column {
+    flex: 1;
+    justify-content: space-between;
+}
+
+.pullRight {
+    text-align: right;
+}
+
+.form-footer {
+    margin-top: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 2px rgba(200,200,200,0.1);
+    border-bottom: solid 2px rgba(200,200,200,0.1);
+ }
+
+.pageButtons {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+form > .row {
+    margin-bottom: 20px;
+}
+#app {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+#app > * {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 30ch;
+      gap: 1rem;
+
+}
+
+#menu {
+    position: relative;
+    top: -20px;
+    left: 0;
+    width: 300px;
+    -webkit-transition: top 0.4s ease-out;
+    padding-right: 20px;
+    border-right: solid 1px rgba(200,200,200,0.1);
+    flex-basis: 10rem;
+    flex-grow: 1;
+}
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+#menu ul li {
+    margin-bottom: 10px;
+}
+#menu ul li a{
+    display: block;
+    text-decoration: none;
+    padding-right: 20px;
+}
+#menu ul li a.active{
+    text-decoration: underline;
+    padding-right: 0;
+}
+
+#content {
+    margin: 20px;
+    margin-top: 0;
+    margin-right: 0;
+    flex-basis: 0;
+    flex-grow: 999;
+      min-inline-size: 50%;
+
+}
+
+@keyframes example {
+
+    0%   {filter: grayscale(100%)}
+    50%  {filter: grayscale(0%)}
+    100% {filter: grayscale(100%)}
+}
+
+#menu img, #appTitle, h1{
+    animation-name: example;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    text-shadow: #b30211 1px 0 10px;
+}
+h1:before,h1:after {
+    content: '*'
+}
+
+
+#appTitle {
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 2em;
+    border-bottom: solid 1px rgba(200,200,200,0.1);
+    text-shadow: #b30211 1px 0 10px;
+}
+#appTitle, h1 {
+    background: #fff -webkit-linear-gradient(#eee, #333);
+    background-position-y: 10px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card {
+    border: solid 1px rgba(200,200,200,0.2);
+    border-radius: 5px;
+    padding: 10px;
+}
+.card:hover {
+    background: #333;
+}
+
+.taskContainer, .groupContainer {
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    margin: 5px;
+    border: solid 1px #fff;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.taskContainer>a, .groupContainer>a {
+    margin-top: auto;
+}
+#messageContainer {
+    z-index: 1;
+    border: solid 3px #fff;
+    box-shadow: 3px 3px red, -3px 0 3px red;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px 5px;
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    width: 50%;
+    background: #ccc;
+}
+.alert.alert-danger {
+    color: #ff0000;
+}
+.alert.alert-success {
+    color: #154709;
+}
+.alert.alert-warning {
+    color: #ae9809;
+}
+.alert.alert-info {
+    color: #333;
+}
+.btn-close:before {
+    content: 'X';
+}
+
+.executionNote{
+    border: solid 1px #fff;
+    max-height: 1.1em;
+    overflow: hidden;
+}
+.executionNote:hover{
+    max-height: 200px;
+    overflow: auto;
+}
+
+.taskNote {
+    border: solid 1px #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#debug {
+    background: #000;
+    z-index: 1000;
+    position: absolute;
+    border-top: solid 3px #fff;
+    margin-top: 250px;
+    width: 100%;
+    right: 0;
+}
