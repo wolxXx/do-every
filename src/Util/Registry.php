@@ -34,8 +34,6 @@ final class Registry
 
     private static Registry $instance;
 
-    private array           $cache = [];
-
 
     public static function getInstance(): static
     {
@@ -49,19 +47,12 @@ final class Registry
 
     private final function __construct()
     {
-        foreach (\DoEveryApp\Entity\Registry::getRepository()->findAll() as $registryItem) {
-            $this->cache[$registryItem->getKey()] = $registryItem;
-        }
     }
 
 
     private function getRow(string $key): ?\DoEveryApp\Entity\Registry
     {
-        if (false === array_key_exists($key, $this->cache)) {
-            return null;
-        }
-
-        return $this->cache[$key];
+        return \DoEveryApp\Entity\Registry::getRepository()->getByKey($key);
     }
 
 
