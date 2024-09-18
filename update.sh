@@ -14,11 +14,15 @@ echo "dn port: $DB_PORT"
 
 git pull
 ./docker.sh
+set +e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
+set -e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar install"
 docker exec -it do-every-$INSTANCE-php83-web bash -c "./install.sh"
 docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar dbFull"
+set +e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
+set -e
 
 echo ""
 echo "done!"
