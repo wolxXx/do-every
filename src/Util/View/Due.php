@@ -48,8 +48,12 @@ class Due
                 $unit = '1' === $due ? $translator->year() : $translator->years();
                 break;
             }
+            default:
+            {
+                throw new \InvalidArgumentException('??' . $task->getDueUnit());
+            }
         }
 
-        return $translator->dueAdverb().' ' . $sinceInSwitch . ' ' . $due . ' ' . $unit;
+        return $translator->dueAdverb() . ' ' . $sinceInSwitch . ' ' . $due . ' ' . $unit;
     }
 }
