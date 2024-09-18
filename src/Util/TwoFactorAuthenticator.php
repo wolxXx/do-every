@@ -11,7 +11,7 @@ class TwoFactorAuthenticator
 
     public static function Factory(): static
     {
-        $instance          = new self();
+        $instance          = new static();
         $instance->utility = new \PragmaRX\Google2FA\Google2FA();
         $instance->utility->setOneTimePasswordLength(6);
 
