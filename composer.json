@@ -29,6 +29,8 @@
     "test": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox-html test/testdocs.html --testdox --cache-result",
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
     "stan": "vendor/bin/phpstan analyse src | tee stan.log",
+    "stanDetailed": "vendor/bin/phpstan analyse src --level 6 | tee stan.log",
+    "stanHeavy": "vendor/bin/phpstan analyse src --level 9 | tee stan.log",
     "css": "php vendor/bin/pscss public/css/app.scss public/css/app.css",
     "dbFull": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose && php bin/doctrine orm:schema-tool:update --force --verbose",
     "dbDry": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
