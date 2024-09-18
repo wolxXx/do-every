@@ -93,7 +93,7 @@ class English implements \DoEveryApp\Util\Translator
 
     public function confirmPassword(): string
     {
-        // TODO: Implement confirmPassword() method.
+        return 'confirm password';
     }
 
 
