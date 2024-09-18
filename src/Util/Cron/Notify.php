@@ -82,20 +82,24 @@ class Notify
     }
 
 
-    public function notify()
+    public function notify(): void
     {
         foreach ($this->workers as $worker) {
-            $tasks = [];
-            foreach ($this->tasks as $task) {
-                $tasks[]      = $task;
-                $notification = (new \DoEveryApp\Entity\Notification())
-                    ->setWorker($worker)
-                    ->setTask($task)
-                    ->setDate(\Carbon\Carbon::now())
-                ;
-                $notification::getRepository()->create($notification);
+            try {
+                $tasks = [];
+                foreach ($this->tasks as $task) {
+                    $tasks[]      = $task;
+                    $notification = (new \DoEveryApp\Entity\Notification())
+                        ->setWorker($worker)
+                        ->setTask($task)
+                        ->setDate(\Carbon\Carbon::now())
+                    ;
+                    $notification::getRepository()->create($notification);
+                }
+                \DoEveryApp\Util\Mailing\Notify::send($worker, $tasks);
+            }catch (\Throwable $exception) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->error('notification mail failed. '.$exception->getMessage().\PHP_EOL.\PHP_EOL.$exception->getTraceAsString());
             }
-            \DoEveryApp\Util\Mailing\Notify::send($worker, $tasks);
         }
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getEntityManager()
