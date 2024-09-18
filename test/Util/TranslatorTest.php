@@ -64,6 +64,6 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
         $translator = new \DoEveryApp\Util\Translator\Nothing();
         $this->assertInstanceOf(\DoEveryApp\Util\Translator::class, $translator);
         $this->assertInstanceOf(\DoEveryApp\Util\Translator\Nothing::class, $translator);
-        $this->assertSame('..', ($translator)->dashboard());
+        $this->assertSame('dashboard()', ($translator)->dashboard());
     }
 }
