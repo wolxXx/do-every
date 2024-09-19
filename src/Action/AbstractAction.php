@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Action;
 
-use DoEveryApp\Util\DependencyContainer;
-
 abstract class AbstractAction
 {
     protected \Psr\Http\Message\ServerRequestInterface $request;
@@ -28,7 +26,7 @@ abstract class AbstractAction
         \DoEveryApp\Util\Session::Factory(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
         new \DoEveryApp\Util\SessionContainer(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
         $this->errorStore          = new \DoEveryApp\Util\ErrorStore();
-        $this->dependencyContainer = DependencyContainer::getInstance();
+        $this->dependencyContainer = \DoEveryApp\Util\DependencyContainer::getInstance();
         $this->entityManager       = $this->dependencyContainer->getEntityManager();
         $this->translator          = $this->dependencyContainer->getTranslator();
     }
