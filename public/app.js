@@ -8,6 +8,7 @@ function captureConfirmElements() {
 
         element.addEventListener('click', (e) => {
             if (!confirm('Bist du sicher?')) {
+                e.stopPropagation();
                 e.preventDefault();
             }
         });
@@ -48,18 +49,32 @@ function captureElements() {
     checkFlashMessages();
     captureCloseButtons();
     captureConfirmElements();
+    initRowAdder();
+    initRowRemover();
 }
 
+function initRowAdder() {
+    document.querySelectorAll('.rowAdder').forEach(function (element) {
+        element.addEventListener('click', function () {
+            let index = element.parentElement.querySelectorAll('.rowRemover').length + 1;
+            index = '' + index;
+            let newRow = document.createElement('div');
+            newRow.innerHTML = element.parentElement.querySelector('template').innerHTML.replaceAll('__INDEX__', index);
+            element.parentElement.appendChild(newRow);
+            initRowRemover();
+        });
+    });
+}
 
 function initRowRemover() {
     document.querySelectorAll('.rowRemover').forEach(function (element) {
-        if ('1' === element.dataset['foo']) {
+        if ('1' === element.dataset['bound']) {
             return;
         }
         element.addEventListener('click', function () {
             element.closest('.row').remove();
         });
-        element.dataset['foo'] = '1';
+        element.dataset['bound'] = '1';
     });
 }
 
@@ -74,13 +89,14 @@ function dragstartHandler(ev) {
 }
 
 
-window.addEventListener("DOMContentLoaded", () => {
+
+function initDragHAndler() {
     // Get the element by id
     document.querySelectorAll('*[draggable="true"]').forEach(function (element) {
         console.log(element)
         element.addEventListener("dragstart", dragstartHandler);
     });
-});
+}
 
 function dragoverHandler(ev) {
     ev.preventDefault();
@@ -107,14 +123,5 @@ addEventListener("scroll", (event) => {
 document.addEventListener('DOMContentLoaded', (event) => {
     reactOnScroll();
     captureElements();
-    initRowRemover();
-    document.querySelectorAll('.rowAdder').forEach(function (element) {
-        element.addEventListener('click', function () {
-            let index = element.parentElement.querySelectorAll('.rowRemover').length + 1;
-            let newRow = document.createElement('div');
-            newRow.innerHTML = element.parentElement.querySelector('template').innerHTML.replaceAll('__INDEX__', index);
-            element.parentElement.appendChild(newRow);
-            initRowRemover();
-        });
-    });
+    initDragHAndler();
 });
