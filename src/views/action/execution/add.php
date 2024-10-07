@@ -12,26 +12,10 @@ declare(strict_types=1);
  */
 
 /**
- * @var \DoEveryApp\Entity\Task $task
- * @var array                   $data
+ * @var \DoEveryApp\Entity\Execution | null $execution
+ * @var \DoEveryApp\Entity\Task             $task
+ * @var array                               $data
  */
 ?>
 
-
-<h1>
-    Ausführung hinzufügen
-</h1>
-<div>
-    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-        Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-    </a>
-    <? if(null !== $task->getGroup()): ?>
-        |  Gruppe:
-        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
-            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
-        </a>
-    <? endif ?>
-    <hr />
-</div>
-
-<?= $this->fetchTemplate('action/execution/partial/addEdit.php', ['data' => $data]) ?>
+<?= $this->fetchTemplate('action/execution/partial/addEdit.php', ['data' => $data, 'task' => $task, 'execution' => $execution]) ?>
