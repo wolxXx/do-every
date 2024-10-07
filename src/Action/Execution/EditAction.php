@@ -39,8 +39,9 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             return $this->render(
                 'action/execution/edit',
                 [
-                    'task' => $execution->getTask(),
-                    'data' => [
+                    'execution' => $execution,
+                    'task'      => $execution->getTask(),
+                    'data'      => [
                         static::FORM_FIELD_DATE             => $execution->getDate()->format('Y-m-d H:i:s'),
                         static::FORM_FIELD_WORKER           => $execution->getWorker()?->getId(),
                         static::FORM_FIELD_NOTE             => $execution->getNote(),
@@ -88,7 +89,9 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         return $this->render(
             'action/execution/edit',
             [
-                'data' => $data,
+                'execution' => $execution,
+                'task'      => $execution->getTask(),
+                'data'      => $data,
             ]
         );
     }

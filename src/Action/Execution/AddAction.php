@@ -40,12 +40,13 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             return $this->render(
                 'action/execution/add',
                 [
-                    'data' => [
+                    'execution' => null,
+                    'task'      => $task,
+                    'data'      => [
                         static::FORM_FIELD_DATE             => (new \DateTime())->format('Y-m-d H:i:s'),
                         static::FORM_FIELD_WORKER           => \DoEveryApp\Util\User\Current::get()->getId(),
                         static::FORM_FIELD_CHECK_LIST_ITEMS => $checkListItemData,
                     ],
-                    'task' => $task,
                 ]
             );
         }
@@ -85,8 +86,9 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         return $this->render(
             'action/execution/add',
             [
-                'data' => $data,
-                'task' => $task,
+                'execution' => null,
+                'task'      => $task,
+                'data'      => $data,
             ]
         );
     }
