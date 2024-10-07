@@ -12,9 +12,39 @@ declare(strict_types=1);
  */
 
 /**
- * @var array $data
+ * @var \DoEveryApp\Entity\Execution | null $execution
+ * @var \DoEveryApp\Entity\Task             $task
+ * @var array                               $data
  */
 ?>
+
+<h1>
+    <? if (null === $execution): ?>
+        Ausführung hinzufügen
+    <? endif ?>
+    <? if (null !== $execution): ?>
+        Ausführung bearbeiten
+    <? endif ?>
+</h1>
+<div>
+    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+        Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+    </a>
+    <? if (null !== $task->getGroup()): ?>
+        |  Gruppe:
+        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
+            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+        </a>
+    <? endif ?>
+    <hr />
+</div>
+
+<? if (null !== $task->getNote()): ?>
+    <div>
+        <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+    </div>
+<? endif ?>
+
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
@@ -26,7 +56,7 @@ declare(strict_types=1);
                     <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected'  : '' ?>  value="">
                         - niemand -
                     </option>
-                    <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+                    <? foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
                         <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
                             <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
                         </option>
@@ -54,7 +84,7 @@ declare(strict_types=1);
                 Minuten
             </div>
 
-            <? if(0 !== sizeof($data['checkListItems'])): ?>
+            <? if (0 !== sizeof($data['checkListItems'])): ?>
                 <hr>
                 <table>
                     <thead>
@@ -74,7 +104,7 @@ declare(strict_types=1);
                         </tr>
                     </thead>
                     <tbody>
-                        <? foreach($data['checkListItems'] as $index =>  $checkListItem): ?>
+                        <? foreach ($data['checkListItems'] as $index =>  $checkListItem): ?>
                             <tr>
                                 <td>
                                     <?= \DoEveryApp\Util\View\Escaper::escape($checkListItem['name']) ?>
@@ -109,11 +139,7 @@ declare(strict_types=1);
         </div>
     </div>
 
-
-
     <div>
         <input class="primaryButton" type="submit" value="hinzufügen" />
     </div>
 </form>
-
-
