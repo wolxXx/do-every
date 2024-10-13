@@ -10,6 +10,9 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Worker|null $currentUser
  * @var \DoEveryApp\Util\Translator    $translator
  */
+/**
+ * @var \DoEveryApp\Entity\Task[] $tasks
+ */
 ?>
 
 <div class="row">
@@ -48,7 +51,7 @@ declare(strict_types=1);
                     </tr>
                 </thead>
                 <tbody>
-                    <? foreach(\DoEveryApp\Entity\Task::getRepository()->findForIndex() as $task): ?>
+                    <? foreach($tasks as $task): ?>
                         <tr>
                             <td>
                                 <? if(null === $task->getGroup()): ?>
@@ -88,26 +91,34 @@ declare(strict_types=1);
                             <td>
                                 <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
                                 <?= $translator->doNotifyDueTasksQuestion() ?> <?= \DoEveryApp\Util\View\Boolean::get($task->isNotify()) ?><br />
-                                <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>
+                                <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+                                <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?>
                             </td>
                             <td class="pullRight">
                                 <nobr class="buttonRow">
-                                   <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                                        <?= $this->fetchTemplate('icon/show.php') ?>
-                                       <?= $translator->show() ?>
-                                   </a>
-                                   <a class="warningButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+                                    </a>
+                                    <a class="warningButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
                                        <?= $this->fetchTemplate('icon/edit.php') ?>
-                                       <?= $translator->edit() ?>
-                                   </a>
-                                   <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
+                                    </a>
+                                    <? if (true === $task->isActive()): ?>
+                                        <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
+                                            <?= $this->fetchTemplate('icon/off.php') ?>
+                                        </a>
+                                    <? endif ?>
+                                    <? if (false === $task->isActive()): ?>
+                                        <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
+                                            <?= $this->fetchTemplate('icon/on.php') ?>
+                                        </a>
+                                    <? endif ?>
+
+                                    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
                                        <?= $this->fetchTemplate('icon/refresh.php') ?>
-                                       <?= $translator->reset() ?>
-                                   </a>
-                                   <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+                                    </a>
+                                    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
                                        <?= $this->fetchTemplate('icon/trash.php') ?>
-                                       <?= $translator->delete() ?>
-                                   </a>
+                                    </a>
                                 </nobr>
                             </td>
                         </tr>
