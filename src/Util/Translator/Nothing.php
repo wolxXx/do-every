@@ -1033,4 +1033,10 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+
+    public function loginRequired(): string
+    {
+        return $this->debug();
+    }
 }

@@ -10,12 +10,14 @@ class English implements \DoEveryApp\Util\Translator
     public function translate($what, ...$args): string
     {
         switch ($what) {
-            case 'This value should not be blank.': {
+            case 'This value should not be blank.':
+            {
                 return 'This value should not be blank.';
             }
         }
         \var_dump($what, ...$args);
-        return $what;
+
+        return '' . $what;
     }
 
 
@@ -1032,5 +1034,11 @@ Then click the "Save" button to complete the process and digitally secure the da
     public function needEmailForThisAction(): string
     {
         return 'an e-Mail-address is required.';
+    }
+
+
+    public function loginRequired(): string
+    {
+        return 'a login is required';
     }
 }

@@ -526,4 +526,7 @@ interface Translator
 
 
     public function needEmailForThisAction(): string;
+
+
+    public function loginRequired(): string;
 }

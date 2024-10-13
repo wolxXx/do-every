@@ -17,7 +17,7 @@ class German implements \DoEveryApp\Util\Translator
         }
         \var_dump($what, ...$args);
 
-        return $what;
+        return '' . $what;
     }
 
 
@@ -1036,5 +1036,11 @@ class German implements \DoEveryApp\Util\Translator
     public function needEmailForThisAction(): string
     {
         return 'dafür wird eine e-Mail-Adresse benötigt.';
+    }
+
+
+    public function loginRequired(): string
+    {
+        return 'Ein Login ist notwendig';
     }
 }
