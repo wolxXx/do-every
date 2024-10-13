@@ -39,8 +39,25 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('t')
             ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path')
             ->leftJoin('t.group', 'g')
+            ->andWhere('t.active = :active')
+            ->setParameter('active', true)
             ->orderBy('path')
             #->addOrderBy('c.group is null')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
+    public function findAllForIndex()
+    {
+        return $this
+            ->createQueryBuilder('t')
+            ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path')
+            ->leftJoin('t.group', 'g')
+            ->orderBy('path')
             ->getQuery()
             ->execute()
         ;
