@@ -14,6 +14,8 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->render('action/task/index');
+        $tasks = \DoEveryApp\Entity\Task::getRepository()->findAllForIndex();
+
+        return $this->render('action/task/index', ['tasks' => $tasks]);
     }
 }
