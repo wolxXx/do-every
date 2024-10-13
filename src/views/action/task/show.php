@@ -66,7 +66,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         </a>
     <? endif ?>
     <? if(false === $task->isActive()): ?>
-        <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
+        <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
             <?= $this->fetchTemplate('icon/on.php') ?>
             <?= $translator->activate() ?>
         </a>
