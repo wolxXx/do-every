@@ -12,6 +12,8 @@ class Current
 
     public const string LANGUAGE_FRENCH  = 'fr';
 
+    public static ?\DoEveryApp\Entity\Worker $forcedLoggedInUser = null;
+
 
     private static function getAuthSession(): \DoEveryApp\Util\Session
     {
@@ -21,6 +23,9 @@ class Current
 
     public static function get(): ?\DoEveryApp\Entity\Worker
     {
+        if (null !== static::$forcedLoggedInUser) {
+            return static::$forcedLoggedInUser;
+        }
         $session = static::getAuthSession()->get(\DoEveryApp\Util\Session::NAMESPACE_AUTH);
         if (null === $session) {
             return null;
