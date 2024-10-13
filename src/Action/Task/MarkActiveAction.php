@@ -38,6 +38,10 @@ class MarkActiveAction extends \DoEveryApp\Action\AbstractAction
         ;
         \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->statusSet());
 
+        if (null !== $this->getReferrer()) {
+            return $this->redirect($this->getReferrer());
+        }
+
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }
 }
