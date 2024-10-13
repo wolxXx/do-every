@@ -48,41 +48,50 @@ declare(strict_types=1);
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
-            <div>
-                <label for="worker">
-                    <?= $translator->worker() ?>
-                </label>
-                <select name="worker" id="worker">
-                    <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected'  : '' ?>  value="">
-                        - niemand -
-                    </option>
-                    <? foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
-                        <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
-                            <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
-                        </option>
-                    <? endforeach ?>
-                </select>
-                <div class="errors">
-                    <? foreach ($errorStore->getErrors('assignee') as $error): ?>
-                        <?= $error ?><br/>
-                    <? endforeach ?>
+            <div class="row">
+                <div class="column">
+                    <div>
+                        <label for="worker">
+                            <?= $translator->worker() ?>
+                        </label>
+                        <select name="worker" id="worker">
+                            <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected'  : '' ?>  value="">
+                                - niemand -
+                            </option>
+                            <? foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+                                <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
+                                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                                </option>
+                            <? endforeach ?>
+                        </select>
+                        <div class="errors">
+                            <? foreach ($errorStore->getErrors('assignee') as $error): ?>
+                                <?= $error ?><br/>
+                            <? endforeach ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div>
+                        <label for="date" class="required">
+                            Datum
+                        </label>
+                        <input type="datetime-local" id="date" name="date" value="<?= array_key_exists('date', $data) ? $data['date'] : '' ?>"/>
+                    </div>
+                </div>
+                <div class="column">
+                    <div>
+                        <label for="duration">
+                            Dauer
+                        </label>
+                        <input type="number" id="duration" name="duration" value="<?= array_key_exists('duration', $data) ? $data['duration'] : '' ?>"/>
+                        Minuten
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <label for="date" class="required">
-                    Datum
-                </label>
-                <input type="datetime-local" id="date" name="date" value="<?= array_key_exists('date', $data) ? $data['date'] : '' ?>"/>
-            </div>
 
-            <div>
-                <label for="duration">
-                    Dauer
-                </label>
-                <input type="number" id="duration" name="duration" value="<?= array_key_exists('duration', $data) ? $data['duration'] : '' ?>"/>
-                Minuten
-            </div>
+
 
             <? if (0 !== sizeof($data['checkListItems'])): ?>
                 <hr>
@@ -140,6 +149,12 @@ declare(strict_types=1);
     </div>
 
     <div>
-        <input class="primaryButton" type="submit" value="hinzufügen" />
+        <? if (null === $execution): ?>
+            <input class="primaryButton" type="submit" value="<?= $translator->add() ?>" />
+        <? endif ?>
+        <? if (null !== $execution): ?>
+            <input class="primaryButton" type="submit" value="<?= $translator->save() ?>" />
+        <? endif ?>
+
     </div>
 </form>
