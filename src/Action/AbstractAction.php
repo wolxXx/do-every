@@ -106,7 +106,7 @@ abstract class AbstractAction
              */
             $attributeX = $attribute->newInstance();
             if (true === $attributeX->authRequired && false === \DoEveryApp\Util\User\Current::isAuthenticated()) {
-                \DoEveryApp\Util\FlashMessenger::addDanger('login required');
+                \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->loginRequired());
                 $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
 
                 return $this;
@@ -163,7 +163,12 @@ abstract class AbstractAction
             'translator'          => $this->translator,
         ];
 
-        return (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', $defaultVariables, 'layout/main.php'))
+        $phpRenderer = \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                           ->getRenderer()
+        ;
+        $phpRenderer->setAttributes($defaultVariables);
+
+        return $phpRenderer
             ->render($this->getResponse(), $script . '.php', \array_merge($defaultVariables, $data))
         ;
     }
