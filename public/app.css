@@ -20,8 +20,8 @@ select {
 }
 
 textarea {
-    height: 70px;
-    max-width: 200px;
+    height: 200px;
+    width: 100%;
 }
 
 label {
@@ -116,7 +116,7 @@ hr {
     margin-left: -4px !important;
 }
 
-.primaryButton, .dangerButton, .warningButton, .btn-close, .rowAdder {
+.primaryButton, .dangerButton, .warningButton, .successButton, .btn-close, .rowAdder {
     display: inline-block;
     padding: 5px;
     margin: 5px;
@@ -155,6 +155,16 @@ hr {
     color: #000;
     background: #ff0;
     border: solid 3px #ae9809;
+}
+
+.successButton{
+    border: solid 3px #44930d;
+    background: #295908;
+}
+.successButton:hover{
+    color: #000;
+    background: #73dc2a;
+    border: solid 3px #193906;
 }
 
 .rowRemover {
