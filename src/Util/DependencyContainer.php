@@ -65,6 +65,11 @@ class DependencyContainer
     }
 
 
+    public function getRenderer(): \Slim\Views\PhpRenderer
+    {
+        return (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', [], 'layout/main.php'));
+    }
+
     public function getLogger(): \Monolog\Logger
     {
         if (true === $this->getContainer()->has(\Monolog\Logger::class)) {
