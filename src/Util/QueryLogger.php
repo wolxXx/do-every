@@ -83,7 +83,7 @@ class QueryLogger implements \Psr\Log\LoggerInterface
     }
 
 
-    private function mapType(int $type): string
+    private function mapType(\Doctrine\DBAL\ParameterType $type): string
     {
         return match ($type) {
             \Doctrine\DBAL\ParameterType::NULL         => '(NULL)',
