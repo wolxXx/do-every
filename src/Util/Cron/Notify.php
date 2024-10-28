@@ -19,16 +19,19 @@ class Notify
 
     public function __construct()
     {
-        $now = \Carbon\Carbon::now();
-
-        if (true === \DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) {
-            return;
+        $now             = \Carbon\Carbon::now();
+        $notifierLastRun = \DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun();
+        $force = false;
+        $lastCron = \Carbon\Carbon::create($notifierLastRun);
+        $lastCron->addHours(23);
+        if ($lastCron->gt($now)) {
+            $force = true;
         }
 
-        $notifierLastRun = \DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun();
-        $diff            = $now->diff($notifierLastRun, true, ['y', 'm', 'd', 'h']);
-        if ($diff->d > 0 || $diff->h > 6) {
-            return;
+        if (true === \DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) {
+            if(true !== $force) {
+                return;
+            }
         }
 
         \DoEveryApp\Util\Registry::getInstance()->setNotifierRunning(true);
@@ -99,8 +102,8 @@ class Notify
                     $notification::getRepository()->create($notification);
                 }
                 \DoEveryApp\Util\Mailing\Notify::send($worker, $tasks);
-            }catch (\Throwable $exception) {
-                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->error('notification mail failed. '.$exception->getMessage().\PHP_EOL.\PHP_EOL.$exception->getTraceAsString());
+            } catch (\Throwable $exception) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->error('notification mail failed. ' . $exception->getMessage() . \PHP_EOL . \PHP_EOL . $exception->getTraceAsString());
             }
         }
         \DoEveryApp\Util\DependencyContainer::getInstance()
