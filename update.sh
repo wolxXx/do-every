@@ -16,7 +16,7 @@ git pull
 ./docker.sh
 set +e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
-docker exec -it do-every-$INSTANCE-php83-web bash -c "rm cache/doctrine*"
+docker exec -it do-every-$INSTANCE-php83-web bash -c "rm -rf cache/doctrine*"
 set -e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar install"
 docker exec -it do-every-$INSTANCE-php83-web bash -c "./install.sh"
