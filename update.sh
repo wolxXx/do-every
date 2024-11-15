@@ -24,6 +24,8 @@ docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar dbFull"
 set +e
 docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
 docker exec -it do-every-$INSTANCE-php83-web bash -c "echo '' > app.log"
+docker stop do-every-$INSTANCE-php83-ofelia
+docker rm do-every-$INSTANCE-php83-ofelia
 set -e
 
 echo ""
