@@ -18,6 +18,9 @@ ini_set('opcache.max_file_size', 1000);
 ini_set('opcache.file_cache_only', 1);
 ini_set('opcache.file_cache', ROOT_DIR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . '.opcache');
 
+//\DoEveryApp\Util\QueryLogger::$disabled = false;
+\DoEveryApp\Util\QueryLogger::$disabled = true;
+
 $app = \Slim\Factory\AppFactory::create();
 $app->addErrorMiddleware(true, true, true, \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger());
 
