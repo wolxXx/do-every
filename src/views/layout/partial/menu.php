@@ -104,6 +104,7 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName('debug')
         ?>
+        <hr />
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
             ->setActiveRoutes([
