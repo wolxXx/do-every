@@ -92,7 +92,11 @@ declare(strict_types=1);
                                 <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
                                 <?= $translator->doNotifyDueTasksQuestion() ?> <?= \DoEveryApp\Util\View\Boolean::get($task->isNotify()) ?><br />
                                 <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
-                                <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?>
+                                <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?><br />
+                                <?= $translator->effort() ?>: <?= \DoEveryApp\Util\View\Duration::byValue(array_sum(array_map(function(\DoEveryApp\Entity\Execution $execution) {
+                                    return $execution->getDuration() ?? 0;
+                                }, $task->getExecutions()))) ?> (<?= sizeof($task->getExecutions()) ?>)
+
                             </td>
                             <td class="pullRight">
                                 <nobr class="buttonRow">
