@@ -104,6 +104,13 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName('debug')
         ?>
+        <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Cms\HelpAction::getRoute())
+            ->setActiveRoutes([
+                                  \DoEveryApp\Action\Cms\HelpAction::getRoutePattern(),
+                              ])
+            ->setName($translator->help())
+        ?>
         <hr />
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
