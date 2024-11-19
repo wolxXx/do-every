@@ -1043,4 +1043,10 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Ein Login ist notwendig';
     }
+
+
+    public function help(): string
+    {
+        return 'Hilfe';
+    }
 }

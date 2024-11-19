@@ -1,7 +1,7 @@
 <?php
 
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util;
 
@@ -529,4 +529,7 @@ interface Translator
 
 
     public function loginRequired(): string;
+
+
+    public function help(): string;
 }

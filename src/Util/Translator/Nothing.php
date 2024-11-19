@@ -1039,4 +1039,10 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+
+    public function help(): string
+    {
+        return $this->debug();
+    }
 }

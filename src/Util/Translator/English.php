@@ -1041,4 +1041,10 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'a login is required';
     }
+
+
+    public function help(): string
+    {
+        return 'help';
+    }
 }
