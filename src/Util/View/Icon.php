@@ -36,6 +36,12 @@ class Icon
     }
 
 
+    public static function list(): string
+    {
+        return '<i class="fa-solid fa-list"></i>';
+    }
+
+
     public static function off(): string
     {
         return '<i class="fa-solid fa-moon"></i>';
@@ -70,4 +76,6 @@ class Icon
     {
         return '<i class="fa-solid fa-wrench"></i>';
     }
+
+
 }
