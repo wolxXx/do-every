@@ -201,16 +201,16 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     <td class="pullRight">
                         <nobr class="buttonRow">
                             <a class="primaryButton" title="<?= $translator->show() ?>" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                <?= $this->fetchTemplate('icon/show.php') ?>
+                                <?= \DoEveryApp\Util\View\Icon::show() ?>
                             </a>
                             <a class="primaryButton" title="<?= $translator->addExecution() ?>" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
-                                <?= $this->fetchTemplate('icon/add.php') ?>
+                                <?= \DoEveryApp\Util\View\Icon::add() ?>
                             </a>
                             <a class="warningButton" title="<?= $translator->edit() ?>" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
-                                <?= $this->fetchTemplate('icon/edit.php') ?>
+                                <?= \DoEveryApp\Util\View\Icon::edit() ?>
                             </a>
                             <a class="dangerButton confirm" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
-                                <?= $this->fetchTemplate('icon/trash.php') ?>
+                                <?= \DoEveryApp\Util\View\Icon::trash() ?>
                             </a>
                         </nobr>
                     </td>

@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddAction::getRoute() ?>">
-        <?= $this->fetchTemplate('icon/add.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::add() ?>
         <?= $translator->new() ?>
     </a>
 </div>
@@ -84,19 +84,19 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
-                        <?= $this->fetchTemplate('icon/trash.php') ?>
+                        <?= \DoEveryApp\Util\View\Icon::trash() ?>
                     </a>
                     <?= \DoEveryApp\Util\View\Boolean::get(null !== $worker->getPassword()) ?>
                 </td>
                 <td>
                     <? if(true === $worker->isAdmin()): ?>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false  ) ?>">
-                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                            <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <? endif ?>
                     <? if(false === $worker->isAdmin()): ?>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
-                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                            <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <? endif ?>
                     <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
