@@ -39,12 +39,14 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('t',)
-            ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
+            ->addSelect('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
             ->leftJoin('t.group', 'g',)
+            ->leftJoin('t.workingOn', 'w',)
+            ->leftJoin('t.assignee', 'a',)
+            ->leftJoin('t.executions', 'e',)
             ->andWhere('t.active = :active',)
             ->setParameter('active', true,)
             ->orderBy('path',)
-            #->addOrderBy('c.group is null')
             ->getQuery()
             ->execute()
         ;
@@ -58,7 +60,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('t',)
-            ->select('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path',)
+            ->addSelect('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path',)
             ->leftJoin('t.group', 'g',)
             ->orderBy('path',)
             ->getQuery()

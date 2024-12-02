@@ -62,6 +62,13 @@ class Task
     #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
     protected                   $checkListItems;
 
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Execution::class,
+        mappedBy    : 'task',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["id" => "DESC"])]
+    protected                   $executions;
+
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
