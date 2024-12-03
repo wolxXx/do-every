@@ -27,8 +27,6 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 </h1>
 
 <script>
-
-
     document.addEventListener('DOMContentLoaded', function () {
         setInterval(function () {
             fetch('/', {
@@ -59,7 +57,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
                 });
-        }, 2000); // 10 seconds interval
+        }, 10000);
     });
     
 </script>
