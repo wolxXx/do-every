@@ -21,11 +21,19 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-    public function findForIndex()
+    public function findForIndex(?int $limit = null)
     {
-        return $this
+        $queryBuilder = $this
             ->createQueryBuilder('e')
+            ->innerJoin('e.task', 't')
+            ->leftJoin('t.group', 'g')
             ->orderBy('e.date', 'DESC')
+        ;
+        if (null !== $limit) {
+            $queryBuilder->setMaxResults($limit,);
+        }
+
+        return $queryBuilder
             ->getQuery()
             ->execute()
         ;
