@@ -101,7 +101,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Session[]
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): array
+    public function findBy(array $criteria, array|null $orderBy = null, $limit = null, $offset = null): array
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -113,7 +113,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Session | null
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?\DoEveryApp\Entity\Session
+    public function findOneBy(array $criteria, array|null $orderBy = null): ?\DoEveryApp\Entity\Session
     {
         return parent::findOneBy($criteria, $orderBy);
     }

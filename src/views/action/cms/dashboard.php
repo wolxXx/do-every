@@ -15,8 +15,6 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Execution[] $executions
  * @var \DoEveryApp\Entity\Task[]      $dueTasks
  * @var \DoEveryApp\Entity\Task[]      $tasks
- * @var \DoEveryApp\Entity\Task[]      $tasksWithoutGroup
- * @var \DoEveryApp\Entity\Group[]     $groups
  * @var \DoEveryApp\Entity\Worker[]    $workers
  * @var \DoEveryApp\Entity\Task[]      $workingOn
  */
@@ -111,10 +109,13 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     <nobr>
                         <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
+                            <? if (null !== $task->getGroup()): ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>:
+                            <? endif ?>
                             <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-                            <? foreach($workingOn as $workingOnTask): ?>
-                                <? if($workingOnTask->getId() === $task->getId()): ?>
-                                    <br>
+                            <? foreach ($workingOn as $workingOnTask): ?>
+                                <? if ($workingOnTask->getId() === $task->getId()): ?>
+                                    <br />
                                     (<?= sprintf($translator->isCurrentlyWorkingOn(), \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn())) ?>)
                                 <? endif ?>
                             <? endforeach ?>
@@ -255,7 +256,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach(array_slice($executions, 0, 10) as $execution): ?>
+                <? foreach($executions as $execution): ?>
                     <tr>
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>

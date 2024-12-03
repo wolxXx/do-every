@@ -21,11 +21,19 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-    public function findForIndex()
+    public function findForIndex(?int $limit = null)
     {
-        return $this
+        $queryBuilder = $this
             ->createQueryBuilder('e')
+            ->innerJoin('e.task', 't')
+            ->leftJoin('t.group', 'g')
             ->orderBy('e.date', 'DESC')
+        ;
+        if (null !== $limit) {
+            $queryBuilder->setMaxResults($limit,);
+        }
+
+        return $queryBuilder
             ->getQuery()
             ->execute()
         ;
@@ -111,7 +119,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Execution[]
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): array
+    public function findBy(array $criteria, array|null $orderBy = null, $limit = null, $offset = null): array
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -123,7 +131,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Execution | null
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?\DoEveryApp\Entity\Execution
+    public function findOneBy(array $criteria, array|null $orderBy = null): ?\DoEveryApp\Entity\Execution
     {
         return parent::findOneBy($criteria, $orderBy);
     }

@@ -143,7 +143,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Notification[]
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): array
+    public function findBy(array $criteria, array|null $orderBy = null, $limit = null, $offset = null): array
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -155,7 +155,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Notification | null
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?\DoEveryApp\Entity\Notification
+    public function findOneBy(array $criteria, array|null $orderBy = null): ?\DoEveryApp\Entity\Notification
     {
         return parent::findOneBy($criteria, $orderBy);
     }
