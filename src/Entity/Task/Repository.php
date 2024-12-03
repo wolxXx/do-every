@@ -9,9 +9,24 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    /**
+     * @var \DoEveryApp\Entity\Execution[]
+     */
+    protected array $map = [];
+
     public function getDueTasks(): array
     {
-        return \array_filter($this->findAll(), function(\DoEveryApp\Entity\Task $task,) {
+        $tasks = $this
+            ->createQueryBuilder('t')
+            ->leftJoin('t.group', 'g')
+            ->leftJoin('t.workingOn', 'w')
+            ->leftJoin('t.assignee', 'a')
+            ->andWhere('t.active = :active',)
+            ->setParameter('active', true,)
+            ->getQuery()
+            ->execute()
+            ;
+        return \array_filter($tasks, function(\DoEveryApp\Entity\Task $task,) {
             if (false === $task->isActive()) {
                 return false;
             }
@@ -41,10 +56,11 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('t',)
             ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
             ->leftJoin('t.group', 'g',)
+            ->leftJoin('t.assignee', 'a')
+            ->leftJoin('t.workingOn', 'w')
             ->andWhere('t.active = :active',)
             ->setParameter('active', true,)
             ->orderBy('path',)
-            #->addOrderBy('c.group is null')
             ->getQuery()
             ->execute()
         ;
@@ -71,6 +87,9 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('t',)
+            ->leftJoin('t.workingOn', 'w',)
+            ->leftJoin('t.assignee', 'a',)
+            ->leftJoin('t.group', 'g',)
             ->andWhere('t.workingOn IS NOT NULL',)
             ->getQuery()
             ->execute()
@@ -80,14 +99,21 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
     public function getLastExecution(\DoEveryApp\Entity\Task $task,): ?\DoEveryApp\Entity\Execution
     {
-        return \DoEveryApp\Entity\Execution::getRepository()
-                                           ->createQueryBuilder('e',)
-                                           ->andWhere('e.task = :task',)
-                                           ->setParameter('task', $task,)
-                                           ->orderBy('e.date', 'DESC',)
-                                           ->setMaxResults(1,)
-                                           ->getQuery()
-                                           ->getOneOrNullResult()
+        if(true === \array_key_exists($task->getId(), $this->map)) {
+            return $this->map[$task->getId()];
+        }
+        $lastExecution = \DoEveryApp\Entity\Execution::getRepository()
+                                                       ->createQueryBuilder('e',)
+                                                       ->andWhere('e.task = :task',)
+                                                       ->setParameter('task', $task,)
+                                                       ->orderBy('e.date', 'DESC',)
+                                                       ->setMaxResults(1,)
+                                                       ->getQuery()
+                                                       ->getOneOrNullResult()
+        ;
+
+        $this->map[$task->getId()]  = $lastExecution;
+        return $lastExecution
         ;
     }
 
