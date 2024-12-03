@@ -62,6 +62,13 @@ class Task
     #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
     protected                   $checkListItems;
 
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Execution::class,
+        mappedBy    : 'task',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["id" => "DESC"])]
+    protected                   $executions;
+
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
@@ -133,6 +140,7 @@ class Task
     public function __construct()
     {
         $this->checkListItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->executions     = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -275,15 +283,9 @@ class Task
     /**
      * @return Execution[]
      */
-    public function getExecutions(): array
+    public function getExecutions(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
     {
-        return Execution::getRepository()->findIndexed($this);
-    }
-
-
-    public function getExecutionDuration(): int
-    {
-        return Execution::getRepository()->findIndexed($this);
+        return $this->executions;
     }
 
 
