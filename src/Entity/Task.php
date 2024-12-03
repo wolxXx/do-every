@@ -274,18 +274,18 @@ class Task
     /**
      * @return \DoEveryApp\Entity\Task\CheckListItem[]
      */
-    public function getCheckListItems(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    public function getCheckListItems(): array
     {
-        return $this->checkListItems;
+        return $this->checkListItems->toArray();
     }
 
 
     /**
      * @return Execution[]
      */
-    public function getExecutions(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    public function getExecutions(): array
     {
-        return $this->executions;
+        return $this->executions->toArray();
     }
 
 
