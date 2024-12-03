@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddAction::getRoute() ?>">
-        <?= $this->fetchTemplate('icon/add.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::add() ?>
         <?= $translator->new() ?>
     </a>
 </div>
@@ -83,20 +83,22 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
                 </td>
                 <td>
-                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
-                        <?= $this->fetchTemplate('icon/trash.php') ?>
-                    </a>
+                    <? if(null !== $worker->getPassword()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Icon::trash() ?>
+                        </a>
+                    <? endif ?>
                     <?= \DoEveryApp\Util\View\Boolean::get(null !== $worker->getPassword()) ?>
                 </td>
                 <td>
                     <? if(true === $worker->isAdmin()): ?>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false  ) ?>">
-                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                            <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <? endif ?>
                     <? if(false === $worker->isAdmin()): ?>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
-                            <?= $this->fetchTemplate('icon/refresh.php') ?>
+                            <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <? endif ?>
                     <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
@@ -116,23 +118,26 @@ declare(strict_types=1);
                 <td class="pullRight">
                     <nobr class="buttonRow">
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($worker->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Icon::list() ?>
                             <?= $translator->log() ?>
                         </a>
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
-                            <?= $translator->edit() ?>
+                            <?= \DoEveryApp\Util\View\Icon::edit() ?>
                         </a>
                         <? if(null === $worker->getTwoFactorSecret()): ?>
                             <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Icon::on() ?>
                                 <?= $translator->addTwoFactor() ?>
                             </a>
                         <? endif ?>
                         <? if(null !== $worker->getTwoFactorSecret()): ?>
                             <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute($worker->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Icon::off() ?>
                                 <?= $translator->removeTwoFactor() ?>
                             </a>
                         <? endif ?>
                         <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
-                            <?= $translator->delete() ?>
+                            <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
                     </nobr>
                 </td>

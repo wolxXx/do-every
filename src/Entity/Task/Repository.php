@@ -54,7 +54,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('t',)
-            ->select('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
+            ->addSelect('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
             ->leftJoin('t.group', 'g',)
             ->leftJoin('t.assignee', 'a')
             ->leftJoin('t.workingOn', 'w')
@@ -74,7 +74,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('t',)
-            ->select('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path',)
+            ->addSelect('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path',)
             ->leftJoin('t.group', 'g',)
             ->orderBy('path',)
             ->getQuery()

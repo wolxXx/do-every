@@ -22,7 +22,7 @@ declare(strict_types=1);
         </h1>
         <div class="pageButtons">
             <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">
-                <?= $this->fetchTemplate('icon/add.php') ?>
+                <?= \DoEveryApp\Util\View\Icon::add() ?>
                 <?= $translator->addTask() ?>
             </a>
         </div>
@@ -101,27 +101,27 @@ declare(strict_types=1);
                             <td class="pullRight">
                                 <nobr class="buttonRow">
                                     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                       <?= $this->fetchTemplate('icon/show.php') ?>
+                                        <?= \DoEveryApp\Util\View\Icon::show() ?>
                                     </a>
                                     <a class="warningButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
-                                       <?= $this->fetchTemplate('icon/edit.php') ?>
+                                        <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                     </a>
                                     <? if (true === $task->isActive()): ?>
                                         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
-                                            <?= $this->fetchTemplate('icon/off.php') ?>
+                                            <?= \DoEveryApp\Util\View\Icon::off() ?>
                                         </a>
                                     <? endif ?>
                                     <? if (false === $task->isActive()): ?>
                                         <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
-                                            <?= $this->fetchTemplate('icon/on.php') ?>
+                                            <?= \DoEveryApp\Util\View\Icon::on() ?>
                                         </a>
                                     <? endif ?>
 
                                     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
-                                       <?= $this->fetchTemplate('icon/refresh.php') ?>
+                                        <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                                     </a>
                                     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
-                                       <?= $this->fetchTemplate('icon/trash.php') ?>
+                                        <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                     </a>
                                 </nobr>
                             </td>
@@ -138,7 +138,7 @@ declare(strict_types=1);
         </h1>
         <div class="pageButtons">
             <a href="<?= \DoEveryApp\Action\Group\AddAction::getRoute() ?>" class="primaryButton">
-                <?= $this->fetchTemplate('icon/add.php') ?>
+                <?= \DoEveryApp\Util\View\Icon::add() ?>
                 <?= $translator->addGroup() ?>
             </a>
         </div>
@@ -163,15 +163,15 @@ declare(strict_types=1);
                         <td class="pullRight">
                             <div class="buttonRow">
                                 <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
-                                    <?= $this->fetchTemplate('icon/show.php') ?>
+                                    <?= \DoEveryApp\Util\View\Icon::show() ?>
                                     <?= $translator->show() ?>
                                 </a>
                                 <a class="warningButton" href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>">
-                                    <?= $this->fetchTemplate('icon/edit.php') ?>
+                                    <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                     <?= $translator->edit() ?>
                                 </a>
                                 <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
-                                    <?= $this->fetchTemplate('icon/trash.php') ?>
+                                    <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                     <?= $translator->delete() ?>
                                 </a>
                             </div>
