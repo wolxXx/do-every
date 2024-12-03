@@ -18,11 +18,11 @@ declare(strict_types=1);
 $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
 ?>
 <h1>
-    <?= sprintf($translator->logFor(), \DoEveryApp\Util\View\Worker::get($worker)) ?>
+    <?= $translator->logFor(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 
 <? if(0 === sizeof($data)): ?>
-    <?= sprintf($translator->workerDidNothing(), \DoEveryApp\Util\View\Worker::get($worker)) ?>
+    <?= $translator->workerDidNothing(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 <? endif ?>
 <? if(0 !== sizeof($data)): ?>
     <div class="row">

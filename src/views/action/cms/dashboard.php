@@ -32,7 +32,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
             <?= $translator->attention() ?>
         </legend>
         <? if(null !== $currentUser->getLastPasswordChange()): ?>
-            <?= sprintf($translator->dashboardLastPasswordChange(), \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($currentUser->getLastPasswordChange())) ?><br />
+            <?= $translator->dashboardLastPasswordChange($currentUser->getLastPasswordChange()) ?><br />
         <? endif ?>
         <?= $translator->dashboardChangePassword() ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
@@ -116,7 +116,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                             <? foreach ($workingOn as $workingOnTask): ?>
                                 <? if ($workingOnTask->getId() === $task->getId()): ?>
                                     <br />
-                                    (<?= sprintf($translator->isCurrentlyWorkingOn(), \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn())) ?>)
+                                    (<?= $translator->isCurrentlyWorkingOn(\DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn())) ?>)
                                 <? endif ?>
                             <? endforeach ?>
                         </a>
