@@ -19,7 +19,6 @@ declare(strict_types=1);
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddAction::getRoute() ?>">
         <?= \DoEveryApp\Util\View\Icon::add() ?>
-        <?= $translator->new() ?>
     </a>
 </div>
 
