@@ -23,7 +23,6 @@ declare(strict_types=1);
         <div class="pageButtons">
             <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>" class="primaryButton">
                 <?= \DoEveryApp\Util\View\Icon::add() ?>
-                <?= $translator->addTask() ?>
             </a>
         </div>
         <div>
@@ -92,10 +91,11 @@ declare(strict_types=1);
                                 <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
                                 <?= $translator->doNotifyDueTasksQuestion() ?> <?= \DoEveryApp\Util\View\Boolean::get($task->isNotify()) ?><br />
                                 <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+                                <?= $translator->lastExecution() ?>: <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Entity\Task::getRepository()->getLastExecution($task)?->getDate()) ?><br />
                                 <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?><br />
                                 <?= $translator->effort() ?>: <?= \DoEveryApp\Util\View\Duration::byValue(array_sum(array_map(function(\DoEveryApp\Entity\Execution $execution) {
                                     return $execution->getDuration() ?? 0;
-                                }, $task->getExecutions()))) ?> (<?= sizeof($task->getExecutions()) ?>)
+                                }, $task->getExecutions()))) ?> (<?= sizeof($task->getExecutions()) ?> <?= $translator->executions() ?>)
 
                             </td>
                             <td class="pullRight">
@@ -139,7 +139,6 @@ declare(strict_types=1);
         <div class="pageButtons">
             <a href="<?= \DoEveryApp\Action\Group\AddAction::getRoute() ?>" class="primaryButton">
                 <?= \DoEveryApp\Util\View\Icon::add() ?>
-                <?= $translator->addGroup() ?>
             </a>
         </div>
         <div>
@@ -155,29 +154,26 @@ declare(strict_types=1);
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach(\DoEveryApp\Entity\Group::getRepository()->findIndexed() as $group): ?>
-                    <tr>
-                        <td>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
-                        </td>
-                        <td class="pullRight">
-                            <div class="buttonRow">
-                                <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
-                                    <?= \DoEveryApp\Util\View\Icon::show() ?>
-                                    <?= $translator->show() ?>
-                                </a>
-                                <a class="warningButton" href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>">
-                                    <?= \DoEveryApp\Util\View\Icon::edit() ?>
-                                    <?= $translator->edit() ?>
-                                </a>
-                                <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
-                                    <?= \DoEveryApp\Util\View\Icon::trash() ?>
-                                    <?= $translator->delete() ?>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                <? endforeach ?>
+                    <? foreach(\DoEveryApp\Entity\Group::getRepository()->findIndexed() as $group): ?>
+                        <tr>
+                            <td>
+                                <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
+                            </td>
+                            <td class="pullRight">
+                                <div class="buttonRow">
+                                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($group->getId()) ?>">
+                                        <?= \DoEveryApp\Util\View\Icon::show() ?>
+                                    </a>
+                                    <a class="warningButton" href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>">
+                                        <?= \DoEveryApp\Util\View\Icon::edit() ?>
+                                    </a>
+                                    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
+                                        <?= \DoEveryApp\Util\View\Icon::trash() ?>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <? endforeach ?>
                 </tbody>
             </table>
         </div>
