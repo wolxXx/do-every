@@ -45,7 +45,7 @@ trait  AddEdit
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
             'assignee'            => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }
@@ -56,7 +56,7 @@ trait  AddEdit
                 }),
             ],
             'group'               => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }
@@ -67,7 +67,7 @@ trait  AddEdit
                 }),
             ],
             'intervalType'        => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }
@@ -76,7 +76,7 @@ trait  AddEdit
             ],
             'intervalValue'       => [
                 new \Symfony\Component\Validator\Constraints\GreaterThan(0),
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }
@@ -84,7 +84,7 @@ trait  AddEdit
             ],
             'priority'            => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }

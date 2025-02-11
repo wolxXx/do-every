@@ -10,7 +10,7 @@ class ErrorStore
 
     public function hasError(string $key): bool
     {
-        return \array_key_exists($key, $this->errors) && 0 !== sizeof($this->errors[$key]);
+        return \array_key_exists($key, $this->errors) && 0 !== count($this->errors[$key]);
     }
 
     public function getErrors(string $key): array

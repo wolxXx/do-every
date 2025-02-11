@@ -79,10 +79,10 @@ class FlashMessenger
     public static function hasMessages(): bool
     {
         $data = [
-            \sizeof(\array_keys(static::getInfo(false))),
-            \sizeof(\array_keys(static::getSuccess(false))),
-            \sizeof(\array_keys(static::getDanger(false))),
-            \sizeof(\array_keys(static::getWarning(false))),
+            count(\array_keys(static::getInfo(false))),
+            count(\array_keys(static::getSuccess(false))),
+            count(\array_keys(static::getDanger(false))),
+            count(\array_keys(static::getWarning(false))),
         ];
 
         return \array_sum($data) > 0;

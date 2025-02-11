@@ -107,7 +107,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         </fieldset>
 
     </div>
-    <? if(0 !== sizeof($executions)): ?>
+    <? if(0 !== count($executions)): ?>
         <div class="column">
             <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
         </div>
@@ -122,7 +122,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
             <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
         </div>
     <? endif ?>
-    <? if(0 !== sizeof($task->getCheckListItems())): ?>
+    <? if(0 !== count($task->getCheckListItems())): ?>
         <div class="column">
             <fieldset>
                 <legend>
@@ -162,7 +162,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 
 
 
-<? if(0 !== sizeof($executions)): ?>
+<? if(0 !== count($executions)): ?>
     <hr />
     <fieldset>
         <legend>
@@ -181,7 +181,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                     <th>
                         <?= $translator->effort() ?>
                     </th>
-                    <? if(0 !== sizeof($task->getCheckListItems())): ?>
+                    <? if(0 !== count($task->getCheckListItems())): ?>
                         <th>
                             <?= $translator->steps() ?>
                         </th>
@@ -206,7 +206,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                         <td>
                             <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
                         </td>
-                        <? if(0 !== sizeof($task->getCheckListItems())): ?>
+                        <? if(0 !== count($task->getCheckListItems())): ?>
                             <td>
 
                                 <? foreach($execution->getCheckListItems() as $checkListItem): ?>

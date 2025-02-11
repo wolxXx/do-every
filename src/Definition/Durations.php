@@ -55,7 +55,7 @@ class Durations
         if (0 !== count($this->durations)) {
             $this->average = (int)\ceil(\array_sum($this->durations) / count($this->durations));
         }
-        if (0 !== sizeof($this->years)) {
+        if (0 !== count($this->years)) {
             $firstYear = \array_key_last($this->years);
             $lastYear  = \array_key_first($this->years);
             if (true === \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) {
@@ -69,7 +69,7 @@ class Durations
             $this->years = \array_reverse($this->years, true);
         }
 
-        if (0 !== \sizeof($this->months)) {
+        if (0 !== count($this->months)) {
             $firstYearMonth = \explode('/', \array_key_last($this->months));
             $lastYearMonth  = explode('/', \array_key_first($this->months));
             $begin          = \Carbon\Carbon::now()->year((int)$firstYearMonth[0])->month((int)$firstYearMonth[1]);

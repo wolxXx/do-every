@@ -197,7 +197,7 @@ declare(strict_types=1);
 </fieldset>
 
 
-<? if (0 !== sizeof($backupFiles)): ?>
+<? if (0 !== count($backupFiles)): ?>
 
     <fieldset>
         <legend>
@@ -269,7 +269,7 @@ declare(strict_types=1);
         <tbody>
         <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $key => $value): ?>
+                <? foreach((array) $entry as $value): ?>
                     <td>
                         <?= \DoEveryApp\Util\View\DisplayValue::do($value) ?>
                     </td>

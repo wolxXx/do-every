@@ -93,7 +93,7 @@ declare(strict_types=1);
 
 
 
-            <? if (0 !== sizeof($data['checkListItems'])): ?>
+            <? if (0 !== count($data['checkListItems'])): ?>
                 <hr>
                 <table>
                     <thead>
