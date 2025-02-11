@@ -9,11 +9,12 @@ a {
     color: #fff;
 }
 
-input[type="text"], input[type="email"], input[type="password"],input[type="number"], textarea, select {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
     color: #fff;
     background: #333;
     border: solid 1px #ccc;
 }
+
 select {
     display: block;
     min-width: 200px;
@@ -27,13 +28,16 @@ textarea {
 label {
     display: block;
 }
+
 label.required {
     color: #eee;
     font-weight: bolder;
 }
+
 label.required:after {
     content: "*";
 }
+
 table {
     width: 100%;
     border: solid 1px #666;
@@ -47,20 +51,24 @@ td, th {
     text-align: left;
     vertical-align: top;
 }
+
 th {
     border-bottom: solid 3px #fff;
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
 td {
     padding-top: 3px;
     padding-bottom: 3px;
     margin-bottom: 3px;
 }
+
 fieldset {
-    border: solid 1px rgba(200,200,200,0.4);
+    border: solid 1px rgba(200, 200, 200, 0.4);
     margin-bottom: 30px;
 }
+
 fieldset > legend {
     margin-left: 10px;
     border: solid 1px #fff;
@@ -82,15 +90,15 @@ table.keyValue tr td:first-child {
 h1, h2, h3 {
     margin: 0;
     margin-bottom: 20px;
-    border-bottom: solid 1px rgba(200,200,200,0.1);
+    border-bottom: solid 1px rgba(200, 200, 200, 0.1);
 }
 
 hr {
     margin-top: 20px;
     margin-bottom: 40px;
-    border: solid 1px rgba(200,200,200,0.2);
-    color: rgba(200,200,200,0.1);
-    background: rgba(200,200,200,0.1);
+    border: solid 1px rgba(200, 200, 200, 0.2);
+    color: rgba(200, 200, 200, 0.1);
+    background: rgba(200, 200, 200, 0.1);
     display: block;
 }
 
@@ -109,6 +117,7 @@ hr {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .buttonRow > * {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -131,37 +140,41 @@ hr {
     border: solid 3px #fff;
     background: #999999;
 }
+
 .primaryButton:hover {
     color: #333;
     background: #fff;
     border: solid 3px #ccc;
 }
 
-.dangerButton{
+.dangerButton {
     border: solid 3px #f00;
     background: #f66;
 }
+
 .dangerButton:hover {
     color: #fff;
     background: #f00;
     border: solid 3px #833;
 }
 
-.warningButton{
+.warningButton {
     border: solid 3px #e8c92f;
     background: #a19126;
 }
-.warningButton:hover{
+
+.warningButton:hover {
     color: #000;
     background: #ff0;
     border: solid 3px #ae9809;
 }
 
-.successButton{
+.successButton {
     border: solid 3px #44930d;
     background: #295908;
 }
-.successButton:hover{
+
+.successButton:hover {
     color: #000;
     background: #73dc2a;
     border: solid 3px #193906;
@@ -179,10 +192,12 @@ hr {
     gap: 20px;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
 }
+
 .rowSimple {
     display: flex;
     gap: 20px;
 }
+
 .grid {
     /**
      * User input values.
@@ -208,6 +223,7 @@ hr {
     justify-content: space-between;
     max-width: 300px;
 }
+
 .row > .column {
     flex: 1;
     justify-content: space-between;
@@ -221,9 +237,9 @@ hr {
     margin-top: 40px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: solid 2px rgba(200,200,200,0.1);
-    border-bottom: solid 2px rgba(200,200,200,0.1);
- }
+    border-top: solid 2px rgba(200, 200, 200, 0.1);
+    border-bottom: solid 2px rgba(200, 200, 200, 0.1);
+}
 
 .pageButtons {
     margin-top: 20px;
@@ -233,6 +249,7 @@ hr {
 form > .row {
     margin-bottom: 20px;
 }
+
 #app {
     margin: 20px;
     display: flex;
@@ -244,7 +261,7 @@ form > .row {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 30ch;
-      gap: 1rem;
+    gap: 1rem;
 
 }
 
@@ -255,25 +272,29 @@ form > .row {
     width: 300px;
     -webkit-transition: top 0.4s ease-out;
     padding-right: 20px;
-    border-right: solid 1px rgba(200,200,200,0.1);
+    border-right: solid 1px rgba(200, 200, 200, 0.1);
     flex-basis: 10rem;
     flex-grow: 1;
 }
+
 #menu ul {
     list-style: none;
     margin: 0;
     padding: 0;
     text-align: right;
 }
+
 #menu ul li {
     margin-bottom: 10px;
 }
-#menu ul li a{
+
+#menu ul li a {
     display: block;
     text-decoration: none;
     padding-right: 20px;
 }
-#menu ul li a.active{
+
+#menu ul li a.active {
     text-decoration: underline;
     padding-right: 0;
 }
@@ -284,24 +305,31 @@ form > .row {
     margin-right: 0;
     flex-basis: 0;
     flex-grow: 999;
-      min-inline-size: 50%;
+    min-inline-size: 50%;
 
 }
 
 @keyframes example {
 
-    0%   {filter: grayscale(100%)}
-    50%  {filter: grayscale(0%)}
-    100% {filter: grayscale(100%)}
+    0% {
+        filter: grayscale(100%)
+    }
+    50% {
+        filter: grayscale(0%)
+    }
+    100% {
+        filter: grayscale(100%)
+    }
 }
 
-#menu img, #appTitle, h1{
+#menu img, #appTitle, h1 {
     animation-name: example;
     animation-duration: 6s;
     animation-iteration-count: infinite;
     text-shadow: #b30211 1px 0 10px;
 }
-h1:before,h1:after {
+
+h1:before, h1:after {
     content: '*'
 }
 
@@ -310,9 +338,10 @@ h1:before,h1:after {
     margin-bottom: 10px;
     text-align: right;
     font-size: 2em;
-    border-bottom: solid 1px rgba(200,200,200,0.1);
+    border-bottom: solid 1px rgba(200, 200, 200, 0.1);
     text-shadow: #b30211 1px 0 10px;
 }
+
 #appTitle, h1 {
     background: #fff -webkit-linear-gradient(#eee, #333);
     background-position-y: 10px;
@@ -321,10 +350,11 @@ h1:before,h1:after {
 }
 
 .card {
-    border: solid 1px rgba(200,200,200,0.2);
+    border: solid 1px rgba(200, 200, 200, 0.2);
     border-radius: 5px;
     padding: 10px;
 }
+
 .card:hover {
     background: #333;
 }
@@ -339,9 +369,10 @@ h1:before,h1:after {
     padding: 5px;
 }
 
-.taskContainer>a, .groupContainer>a {
+.taskContainer > a, .groupContainer > a {
     margin-top: auto;
 }
+
 #messageContainer {
     z-index: 1;
     border: solid 3px #fff;
@@ -355,28 +386,34 @@ h1:before,h1:after {
     width: 96%;
     background: #ccc;
 }
+
 .alert.alert-danger {
     color: #ff0000;
 }
+
 .alert.alert-success {
     color: #154709;
 }
+
 .alert.alert-warning {
     color: #ae9809;
 }
+
 .alert.alert-info {
     color: #333;
 }
+
 .btn-close:before {
     content: 'X';
 }
 
-.executionNote{
+.executionNote {
     border: solid 1px #fff;
     max-height: 1.1em;
     overflow: hidden;
 }
-.executionNote:hover{
+
+.executionNote:hover {
     max-height: 200px;
     overflow: auto;
 }
