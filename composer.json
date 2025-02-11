@@ -96,6 +96,7 @@
     "phpunit/phpunit": "*",
     "pragmarx/google2fa": "*",
     "ramsey/uuid": "*",
+    "rector/rector": "*",
     "slim/http": "*",
     "slim/php-view": "*",
     "slim/psr7": "*",
