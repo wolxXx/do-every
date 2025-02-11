@@ -18,8 +18,7 @@ declare(strict_types=1);
 
 <div class="pageButtons">
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\EditSettingsAction::getRoute() ?>">
-        <?= $this->fetchTemplate('icon/wrench.php') ?>
-        <?= $translator->editSettings() ?>
+        <?= \DoEveryApp\Util\View\Icon::wrench() ?>
     </a>
 </div>
 

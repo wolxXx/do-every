@@ -224,7 +224,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             <?= $translator->stepsQuestion() ?>
         </div>
         <i class="rowAdder primaryButton">
-            <?= $this->fetchTemplate('icon/add.php') ?>
+            <?= \DoEveryApp\Util\View\Icon::add() ?>
             <?= $translator->add() ?>
         </i>
         <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">

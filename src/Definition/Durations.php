@@ -157,7 +157,16 @@ class Durations
 
     public static function FactoryForGlobal(): static
     {
-        return (static::byTasks(\DoEveryApp\Entity\Task::getRepository()->findAll()))
+        $tasks = \DoEveryApp\Entity\Task::getRepository()
+            ->createQueryBuilder('t')
+            ->leftJoin('t.group', 'g')
+            ->leftJoin('t.assignee', 'a')
+            ->leftJoin('t.workingOn', 'w')
+            ->leftJoin('t.executions', 'e')
+            ->getQuery()
+            ->execute()
+        ;
+        return (static::byTasks($tasks))
             ->finalize()
         ;
     }

@@ -34,6 +34,8 @@ final class Registry
 
     private static Registry $instance;
 
+    private array $map = [];
+
 
     public static function getInstance(): static
     {
@@ -47,12 +49,23 @@ final class Registry
 
     private final function __construct()
     {
+        $this->map = [];
+        foreach (\DoEveryApp\Entity\Registry::getRepository()->findAll() as $registry) {
+            $this->map[$registry->getKey()] = $registry;
+        }
     }
 
 
-    private function getRow(string $key): ?\DoEveryApp\Entity\Registry
+    private function getRow(string $key,): ?\DoEveryApp\Entity\Registry
     {
-        return \DoEveryApp\Entity\Registry::getRepository()->getByKey($key);
+        if (false === \array_key_exists($key, $this->map,)) {
+            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey($key,);
+            $this->map[$key] = $registry;
+
+            return $registry;
+        }
+
+        return $this->map[$key];
     }
 
 

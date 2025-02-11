@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\View;
 
@@ -9,9 +9,9 @@ class TaskSortByDue
     /**
      * @return \DoEveryApp\Entity\Task[]
      */
-    public static function sort($tasks): array
+    public static function sort($tasks,): array
     {
-        usort($tasks, function (\DoEveryApp\Entity\Task $a, \DoEveryApp\Entity\Task $b) {
+        usort($tasks, function(\DoEveryApp\Entity\Task $a, \DoEveryApp\Entity\Task $b,) {
             $dueA     = $a->getDueValue();
             $dueUnitA = $a->getDueUnit();
             $dueB     = $b->getDueValue();
@@ -22,7 +22,7 @@ class TaskSortByDue
             if (null === $dueB) {
                 return 1;
             }
-            $foo  = function (float|int $a, string $b): int|float {
+            $sortFunction = function(float|int $a, string $b,): int|float {
                 switch ($b) {
                     case \DoEveryApp\Definition\IntervalType::HOUR->value:
                     {
@@ -40,14 +40,15 @@ class TaskSortByDue
                     {
                         return $a * 60 * 24 * 30 * 12;
                     }
-                    default: return $a;
+                    default:
+                        return $a;
                 }
             };
-            $dueA = $foo($dueA, $dueUnitA);
-            $dueB = $foo($dueB, $dueUnitB);
+            $dueA         = $sortFunction($dueA, $dueUnitA,);
+            $dueB         = $sortFunction($dueB, $dueUnitB,);
 
             return $dueA > $dueB ? 1 : -1;
-        });
+        },);
 
         return $tasks;
     }

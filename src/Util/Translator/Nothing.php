@@ -99,7 +99,7 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
 
-    public function dashboardLastPasswordChange(): string
+    public function dashboardLastPasswordChange(\DateTime $dateTime): string
     {
         return $this->debug();
     }
@@ -147,7 +147,7 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
 
-    public function isCurrentlyWorkingOn(): string
+    public function isCurrentlyWorkingOn(string $who): string
     {
         return $this->debug();
     }
@@ -945,7 +945,7 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editTask(): string
+    public function editTask(string $task): string
     {
         return $this->debug();
     }
@@ -969,13 +969,13 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editWorker(): string
+    public function editWorker(string $who): string
     {
         return $this->debug();
     }
 
 
-    public function enableTwoFactorForWorker(): string
+    public function enableTwoFactorForWorker(string $who): string
     {
         return $this->debug();
     }
@@ -1017,13 +1017,13 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
 
-    public function logFor(): string
+    public function logFor(string $who): string
     {
         return $this->debug();
     }
 
 
-    public function workerDidNothing(): string
+    public function workerDidNothing(string $who): string
     {
         return $this->debug();
     }

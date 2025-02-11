@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
@@ -15,7 +15,7 @@ class German implements \DoEveryApp\Util\Translator
                 return 'Es wird eine Eingabe benötigt.';
             }
         }
-        \var_dump($what, ...$args);
+        \var_dump($what, ...$args,);
 
         return '' . $what;
     }
@@ -105,9 +105,9 @@ class German implements \DoEveryApp\Util\Translator
     }
 
 
-    public function dashboardLastPasswordChange(): string
+    public function dashboardLastPasswordChange(\DateTime $dateTime,): string
     {
-        return 'Du hast dein Passwort lange nicht geändert. Das letzte mal %s.';
+        return 'Du hast dein Passwort lange nicht geändert. Das letzte mal ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($dateTime,) . '.';
     }
 
 
@@ -147,9 +147,9 @@ class German implements \DoEveryApp\Util\Translator
     }
 
 
-    public function isCurrentlyWorkingOn(): string
+    public function isCurrentlyWorkingOn(string $who,): string
     {
-        return '%s arbeitet daran';
+        return \DoEveryApp\Util\View\Escaper::escape($who,) . ' arbeitet daran';
     }
 
 
@@ -945,9 +945,9 @@ class German implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editTask(): string
+    public function editTask(string $task,): string
     {
-        return 'Aufgabe %s bearbeiten';
+        return 'Aufgabe ' . $task . ' bearbeiten';
     }
 
 
@@ -969,15 +969,15 @@ class German implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editWorker(): string
+    public function editWorker(string $who,): string
     {
-        return 'Biene %s bearbeiten';
+        return 'Biene ' . \DoEveryApp\Util\View\Escaper::escape($who,) . ' bearbeiten';
     }
 
 
-    public function enableTwoFactorForWorker(): string
+    public function enableTwoFactorForWorker(string $who,): string
     {
-        return '2FA für Biene %s einrichten';
+        return '2FA für Biene ' . \DoEveryApp\Util\View\Escaper::escape($who,) . ' einrichten';
     }
 
 
@@ -1021,15 +1021,15 @@ class German implements \DoEveryApp\Util\Translator
     }
 
 
-    public function logFor(): string
+    public function logFor(string $who,): string
     {
-        return 'Arbeitsnachweis für Biene "%s"';
+        return 'Arbeitsnachweis für Biene "' . \DoEveryApp\Util\View\Escaper::escape($who,) . '"';
     }
 
 
-    public function workerDidNothing(): string
+    public function workerDidNothing(string $who,): string
     {
-        return '- %s hat bisher kein Beitrag geleistet -';
+        return '- ' . \DoEveryApp\Util\View\Escaper::escape($who,) . ' hat bisher kein Beitrag geleistet -';
     }
 
 

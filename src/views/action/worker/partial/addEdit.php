@@ -123,7 +123,7 @@ declare(strict_types=1);
     </div>
 
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="<?= $translator->go() ?>">
+        <input class="primaryButton" type="submit" value="<?= $translator->save() ?>">
     </div>
 </form>
 

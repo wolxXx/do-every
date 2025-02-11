@@ -21,7 +21,7 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    <?= sprintf($translator->enableTwoFactorForWorker(),\DoEveryApp\Util\View\Worker::get($worker) ) ?>
+    <?= $translator->enableTwoFactorForWorker(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 <form action="" method="post" novalidate>
     <div class="row">

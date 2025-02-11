@@ -60,7 +60,7 @@ interface Translator
     public function confirmPassword(): string;
 
 
-    public function dashboardLastPasswordChange(): string;
+    public function dashboardLastPasswordChange(\DateTime $dateTime): string;
 
 
     public function dashboardChangePassword(): string;
@@ -84,7 +84,7 @@ interface Translator
     public function tasksWithDue(): string;
 
 
-    public function isCurrentlyWorkingOn(): string;
+    public function isCurrentlyWorkingOn(string $who): string;
 
 
     public function group(): string;
@@ -483,7 +483,7 @@ interface Translator
     public function addTask(): string;
 
 
-    public function editTask(): string;
+    public function editTask(string $task): string;
 
 
     public function groups(): string;
@@ -495,10 +495,10 @@ interface Translator
     public function addWorker(): string;
 
 
-    public function editWorker(): string;
+    public function editWorker(string $who): string;
 
 
-    public function enableTwoFactorForWorker(): string;
+    public function enableTwoFactorForWorker(string $who): string;
 
 
     public function twoFactorNotice(): string;
@@ -519,10 +519,10 @@ interface Translator
     public function removeTwoFactor(): string;
 
 
-    public function logFor(): string;
+    public function logFor(string $who): string;
 
 
-    public function workerDidNothing(): string;
+    public function workerDidNothing(string $who): string;
 
 
     public function needEmailForThisAction(): string;

@@ -35,45 +35,45 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 <div class="pageButtons buttonRow">
     <? if(null === $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId(), $currentUser->getId()) ?>">
-            <?= $this->fetchTemplate('icon/hand.php') ?>
+            <?= \DoEveryApp\Util\View\Icon::hand() ?>
             <?= $translator->iAmWorkingOn() ?>
         </a>
     <? endif ?>
     <? if(null !== $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId()) ?>">
-            <?= $this->fetchTemplate('icon/cross.php') ?>
+            <?= \DoEveryApp\Util\View\Icon::cross() ?>
             <?= $translator->nobodyIsWorkingOn() ?>
         </a>
     <? endif ?>
 
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
-        <?= $this->fetchTemplate('icon/add.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::add() ?>
         <?= $translator->addExecution() ?>
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
-        <?= $this->fetchTemplate('icon/edit.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::edit() ?>
         <?= $translator->edit() ?>
     </a>
     <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
-        <?= $this->fetchTemplate('icon/refresh.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::refresh() ?>
         <?= $translator->reset() ?>
 
     </a>
     <? if(true === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
-            <?= $this->fetchTemplate('icon/off.php') ?>
+            <?= \DoEveryApp\Util\View\Icon::off() ?>
             <?= $translator->deactivate() ?>
         </a>
     <? endif ?>
     <? if(false === $task->isActive()): ?>
         <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
-            <?= $this->fetchTemplate('icon/on.php') ?>
+            <?= \DoEveryApp\Util\View\Icon::on() ?>
             <?= $translator->activate() ?>
         </a>
     <? endif ?>
 
     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
-        <?= $this->fetchTemplate('icon/trash.php') ?>
+        <?= \DoEveryApp\Util\View\Icon::trash() ?>
         <?= $translator->delete() ?>
     </a>
 </div>
@@ -229,11 +229,11 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                         <td class="pullRight">
                             <div class="buttonRow">
                                 <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute($execution->getId()) ?>">
-                                    <?= $this->fetchTemplate('icon/edit.php') ?>
+                                    <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                     <?= $translator->edit() ?>
                                 </a>
                                 <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute($execution->getId()) ?>">
-                                    <?= $this->fetchTemplate('icon/trash.php') ?>
+                                    <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                     <?= $translator->delete() ?>
                                 </a>
                             </div>

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
@@ -15,7 +15,7 @@ class English implements \DoEveryApp\Util\Translator
                 return 'This value should not be blank.';
             }
         }
-        \var_dump($what, ...$args);
+        \var_dump($what, ...$args,);
 
         return '' . $what;
     }
@@ -99,9 +99,9 @@ class English implements \DoEveryApp\Util\Translator
     }
 
 
-    public function dashboardLastPasswordChange(): string
+    public function dashboardLastPasswordChange(\DateTime $dateTime,): string
     {
-        return 'last password change';
+        return 'You haven\'t changed your password for a long time. The last time was ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($dateTime,) . '.';
     }
 
 
@@ -147,9 +147,9 @@ class English implements \DoEveryApp\Util\Translator
     }
 
 
-    public function isCurrentlyWorkingOn(): string
+    public function isCurrentlyWorkingOn(string $who,): string
     {
-        return '%s is working on';
+        return \DoEveryApp\Util\View\Escaper::escape($who,) . ' is working on';
     }
 
 
@@ -945,9 +945,9 @@ class English implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editTask(): string
+    public function editTask(string $task,): string
     {
-        return 'edit task %s';
+        return 'edit task ' . $task;
     }
 
 
@@ -969,15 +969,15 @@ class English implements \DoEveryApp\Util\Translator
     }
 
 
-    public function editWorker(): string
+    public function editWorker(string $who,): string
     {
-        return 'edit worker %s';
+        return 'edit worker ' . \DoEveryApp\Util\View\Escaper::escape($who,);
     }
 
 
-    public function enableTwoFactorForWorker(): string
+    public function enableTwoFactorForWorker(string $who,): string
     {
-        return 'enable 2FA for worker %s';
+        return 'enable 2FA for worker ' . \DoEveryApp\Util\View\Escaper::escape($who,);
     }
 
 
@@ -1019,15 +1019,15 @@ Then click the "Save" button to complete the process and digitally secure the da
     }
 
 
-    public function logFor(): string
+    public function logFor(string $who,): string
     {
-        return 'work log for "%s"';
+        return 'work log for "' . \DoEveryApp\Util\View\Escaper::escape($who,) . '"';
     }
 
 
-    public function workerDidNothing(): string
+    public function workerDidNothing(string $who,): string
     {
-        return '- %s did not contribute yet -';
+        return '- ' . \DoEveryApp\Util\View\Escaper::escape($who,) . ' did not contribute yet -';
     }
 
 

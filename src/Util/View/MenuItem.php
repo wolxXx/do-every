@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\View;
 
@@ -19,19 +19,19 @@ class MenuItem
 
     public function __toString()
     {
-        $isActive = true === in_array($this->currentRoutePattern, $this->activeRoutes);
+        $isActive = true === in_array($this->currentRoutePattern, $this->activeRoutes,);
         $class    = 'nav-link menu-button';
         if (true === $isActive) {
             $class .= ' menu-button-active active';
         }
 
         return <<<HTML
-<li class="nav-item">
-    <a href="{$this->target}" class="{$class}">
-        {$this->name}
-    </a>
-</li>
-HTML;
+            <li class="nav-item">
+                <a href="{$this->target}" class="{$class}">
+                    {$this->name}
+                </a>
+            </li>
+            HTML;
     }
 
 
@@ -41,7 +41,7 @@ HTML;
     }
 
 
-    public function setTarget(string $target): static
+    public function setTarget(string $target,): static
     {
         $this->target = $target;
 
@@ -55,7 +55,7 @@ HTML;
     }
 
 
-    public function setName(string $name): static
+    public function setName(string $name,): static
     {
         $this->name = $name;
 
@@ -77,26 +77,26 @@ HTML;
     }
 
 
-    public function setActiveRoutes(array $activeRoutes): static
+    public function setActiveRoutes(array $activeRoutes,): static
     {
         return $this
             ->clearActiveRoutes()
-            ->addActiveRoutes($activeRoutes)
+            ->addActiveRoutes($activeRoutes,)
         ;;
     }
 
 
-    public function addActiveRoutes(array $routes): static
+    public function addActiveRoutes(array $routes,): static
     {
         foreach ($routes as $route) {
-            $this->addActiveRoute($route);
+            $this->addActiveRoute($route,);
         }
 
         return $this;
     }
 
 
-    public function addActiveRoute(string $route): static
+    public function addActiveRoute(string $route,): static
     {
         $this->activeRoutes[] = $route;
 
@@ -110,7 +110,7 @@ HTML;
     }
 
 
-    public function setCurrentRoute(string $currentRoute): static
+    public function setCurrentRoute(string $currentRoute,): static
     {
         $this->currentRoute = $currentRoute;
 
@@ -124,7 +124,7 @@ HTML;
     }
 
 
-    public function setCurrentRoutePattern(string $currentRoutePattern): static
+    public function setCurrentRoutePattern(string $currentRoutePattern,): static
     {
         $this->currentRoutePattern = $currentRoutePattern;
 
