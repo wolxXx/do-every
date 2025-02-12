@@ -42,13 +42,13 @@ class Cron
 
         \DoEveryApp\Util\Debugger::debug('asdf');
 
-        \Amp\async(function () {
+        \Amp\async(function (): void {
             new \DoEveryApp\Util\Cron\Backup();
         });
-        \Amp\async(function () {
+        \Amp\async(function (): void {
             new \DoEveryApp\Util\Cron\BackupRotation();
         });
-        \Amp\async(function () {
+        \Amp\async(function (): void {
             new \DoEveryApp\Util\Cron\Notify();
         });
 

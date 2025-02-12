@@ -57,7 +57,7 @@ trait  AddEdit
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
             static::FORM_FIELD_WORKER   => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
                     if (null === $value) {
                         return;
                     }

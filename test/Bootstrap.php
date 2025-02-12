@@ -9,10 +9,10 @@ if (false === defined('IS_IN_TEST_ENV')) {
 }
 defined('ROOT_DIR') || define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..' );
 require_once __DIR__ . '/TestBase.php';
-ini_alter('xdebug.var_display_max_data', '1000000');
-ini_alter('xdebug.var_display_max_children', '1000000');
-ini_alter('xdebug.var_display_max_depth', '1000000');
-ini_alter('zend.exception_ignore_args', '1');
+ini_set('xdebug.var_display_max_data', '1000000');
+ini_set('xdebug.var_display_max_children', '1000000');
+ini_set('xdebug.var_display_max_depth', '1000000');
+ini_set('zend.exception_ignore_args', '1');
 \DoEveryApp\Util\QueryLogger::$disabled = true;
 class Bootstrap
 {

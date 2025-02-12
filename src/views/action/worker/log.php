@@ -21,10 +21,10 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
     <?= $translator->logFor(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 
-<? if(0 === sizeof($data)): ?>
+<? if(0 === count($data)): ?>
     <?= $translator->workerDidNothing(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 <? endif ?>
-<? if(0 !== sizeof($data)): ?>
+<? if(0 !== count($data)): ?>
     <div class="row">
         <div class="column">
             <table>

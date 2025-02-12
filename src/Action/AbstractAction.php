@@ -97,7 +97,7 @@ abstract class AbstractAction
     {
         $annotation = new \ReflectionClass($this);
         $attributes = $annotation->getAttributes(\DoEveryApp\Attribute\Action\Route::class);
-        if (0 === \sizeof($attributes)) {
+        if (0 === count($attributes)) {
             throw new \InvalidArgumentException('no route attribute detected!');
         }
         foreach ($attributes as $attribute) {
@@ -258,7 +258,7 @@ abstract class AbstractAction
     {
         $validator = \DoEveryApp\Util\DependencyContainer::getInstance()->getValidator();
         $hasErrors = false;
-        foreach ($validator->validate($data, $validators) as $index => $error) {
+        foreach ($validator->validate($data, $validators) as $error) {
             $key     = $error->getPropertyPath();
             $key     = \substr($key, 1, strlen($key) - 2);
             $message = $error->getMessage();
