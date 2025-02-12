@@ -216,7 +216,7 @@ class Task
         if (0 !== $diff->y) {
             $dueDays = $diff->y + ($diff->m / 12);
             if ($due < $now) {
-                $dueDays = $dueDays * -1;
+                $dueDays *= -1;
             }
             $this->dueCacheValue = $dueDays;
             $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::YEAR->value;
@@ -226,7 +226,7 @@ class Task
         if (0 !== $diff->m) {
             $dueDays = $diff->m + ($diff->d / 30);
             if ($due < $now) {
-                $dueDays = $dueDays * -1;
+                $dueDays *= -1;
             }
             $this->dueCacheValue = $dueDays;
             $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MONTH->value;
@@ -236,7 +236,7 @@ class Task
         if (0 !== $diff->d) {
             $dueDays = $diff->d + ($diff->h / 24);
             if ($due < $now) {
-                $dueDays = $dueDays * -1;
+                $dueDays *= -1;
             }
             $this->dueCacheValue = $dueDays;
             $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::DAY->value;
@@ -246,7 +246,7 @@ class Task
         if (0 !== $diff->h) {
             $dueDays = $diff->h + ($diff->i / 60);
             if ($due < $now) {
-                $dueDays = $dueDays * -1;
+                $dueDays *= -1;
             }
             $this->dueCacheValue = $dueDays;
             $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::HOUR->value;
@@ -256,7 +256,7 @@ class Task
         if (0 !== $diff->i) {
             $dueDays = $diff->i + ($diff->s / 60);
             if ($due < $now) {
-                $dueDays = $dueDays * -1;
+                $dueDays *= -1;
             }
             $this->dueCacheValue = $dueDays;
             $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MINUTE->value;

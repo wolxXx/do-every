@@ -28,6 +28,7 @@ docker exec -it do-every-$INSTANCE-php83-web bash -c "echo '' > app.log"
 docker stop do-every-$INSTANCE-php83-ofelia
 docker rm do-every-$INSTANCE-php83-ofelia
 set -e
+docker-compose up --build -d
 
 echo ""
 echo "done!"

@@ -81,7 +81,7 @@ class Notify
             \DoEveryApp\Util\Debugger::debug($task->getName() . '->' . $task->getDueValue() . ' ' . $task->getDueUnit() . ' ' . \DoEveryApp\Util\View\Due::getByTask($task,),);
         }
         \DoEveryApp\Util\Debugger::debug($this->hasSomethingToDo(),);
-        if (0 !== \sizeof($this->tasks,)) {
+        if (0 !== count($this->tasks,)) {
             $this->notify();
         }
         \DoEveryApp\Util\Registry::getInstance()->setNotifierRunning(false,);
@@ -118,6 +118,6 @@ class Notify
 
     public function hasSomethingToDo(): bool
     {
-        return 0 !== \sizeof($this->tasks,) && 0 !== \sizeof($this->workers,);
+        return 0 !== count($this->tasks,) && 0 !== count($this->workers,);
     }
 }

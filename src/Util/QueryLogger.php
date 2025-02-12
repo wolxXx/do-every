@@ -27,7 +27,7 @@ class QueryLogger implements \Psr\Log\LoggerInterface
             $blahFoo = \str_replace(\realpath(\ROOT_DIR,) . \DIRECTORY_SEPARATOR, '', $traceItem['file'],);
             if (false === \str_starts_with($blahFoo, 'vendor',)) {
                 $paths[] = trim($blahFoo . '::' . $traceItem['line'],) . ' ' . $traceItem['function'] . '()';
-                if (\sizeof($paths,) > 5) {
+                if (count($paths,) > 5) {
                     break;
                 }
             }
@@ -80,7 +80,7 @@ class QueryLogger implements \Psr\Log\LoggerInterface
         $end = microtime(true,);
         echo '<div id="debug">';
         echo \number_format((($end - \STARTED) * 1000), 0,) . 'ms execution time<br>';
-        echo sizeof(self::$queries,) . ' queries executed.<br> <br>';
+        echo count(self::$queries,) . ' queries executed.<br> <br>';
         echo $foo . '</div>';
     }
 

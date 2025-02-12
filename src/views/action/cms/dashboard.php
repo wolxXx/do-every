@@ -59,7 +59,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 });
         }, 10000);
     });
-    
+
 </script>
 
 <div id="passwordChange">
@@ -92,7 +92,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <? endif ?>
 </div>
 <div id="workingOn">
-    <? if (0 !== sizeof($workingOn)): ?>
+    <? if (0 !== count($workingOn)): ?>
         <fieldset>
             <legend>
                 <?= $translator->currentWorks() ?>
@@ -137,7 +137,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <? endif ?>
 </div>
 <div id="dueTasks">
-    <? if (0 !== sizeof($dueTasks)): ?>
+    <? if (0 !== count($dueTasks)): ?>
         <fieldset>
             <legend>
                 <?= $translator->tasksWithDue() ?>
@@ -167,7 +167,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <? endif ?>
 </div>
 <div id="tasks">
-    <? if (0 !== sizeof($tasks)): ?>
+    <? if (0 !== count($tasks)): ?>
         <fieldset>
             <legend>
                 <?= $translator->tasks() ?>

@@ -95,7 +95,7 @@ declare(strict_types=1);
                                 <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?><br />
                                 <?= $translator->effort() ?>: <?= \DoEveryApp\Util\View\Duration::byValue(array_sum(array_map(function(\DoEveryApp\Entity\Execution $execution) {
                                     return $execution->getDuration() ?? 0;
-                                }, $task->getExecutions()))) ?> (<?= sizeof($task->getExecutions()) ?> <?= $translator->executions() ?>)
+                                }, $task->getExecutions()))) ?> (<?= count($task->getExecutions()) ?> <?= $translator->executions() ?>)
 
                             </td>
                             <td class="pullRight">

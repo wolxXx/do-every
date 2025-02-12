@@ -65,7 +65,7 @@ foreach ($Regex as $files) {
     }
 }
 
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response): void {
     throw new \Slim\Exception\HttpNotFoundException($request);
 });
 

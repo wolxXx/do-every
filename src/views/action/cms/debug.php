@@ -25,170 +25,179 @@ declare(strict_types=1);
     </legend>
     <table class="keyValue">
         <thead>
-        <tr>
-            <th>
-                <?= $translator->what() ?>
-            </th>
-            <th>
-                <?= $translator->value() ?>
-            </th>
-            <th>
-                Key
-            </th>
-        </tr>
+            <tr>
+                <th>
+                    <?= $translator->what() ?>
+                </th>
+                <th>
+                    <?= $translator->value() ?>
+                </th>
+                <th>
+                    Key
+                </th>
+            </tr>
         </thead>
         <tbody>
-
-        <tr>
-            <td>
-                super admin admin :<br />
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Worker::get(\DoEveryApp\Util\Registry::getInstance()->getAdminUser()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_ADMIN_USER) ?>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                cron läuft:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isCronRunning()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_LOCK) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                cron gestartet:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getCronStarted()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_STARTED) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                letzte cron ausführung:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastCron()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_CRON) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                notifier läuft:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                letzte notifier ausführung:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_LAST_RUN) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                letztes backup:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastBackup()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                backup tage:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_KEEP_BACKUP_DAYS) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Fälligkeitpräzision:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_PRECISION_DUE) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Zeitlinie auffüllen:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_FILL_TIME_LINE) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                maximale Anzahl Worker:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxWorkers(), '-') ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_WORKERS) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                maximale Anzahl Aufgaben:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxTasks(), '-') ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_TASKS) ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                maximale Anzahl Gruppen:
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), '-') ?>
-            </td>
-            <td>
-                <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_GROUPS) ?>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    super admin admin :<br />
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Worker::get(\DoEveryApp\Util\Registry::getInstance()->getAdminUser()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_ADMIN_USER) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    cron läuft:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isCronRunning()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_LOCK) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    cron gestartet:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getCronStarted()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_STARTED) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    letzte cron ausführung:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastCron()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_CRON) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    notifier läuft:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    letzte notifier ausführung:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_LAST_RUN) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    letztes backup:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastBackup()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    backup tage:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_KEEP_BACKUP_DAYS) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fälligkeitpräzision:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_PRECISION_DUE) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Zeitlinie auffüllen:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_FILL_TIME_LINE) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    maximale Anzahl Worker:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxWorkers(), '-') ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_WORKERS) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    maximale Anzahl Aufgaben:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxTasks(), '-') ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_TASKS) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    maximale Anzahl Gruppen:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), '-') ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_GROUPS) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    PHP-Version:
+                </td>
+                <td>
+                    <?= phpversion() ?>
+                </td>
+                <td>
+                    -
+                </td>
+            </tr>
         </tbody>
     </table>
 </fieldset>
 
 
-<? if(0 !== sizeof($backupFiles)): ?>
+<? if (0 !== count($backupFiles)): ?>
 
     <fieldset>
         <legend>
@@ -260,7 +269,7 @@ declare(strict_types=1);
         <tbody>
         <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $key => $value): ?>
+                <? foreach((array) $entry as $value): ?>
                     <td>
                         <?= \DoEveryApp\Util\View\DisplayValue::do($value) ?>
                     </td>

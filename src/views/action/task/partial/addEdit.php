@@ -21,7 +21,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
     <div class="row">
         <div class="column">
             <div class="row">
-                <? if(0 !== sizeof($groups)): ?>
+                <? if(0 !== count($groups)): ?>
                     <div class="column">
                         <div>
                             <label for="group">
