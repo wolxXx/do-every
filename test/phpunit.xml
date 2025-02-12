@@ -13,6 +13,7 @@
   </extensions>
   <php>
     <ini name="zend.enable_gc" value="1"/>
+    <ini name="zend.exception_ignore_args" value="1"/>
   </php>
   <source>
     <include>
