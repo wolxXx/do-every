@@ -77,6 +77,7 @@
     "ergebnis/phpunit-slow-test-detector": "*",
     "fakerphp/faker": "*",
     "fortawesome/font-awesome": "*",
+    "friendsofphp/php-cs-fixer": "*",
     "gedmo/doctrine-extensions": "*",
     "guzzlehttp/guzzle": "*",
     "guzzlehttp/promises": "*",

@@ -107,7 +107,6 @@ class Task
     )]
     protected int               $priority         = 100;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
@@ -117,7 +116,6 @@ class Task
         ],
     )]
     protected bool $notify = false;
-
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_active',
@@ -136,25 +134,21 @@ class Task
     )]
     protected ?string $note   = null;
 
-
     public function __construct()
     {
         $this->checkListItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->executions     = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     public static function getRepository(): Task\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
     public function getDueUnit(): ?string
     {
         return $this->dueCacheUnit;
     }
-
 
     public function getDueValue(): int|float|null
     {
@@ -204,7 +198,6 @@ class Task
 
         throw new \RuntimeException('WTF?');
     }
-
 
     protected function calculateDue(?\Carbon\Carbon $due): int|null|float
     {
@@ -266,10 +259,8 @@ class Task
         $this->dueCacheValue = null;
         $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MINUTE->value;
 
-
         return $this->dueCacheValue;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Task\CheckListItem[]
@@ -279,7 +270,6 @@ class Task
         return $this->checkListItems->toArray();
     }
 
-
     /**
      * @return Execution[]
      */
@@ -288,12 +278,10 @@ class Task
         return $this->executions->toArray();
     }
 
-
     public function getGroup(): ?Group
     {
         return $this->group;
     }
-
 
     public function setGroup(?Group $group): static
     {
@@ -302,12 +290,10 @@ class Task
         return $this;
     }
 
-
     public function getWorkingOn(): ?Worker
     {
         return $this->workingOn;
     }
-
 
     public function setWorkingOn(?Worker $workingOn): static
     {
@@ -316,12 +302,10 @@ class Task
         return $this;
     }
 
-
     public function getAssignee(): ?Worker
     {
         return $this->assignee;
     }
-
 
     public function setAssignee(?Worker $assignee): static
     {
@@ -330,12 +314,10 @@ class Task
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -344,12 +326,10 @@ class Task
         return $this;
     }
 
-
     public function getIntervalType(): ?string
     {
         return $this->intervalType;
     }
-
 
     public function setIntervalType(?string $intervalType): static
     {
@@ -358,12 +338,10 @@ class Task
         return $this;
     }
 
-
     public function getIntervalValue(): ?int
     {
         return $this->intervalValue;
     }
-
 
     public function setIntervalValue(?int $intervalValue): static
     {
@@ -372,12 +350,10 @@ class Task
         return $this;
     }
 
-
     public function getPriority(): int
     {
         return $this->priority;
     }
-
 
     public function setPriority(int $priority): static
     {
@@ -386,12 +362,10 @@ class Task
         return $this;
     }
 
-
     public function isNotify(): bool
     {
         return $this->notify;
     }
-
 
     public function setNotify(bool $notify): static
     {
@@ -400,12 +374,10 @@ class Task
         return $this;
     }
 
-
     public function isActive(): bool
     {
         return $this->active;
     }
-
 
     public function setActive(bool $active): static
     {
@@ -414,12 +386,10 @@ class Task
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {
@@ -428,12 +398,10 @@ class Task
         return $this;
     }
 
-
     public function isElapsingCronType(): bool
     {
         return $this->elapsingCronType;
     }
-
 
     public function setElapsingCronType(bool $elapsingCronType): static
     {

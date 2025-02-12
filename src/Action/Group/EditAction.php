@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Group;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -26,20 +28,20 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 'action/group/edit',
                 [
                     'group' => $group,
-                    'data' => [
-                        'name' => $group->getName(),
+                    'data'  => [
+                        'name'  => $group->getName(),
                         'color' => $group->getColor(),
-                    ]
+                    ],
                 ]
             );
         }
         $data = [];
         try {
-            $data     = $this->getRequest()->getParsedBody();
-            $data     = $this->filterAndValidate($data);
+            $data = $this->getRequest()->getParsedBody();
+            $data = $this->filterAndValidate($data);
             $group
-                    ->setName($data['name'])
-                    ->setColor($data['color'])
+                ->setName($data['name'])
+                ->setColor($data['color'])
             ;
 
             $group::getRepository()->update($group);
@@ -54,14 +56,13 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render(
-        'action/group/edit',
-        [
-            'group' => $group,
-            'data' => $data
-        ]
-    );
+            'action/group/edit',
+            [
+                'group' => $group,
+                'data'  => $data,
+            ]
+        );
     }
-
 
     protected function filterAndValidate(array &$data): array
     {
@@ -85,7 +86,6 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                                                                                   ],
 
                                                                               ]);
-
 
         $this->validate($data, $validators);
 

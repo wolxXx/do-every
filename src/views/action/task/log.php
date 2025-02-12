@@ -52,18 +52,18 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
             </tr>
             </thead>
             <tbody>
-            <? foreach($executions as $execution): ?>
+            <?php foreach($executions as $execution): ?>
                 <tr>
                     <td>
                         <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
                     </td>
                     <td>
-                        <? if(null === $execution->getTask()->getGroup()): ?>
+                        <?php if(null === $execution->getTask()->getGroup()): ?>
                             -
-                        <? endif?>
-                        <? if(null !== $execution->getTask()->getGroup()): ?>
+                        <?php endif?>
+                        <?php if(null !== $execution->getTask()->getGroup()): ?>
                             <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
-                        <? endif?>
+                        <?php endif?>
                     </td>
                     <td>
                         <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
@@ -80,7 +80,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                         <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                     </td>
                 </tr>
-            <? endforeach ?>
+            <?php endforeach ?>
             </tbody>
         </table>
 

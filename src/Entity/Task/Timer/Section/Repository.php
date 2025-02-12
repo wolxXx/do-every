@@ -9,7 +9,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-
     public function create(\DoEveryApp\Entity\Task\Timer\Section $entity): static
     {
         $this
@@ -21,7 +20,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Task\Timer\Section $entity): static
     {
@@ -35,7 +33,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function delete(\DoEveryApp\Entity\Task\Timer\Section $entity): static
     {
         $this
@@ -45,7 +42,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -59,7 +55,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Task\Timer[]
      */
@@ -67,7 +62,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -81,7 +75,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

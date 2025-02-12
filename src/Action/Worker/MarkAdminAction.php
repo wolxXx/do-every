@@ -13,6 +13,7 @@ namespace DoEveryApp\Action\Worker;
 class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\Worker;
+
     public static function getRoute(int $id, bool $admin = true): string
     {
         $reflection = new \ReflectionClass(__CLASS__);
@@ -25,7 +26,6 @@ class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
 
         throw new \RuntimeException('Could not determine route path');
     }
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DoEveryApp\Action\Worker;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/worker/log/{id:[0-9]+}',
+    path: '/worker/log/{id:[0-9]+}',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],

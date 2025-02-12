@@ -39,7 +39,6 @@ class BackupRotation
         $this->deleteEmptyDirectories($path);
     }
 
-
     protected function deleteEmptyDirectories($path): void
     {
         $fileCount = $this->countFiles($path);
@@ -63,7 +62,6 @@ class BackupRotation
             }
         }
     }
-
 
     protected function countFiles($path): int
     {

@@ -16,3 +16,4 @@
 /log
 /public/vendor
 /vendor
+/.php-cs-fixer.cache

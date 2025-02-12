@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -17,7 +19,6 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
     public const string FORM_FIELD_CODE          = 'code';
 
     public const string FORM_FIELD_RECOVERY_CODE = 'recoveryCode';
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
@@ -116,7 +117,6 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
         return $this->render('action/auth/authenticate', ['data' => []]);
     }
 
-
     protected function filterAndValidate(array &$data): array
     {
         $data[static::FORM_FIELD_CODE]          = (new \Laminas\Filter\FilterChain())
@@ -136,7 +136,6 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                                                                                   static::FORM_FIELD_RECOVERY_CODE => [
                                                                                   ],
                                                                               ]);
-
 
         $this->validate($data, $validators);
 

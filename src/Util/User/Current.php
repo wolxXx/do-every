@@ -14,12 +14,10 @@ class Current
 
     public static ?\DoEveryApp\Entity\Worker $forcedLoggedInUser = null;
 
-
     private static function getAuthSession(): \DoEveryApp\Util\Session
     {
         return \DoEveryApp\Util\Session::Factory(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
     }
-
 
     public static function get(): ?\DoEveryApp\Entity\Worker
     {
@@ -37,12 +35,10 @@ class Current
         return \DoEveryApp\Entity\Worker::getRepository()->find($session->user->id);
     }
 
-
     public static function logout(): void
     {
         static::getAuthSession()->clear(\DoEveryApp\Util\Session::NAMESPACE_AUTH);
     }
-
 
     public static function login(\DoEveryApp\Entity\Worker $user): void
     {
@@ -64,24 +60,20 @@ class Current
         \DoEveryApp\Util\FlashMessenger::addSuccess('welcome, ' . \DoEveryApp\Util\View\Worker::get($user));
     }
 
-
     public static function isAuthenticated(): bool
     {
         return true === static::get() instanceof \DoEveryApp\Entity\Worker;
     }
-
 
     public static function getLanguage(): string
     {
         return $_COOKIE['lang'] ?? \DoEveryApp\Util\Translator::LANGUAGE_GERMAN;
     }
 
-
     public static function setLanguage(?string $language): void
     {
         $_COOKIE['lang'] = $language;
     }
-
 
     public static function getLocale(): string
     {

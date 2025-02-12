@@ -8,7 +8,6 @@ class DisplayValue
 {
     public static function do(mixed $value): string
     {
-
         switch (true) {
             case \is_null($value):
             {
@@ -24,7 +23,7 @@ class DisplayValue
             }
             case \is_float($value):
             {
-                return \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(),  \NumberFormatter::PATTERN_DECIMAL)->format($value);
+                return \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \NumberFormatter::PATTERN_DECIMAL)->format($value);
             }
             case \is_a($value, \DateTime::class):
             {

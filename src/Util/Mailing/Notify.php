@@ -28,15 +28,15 @@ class Notify
             $taskMessage .= $message . \PHP_EOL . \PHP_EOL;
         }
         $body = <<<TEXT
-Hallo {$worker->getName()}!
-
-Es stehen folgende Aufgaben an: 
-
-{$taskMessage}
-
-Binäre Grüße aus dem Maschinenraum
-do-every* 
-TEXT;
+            Hallo {$worker->getName()}!
+            
+            Es stehen folgende Aufgaben an: 
+            
+            {$taskMessage}
+            
+            Binäre Grüße aus dem Maschinenraum
+            do-every* 
+            TEXT;
 
         \DoEveryApp\Util\Mailer::Factory()
                                ->addRecipient($worker->getEmail(), $worker->getName())

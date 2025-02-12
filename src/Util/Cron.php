@@ -11,6 +11,7 @@ class Cron
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug('start cron object');
         if (true === Registry::getInstance()->isCronRunning()) {
             DependencyContainer::getInstance()->getLogger()->debug('Cron is already running.');
+
             return;
         }
         $now      = \Carbon\Carbon::now();
@@ -22,6 +23,7 @@ class Cron
             $lastCron->addMinutes(5);
             if ($lastCron->gt($now)) {
                 DependencyContainer::getInstance()->getLogger()->debug('Cron has no due...');
+
                 return;
             }
         }
@@ -53,7 +55,6 @@ class Cron
         });
 
         \Revolt\EventLoop::run();
-
 
         Registry::getInstance()
                 ->setLastCron(\Carbon\Carbon::now())

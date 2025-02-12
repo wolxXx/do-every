@@ -1,13 +1,11 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Action\Task\Share;
 
-trait  AddEdit
+trait AddEdit
 {
-
     protected function handleCheckListItems(\DoEveryApp\Entity\Task $task, array $data): static
     {
         foreach ($data['checkListItem'] ?? [] as $position => $item) {
@@ -32,7 +30,6 @@ trait  AddEdit
 
         return $this;
     }
-
 
     protected function filterAndValidate(array &$data): array
     {

@@ -11,16 +11,15 @@ class CheckListItem
         return static::byValue($item->getName(), $item->isChecked(), $item->getNote());
     }
 
-
     public static function byValue(string $name, bool $checked, string|null $note = null): string
     {
         $color = '#ff00a0';
         if (true === $checked) {
-            $icon = Icon::check();
+            $icon  = Icon::check();
             $color = '#154709';
         }
         if (false === $checked) {
-            $icon = Icon::cross();
+            $icon  = Icon::cross();
             $color = '#f00';
         }
         $icon   = '<span style="color: ' . $color . ';">' . $icon . '</span>';

@@ -10,11 +10,11 @@ class CheckListItemNote
     {
         return static::byValue($item->getNote());
     }
+
     public static function byExecutionCheckListItem(\DoEveryApp\Entity\Execution\CheckListItem $item): string
     {
         return static::byValue($item->getNote());
     }
-
 
     public static function byValue(?string $note = null): string
     {

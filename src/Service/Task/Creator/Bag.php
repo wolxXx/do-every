@@ -28,12 +28,10 @@ class Bag
 
     protected ?string                              $note             = null;
 
-
     public function getGroup(): ?\DoEveryApp\Entity\Group
     {
         return $this->group;
     }
-
 
     public function setGroup(?\DoEveryApp\Entity\Group $group): static
     {
@@ -42,12 +40,10 @@ class Bag
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -56,12 +52,10 @@ class Bag
         return $this;
     }
 
-
     public function getIntervalType(): ?\DoEveryApp\Definition\IntervalType
     {
         return $this->intervalType;
     }
-
 
     public function setIntervalType(?\DoEveryApp\Definition\IntervalType $intervalType): static
     {
@@ -70,12 +64,10 @@ class Bag
         return $this;
     }
 
-
     public function getIntervalValue(): ?int
     {
         return $this->intervalValue;
     }
-
 
     public function setIntervalValue(?int $intervalValue): static
     {
@@ -84,12 +76,10 @@ class Bag
         return $this;
     }
 
-
     public function getPriority(): \DoEveryApp\Definition\Priority
     {
         return $this->priority;
     }
-
 
     public function setPriority(\DoEveryApp\Definition\Priority $priority): static
     {
@@ -98,12 +88,10 @@ class Bag
         return $this;
     }
 
-
     public function doNotify(): bool
     {
         return $this->notify;
     }
-
 
     public function enableNotifications(bool $notify): static
     {
@@ -112,12 +100,10 @@ class Bag
         return $this;
     }
 
-
     public function getAssignee(): ?\DoEveryApp\Entity\Worker
     {
         return $this->assignee;
     }
-
 
     public function setAssignee(?\DoEveryApp\Entity\Worker $assignee): static
     {
@@ -126,12 +112,10 @@ class Bag
         return $this;
     }
 
-
     public function getWorkingOn(): ?\DoEveryApp\Entity\Worker
     {
         return $this->workingOn;
     }
-
 
     public function setWorkingOn(?\DoEveryApp\Entity\Worker $workingOn): static
     {
@@ -140,12 +124,10 @@ class Bag
         return $this;
     }
 
-
     public function isActive(): bool
     {
         return $this->active;
     }
-
 
     public function setActive(bool $active): static
     {
@@ -154,12 +136,10 @@ class Bag
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {
@@ -168,12 +148,10 @@ class Bag
         return $this;
     }
 
-
     public function isElapsingCronType(): bool
     {
         return $this->elapsingCronType;
     }
-
 
     public function setElapsingCronType(bool $elapsingCronType): static
     {

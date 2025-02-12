@@ -28,9 +28,9 @@ declare(strict_types=1);
     <link href="/vendor/fontawesome/css/all.css?t=<?= filemtime('public/vendor/fontawesome/css/all.css') ?>" media="screen" rel="stylesheet" type="text/css"/>
     <title>
        Do Every
-        <? if(true === isset($pageTitle)): ?>
+        <?php if(true === isset($pageTitle)): ?>
             - <?= $pageTitle ?>
-        <? endif ?>
+        <?php endif ?>
     </title>
 </head>
 <body>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -17,7 +19,6 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
     public const string FORM_FIELD_EMAIL    = 'email';
 
     public const string FORM_FIELD_PASSWORD = 'password';
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
@@ -59,7 +60,6 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
         return $this->render('action/auth/login', ['data' => $data]);
     }
 
-
     protected function filterAndValidate(array &$data): array
     {
         $data[static::FORM_FIELD_EMAIL]    = (new \Laminas\Filter\FilterChain())
@@ -81,7 +81,6 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
                                                                                       new \Symfony\Component\Validator\Constraints\NotBlank(),
                                                                                   ],
                                                                               ]);
-
 
         $this->validate($data, $validators);
 

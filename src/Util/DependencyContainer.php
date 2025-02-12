@@ -8,8 +8,11 @@ class DependencyContainer
 {
     protected static DependencyContainer $instance;
 
-    protected \DI\Container              $container;
-
+    protected \DI\Container              $container {
+        get {
+            return $this->container;
+        }
+    }
 
     final private function __construct()
     {
@@ -23,7 +26,6 @@ class DependencyContainer
         ;
     }
 
-
     public static function getInstance(): static
     {
         if (false === isset(static::$instance)) {
@@ -33,20 +35,12 @@ class DependencyContainer
         return static::$instance;
     }
 
-
     private function setContainer(\DI\Container $container): static
     {
         $this->container = $container;
 
         return $this;
     }
-
-
-    public function getContainer(): \DI\Container
-    {
-        return $this->container;
-    }
-
 
     public function getEntityManager(): \Doctrine\ORM\EntityManager
     {
@@ -55,15 +49,14 @@ class DependencyContainer
          *
          * @var \Doctrine\ORM\EntityManager $entityManager
          */
-        if (true === $this->getContainer()->has(\Doctrine\ORM\EntityManager::class)) {
-            return $this->getContainer()->get(\Doctrine\ORM\EntityManager::class);
+        if (true === $this->container->has(\Doctrine\ORM\EntityManager::class)) {
+            return $this->container->get(\Doctrine\ORM\EntityManager::class);
         }
         require ROOT_DIR . DIRECTORY_SEPARATOR . 'doctrineBootstrap.php';
-        $this->getContainer()->set(\Doctrine\ORM\EntityManager::class, $entityManager);
+        $this->container->set(\Doctrine\ORM\EntityManager::class, $entityManager);
 
         return $this->getEntityManager();
     }
-
 
     public function getRenderer(): \Slim\Views\PhpRenderer
     {
@@ -72,34 +65,31 @@ class DependencyContainer
 
     public function getLogger(): \Monolog\Logger
     {
-        if (true === $this->getContainer()->has(\Monolog\Logger::class)) {
-            return $this->getContainer()->get(\Monolog\Logger::class);
+        if (true === $this->container->has(\Monolog\Logger::class)) {
+            return $this->container->get(\Monolog\Logger::class);
         }
         $logger = (new \Monolog\Logger('logger'))
             ->pushHandler(new \Monolog\Handler\StreamHandler(ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log', \Monolog\Level::Debug))
         ;
-        $this->getContainer()->set(\Monolog\Logger::class, $logger);
+        $this->container->set(\Monolog\Logger::class, $logger);
 
         return $this->getLogger();
     }
 
-
     public function getTranslator(): Translator
     {
         return match (\DoEveryApp\Util\User\Current::getLanguage()) {
-            Translator::LANGUAGE_GERMAN => new \DoEveryApp\Util\Translator\German(),
+            Translator::LANGUAGE_GERMAN  => new \DoEveryApp\Util\Translator\German(),
             Translator::LANGUAGE_ENGLISH => new \DoEveryApp\Util\Translator\English(),
-            Translator::LANGUAGE_MAORI => new \DoEveryApp\Util\Translator\Nothing(),
+            Translator::LANGUAGE_MAORI   => new \DoEveryApp\Util\Translator\Nothing(),
         };
     }
-
 
     public function getValidator(): \Symfony\Component\Validator\Validator\RecursiveValidator
     {
         return new \Symfony\Component\Validator\Validator\RecursiveValidator(
             new \Symfony\Component\Validator\Context\ExecutionContextFactory(
-                new class implements \Symfony\Contracts\Translation\TranslatorInterface {
-
+                new class () implements \Symfony\Contracts\Translation\TranslatorInterface {
                     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
                     {
                         return DependencyContainer::getInstance()
@@ -107,7 +97,6 @@ class DependencyContainer
                                                   ->translate($id, $parameters, $domain, $locale)
                         ;
                     }
-
 
                     public function getLocale(): string
                     {

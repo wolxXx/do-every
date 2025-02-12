@@ -14,19 +14,19 @@ class SessionContainer
         $this->name = $name;
         switch (\session_status()) {
             case PHP_SESSION_DISABLED:
-            {
-                return;
-            }
+                {
+                    return;
+                }
             case \PHP_SESSION_NONE:
-            {
-                \session_start();
-                break;
-            }
+                {
+                    \session_start();
+                    break;
+                }
             case \PHP_SESSION_ACTIVE:
-            {
-                // all good
-                break;
-            }
+                {
+                    // all good
+                    break;
+                }
         }
         if (null !== $_SESSION && false === \array_key_exists($this->getName(), $_SESSION)) {
             $_SESSION[$name] = [];

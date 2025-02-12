@@ -12,7 +12,6 @@ class Mailer
 
     protected mixed                          $mailFrom = '';
 
-
     final private function __construct()
     {
         $instance             = $this
@@ -38,11 +37,11 @@ class Mailer
             'secure',
         ];
         if (false === is_array($configuration)) {
-            throw new \Exception($pathToMailConfigFile.' did not return an array');
+            throw new \Exception($pathToMailConfigFile . ' did not return an array');
         }
         foreach ($requiredFields as $requiredField) {
             if (false === array_key_exists($requiredField, $configuration)) {
-                throw new \Exception('missing field "' . $requiredField . '" in '.$pathToMailConfigFile);
+                throw new \Exception('missing field "' . $requiredField . '" in ' . $pathToMailConfigFile);
             }
         }
         $mailSkipSend      = $configuration['skipSend'];
@@ -90,12 +89,10 @@ class Mailer
         $instance->addCustomHeader('bar', 'foo');
     }
 
-
     protected function getInstance(): \PHPMailer\PHPMailer\PHPMailer
     {
         return $this->instance;
     }
-
 
     protected function setInstance(\PHPMailer\PHPMailer\PHPMailer $mailer): static
     {
@@ -104,12 +101,10 @@ class Mailer
         return $this;
     }
 
-
     public static function Factory(): static
     {
         return new static();
     }
-
 
     public function send(): bool
     {
@@ -130,14 +125,12 @@ class Mailer
         return true;
     }
 
-
     public function setSubject(string $subject): static
     {
         $this->getInstance()->Subject = $subject;
 
         return $this;
     }
-
 
     public function addRecipient(string $address, ?string $name = null): static
     {
@@ -146,7 +139,6 @@ class Mailer
         return $this;
     }
 
-
     public function addCc(string $address, ?string $name = null): static
     {
         $this->getInstance()->addCC($address, $name);
@@ -154,14 +146,12 @@ class Mailer
         return $this;
     }
 
-
     public function addBcc(string $address, ?string $name = null): static
     {
         $this->getInstance()->addBCC($address, $name);
 
         return $this;
     }
-
 
     public function setHtml(string $html): static
     {
@@ -173,14 +163,12 @@ class Mailer
         return $this;
     }
 
-
     public function setBody(string $body): static
     {
         $this->getInstance()->Body = $body;
 
         return $this;
     }
-
 
     public function setAlternativeBody(string $body): static
     {
@@ -189,12 +177,10 @@ class Mailer
         return $this;
     }
 
-
     public function isSkipSend(): bool
     {
         return $this->skipSend;
     }
-
 
     public function getMailFrom(): string
     {

@@ -1,18 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace DoEveryApp\Util\View;
 
 class Duration
 {
-    public static function byExecution(\DoEveryApp\Entity\Execution $execution,): string
+    public static function byExecution(\DoEveryApp\Entity\Execution $execution): string
     {
-        return static::byValue($execution->getDuration(),);
+        return static::byValue($execution->getDuration());
     }
 
-
-    public static function byValue(?int $duration = null,): string
+    public static function byValue(?int $duration = null): string
     {
         switch ($duration) {
             case null:
@@ -44,11 +43,11 @@ class Duration
         if ($duration < 120) {
             return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->minutes();
         }
-        $duration = round($duration / 60,);
+        $duration = round($duration / 60);
         if ($duration < 100) {
             return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->hours();
         }
-        $duration = round($duration / 24,);
+        $duration = round($duration / 24);
 
         return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->days();
     }

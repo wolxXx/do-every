@@ -1,11 +1,10 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Action\Execution\Share;
 
-trait  AddEdit
+trait AddEdit
 {
     public const string FORM_FIELD_DURATION                       = 'duration';
 
@@ -43,6 +42,7 @@ trait  AddEdit
             ;
             $checkListItem::getRepository()->create($checkListItem);
         }
+
         return $this;
     }
 

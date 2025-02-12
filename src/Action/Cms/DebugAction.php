@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(

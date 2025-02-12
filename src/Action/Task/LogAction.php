@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path        : '/log',
-    methods     : [
+    path   : '/log',
+    methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ]
 )]

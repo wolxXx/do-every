@@ -18,6 +18,7 @@ class ErrorStore
         if (false === $this->hasError($key)) {
             return [];
         }
+
         return (array)$this->errors[$key];
     }
 
@@ -27,6 +28,7 @@ class ErrorStore
             $this->errors[$key] = [];
         }
         $this->errors[$key][] = $message;
+
         return $this;
     }
 

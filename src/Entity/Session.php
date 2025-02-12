@@ -27,7 +27,6 @@ class Session
     )]
     protected string $name;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         type    : \Doctrine\DBAL\Types\Types::TEXT,
         nullable: false
@@ -40,18 +39,15 @@ class Session
     )]
     protected string $expires;
 
-
     public static function getRepository(): Session\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
     public function getContent(): string
     {
         return $this->content;
     }
-
 
     public function setContent(string $content): static
     {
@@ -60,12 +56,10 @@ class Session
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -74,12 +68,10 @@ class Session
         return $this;
     }
 
-
     public function getExpires(): string
     {
         return $this->expires;
     }
-
 
     public function setExpires(string $expires): static
     {

@@ -34,7 +34,6 @@ class Backup
 
         exec($command);
 
-
         \DoEveryApp\Util\Registry::getInstance()
                                  ->setLastBackup(\Carbon\Carbon::now())
         ;

@@ -1,13 +1,11 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Action\Worker\Share;
 
-trait  AddEdit
+trait AddEdit
 {
-
     public const string FORM_FIELD_NAME             = 'name';
 
     public const string FORM_FIELD_EMAIL            = 'email';
@@ -54,20 +52,20 @@ trait  AddEdit
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            static::FORM_FIELD_EMAIL            => [
-            ],
-            static::FORM_FIELD_IS_ADMIN         => [
-            ],
-            static::FORM_FIELD_DO_NOTIFY        => [
-            ],
-            static::FORM_FIELD_DO_NOTIFY_LOGINS => [
-            ],
-            static::FORM_FIELD_PASSWORD         => [
-            ],
-            static::FORM_FIELD_NAME             => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
+                                                                                  static::FORM_FIELD_EMAIL            => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_IS_ADMIN         => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_DO_NOTIFY        => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_DO_NOTIFY_LOGINS => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_PASSWORD         => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_NAME             => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
         $this->validate($data, $validators);
 

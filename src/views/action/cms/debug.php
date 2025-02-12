@@ -197,7 +197,7 @@ declare(strict_types=1);
 </fieldset>
 
 
-<? if (0 !== count($backupFiles)): ?>
+<?php if (0 !== count($backupFiles)): ?>
 
     <fieldset>
         <legend>
@@ -223,15 +223,15 @@ declare(strict_types=1);
                 </tr>
             </thead>
             <tbody>
-                <? foreach($backupFiles as $debugFile => $fileSize): ?>
+                <?php foreach($backupFiles as $debugFile => $fileSize): ?>
                     <tr>
                         <td>
 
-                            <?
+                            <?php
                             $date = str_replace(['backup_', '.sql', '_'], ['','', ' '], basename($debugFile));
-                            $dateSplit = explode(' ', $date);
-                            $date = $dateSplit[0] . ' '. str_replace('-', ':', $dateSplit[1]);
-                            ?>
+                    $dateSplit = explode(' ', $date);
+                    $date = $dateSplit[0] . ' '. str_replace('-', ':', $dateSplit[1]);
+                    ?>
                             <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(new \DateTime($date)) ?>
                         </td>
                         <td>
@@ -243,11 +243,11 @@ declare(strict_types=1);
                             </a>
                         </td>
                     </tr>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tbody>
         </table>
     </fieldset>
-<? endif ?>
+<?php endif ?>
 
 <fieldset>
     <legend>
@@ -255,27 +255,27 @@ declare(strict_types=1);
     </legend>
     <table>
         <thead>
-        <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
+        <?php foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $key => $value): ?>
+                <?php foreach((array) $entry as $key => $value): ?>
                     <th>
                         <?= \DoEveryApp\Util\View\Escaper::escape($key) ?>
                     </th>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tr>
-            <? break ?>
-        <? endforeach ?>
+            <?php break ?>
+        <?php endforeach ?>
         </thead>
         <tbody>
-        <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
+        <?php foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $value): ?>
+                <?php foreach((array) $entry as $value): ?>
                     <td>
                         <?= \DoEveryApp\Util\View\DisplayValue::do($value) ?>
                     </td>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tr>
-        <? endforeach ?>
+        <?php endforeach ?>
         </tbody>
     </table>
 </fieldset>

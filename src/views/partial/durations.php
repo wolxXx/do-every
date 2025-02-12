@@ -135,7 +135,7 @@ declare(strict_types=1);
             <h3>
                 <?= $translator->byMonth() ?>
             </h3>
-            <? foreach($durations->getMonths() as $month => $duration): ?>
+            <?php foreach($durations->getMonths() as $month => $duration): ?>
                 <div class="row">
                     <div class="column">
                         <?= $month ?>:
@@ -144,13 +144,13 @@ declare(strict_types=1);
                         <?= \DoEveryApp\Util\View\Duration::byValue($duration) ?>
                     </div>
                 </div>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
         <div class="column">
             <h3>
                 <?= $translator->byYear() ?>
             </h3>
-            <? foreach($durations->getYears() as $year => $duration): ?>
+            <?php foreach($durations->getYears() as $year => $duration): ?>
                 <div class="row">
                     <div class="column">
                         <?= $year ?>:
@@ -159,7 +159,7 @@ declare(strict_types=1);
                         <?= \DoEveryApp\Util\View\Duration::byValue($duration) ?>
                     </div>
                 </div>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 </fieldset>

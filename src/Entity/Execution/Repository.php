@@ -30,7 +30,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->orderBy('e.date', 'DESC')
         ;
         if (null !== $limit) {
-            $queryBuilder->setMaxResults($limit,);
+            $queryBuilder->setMaxResults($limit);
         }
 
         return $queryBuilder
@@ -38,7 +38,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->execute()
         ;
     }
-    
+
     public function findIndexed(\DoEveryApp\Entity\Task $param)
     {
         return $this
@@ -48,9 +48,8 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->orderBy('e.date', 'DESC')
             ->getQuery()
             ->execute()
-            ;
+        ;
     }
-
 
     public function create(\DoEveryApp\Entity\Execution $entity): static
     {
@@ -64,7 +63,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function update(\DoEveryApp\Entity\Execution $entity): static
     {
         $this
@@ -77,7 +75,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function delete(\DoEveryApp\Entity\Execution $entity): static
     {
         $this
@@ -87,7 +84,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -101,7 +97,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Execution[]
      */
@@ -109,7 +104,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -123,7 +117,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

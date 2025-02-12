@@ -25,9 +25,9 @@ declare(strict_types=1);
         </label>
         <input id="token" type="text" name="<?= \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN, $data) ? $data[\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN] : '' ?>"/>
         <div class="errors">
-            <? foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN) as $error): ?>
+            <?php foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN) as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 

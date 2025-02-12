@@ -20,7 +20,6 @@ abstract class AbstractAction
 
     protected \DoEveryApp\Util\Translator              $translator;
 
-
     final public function __construct()
     {
         \DoEveryApp\Util\Session::Factory(\DoEveryApp\Util\Session::NAMESPACE_APPLICATION);
@@ -31,12 +30,10 @@ abstract class AbstractAction
         $this->translator          = $this->dependencyContainer->getTranslator();
     }
 
-
     public function getRequest(): \Psr\Http\Message\ServerRequestInterface
     {
         return $this->request;
     }
-
 
     public function setRequest(\Psr\Http\Message\ServerRequestInterface $request): static
     {
@@ -45,12 +42,10 @@ abstract class AbstractAction
         return $this;
     }
 
-
     public function getResponse(): \Psr\Http\Message\ResponseInterface
     {
         return $this->response;
     }
-
 
     public function setResponse(\Psr\Http\Message\ResponseInterface $response): static
     {
@@ -59,12 +54,10 @@ abstract class AbstractAction
         return $this;
     }
 
-
     public function getErrorStore(): \DoEveryApp\Util\ErrorStore
     {
         return $this->errorStore;
     }
-
 
     final public function direct(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, mixed $arguments): \Psr\Http\Message\ResponseInterface
     {
@@ -78,7 +71,6 @@ abstract class AbstractAction
         ;
     }
 
-
     private function appendHeaders(): static
     {
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -91,7 +83,6 @@ abstract class AbstractAction
 
         return $this->setResponse($response);
     }
-
 
     final public function init(): static
     {
@@ -118,15 +109,12 @@ abstract class AbstractAction
         return $this;
     }
 
-
     abstract public function run(): \Psr\Http\Message\ResponseInterface;
-
 
     protected function prepare(): static
     {
         return $this;
     }
-
 
     protected function getReferrer(): ?string
     {
@@ -135,7 +123,6 @@ abstract class AbstractAction
             ->getHeaderLine('referer')
         ;
     }
-
 
     protected function redirect(string $to): \Psr\Http\Message\ResponseInterface
     {
@@ -148,7 +135,6 @@ abstract class AbstractAction
 
         return $this->getResponse();
     }
-
 
     /**
      * @param array<mixed> $data
@@ -173,7 +159,6 @@ abstract class AbstractAction
         ;
     }
 
-
     public static function getRoutePattern(): string
     {
         $reflection = new \ReflectionClass(static::class);
@@ -184,12 +169,10 @@ abstract class AbstractAction
             ->path;
     }
 
-
     public function getArgs(): mixed
     {
         return $this->args;
     }
-
 
     public function setArgs(mixed $args): static
     {
@@ -198,12 +181,10 @@ abstract class AbstractAction
         return $this;
     }
 
-
     public function getFromQuery(string $key, mixed $default = null): mixed
     {
         return $this->getRequest()->getQueryParams()[$key] ?? $default;
     }
-
 
     public function getFromBody(string $key, mixed $default = null): mixed
     {
@@ -225,7 +206,6 @@ abstract class AbstractAction
         return $default;
     }
 
-
     public function getArgumentSafe(string $argumentName = 'id'): mixed
     {
         if (false === array_key_exists($argumentName, $this->args)) {
@@ -235,24 +215,20 @@ abstract class AbstractAction
         return $this->args[$argumentName];
     }
 
-
     protected function isGetRequest(): bool
     {
         return \Fig\Http\Message\RequestMethodInterface::METHOD_GET === $this->request->getMethod();
     }
-
 
     protected function isPostRequest(): bool
     {
         return \Fig\Http\Message\RequestMethodInterface::METHOD_POST === $this->request->getMethod();
     }
 
-
     protected function isAjaxRequest(): bool
     {
         return 'XMLHttpRequest' === $this->getRequest()->getHeaderLine('X-Requested-With');
     }
-
 
     protected function validate(array $data, \Symfony\Component\Validator\Constraints\Collection $validators): static
     {

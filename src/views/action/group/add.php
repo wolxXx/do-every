@@ -25,9 +25,9 @@ declare(strict_types=1);
         </label>
         <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
         <div class="errors">
-            <? foreach ($errorStore->getErrors('name') as $error): ?>
+            <?php foreach ($errorStore->getErrors('name') as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 
@@ -37,9 +37,9 @@ declare(strict_types=1);
         </label>
         <input id="color" type="color" name="color" value="<?= array_key_exists('color', $data) ? $data['color'] : '' ?>"/>
         <div class="errors">
-            <? foreach ($errorStore->getErrors('color') as $error): ?>
+            <?php foreach ($errorStore->getErrors('color') as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 

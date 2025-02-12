@@ -19,31 +19,31 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    <? if (null === $execution): ?>
+    <?php if (null === $execution): ?>
         Ausführung hinzufügen
-    <? endif ?>
-    <? if (null !== $execution): ?>
+    <?php endif ?>
+    <?php if (null !== $execution): ?>
         Ausführung bearbeiten
-    <? endif ?>
+    <?php endif ?>
 </h1>
 <div>
     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
         Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
     </a>
-    <? if (null !== $task->getGroup()): ?>
+    <?php if (null !== $task->getGroup()): ?>
         |  Gruppe:
         <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
             <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
         </a>
-    <? endif ?>
+    <?php endif ?>
     <hr />
 </div>
 
-<? if (null !== $task->getNote()): ?>
+<?php if (null !== $task->getNote()): ?>
     <div>
         <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
     </div>
-<? endif ?>
+<?php endif ?>
 
 <form action="" method="post" novalidate>
     <div class="row">
@@ -55,19 +55,19 @@ declare(strict_types=1);
                             <?= $translator->worker() ?>
                         </label>
                         <select name="worker" id="worker">
-                            <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected'  : '' ?>  value="">
+                            <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected' : '' ?>  value="">
                                 - niemand -
                             </option>
-                            <? foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
-                                <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
+                            <?php foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+                                <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected' : '' ?> value="<?= $worker->getId() ?>">
                                     <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
                                 </option>
-                            <? endforeach ?>
+                            <?php endforeach ?>
                         </select>
                         <div class="errors">
-                            <? foreach ($errorStore->getErrors('assignee') as $error): ?>
+                            <?php foreach ($errorStore->getErrors('assignee') as $error): ?>
                                 <?= $error ?><br/>
-                            <? endforeach ?>
+                            <?php endforeach ?>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@ declare(strict_types=1);
 
 
 
-            <? if (0 !== count($data['checkListItems'])): ?>
+            <?php if (0 !== count($data['checkListItems'])): ?>
                 <hr>
                 <table>
                     <thead>
@@ -113,7 +113,7 @@ declare(strict_types=1);
                         </tr>
                     </thead>
                     <tbody>
-                        <? foreach ($data['checkListItems'] as $index =>  $checkListItem): ?>
+                        <?php foreach ($data['checkListItems'] as $index =>  $checkListItem): ?>
                             <tr>
                                 <td>
                                     <?= \DoEveryApp\Util\View\Escaper::escape($checkListItem['name']) ?>
@@ -122,7 +122,7 @@ declare(strict_types=1);
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][id]" value="<?= $checkListItem['id'] ?>">
                                 </td>
                                 <td>
-                                    <input type="checkbox" <?= '1' === $checkListItem['checked']? 'checked': '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
+                                    <input type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
                                 </td>
                                 <td>
                                     <?= \DoEveryApp\Util\View\CheckListItemNote::byValue($checkListItem['referenceNote']) ?>
@@ -131,11 +131,11 @@ declare(strict_types=1);
                                     <textarea rows="1000" cols="1000" name="checkListItems[<?= $index ?>][note]"><?= $checkListItem['note'] ?></textarea>
                                 </td>
                             </tr>
-                        <? endforeach ?>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
                 <??>
-            <? endif ?>
+            <?php endif ?>
         </div>
         <div class="column">
 
@@ -149,12 +149,12 @@ declare(strict_types=1);
     </div>
 
     <div>
-        <? if (null === $execution): ?>
+        <?php if (null === $execution): ?>
             <input class="primaryButton" type="submit" value="<?= $translator->add() ?>" />
-        <? endif ?>
-        <? if (null !== $execution): ?>
+        <?php endif ?>
+        <?php if (null !== $execution): ?>
             <input class="primaryButton" type="submit" value="<?= $translator->save() ?>" />
-        <? endif ?>
+        <?php endif ?>
 
     </div>
 </form>

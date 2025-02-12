@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Task\Timer;
@@ -26,7 +25,6 @@ class Section
 
     public const string TABLE_NAME = 'task_timer_section';
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task\Timer::class
     )]
@@ -36,20 +34,19 @@ class Section
     )]
     protected \DoEveryApp\Entity\Task\Timer $task;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'start',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: false
     )]
-    protected \DateTime  $start;
+    protected \DateTime $start;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'end',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: false
     )]
-    protected \DateTime  $end;
+    protected \DateTime $end;
 
     public static function getRepository(): Timer\Repository
     {

@@ -47,7 +47,7 @@ final class Registry
     }
 
 
-    private final function __construct()
+    final private function __construct()
     {
         $this->map = [];
         foreach (\DoEveryApp\Entity\Registry::getRepository()->findAll() as $registry) {
@@ -56,10 +56,10 @@ final class Registry
     }
 
 
-    private function getRow(string $key,): ?\DoEveryApp\Entity\Registry
+    private function getRow(string $key): ?\DoEveryApp\Entity\Registry
     {
-        if (false === \array_key_exists($key, $this->map,)) {
-            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey($key,);
+        if (false === \array_key_exists($key, $this->map, )) {
+            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey($key, );
             $this->map[$key] = $registry;
 
             return $registry;

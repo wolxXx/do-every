@@ -15,7 +15,6 @@ class DateTime
         return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE)->format($dateTime) . '</nobr>';
     }
 
-
     public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime): string
     {
         if (null === $dateTime) {
@@ -24,7 +23,6 @@ class DateTime
 
         return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime) . '</nobr>';
     }
-
 
     public static function getDateTimeMediumDateShortTime(?\DateTime $dateTime): string
     {

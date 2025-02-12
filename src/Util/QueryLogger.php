@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace DoEveryApp\Util;
 
@@ -12,10 +12,9 @@ class QueryLogger implements \Psr\Log\LoggerInterface
 
     public static array $queries  = [];
 
-
-    public function log($level, string|\Stringable $message, array $context = [],): void
+    public function log($level, string|\Stringable $message, array $context = []): void
     {
-        if (false === str_contains($message, 'Executing statement',) && false === str_contains($message, 'Executing query',)) {
+        if (false === str_contains($message, 'Executing statement') && false === str_contains($message, 'Executing query')) {
             return;
         }
         $exception = new \InvalidArgumentException();
@@ -24,10 +23,10 @@ class QueryLogger implements \Psr\Log\LoggerInterface
             if (false === isset($traceItem['file'],)) {
                 continue;
             }
-            $blahFoo = \str_replace(\realpath(\ROOT_DIR,) . \DIRECTORY_SEPARATOR, '', $traceItem['file'],);
-            if (false === \str_starts_with($blahFoo, 'vendor',)) {
-                $paths[] = trim($blahFoo . '::' . $traceItem['line'],) . ' ' . $traceItem['function'] . '()';
-                if (count($paths,) > 5) {
+            $blahFoo = \str_replace(\realpath(\ROOT_DIR) . \DIRECTORY_SEPARATOR, '', $traceItem['file']);
+            if (false === \str_starts_with($blahFoo, 'vendor')) {
+                $paths[] = trim($blahFoo . '::' . $traceItem['line']) . ' ' . $traceItem['function'] . '()';
+                if (count($paths) > 5) {
                     break;
                 }
             }
@@ -36,7 +35,6 @@ class QueryLogger implements \Psr\Log\LoggerInterface
 
         self::$queries[] = $context;
     }
-
 
     public function __destruct()
     {
@@ -58,34 +56,33 @@ class QueryLogger implements \Psr\Log\LoggerInterface
                                                                                                            ],),);
         foreach (static::$queries as $query) {
             $rawQuery    = $query['sql'];
-            $queryString = $sqlFormatter->format($rawQuery,);
+            $queryString = $sqlFormatter->format($rawQuery);
             $params      = [];
-            if (\array_key_exists('params', $query,)) {
+            if (\array_key_exists('params', $query)) {
                 foreach ($query['params'] as $index => $param) {
-                    $param    = $this->mapType($query['types'][$index],) . ' ' . \DoEveryApp\Util\View\DisplayValue::do($param,);
+                    $param    = $this->mapType($query['types'][$index]) . ' ' . \DoEveryApp\Util\View\DisplayValue::do($param);
                     $param    = '<span style="color: #f00;   font-style: oblique;">' . $param . '</span>';
                     $params[] = $param;
                 }
             }
             foreach ($params as $param) {
-                $pos = strpos($queryString, '?',);
+                $pos = strpos($queryString, '?');
                 if ($pos !== false) {
-                    $queryString = substr_replace($queryString, $param, $pos, strlen('?',),);
+                    $queryString = substr_replace($queryString, $param, $pos, strlen('?'));
                 }
             }
-            echo \implode(' <- ', $query['paths'],) . '<br>';
+            echo \implode(' <- ', $query['paths']) . '<br>';
             echo $queryString;
         }
         $foo = \ob_get_clean();
-        $end = microtime(true,);
+        $end = microtime(true);
         echo '<div id="debug">';
-        echo \number_format((($end - \STARTED) * 1000), 0,) . 'ms execution time<br>';
-        echo count(self::$queries,) . ' queries executed.<br> <br>';
+        echo \number_format((($end - \STARTED) * 1000), 0) . 'ms execution time<br>';
+        echo count(self::$queries) . ' queries executed.<br> <br>';
         echo $foo . '</div>';
     }
 
-
-    private function mapType(\Doctrine\DBAL\ParameterType $type,): string
+    private function mapType(\Doctrine\DBAL\ParameterType $type): string
     {
         return match ($type) {
             \Doctrine\DBAL\ParameterType::NULL         => '(NULL)',

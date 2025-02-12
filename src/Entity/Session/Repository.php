@@ -6,11 +6,10 @@ namespace DoEveryApp\Entity\Session;
 
 class Repository extends \Doctrine\ORM\EntityRepository
 {
-
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-    public function findOneByName(string $name) : ?\DoEveryApp\Entity\Session
+    public function findOneByName(string $name): ?\DoEveryApp\Entity\Session
     {
         return $this->findOneBy(['name' => $name]);
     }
@@ -46,7 +45,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function update(\DoEveryApp\Entity\Session $entity): static
     {
         $this
@@ -59,7 +57,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function delete(\DoEveryApp\Entity\Session $entity): static
     {
         $this
@@ -69,7 +66,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -83,7 +79,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Session[]
      */
@@ -91,7 +86,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -105,7 +99,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

@@ -25,9 +25,9 @@ declare(strict_types=1);
         </label>
         <input id="email" type="email" name="email" value="<?= array_key_exists('email', $data) ? $data['email'] : '' ?>"/>
         <div class="errors">
-            <? foreach ($errorStore->getErrors('email') as $error): ?>
+            <?php foreach ($errorStore->getErrors('email') as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 

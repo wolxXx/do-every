@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path        : '/help',
-    methods     : [
+    path   : '/help',
+    methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
 )]

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -55,9 +57,11 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
                 ;
                 $this->setResponse($response);
                 \unlink($filename);
+
                 return $this->getResponse();
             } catch (\Exception $exception) {
                 \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+
                 return $this->redirect(IndexAction::getRoute());
             }
         }
@@ -65,6 +69,7 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
         $filePath = \ROOT_DIR . $requestedFile;
         if (false === \file_exists($filePath)) {
             \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+
             return $this->redirect(IndexAction::getRoute());
         }
 
@@ -81,9 +86,11 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
                 ->withAddedHeader('Content-Disposition', 'attachment; filename="' . \basename($requestedFile) . '"')
             ;
             $this->setResponse($response);
+
             return $this->getResponse();
         } catch (\Exception $exception) {
             \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+
             return $this->redirect(IndexAction::getRoute());
         }
     }

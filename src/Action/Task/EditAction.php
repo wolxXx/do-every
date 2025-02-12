@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -77,7 +79,6 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
-
 
         return $this->render(
             'action/task/edit',

@@ -9,18 +9,15 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-
     public function findOneByPasswordResetToken(string $token): ?\DoEveryApp\Entity\Worker
     {
         return $this->findOneBy(['passwordResetToken' => $token]);
     }
 
-
     public function findOneByEmail(string $email): ?\DoEveryApp\Entity\Worker
     {
         return $this->findOneBy(['email' => $email]);
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Worker[]
@@ -35,7 +32,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
@@ -47,7 +43,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Worker $entity): static
     {
@@ -61,7 +56,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function delete(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
@@ -71,7 +65,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -85,7 +78,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Worker[]
      */
@@ -93,7 +85,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -107,7 +98,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

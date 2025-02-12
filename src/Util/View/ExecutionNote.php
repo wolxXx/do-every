@@ -11,7 +11,6 @@ class ExecutionNote
         return static::byValue($execution->getNote());
     }
 
-
     public static function byValue(?string $note = null): string
     {
         if (null === $note) {

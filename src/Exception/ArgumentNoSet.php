@@ -6,5 +6,4 @@ namespace DoEveryApp\Exception;
 
 class ArgumentNoSet extends \RuntimeException
 {
-
 }

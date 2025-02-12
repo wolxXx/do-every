@@ -50,17 +50,17 @@ declare(strict_types=1);
                     </tr>
                 </thead>
                 <tbody>
-                    <? foreach($tasks as $task): ?>
+                    <?php foreach($tasks as $task): ?>
                         <tr>
                             <td>
-                                <? if(null === $task->getGroup()): ?>
+                                <?php if(null === $task->getGroup()): ?>
                                     <?= $translator->noValue() ?>
-                                <? endif ?>
-                                <? if(null !== $task->getGroup()): ?>
+                                <?php endif ?>
+                                <?php if(null !== $task->getGroup()): ?>
                                     <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
                                         <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
                                     </a>
-                                <? endif ?>
+                                <?php endif ?>
                             </td>
                             <td>
                                 <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
@@ -68,24 +68,24 @@ declare(strict_types=1);
                                 </a>
                             </td>
                             <td>
-                                <? if(null !== $task->getAssignee()): ?>
+                                <?php if(null !== $task->getAssignee()): ?>
                                     <a href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($task->getAssignee()->getId()) ?>">
                                         <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
                                     </a>
-                                <? endif ?>
-                                <? if(null === $task->getAssignee()): ?>
+                                <?php endif ?>
+                                <?php if(null === $task->getAssignee()): ?>
                                     <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
-                                <? endif ?>
+                                <?php endif ?>
                             </td>
                             <td>
-                                <? if(null !== $task->getWorkingOn()): ?>
+                                <?php if(null !== $task->getWorkingOn()): ?>
                                     <a href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($task->getWorkingOn()->getId()) ?>">
                                         <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
                                     </a>
-                                <? endif ?>
-                                <? if(null === $task->getWorkingOn()): ?>
+                                <?php endif ?>
+                                <?php if(null === $task->getWorkingOn()): ?>
                                     <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
-                                <? endif ?>
+                                <?php endif ?>
                             </td>
                             <td>
                                 <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
@@ -93,7 +93,7 @@ declare(strict_types=1);
                                 <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
                                 <?= $translator->lastExecution() ?>: <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Entity\Task::getRepository()->getLastExecution($task)?->getDate()) ?><br />
                                 <?= $translator->active() ?>: <?= \DoEveryApp\Util\View\Boolean::get($task->isActive()) ?><br />
-                                <?= $translator->effort() ?>: <?= \DoEveryApp\Util\View\Duration::byValue(array_sum(array_map(function(\DoEveryApp\Entity\Execution $execution) {
+                                <?= $translator->effort() ?>: <?= \DoEveryApp\Util\View\Duration::byValue(array_sum(array_map(function (\DoEveryApp\Entity\Execution $execution) {
                                     return $execution->getDuration() ?? 0;
                                 }, $task->getExecutions()))) ?> (<?= count($task->getExecutions()) ?> <?= $translator->executions() ?>)
 
@@ -106,16 +106,16 @@ declare(strict_types=1);
                                     <a class="warningButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
                                         <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                     </a>
-                                    <? if (true === $task->isActive()): ?>
+                                    <?php if (true === $task->isActive()): ?>
                                         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
                                             <?= \DoEveryApp\Util\View\Icon::off() ?>
                                         </a>
-                                    <? endif ?>
-                                    <? if (false === $task->isActive()): ?>
+                                    <?php endif ?>
+                                    <?php if (false === $task->isActive()): ?>
                                         <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
                                             <?= \DoEveryApp\Util\View\Icon::on() ?>
                                         </a>
-                                    <? endif ?>
+                                    <?php endif ?>
 
                                     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute($task->getId()) ?>">
                                         <?= \DoEveryApp\Util\View\Icon::refresh() ?>
@@ -126,7 +126,7 @@ declare(strict_types=1);
                                 </nobr>
                             </td>
                         </tr>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
@@ -154,7 +154,7 @@ declare(strict_types=1);
                 </tr>
                 </thead>
                 <tbody>
-                    <? foreach(\DoEveryApp\Entity\Group::getRepository()->findIndexed() as $group): ?>
+                    <?php foreach(\DoEveryApp\Entity\Group::getRepository()->findIndexed() as $group): ?>
                         <tr>
                             <td>
                                 <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
@@ -173,7 +173,7 @@ declare(strict_types=1);
                                 </div>
                             </td>
                         </tr>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Entity\Share;
 
 trait Id
@@ -11,7 +13,6 @@ trait Id
     #[\Doctrine\ORM\Mapping\GeneratedValue]
     protected int $id;
 
-
     public function getId(): ?int
     {
         if (false === isset($this->id)) {
@@ -21,12 +22,10 @@ trait Id
         return $this->id;
     }
 
-
     public function hasId(): bool
     {
         return true === isset($this->id) && null !== $this->getId();
     }
-
 
     public function setId(int $id): static
     {

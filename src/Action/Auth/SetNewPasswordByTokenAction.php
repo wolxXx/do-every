@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -42,6 +44,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
         } catch (\Throwable $exception) {
             \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
             $session->reset();
+
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
 
@@ -71,15 +74,14 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             ;
             \DoEveryApp\Util\Mailing\PasswordChanged::send($existing);
 
-
             \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordChanged());
+
             return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render('action/auth/applyNewPassword', ['data' => $data]);
     }
-
 
     protected function filterAndValidate(array &$data): array
     {
@@ -95,13 +97,13 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            static::FORM_FIELD_PASSWORD         => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-            static::FORM_FIELD_PASSWORD_CONFIRM => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
+                                                                                  static::FORM_FIELD_PASSWORD         => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                                  static::FORM_FIELD_PASSWORD_CONFIRM => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
         $this->validate($data, $validators);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -51,7 +53,6 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($newTask->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
-
 
         return $this->render('action/task/add', ['data' => $data]);
     }

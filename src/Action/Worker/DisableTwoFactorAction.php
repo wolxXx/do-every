@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace DoEveryApp\Action\Worker;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -41,4 +40,3 @@ class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
         return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }
-

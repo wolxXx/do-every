@@ -10,18 +10,15 @@ class BufferContainer
 
     private int   $counter        = 0;
 
-
     public function next(): int
     {
         return $this->counter++;
     }
 
-
     public function __toString(): string
     {
         return $this->get();
     }
-
 
     public function get(): string
     {
@@ -32,7 +29,6 @@ class BufferContainer
 
         return $result;
     }
-
 
     public function set($registration, $content): static
     {

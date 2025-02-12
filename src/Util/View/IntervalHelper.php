@@ -6,12 +6,10 @@ namespace DoEveryApp\Util\View;
 
 class IntervalHelper
 {
-
     public static function getElapsingTypeByTask(\DoEveryApp\Entity\Task $task): string
     {
         return static::getElapsingTypeByBoolean($task->isElapsingCronType());
     }
-
 
     public static function getElapsingTypeByBoolean(bool $elapsing): string
     {
@@ -22,7 +20,6 @@ class IntervalHelper
 
         return $translator->intervalTypeCyclic();
     }
-
 
     public static function get(\DoEveryApp\Entity\Task $task): string
     {
@@ -56,7 +53,6 @@ class IntervalHelper
         }
         throw new \InvalidArgumentException('??' . $task->getIntervalType() . $task->getIntervalValue());
     }
-
 
     public static function map(\DoEveryApp\Definition\IntervalType $intervalType): string
     {

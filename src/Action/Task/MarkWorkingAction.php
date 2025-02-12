@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -11,6 +13,7 @@ namespace DoEveryApp\Action\Task;
 class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\Task;
+
     public static function getRoute(int $id, ?int $workingOn = null): string
     {
         $reflection = new \ReflectionClass(__CLASS__);
@@ -25,7 +28,6 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
 
         throw new \RuntimeException('Could not determine route path');
     }
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
@@ -52,6 +54,7 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
             ->entityManager
             ->flush()
         ;
+
         return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
     }
 }

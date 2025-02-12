@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Entity\Share;
 
 trait Timestampable
@@ -12,7 +14,6 @@ trait Timestampable
 
         return $this;
     }
-
 
     protected function onUpdateTS($model): static
     {

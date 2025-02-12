@@ -21,10 +21,10 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
     <?= $translator->logFor(\DoEveryApp\Util\View\Worker::get($worker)) ?>
 </h1>
 
-<? if(0 === count($data)): ?>
+<?php if(0 === count($data)): ?>
     <?= $translator->workerDidNothing(\DoEveryApp\Util\View\Worker::get($worker)) ?>
-<? endif ?>
-<? if(0 !== count($data)): ?>
+<?php endif ?>
+<?php if(0 !== count($data)): ?>
     <div class="row">
         <div class="column">
             <table>
@@ -48,18 +48,18 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach($data as $execution): ?>
+                <?php foreach($data as $execution): ?>
                     <tr>
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
                         </td>
                         <td>
-                            <? if(null === $execution->getTask()->getGroup()): ?>
+                            <?php if(null === $execution->getTask()->getGroup()): ?>
                                 <?= $translator->noValue() ?>
-                            <? endif ?>
-                            <? if(null !== $execution->getTask()->getGroup()): ?>
+                            <?php endif ?>
+                            <?php if(null !== $execution->getTask()->getGroup()): ?>
                                 <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
-                            <? endif ?>
+                            <?php endif ?>
                         </td>
                         <td>
                             <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
@@ -73,7 +73,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
                         </td>
                     </tr>
-                <? endforeach ?>
+                <?php endforeach ?>
                 </tbody>
             </table>
         </div>
@@ -81,4 +81,4 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
             <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
         </div>
     </div>
-<? endif ?>
+<?php endif ?>

@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Task;
@@ -26,7 +25,6 @@ class CheckListItem
 
     public const string TABLE_NAME = 'task_check_list_item';
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task::class
     )]
@@ -51,8 +49,7 @@ class CheckListItem
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    protected string  $name;
-
+    protected string                  $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
@@ -61,18 +58,15 @@ class CheckListItem
     )]
     protected ?string $note = null;
 
-
     public static function getRepository(): CheckListItem\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
     public function getTask(): \DoEveryApp\Entity\Task
     {
         return $this->task;
     }
-
 
     public function setTask(\DoEveryApp\Entity\Task $task): static
     {
@@ -81,12 +75,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getPosition(): int
     {
         return $this->position;
     }
-
 
     public function setPosition(int $position): static
     {
@@ -95,12 +87,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -109,12 +99,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {

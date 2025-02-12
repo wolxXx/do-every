@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Execution;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -13,7 +15,6 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
     use \DoEveryApp\Action\Execution\Share\AddEdit;
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {

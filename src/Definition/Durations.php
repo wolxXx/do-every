@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Definition;
@@ -35,7 +34,6 @@ class Durations
 
     protected int   $lastYear    = 0;
 
-
     protected static function byTasks(array $tasks): static
     {
         $instance = new static();
@@ -48,7 +46,6 @@ class Durations
 
         return $instance->finalize();
     }
-
 
     protected function finalize(): static
     {
@@ -96,7 +93,6 @@ class Durations
 
         return $this;
     }
-
 
     protected function addExecution(\DoEveryApp\Entity\Execution $execution): static
     {
@@ -154,23 +150,22 @@ class Durations
         return $this;
     }
 
-
     public static function FactoryForGlobal(): static
     {
         $tasks = \DoEveryApp\Entity\Task::getRepository()
-            ->createQueryBuilder('t')
-            ->leftJoin('t.group', 'g')
-            ->leftJoin('t.assignee', 'a')
-            ->leftJoin('t.workingOn', 'w')
-            ->leftJoin('t.executions', 'e')
-            ->getQuery()
-            ->execute()
+                                        ->createQueryBuilder('t')
+                                        ->leftJoin('t.group', 'g')
+                                        ->leftJoin('t.assignee', 'a')
+                                        ->leftJoin('t.workingOn', 'w')
+                                        ->leftJoin('t.executions', 'e')
+                                        ->getQuery()
+                                        ->execute()
         ;
+
         return (static::byTasks($tasks))
             ->finalize()
         ;
     }
-
 
     public static function FactoryByTask(\DoEveryApp\Entity\Task $task): static
     {
@@ -179,14 +174,12 @@ class Durations
         ;
     }
 
-
     public static function FactoryByGroup(\DoEveryApp\Entity\Group $group): static
     {
         return (static::byTasks($group->getTasks()))
             ->finalize()
         ;
     }
-
 
     public static function FactoryByWorker(\DoEveryApp\Entity\Worker $worker): static
     {
@@ -198,78 +191,65 @@ class Durations
         return $instance->finalize();
     }
 
-
     public function getTotal(): int
     {
         return $this->total;
     }
-
 
     public function getDay(): int
     {
         return $this->day;
     }
 
-
     public function getLastDay(): int
     {
         return $this->lastDay;
     }
-
 
     public function getWeek(): int
     {
         return $this->week;
     }
 
-
     public function getLastWeek(): int
     {
         return $this->lastWeek;
     }
-
 
     public function getMonth(): int
     {
         return $this->month;
     }
 
-
     public function getLastMonth(): int
     {
         return $this->lastMonth;
     }
-
 
     public function getYear(): int
     {
         return $this->year;
     }
 
-
     public function getLastYear(): int
     {
         return $this->lastYear;
     }
-
 
     public function getAverage(): int
     {
         return $this->average;
     }
 
-
     public function getWithoutDate(): array
     {
         return $this->withoutDate;
     }
 
-
     public function getYears(): array
     {
         return $this->years;
     }
-
 
     public function getMonths(): array
     {

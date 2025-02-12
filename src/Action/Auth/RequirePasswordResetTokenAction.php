@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -48,10 +50,8 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
-
         return $this->render('action/auth/requirePasswordResetToken', ['data' => $data]);
     }
-
 
     protected function filterAndValidate(array &$data): array
     {
@@ -62,11 +62,10 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            self::FORM_FIELD_EMAIL => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
-
+                                                                                  self::FORM_FIELD_EMAIL => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
         $this->validate($data, $validators);
 

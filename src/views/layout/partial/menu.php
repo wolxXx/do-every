@@ -17,7 +17,7 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
 ?>
 <ul>
 
-    <? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+    <?php if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
             ->setActiveRoutes([
@@ -46,9 +46,9 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName('Code eingeben')
         ?>
-    <? endif ?>
+    <?php endif ?>
 
-    <? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+    <?php if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
             ->setActiveRoutes([
@@ -119,5 +119,5 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName($translator->logout())
         ?>
-    <? endif ?>
+    <?php endif ?>
 </ul>

@@ -35,18 +35,18 @@ declare(strict_types=1);
 <div class="row">
     <div class="column">
         <div class="grid">
-            <? foreach($group->getTasks() as $task): ?>
+            <?php foreach($group->getTasks() as $task): ?>
                 <div class="column card">
                     <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?><br />
                     <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
-                    <? if(null !== $task->getWorkingOn()): ?>
+                    <?php if(null !== $task->getWorkingOn()): ?>
                         <?= \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
-                    <? endif ?>
+                    <?php endif ?>
                     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
                         <?= $translator->show() ?>
                     </a>
                 </div>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
     <div class="column">

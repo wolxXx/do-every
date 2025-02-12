@@ -16,12 +16,10 @@ class Bag
 
     protected ?string                    $note     = null;
 
-
     public function getTask(): \DoEveryApp\Entity\Task
     {
         return $this->task;
     }
-
 
     public function setTask(\DoEveryApp\Entity\Task $task): static
     {
@@ -30,12 +28,10 @@ class Bag
         return $this;
     }
 
-
     public function getDate(): \DateTime
     {
         return $this->date;
     }
-
 
     public function setDate(\DateTime $date): static
     {
@@ -44,12 +40,10 @@ class Bag
         return $this;
     }
 
-
     public function getWorker(): ?\DoEveryApp\Entity\Worker
     {
         return $this->worker;
     }
-
 
     public function setWorker(?\DoEveryApp\Entity\Worker $worker): static
     {
@@ -58,12 +52,10 @@ class Bag
         return $this;
     }
 
-
     public function getDuration(): ?int
     {
         return $this->duration;
     }
-
 
     public function setDuration(?int $duration): static
     {
@@ -72,12 +64,10 @@ class Bag
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {

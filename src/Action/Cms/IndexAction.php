@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -20,11 +22,11 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render('action/cms/dashboard', [
-            'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(5),
-            'dueTasks'          => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
-            'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
-            'workingOn'         => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
-            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
+            'executions' => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(5),
+            'dueTasks'   => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
+            'tasks'      => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
+            'workingOn'  => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
+            'workers'    => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
         ]);
     }
 }

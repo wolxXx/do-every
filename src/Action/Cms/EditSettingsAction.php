@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -18,7 +20,6 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
     public const string FORM_FIELD_FILL_TIME_LINE = 'fillTimeLine';
 
     public const string FORM_FIELD_PRECISION_DUE  = 'precisionDue';
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
@@ -56,7 +57,6 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
         return $this->render('action/cms/editSettings', ['data' => $data]);
     }
 
-
     protected function filterAndValidate(array &$data): array
     {
         $data[static::FORM_FIELD_KEEP_BACKUPS]   = (new \Laminas\Filter\FilterChain())
@@ -76,14 +76,13 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            static::FORM_FIELD_KEEP_BACKUPS   => [
-            ],
-            static::FORM_FIELD_FILL_TIME_LINE => [
-            ],
-            static::FORM_FIELD_PRECISION_DUE  => [
-            ],
-        ]);
-
+                                                                                  static::FORM_FIELD_KEEP_BACKUPS   => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_FILL_TIME_LINE => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_PRECISION_DUE  => [
+                                                                                  ],
+                                                                              ]);
 
         $this->validate($data, $validators);
 

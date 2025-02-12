@@ -24,13 +24,12 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
 
     private const string CODE_THREE = '2faCode3';
 
-
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
             return $worker;
         }
-        if(null === $worker->getEmail()) {
+        if (null === $worker->getEmail()) {
             \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->needEmailForThisAction());
 
             return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
@@ -107,4 +106,3 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
         ]);
     }
 }
-

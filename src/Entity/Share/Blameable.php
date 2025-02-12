@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Entity\Share;
 
 trait Blameable
@@ -13,7 +15,6 @@ trait Blameable
         return $this;
     }
 
-
     private function getUser(): string
     {
         $user = \DoEveryApp\Util\User\Current::get();
@@ -23,7 +24,6 @@ trait Blameable
 
         return $user->getName();
     }
-
 
     protected function onUpdate($model): static
     {

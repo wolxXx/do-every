@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Group;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -42,10 +44,8 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
-
         return $this->render('action/group/add', ['data' => $data]);
     }
-
 
     protected function filterAndValidate(array &$data): array
     {
@@ -61,13 +61,13 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection([
-            static::FORM_FIELD_COLOR => [
+                                                                                  static::FORM_FIELD_COLOR => [
 
-            ],
-            static::FORM_FIELD_NAME  => [
-                new \Symfony\Component\Validator\Constraints\NotBlank(),
-            ],
-        ]);
+                                                                                  ],
+                                                                                  static::FORM_FIELD_NAME  => [
+                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                  ],
+                                                                              ]);
 
         $this->validate($data, $validators);
 

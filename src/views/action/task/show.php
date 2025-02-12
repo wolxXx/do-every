@@ -21,11 +21,11 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 
 <h1>
     <?= $translator->task() ?>: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-    <? if (null !== $task->getGroup()): ?>
+    <?php if (null !== $task->getGroup()): ?>
         <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
             (<?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>)
         </a>
-    <? endif ?>
+    <?php endif ?>
 </h1>
 
 <h2>
@@ -33,18 +33,18 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
 </h2>
 
 <div class="pageButtons buttonRow">
-    <? if(null === $task->getWorkingOn()): ?>
+    <?php if(null === $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId(), $currentUser->getId()) ?>">
             <?= \DoEveryApp\Util\View\Icon::hand() ?>
             <?= $translator->iAmWorkingOn() ?>
         </a>
-    <? endif ?>
-    <? if(null !== $task->getWorkingOn()): ?>
+    <?php endif ?>
+    <?php if(null !== $task->getWorkingOn()): ?>
         <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\MarkWorkingAction::getRoute($task->getId()) ?>">
             <?= \DoEveryApp\Util\View\Icon::cross() ?>
             <?= $translator->nobodyIsWorkingOn() ?>
         </a>
-    <? endif ?>
+    <?php endif ?>
 
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::add() ?>
@@ -59,18 +59,18 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
         <?= $translator->reset() ?>
 
     </a>
-    <? if(true === $task->isActive()): ?>
+    <?php if(true === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), false) ?>">
             <?= \DoEveryApp\Util\View\Icon::off() ?>
             <?= $translator->deactivate() ?>
         </a>
-    <? endif ?>
-    <? if(false === $task->isActive()): ?>
+    <?php endif ?>
+    <?php if(false === $task->isActive()): ?>
         <a class="successButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute($task->getId(), true) ?>">
             <?= \DoEveryApp\Util\View\Icon::on() ?>
             <?= $translator->activate() ?>
         </a>
-    <? endif ?>
+    <?php endif ?>
 
     <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::trash() ?>
@@ -86,43 +86,43 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
             <legend>
                 <?= $translator->info() ?>
             </legend>
-            <?= $translator->status() ?>: <?= $task->isActive()? $translator->active(): $translator->paused() ?> |
+            <?= $translator->status() ?>: <?= $task->isActive() ? $translator->active() : $translator->paused() ?> |
             <?= $task->isNotify() ? $translator->willBeNotified() : $translator->willNotBeNotified() ?><br />
 
 
             <?= $translator->interval() ?>: <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
-            <? if(null !== $task->getIntervalType()): ?>
+            <?php if(null !== $task->getIntervalType()): ?>
                 (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
-            <? endif ?>
+            <?php endif ?>
             |
 
             <?= $translator->priority() ?>: <?= \DoEveryApp\Util\View\PriorityMap::getByTask($task) ?><br />
 
-            <?= $translator->currentlyWorkingOn() ?>: <?= null === $task->getWorkingOn()? $translator->nobody(): \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
-            <?= $translator->assignedTo() ?>: <?= null === $task->getAssignee()? $translator->nobody(): \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
+            <?= $translator->currentlyWorkingOn() ?>: <?= null === $task->getWorkingOn() ? $translator->nobody() : \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?> |
+            <?= $translator->assignedTo() ?>: <?= null === $task->getAssignee() ? $translator->nobody() : \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?><br />
             <?= $translator->lastExecution() ?>: <?= $lastExecution ? \DoEveryApp\Util\View\ExecutionDate::byExecution($lastExecution) : $translator->noValue() ?>
-            <? if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
+            <?php if(null !== $lastExecution && null !== $lastExecution->getWorker()): ?>
                 <?= $translator->by() ?> <?= \DoEveryApp\Util\View\Worker::get($lastExecution->getWorker()) ?>
-            <? endif ?>
+            <?php endif ?>
         </fieldset>
 
     </div>
-    <? if(0 !== count($executions)): ?>
+    <?php if(0 !== count($executions)): ?>
         <div class="column">
             <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
         </div>
-    <? endif ?>
+    <?php endif ?>
 </div>
 
 <hr>
 
 <div class="row">
-    <? if(null !== $task->getNote()): ?>
+    <?php if(null !== $task->getNote()): ?>
         <div class="column">
             <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
         </div>
-    <? endif ?>
-    <? if(0 !== count($task->getCheckListItems())): ?>
+    <?php endif ?>
+    <?php if(0 !== count($task->getCheckListItems())): ?>
         <div class="column">
             <fieldset>
                 <legend>
@@ -140,7 +140,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                     </tr>
                     </thead>
                     <tbody>
-                    <? foreach($task->getCheckListItems() as $checkListItem): ?>
+                    <?php foreach($task->getCheckListItems() as $checkListItem): ?>
                         <tr>
                             <td>
                                 <?= \DoEveryApp\Util\View\Escaper::escape($checkListItem->getName()) ?>
@@ -149,20 +149,20 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                                 <?= \DoEveryApp\Util\View\CheckListItemNote::byTaskCheckListItem($checkListItem) ?>
                             </td>
                         </tr>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                     </tbody>
                 </table>
             </fieldset>
 
 
         </div>
-    <? endif ?>
+    <?php endif ?>
 </div>
 
 
 
 
-<? if(0 !== count($executions)): ?>
+<?php if(0 !== count($executions)): ?>
     <hr />
     <fieldset>
         <legend>
@@ -181,11 +181,11 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                     <th>
                         <?= $translator->effort() ?>
                     </th>
-                    <? if(0 !== count($task->getCheckListItems())): ?>
+                    <?php if(0 !== count($task->getCheckListItems())): ?>
                         <th>
                             <?= $translator->steps() ?>
                         </th>
-                    <? endif ?>
+                    <?php endif ?>
                     <th>
                         <?= $translator->notice() ?>
                     </th>
@@ -195,7 +195,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                 </tr>
             </thead>
             <tbody>
-                <? foreach($task->getExecutions() as $execution): ?>
+                <?php foreach($task->getExecutions() as $execution): ?>
                     <tr>
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
@@ -206,10 +206,10 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                         <td>
                             <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
                         </td>
-                        <? if(0 !== count($task->getCheckListItems())): ?>
+                        <?php if(0 !== count($task->getCheckListItems())): ?>
                             <td>
 
-                                <? foreach($execution->getCheckListItems() as $checkListItem): ?>
+                                <?php foreach($execution->getCheckListItems() as $checkListItem): ?>
 
                                     <div class="row">
                                         <div class="column">
@@ -219,9 +219,9 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                                             <?= \DoEveryApp\Util\View\ExecutionNote::byValue($checkListItem->getNote()) ?>
                                         </div>
                                     </div>
-                                <? endforeach ?>
+                                <?php endforeach ?>
                             </td>
-                        <? endif ?>
+                        <?php endif ?>
 
                         <td>
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
@@ -239,8 +239,8 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask($task);
                             </div>
                         </td>
                     </tr>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tbody>
         </table>
     </fieldset>
-<? endif ?>
+<?php endif ?>

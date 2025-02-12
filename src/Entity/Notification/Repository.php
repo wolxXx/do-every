@@ -24,7 +24,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-
     public function getLastForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Notification
     {
         return $this
@@ -37,7 +36,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->getOneOrNullResult()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Notification[]
@@ -55,7 +53,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
             ->execute()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Notification[]
@@ -75,7 +72,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-
     public function create(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
@@ -87,7 +83,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Notification $entity): static
     {
@@ -101,7 +96,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return $this;
     }
 
-
     public function delete(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
@@ -111,7 +105,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -125,7 +118,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Notification[]
      */
@@ -133,7 +125,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -147,7 +138,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

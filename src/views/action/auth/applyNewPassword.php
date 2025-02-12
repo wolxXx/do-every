@@ -27,7 +27,7 @@ declare(strict_types=1);
         <div class="errors">
             <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD) as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 
@@ -39,7 +39,7 @@ declare(strict_types=1);
         <div class="errors">
             <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM) as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 

@@ -15,7 +15,6 @@ class Debugger
         die('die debug called. stopping here...' . PHP_EOL);
     }
 
-
     public static function debug(...$debug): void
     {
         $backtrace = debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT);
@@ -44,7 +43,6 @@ class Debugger
         }
         echo $last;
     }
-
 
     public static function isCli(): bool
     {

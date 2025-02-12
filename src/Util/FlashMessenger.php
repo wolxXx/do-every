@@ -14,7 +14,6 @@ class FlashMessenger
         $session->write('messages_' . $level, $existing);
     }
 
-
     private static function get(string $level, bool $reset = true): array
     {
         $session = Session::Factory(Session::NAMESPACE_APPLICATION);
@@ -27,54 +26,45 @@ class FlashMessenger
         return $messages;
     }
 
-
     public static function addInfo(string $message): void
     {
         static::add('info', $message);
     }
-
 
     public static function addSuccess(string $message): void
     {
         static::add('success', $message);
     }
 
-
     public static function addDanger(string $message): void
     {
         static::add('danger', $message);
     }
-
 
     public static function addWarning(string $message): void
     {
         static::add('warning', $message);
     }
 
-
     public static function getInfo(bool $reset = true): array
     {
         return static::get('info', $reset);
     }
-
 
     public static function getSuccess(bool $reset = true): array
     {
         return static::get('success', $reset);
     }
 
-
     public static function getDanger(bool $reset = true): array
     {
         return static::get('danger', $reset);
     }
 
-
     public static function getWarning(bool $reset = true): array
     {
         return static::get('warning', $reset);
     }
-
 
     public static function hasMessages(): bool
     {
@@ -87,7 +77,6 @@ class FlashMessenger
 
         return \array_sum($data) > 0;
     }
-
 
     public static function getAll(): array
     {

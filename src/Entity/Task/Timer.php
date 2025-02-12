@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Task;
@@ -26,7 +25,6 @@ class Timer
 
     public const string TABLE_NAME = 'task_timer';
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task::class
     )]
@@ -35,7 +33,6 @@ class Timer
         onDelete: 'CASCADE'
     )]
     protected \DoEveryApp\Entity\Task $task;
-
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Worker::class
@@ -46,14 +43,12 @@ class Timer
     )]
     protected \DoEveryApp\Entity\Worker $worker;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'duration',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: true
     )]
-    protected ?int       $duration = null;
-
+    protected ?int $duration = null;
 
     public static function getRepository(): Timer\Repository
     {

@@ -29,7 +29,7 @@ class Group
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: false
     )]
-    protected string $name;
+    protected string  $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'color',
@@ -38,12 +38,10 @@ class Group
     )]
     protected ?string $color = null;
 
-
     public static function getRepository(): Group\Repository
     {
         return static::getRepositoryByClassName();
     }
-
 
     /**
      * @return Task[]
@@ -51,8 +49,8 @@ class Group
     public function getTasks(): array
     {
         return Task::getRepository()
-            ->getByGroup($this, null)
-            ;
+                   ->getByGroup($this, null)
+        ;
     }
 
     /**
@@ -61,8 +59,8 @@ class Group
     public function getActiveTasks(): array
     {
         return Task::getRepository()
-            ->getByGroup($this, true)
-            ;
+                   ->getByGroup($this, true)
+        ;
     }
 
     /**
@@ -71,8 +69,8 @@ class Group
     public function getInActiveTasks(): array
     {
         return Task::getRepository()
-            ->getByGroup($this, false)
-            ;
+                   ->getByGroup($this, false)
+        ;
     }
 
     public function getName(): string
@@ -83,7 +81,7 @@ class Group
     public function setName(string $name): static
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -95,7 +93,7 @@ class Group
     public function setColor(?string $color): static
     {
         $this->color = $color;
-        
+
         return $this;
     }
 }
