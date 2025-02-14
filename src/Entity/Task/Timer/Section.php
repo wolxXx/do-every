@@ -32,7 +32,7 @@ class Section
         nullable: false,
         onDelete: 'CASCADE'
     )]
-    protected \DoEveryApp\Entity\Task\Timer $task;
+    protected \DoEveryApp\Entity\Task\Timer $timer;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'start',
@@ -48,8 +48,44 @@ class Section
     )]
     protected \DateTime $end;
 
-    public static function getRepository(): Timer\Repository
+    public static function getRepository(): Section\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+    public function getTimer(): \DoEveryApp\Entity\Task\Timer
+    {
+        return $this->timer;
+    }
+
+    public function setTimer(\DoEveryApp\Entity\Task\Timer $timer): static
+    {
+        $this->timer = $timer;
+
+        return $this;
+    }
+
+    public function getStart(): \DateTime
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTime $start): static
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): \DateTime
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTime $end): static
+    {
+        $this->end = $end;
+
+        return $this;
     }
 }

@@ -50,8 +50,64 @@ class Timer
     )]
     protected ?int $duration = null;
 
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'stopped',
+        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
+        nullable: false,
+        options: ['default' => false]
+    )]
+    protected bool $stopped = false;
+
     public static function getRepository(): Timer\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+    public function getTask(): \DoEveryApp\Entity\Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(\DoEveryApp\Entity\Task $task): static
+    {
+        $this->task = $task;
+
+        return $this;
+    }
+
+    public function getWorker(): \DoEveryApp\Entity\Worker
+    {
+        return $this->worker;
+    }
+
+    public function setWorker(\DoEveryApp\Entity\Worker $worker): static
+    {
+        $this->worker = $worker;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function isStopped(): bool
+    {
+        return $this->stopped;
+    }
+
+    public function setStopped(bool $stopped): static
+    {
+        $this->stopped = $stopped;
+
+        return $this;
     }
 }
