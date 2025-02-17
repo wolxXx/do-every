@@ -54,6 +54,8 @@ class Timer
         ;
         $nesSection::getRepository()->create($nesSection);
         DependencyContainer::getInstance()->getEntityManager()->flush();
+
+        return true;
     }
 
     public function pause(\DoEveryApp\Entity\Task $task, \DoEveryApp\Entity\Worker $worker): bool
