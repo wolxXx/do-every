@@ -44,9 +44,9 @@ class Section
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'end',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
-        nullable: false
+        nullable: true
     )]
-    protected \DateTime $end;
+    protected ?\DateTime $end = null;
 
     public static function getRepository(): Section\Repository
     {
@@ -77,12 +77,12 @@ class Section
         return $this;
     }
 
-    public function getEnd(): \DateTime
+    public function getEnd(): ?\DateTime
     {
         return $this->end;
     }
 
-    public function setEnd(\DateTime $end): static
+    public function setEnd(?\DateTime $end): static
     {
         $this->end = $end;
 
