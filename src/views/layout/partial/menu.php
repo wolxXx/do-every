@@ -79,6 +79,13 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
             ->setName('Log')
         ?>
         <?= $menuItem
+            ->setTarget(\DoEveryApp\Action\Task\Timer\IndexAction::getRoute())
+            ->setActiveRoutes([
+                                  \DoEveryApp\Action\Task\Timer\IndexAction::getRoutePattern(),
+                              ])
+            ->setName('Timers')
+        ?>
+        <?= $menuItem
             ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setActiveRoutes([
                                   \DoEveryApp\Action\Worker\AddAction::getRoutePattern(),

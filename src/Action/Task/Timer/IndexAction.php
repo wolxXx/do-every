@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DoEveryApp\Action\Task\Timer;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/tasks',
+    path   : '/timer/all',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
@@ -16,8 +16,13 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $tasks = \DoEveryApp\Entity\Task::getRepository()->findAllForIndex();
+        $timers = \DoEveryApp\Entity\Task\Timer::getRepository()
+            ->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
 
-        return $this->render('action/task/index', ['tasks' => $tasks]);
+        return $this->render('action/task/timer/index', ['timers' => $timers]);
     }
 }
