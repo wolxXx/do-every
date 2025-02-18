@@ -58,9 +58,39 @@ class Timer
     )]
     protected bool $stopped = false;
 
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'note',
+        type    : \Doctrine\DBAL\Types\Types::TEXT,
+        nullable: true
+    )]
+    protected ?string $note = null;
+
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Task\Timer\Section::class,
+        mappedBy    : 'timer',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["start" => "DESC"])]
+    protected                   $sections;
+    public function __construct()
+    {
+        $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+
     public static function getRepository(): Timer\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+
+    /**
+     * @return \DoEveryApp\Entity\Task\Timer\Section[]
+     */
+    public function getSections(): array
+    {
+        return $this->sections->toArray();
     }
 
     public function getTask(): \DoEveryApp\Entity\Task
