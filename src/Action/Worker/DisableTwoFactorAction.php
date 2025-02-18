@@ -22,21 +22,21 @@ class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
         }
 
         $worker
-            ->setTwoFactorSecret(null)
-            ->setTwoFactorRecoverCode1(null)
-            ->setTwoFactorRecoverCode2(null)
-            ->setTwoFactorRecoverCode3(null)
-            ->setTwoFactorRecoverCode1UsedAt(null)
-            ->setTwoFactorRecoverCode2UsedAt(null)
-            ->setTwoFactorRecoverCode3UsedAt(null)
+            ->setTwoFactorSecret(twoFactorSecret: null)
+            ->setTwoFactorRecoverCode1(twoFactorRecoverCode1: null)
+            ->setTwoFactorRecoverCode2(twoFactorRecoverCode2: null)
+            ->setTwoFactorRecoverCode3(twoFactorRecoverCode3: null)
+            ->setTwoFactorRecoverCode1UsedAt(twoFactorRecoverCode1UsedAt: null)
+            ->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: null)
+            ->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: null)
         ;
-        $worker::getRepository()->update($worker);
+        $worker::getRepository()->update(entity: $worker);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->twoFactorDisabled());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->twoFactorDisabled());
 
-        return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }

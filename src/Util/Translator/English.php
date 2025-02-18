@@ -86,7 +86,7 @@ class English implements \DoEveryApp\Util\Translator
 
     public function dashboardLastPasswordChange(\DateTime $dateTime): string
     {
-        return 'You haven\'t changed your password for a long time. The last time was ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($dateTime) . '.';
+        return 'You haven\'t changed your password for a long time. The last time was ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(dateTime: $dateTime) . '.';
     }
 
     public function dashboardChangePassword(): string
@@ -126,7 +126,7 @@ class English implements \DoEveryApp\Util\Translator
 
     public function isCurrentlyWorkingOn(string $who): string
     {
-        return \DoEveryApp\Util\View\Escaper::escape($who) . ' is working on';
+        return \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' is working on';
     }
 
     public function group(): string
@@ -811,12 +811,12 @@ class English implements \DoEveryApp\Util\Translator
 
     public function editWorker(string $who): string
     {
-        return 'edit worker ' . \DoEveryApp\Util\View\Escaper::escape($who);
+        return 'edit worker ' . \DoEveryApp\Util\View\Escaper::escape(value: $who);
     }
 
     public function enableTwoFactorForWorker(string $who): string
     {
-        return 'enable 2FA for worker ' . \DoEveryApp\Util\View\Escaper::escape($who);
+        return 'enable 2FA for worker ' . \DoEveryApp\Util\View\Escaper::escape(value: $who);
     }
 
     public function twoFactorNotice(): string
@@ -853,12 +853,12 @@ Then click the "Save" button to complete the process and digitally secure the da
 
     public function logFor(string $who): string
     {
-        return 'work log for "' . \DoEveryApp\Util\View\Escaper::escape($who) . '"';
+        return 'work log for "' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . '"';
     }
 
     public function workerDidNothing(string $who): string
     {
-        return '- ' . \DoEveryApp\Util\View\Escaper::escape($who) . ' did not contribute yet -';
+        return '- ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' did not contribute yet -';
     }
 
     public function needEmailForThisAction(): string

@@ -13,14 +13,14 @@ class Due
         if ($due === 0 || $due === null) {
             return $translator->dueIsNow();
         }
-        $numberFormatter = \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \NumberFormatter::PATTERN_DECIMAL);
+        $numberFormatter = \NumberFormatter::create(locale: \DoEveryApp\Util\User\Current::getLocale(), style: \NumberFormatter::PATTERN_DECIMAL);
 
         $sinceInSwitch = $translator->dueIsInFuture();
         if ($due < 0) {
             $sinceInSwitch = $translator->dueIsInPast();
-            $due           = abs($due);
+            $due           = abs(num: $due);
         }
-        $due = $numberFormatter->format(\round($due, \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue()));
+        $due = $numberFormatter->format(num: \round(num: $due, precision: \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue()));
 
         switch ($task->getDueUnit()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
@@ -50,7 +50,7 @@ class Due
             }
             default:
             {
-                throw new \InvalidArgumentException('??' . $task->getDueUnit());
+                throw new \InvalidArgumentException(message: '??' . $task->getDueUnit());
             }
         }
 

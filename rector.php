@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 
+
+/*return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->rule(AddNamedArgumentsRector::class);
+};*/
+
 return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/configs',
@@ -16,4 +21,8 @@ return RectorConfig::configure()
     // ->withPhpSets()
     ->withTypeCoverageLevel(0)
     ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0);
+    ->withCodeQualityLevel(0)
+    ->withRules([
+                    \SavinMikhail\AddNamedArgumentsRector\AddNamedArgumentsRector::class
+                ])
+;

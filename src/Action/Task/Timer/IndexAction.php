@@ -17,12 +17,12 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $timers = \DoEveryApp\Entity\Task\Timer::getRepository()
-            ->createQueryBuilder('t')
-            ->orderBy('t.id', 'DESC')
+            ->createQueryBuilder(alias: 't')
+            ->orderBy(sort: 't.id', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
 
-        return $this->render('action/task/timer/index', ['timers' => $timers]);
+        return $this->render(script: 'action/task/timer/index', data: ['timers' => $timers]);
     }
 }

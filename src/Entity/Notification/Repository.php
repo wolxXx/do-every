@@ -15,10 +15,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getForWorker(\DoEveryApp\Entity\Worker $worker): array
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
-            ->orderBy('n.createdAt', 'DESC')
+            ->setParameter(key: 'worker', value: $worker)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
@@ -27,11 +27,11 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getLastForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Notification
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
-            ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(1)
+            ->setParameter(key: 'worker', value: $worker)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
+            ->setMaxResults(maxResults: 1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -43,12 +43,12 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): array
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
+            ->setParameter(key: 'worker', value: $worker)
             ->andWhere('n.task = :task')
-            ->setParameter('task', $task)
-            ->orderBy('n.createdAt', 'DESC')
+            ->setParameter(key: 'task', value: $task)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
@@ -60,13 +60,13 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getLastForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Notification
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
+            ->setParameter(key: 'worker', value: $worker)
             ->andWhere('n.task = :task')
-            ->setParameter('task', $task)
-            ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(1)
+            ->setParameter(key: 'task', value: $task)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
+            ->setMaxResults(maxResults: 1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -75,10 +75,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function create(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -87,10 +87,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function update(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -100,7 +100,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;

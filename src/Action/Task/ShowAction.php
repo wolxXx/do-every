@@ -21,7 +21,7 @@ class ShowAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
 
-        return $this->render('action/task/show', [
+        return $this->render(script: 'action/task/show', data: [
             'task' => $task,
         ]);
     }

@@ -16,6 +16,6 @@ class ShowSettingsAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->render('action/cms/showSettings');
+        return $this->render(script: 'action/cms/showSettings');
     }
 }

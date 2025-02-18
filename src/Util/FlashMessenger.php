@@ -8,19 +8,19 @@ class FlashMessenger
 {
     private static function add(string $level, string $message): void
     {
-        $session    = Session::Factory(Session::NAMESPACE_APPLICATION);
-        $existing   = $session->get('messages_' . $level, []);
+        $session    = Session::Factory(namespace: Session::NAMESPACE_APPLICATION);
+        $existing   = $session->get(what: 'messages_' . $level, default: []);
         $existing[] = $message;
-        $session->write('messages_' . $level, $existing);
+        $session->write(what: 'messages_' . $level, data: $existing);
     }
 
     private static function get(string $level, bool $reset = true): array
     {
-        $session = Session::Factory(Session::NAMESPACE_APPLICATION);
+        $session = Session::Factory(namespace: Session::NAMESPACE_APPLICATION);
 
-        $messages = $session->get('messages_' . $level, []);
+        $messages = $session->get(what: 'messages_' . $level, default: []);
         if (true === $reset) {
-            $session->write('messages_' . $level, []);
+            $session->write(what: 'messages_' . $level, data: []);
         }
 
         return $messages;
@@ -69,13 +69,13 @@ class FlashMessenger
     public static function hasMessages(): bool
     {
         $data = [
-            count(\array_keys(static::getInfo(false))),
-            count(\array_keys(static::getSuccess(false))),
-            count(\array_keys(static::getDanger(false))),
-            count(\array_keys(static::getWarning(false))),
+            count(value: \array_keys(array: static::getInfo(false))),
+            count(value: \array_keys(array: static::getSuccess(false))),
+            count(value: \array_keys(array: static::getDanger(false))),
+            count(value: \array_keys(array: static::getWarning(false))),
         ];
 
-        return \array_sum($data) > 0;
+        return \array_sum(array: $data) > 0;
     }
 
     public static function getAll(): array

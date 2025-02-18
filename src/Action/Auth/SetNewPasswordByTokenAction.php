@@ -22,81 +22,81 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $session = \DoEveryApp\Util\Session::Factory('passwordReset');
-        $id      = $session->get('id');
-        $token   = $session->get('token');
-        $started = $session->get('started');
+        $session = \DoEveryApp\Util\Session::Factory(namespace: 'passwordReset');
+        $id      = $session->get(what: 'id');
+        $token   = $session->get(what: 'token');
+        $started = $session->get(what: 'started');
         try {
             if (null === $id || null === $token || null === $started) {
-                throw new \RuntimeException('invalid data base');
+                throw new \RuntimeException(message: 'invalid data base');
             }
-            $existing = \DoEveryApp\Entity\Worker::getRepository()->find($id);
+            $existing = \DoEveryApp\Entity\Worker::getRepository()->find(id: $id);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                throw new \RuntimeException('user not found by id');
+                throw new \RuntimeException(message: 'user not found by id');
             }
-            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByPasswordResetToken($token);
+            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByPasswordResetToken(token: $token);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                throw new \RuntimeException('user not found by token');
+                throw new \RuntimeException(message: 'user not found by token');
             }
-            if (\Carbon\Carbon::createFromDate($started)->addMinutes(10) < \Carbon\Carbon::now()) {
-                throw new \RuntimeException('took too long');
+            if (\Carbon\Carbon::createFromDate(year: $started)->addMinutes(value: 10) < \Carbon\Carbon::now()) {
+                throw new \RuntimeException(message: 'took too long');
             }
         } catch (\Throwable $exception) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
             $session->reset();
 
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
 
         if (true === $this->isGetRequest()) {
-            return $this->render('action/auth/applyNewPassword', ['data' => []]);
+            return $this->render(script: 'action/auth/applyNewPassword', data: ['data' => []]);
         }
         $data = [];
         try {
             $data = $this->getRequest()->getParsedBody();
-            $data = $this->filterAndValidate($data);
+            $data = $this->filterAndValidate(data: $data);
 
             if ($data[static::FORM_FIELD_PASSWORD] !== $data[static::FORM_FIELD_PASSWORD_CONFIRM]) {
-                $this->getErrorStore()->addError('password', \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordConfirmFailed());
+                $this->getErrorStore()->addError(key: 'password', message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordConfirmFailed());
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
             $existing
-                ->setPassword($data[static::FORM_FIELD_PASSWORD])
-                ->setLastPasswordChange(\Carbon\Carbon::now())
-                ->setTokenValidUntil(null)
-                ->setPasswordResetToken(null)
+                ->setPassword(password: $data[static::FORM_FIELD_PASSWORD])
+                ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
+                ->setTokenValidUntil(tokenValidUntil: null)
+                ->setPasswordResetToken(passwordResetToken: null)
             ;
-            $existing::getRepository()->update($existing);
+            $existing::getRepository()->update(entity: $existing);
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
                                                 ->flush()
             ;
-            \DoEveryApp\Util\Mailing\PasswordChanged::send($existing);
+            \DoEveryApp\Util\Mailing\PasswordChanged::send(worker: $existing);
 
-            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordChanged());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordChanged());
 
-            return $this->redirect(\DoEveryApp\Action\Auth\LoginAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
-        return $this->render('action/auth/applyNewPassword', ['data' => $data]);
+        return $this->render(script: 'action/auth/applyNewPassword', data: ['data' => $data]);
     }
 
     protected function filterAndValidate(array &$data): array
     {
         $data[static::FORM_FIELD_PASSWORD]         = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_PASSWORD))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD))
         ;
         $data[static::FORM_FIELD_PASSWORD_CONFIRM] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_PASSWORD_CONFIRM))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CONFIRM))
         ;
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection([
+        $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
                                                                                   static::FORM_FIELD_PASSWORD         => [
                                                                                       new \Symfony\Component\Validator\Constraints\NotBlank(),
                                                                                   ],
@@ -105,7 +105,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
                                                                                   ],
                                                                               ]);
 
-        $this->validate($data, $validators);
+        $this->validate(data: $data, validators: $validators);
 
         return $data;
     }

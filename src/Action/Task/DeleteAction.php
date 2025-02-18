@@ -21,13 +21,13 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
 
-        $task::getRepository()->delete($task);
+        $task::getRepository()->delete(entity: $task);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskDeleted());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskDeleted());
 
-        return $this->redirect(\DoEveryApp\Action\Task\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Task\IndexAction::getRoute());
     }
 }

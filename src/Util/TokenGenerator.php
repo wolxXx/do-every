@@ -10,7 +10,7 @@ class TokenGenerator
     {
         while (true) {
             $token    = \Ramsey\Uuid\Uuid::uuid4()->toString();
-            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByPasswordResetToken($token);
+            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByPasswordResetToken(token: $token);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
                 return $token;
             }
@@ -21,10 +21,10 @@ class TokenGenerator
     public static function getUserPasswordResetValidUntil(): \DateTime
     {
         return \Carbon\Carbon::now()
-                             ->addDays(30)
-                             ->setHour(23)
-                             ->setMinute(59)
-                             ->setSecond(59)
+                             ->addDays(value: 30)
+                             ->setHour(value: 23)
+                             ->setMinute(value: 59)
+                             ->setSecond(value: 59)
                              ->toDate()
         ;
     }

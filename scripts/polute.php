@@ -13,27 +13,27 @@ $types = [
     \DoEveryApp\Definition\IntervalType::YEAR,
 ];
 
-foreach (range(0, 10000) as $counter) {
+foreach (range(start: 0, end: 10000) as $counter) {
     $task = \DoEveryApp\Service\Task\Creator::execute(
-        (new \DoEveryApp\Service\Task\Creator\Bag())
-            ->setGroup(rand(0, 100) > 50 ? $groups[array_rand($groups)] : null)
-            ->setAssignee(rand(0, 100) > 50 ? $workers[array_rand($workers)] : null)
-            ->setWorkingOn(rand(0, 100) > 50 ? $workers[array_rand($workers)] : null)
-            ->setName('task' . $counter)
-            ->setIntervalValue(rand(1, 50))
-            ->setIntervalType($types[array_rand($types)])
+        bag: (new \DoEveryApp\Service\Task\Creator\Bag())
+            ->setGroup(group: rand(min: 0, max: 100) > 50 ? $groups[array_rand(input: $groups)] : null)
+            ->setAssignee(assignee: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : null)
+            ->setWorkingOn(workingOn: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : null)
+            ->setName(name: 'task' . $counter)
+            ->setIntervalValue(intervalValue: rand(min: 1, max: 50))
+            ->setIntervalType(intervalType: $types[array_rand(input: $types)])
     );
 
-    if (rand(0, 100) > 50) {
+    if (rand(min: 0, max: 100) > 50) {
         continue;
     }
     \DoEveryApp\Service\Task\Execution\Creator::execute(
-        (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
-            ->setTask($task)
-            ->setDate(\Faker\Factory::create()->dateTime)
-            ->setWorker($workers[array_rand($workers)])
-            ->setDuration(rand(1, 50))
-            ->setNote(\Faker\Factory::create()->text(500))
+        bag: (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
+            ->setTask(task: $task)
+            ->setDate(date: \Faker\Factory::create()->dateTime)
+            ->setWorker(worker: $workers[array_rand(input: $workers)])
+            ->setDuration(duration: rand(min: 1, max: 50))
+            ->setNote(note: \Faker\Factory::create()->text(maxNbChars: 500))
     );
 }
 

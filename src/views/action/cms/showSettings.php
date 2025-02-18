@@ -40,7 +40,7 @@ declare(strict_types=1);
                 <?= $translator->fillTimeLineQuestion() ?>
             </td>
             <td>
-                <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
             </td>
         </tr>
         <tr>

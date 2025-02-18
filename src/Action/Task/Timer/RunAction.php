@@ -22,9 +22,9 @@ class RunAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
         \DoEveryApp\Util\QueryLogger::$disabled = true;
-        new \DoEveryApp\Util\Timer()->startOrContinue($task, \DoEveryApp\Util\User\Current::get());
+        new \DoEveryApp\Util\Timer()->startOrContinue(task: $task, worker: \DoEveryApp\Util\User\Current::get());
 
 
-        return \DoEveryApp\Util\JsonGateway::Factory([], $this->getResponse());
+        return \DoEveryApp\Util\JsonGateway::Factory(data: [], response: $this->getResponse());
     }
 }

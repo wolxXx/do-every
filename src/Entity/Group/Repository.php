@@ -15,8 +15,8 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findIndexed(): array
     {
         return $this
-            ->createQueryBuilder('g')
-            ->orderBy('g.name', 'ASC')
+            ->createQueryBuilder(alias: 'g')
+            ->orderBy(sort: 'g.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
@@ -25,10 +25,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function create(\DoEveryApp\Entity\Group $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -37,10 +37,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function update(\DoEveryApp\Entity\Group $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -50,7 +50,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;

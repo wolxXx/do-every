@@ -21,21 +21,21 @@ class UnsetPasswordAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
         if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->itIsYou());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->itIsYou());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
         $worker
-            ->setPassword(null)
-            ->setLastPasswordChange(null)
+            ->setPassword(password: null)
+            ->setLastPasswordChange(lastPasswordChange: null)
         ;
-        $worker::getRepository()->update($worker);
+        $worker::getRepository()->update(entity: $worker);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->passwordDeleted());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->passwordDeleted());
 
-        return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }

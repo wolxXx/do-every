@@ -20,9 +20,9 @@ class RequirePasswordResetToken
             TEXT;
 
         \DoEveryApp\Util\Mailer::Factory()
-                               ->addRecipient($worker->getEmail(), $worker->getName())
-                               ->setSubject('Passwort verloren auf do-every*')
-                               ->setBody(\nl2br($body))
+                               ->addRecipient(address: $worker->getEmail(), name: $worker->getName())
+                               ->setSubject(subject: 'Passwort verloren auf do-every*')
+                               ->setBody(body: \nl2br(string: $body))
                                ->send()
         ;
     }

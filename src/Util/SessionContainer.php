@@ -28,7 +28,7 @@ class SessionContainer
                     break;
                 }
         }
-        if (null !== $_SESSION && false === \array_key_exists($this->getName(), $_SESSION)) {
+        if (null !== $_SESSION && false === \array_key_exists(key: $this->getName(), array: $_SESSION)) {
             $_SESSION[$name] = [];
         }
     }
@@ -36,13 +36,13 @@ class SessionContainer
 
     public function offsetExists(string $key): bool
     {
-        return null !== $_SESSION && true === \array_key_exists($this->getName(), $_SESSION) && true === \array_key_exists($key, $_SESSION[$this->getName()]);
+        return null !== $_SESSION && true === \array_key_exists(key: $this->getName(), array: $_SESSION) && true === \array_key_exists(key: $key, array: $_SESSION[$this->getName()]);
     }
 
 
     public function offsetGet(string $key, mixed $default = null): mixed
     {
-        if (false === $this->offsetExists($key)) {
+        if (false === $this->offsetExists(key: $key)) {
             return $default;
         }
 

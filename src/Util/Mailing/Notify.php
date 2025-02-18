@@ -15,15 +15,15 @@ class Notify
         foreach ($tasks as $task) {
             $message = '';
             if (null !== $task->getGroup()) {
-                $message = \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) . ': ';
+                $message = \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) . ': ';
             }
-            $message .= \DoEveryApp\Util\View\Escaper::escape($task->getName()) . ', ';
-            $message .= \DoEveryApp\Util\View\Due::getByTask($task);
+            $message .= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) . ', ';
+            $message .= \DoEveryApp\Util\View\Due::getByTask(task: $task);
             if (null !== $task->getNote()) {
-                $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape($task->getNote());
+                $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape(value: $task->getNote());
             }
             foreach ($task->getCheckListItems() as $checkListItem) {
-                $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape($checkListItem->getName());
+                $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName());
             }
             $taskMessage .= $message . \PHP_EOL . \PHP_EOL;
         }
@@ -39,9 +39,9 @@ class Notify
             TEXT;
 
         \DoEveryApp\Util\Mailer::Factory()
-                               ->addRecipient($worker->getEmail(), $worker->getName())
-                               ->setSubject('Fälligkeiten von Tasks auf do-every*')
-                               ->setBody(\nl2br($body))
+                               ->addRecipient(address: $worker->getEmail(), name: $worker->getName())
+                               ->setSubject(subject: 'Fälligkeiten von Tasks auf do-every*')
+                               ->setBody(body: \nl2br(string: $body))
                                ->send()
         ;
     }

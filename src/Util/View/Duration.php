@@ -43,11 +43,11 @@ class Duration
         if ($duration < 120) {
             return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->minutes();
         }
-        $duration = round($duration / 60);
+        $duration = round(num: $duration / 60);
         if ($duration < 100) {
             return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->hours();
         }
-        $duration = round($duration / 24);
+        $duration = round(num: $duration / 24);
 
         return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->days();
     }

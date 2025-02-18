@@ -22,7 +22,7 @@ class CheckListItemNote
             return '';
         }
 
-        $note = nl2br(\DoEveryApp\Util\View\Escaper::escape(value: $note));
+        $note = nl2br(string: \DoEveryApp\Util\View\Escaper::escape(value: $note));
 
         return '<div class="checkListItemNote">' . $note . '</div>';
     }

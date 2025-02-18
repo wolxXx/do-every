@@ -16,7 +16,7 @@ class LogAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->render('action/task/log', [
+        return $this->render(script: 'action/task/log', data: [
             'executions' => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(),
         ]);
     }

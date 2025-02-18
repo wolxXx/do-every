@@ -12,7 +12,7 @@ class Worker
             return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->noValue();
         }
 
-        return \DoEveryApp\Util\View\Escaper::escape($worker->getName());
+        return \DoEveryApp\Util\View\Escaper::escape(value: $worker->getName());
     }
 
     public static function isTimeForPasswortChange(\DoEveryApp\Entity\Worker $worker): bool
@@ -26,7 +26,7 @@ class Worker
 
         return \Carbon\Carbon::now()
                              ->greaterThan(
-                                 \Carbon\Carbon::create($worker->getLastPasswordChange())
+                                 date: \Carbon\Carbon::create(year: $worker->getLastPasswordChange())
                                                ->addMonths(3),
                              )
         ;

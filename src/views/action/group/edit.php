@@ -17,16 +17,16 @@ declare(strict_types=1);
  */
 ?>
 <h1>
-    Gruppe "<?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>" bearbeiten
+    Gruppe "<?= \DoEveryApp\Util\View\Escaper::escape(value: $group->getName()) ?>" bearbeiten
 </h1>
 <form action="" method="post" novalidate>
     <div>
         <label for="name">
             Name
         </label>
-        <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
+        <input id="name" type="text" name="name" value="<?= array_key_exists(key: 'name', array: $data) ? $data['name'] : '' ?>"/>
         <div class="errors">
-            <?php foreach ($errorStore->getErrors('name') as $error): ?>
+            <?php foreach ($errorStore->getErrors(key: 'name') as $error): ?>
                 <?= $error ?><br/>
             <?php endforeach ?>
         </div>
@@ -36,9 +36,9 @@ declare(strict_types=1);
         <label for="color">
             Farbe
         </label>
-        <input id="color" type="color" name="color" value="<?= array_key_exists('color', $data) ? $data['color'] : '' ?>"/>
+        <input id="color" type="color" name="color" value="<?= array_key_exists(key: 'color', array: $data) ? $data['color'] : '' ?>"/>
         <div class="errors">
-            <?php foreach ($errorStore->getErrors('color') as $error): ?>
+            <?php foreach ($errorStore->getErrors(key: 'color') as $error): ?>
                 <?= $error ?><br/>
             <?php endforeach ?>
         </div>

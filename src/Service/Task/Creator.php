@@ -9,20 +9,20 @@ class Creator
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Task
     {
         $task = (new \DoEveryApp\Entity\Task())
-            ->setGroup($bag->getGroup())
-            ->setAssignee($bag->getAssignee())
-            ->setWorkingOn($bag->getWorkingOn())
-            ->setName($bag->getName())
-            ->setNotify($bag->doNotify())
-            ->setActive($bag->isActive())
-            ->setPriority($bag->getPriority()->value)
-            ->setIntervalType($bag->getIntervalType()?->value)
-            ->setIntervalValue($bag->getIntervalValue())
-            ->setElapsingCronType($bag->isElapsingCronType())
-            ->setNote($bag->getNote())
+            ->setGroup(group: $bag->getGroup())
+            ->setAssignee(assignee: $bag->getAssignee())
+            ->setWorkingOn(workingOn: $bag->getWorkingOn())
+            ->setName(name: $bag->getName())
+            ->setNotify(notify: $bag->doNotify())
+            ->setActive(active: $bag->isActive())
+            ->setPriority(priority: $bag->getPriority()->value)
+            ->setIntervalType(intervalType: $bag->getIntervalType()?->value)
+            ->setIntervalValue(intervalValue: $bag->getIntervalValue())
+            ->setElapsingCronType(elapsingCronType: $bag->isElapsingCronType())
+            ->setNote(note: $bag->getNote())
         ;
 
-        $task::getRepository()->create($task);
+        $task::getRepository()->create(entity: $task);
 
         return $task;
     }

@@ -19,18 +19,18 @@ class DebugAction extends \DoEveryApp\Action\AbstractAction
         \opcache_reset();
         $backupFiles = [];
         $path        = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
-        $Directory   = new \RecursiveDirectoryIterator($path);
-        $Iterator    = new \RecursiveIteratorIterator($Directory);
-        $Regex       = new \RegexIterator($Iterator, '/^.+\.sql/i', \RegexIterator::GET_MATCH);
+        $Directory   = new \RecursiveDirectoryIterator(directory: $path);
+        $Iterator    = new \RecursiveIteratorIterator(iterator: $Directory);
+        $Regex       = new \RegexIterator(iterator: $Iterator, pattern: '/^.+\.sql/i', mode: \RegexIterator::GET_MATCH);
         foreach ($Regex as $files) {
             foreach ($files as $file) {
-                $realPath               = \realpath($file);
-                $realPath               = \str_replace(\realpath(\ROOT_DIR), '', $realPath);
-                $backupFiles[$realPath] = \filesize(\realpath($file));
+                $realPath               = \realpath(path: $file);
+                $realPath               = \str_replace(search: \realpath(path: \ROOT_DIR), replace: '', subject: $realPath);
+                $backupFiles[$realPath] = \filesize(filename: \realpath(path: $file));
             }
         }
-        \krsort($backupFiles);
+        \krsort(array: $backupFiles);
 
-        return $this->render('action/cms/debug', ['backupFiles' => $backupFiles]);
+        return $this->render(script: 'action/cms/debug', data: ['backupFiles' => $backupFiles]);
     }
 }

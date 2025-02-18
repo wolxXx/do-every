@@ -27,13 +27,13 @@ declare(strict_types=1);
     <?php endif ?>
 </h1>
 <div>
-    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-        Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+        Aufgabe: <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
     </a>
     <?php if (null !== $task->getGroup()): ?>
         |  Gruppe:
-        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute($task->getGroup()->getId()) ?>">
-            <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+        <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute(id: $task->getGroup()->getId()) ?>">
+            <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) ?>
         </a>
     <?php endif ?>
     <hr />
@@ -41,7 +41,7 @@ declare(strict_types=1);
 
 <?php if (null !== $task->getNote()): ?>
     <div>
-        <?= \DoEveryApp\Util\View\TaskNote::byTask($task) ?>
+        <?= \DoEveryApp\Util\View\TaskNote::byTask(task: $task) ?>
     </div>
 <?php endif ?>
 
@@ -55,17 +55,17 @@ declare(strict_types=1);
                             <?= $translator->worker() ?>
                         </label>
                         <select name="worker" id="worker">
-                            <option <?= false === array_key_exists('worker', $data) || null === $data['worker'] ? 'selected' : '' ?>  value="">
+                            <option <?= false === array_key_exists(key: 'worker', array: $data) || null === $data['worker'] ? 'selected' : '' ?>  value="">
                                 - niemand -
                             </option>
                             <?php foreach (\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
-                                <option <?= array_key_exists('worker', $data) && $data['worker'] == $worker->getId() ? 'selected' : '' ?> value="<?= $worker->getId() ?>">
-                                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                                <option <?= array_key_exists(key: 'worker', array: $data) && $data['worker'] == $worker->getId() ? 'selected' : '' ?> value="<?= $worker->getId() ?>">
+                                    <?= \DoEveryApp\Util\View\Worker::get(worker: $worker) ?>
                                 </option>
                             <?php endforeach ?>
                         </select>
                         <div class="errors">
-                            <?php foreach ($errorStore->getErrors('assignee') as $error): ?>
+                            <?php foreach ($errorStore->getErrors(key: 'assignee') as $error): ?>
                                 <?= $error ?><br/>
                             <?php endforeach ?>
                         </div>
@@ -76,7 +76,7 @@ declare(strict_types=1);
                         <label for="date" class="required">
                             Datum
                         </label>
-                        <input type="datetime-local" id="date" name="date" value="<?= array_key_exists('date', $data) ? $data['date'] : '' ?>"/>
+                        <input type="datetime-local" id="date" name="date" value="<?= array_key_exists(key: 'date', array: $data) ? $data['date'] : '' ?>"/>
                     </div>
                 </div>
                 <div class="column">
@@ -84,7 +84,7 @@ declare(strict_types=1);
                         <label for="duration">
                             Dauer
                         </label>
-                        <input type="number" id="duration" name="duration" value="<?= array_key_exists('duration', $data) ? $data['duration'] : '' ?>"/>
+                        <input type="number" id="duration" name="duration" value="<?= array_key_exists(key: 'duration', array: $data) ? $data['duration'] : '' ?>"/>
                         Minuten
                     </div>
                 </div>
@@ -93,7 +93,7 @@ declare(strict_types=1);
 
 
 
-            <?php if (0 !== count($data['checkListItems'])): ?>
+            <?php if (0 !== count(value: $data['checkListItems'])): ?>
                 <hr>
                 <table>
                     <thead>
@@ -116,7 +116,7 @@ declare(strict_types=1);
                         <?php foreach ($data['checkListItems'] as $index =>  $checkListItem): ?>
                             <tr>
                                 <td>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($checkListItem['name']) ?>
+                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem['name']) ?>
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][checked]" value="0">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][reference]" value="<?= $checkListItem['reference'] ?>">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][id]" value="<?= $checkListItem['id'] ?>">
@@ -125,7 +125,7 @@ declare(strict_types=1);
                                     <input type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
                                 </td>
                                 <td>
-                                    <?= \DoEveryApp\Util\View\CheckListItemNote::byValue($checkListItem['referenceNote']) ?>
+                                    <?= \DoEveryApp\Util\View\CheckListItemNote::byValue(note: $checkListItem['referenceNote']) ?>
                                 </td>
                                 <td>
                                     <textarea rows="1000" cols="1000" name="checkListItems[<?= $index ?>][note]"><?= $checkListItem['note'] ?></textarea>
@@ -143,7 +143,7 @@ declare(strict_types=1);
                 <label for="note">
                     Notiz
                 </label>
-                <textarea name="note" id="note" rows="10000" cols="10000"><?= array_key_exists('note', $data) ? $data['note'] : '' ?></textarea>
+                <textarea name="note" id="note" rows="10000" cols="10000"><?= array_key_exists(key: 'note', array: $data) ? $data['note'] : '' ?></textarea>
             </div>
         </div>
     </div>

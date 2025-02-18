@@ -31,7 +31,7 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <? foreach ($timer->getSections() as $section): ?>
-                        <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($section->getStart()) ?> -
+                        <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getStart()) ?> -
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getEnd()) ?>
                     <? endforeach  ?>
                 </td>

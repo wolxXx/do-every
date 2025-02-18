@@ -30,41 +30,41 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
         if (null === $worker->getEmail()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->needEmailForThisAction());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->needEmailForThisAction());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
 
-        $session = \DoEveryApp\Util\Session::Factory(self::TWO_FACTOR);
+        $session = \DoEveryApp\Util\Session::Factory(namespace: self::TWO_FACTOR);
 
         if (true === $this->isPostRequest()) {
-            $stored2Fa      = $session->get(self::TWO_FACTOR);
-            $stored2FaCode1 = $session->get(self::CODE_ONE);
-            $stored2FaCode2 = $session->get(self::CODE_TWO);
-            $stored2FaCode3 = $session->get(self::CODE_THREE);
-            if (true === \in_array(null, [$stored2Fa, $stored2FaCode1, $stored2FaCode2, $stored2FaCode3])) {
-                \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->defaultErrorMessage());
+            $stored2Fa      = $session->get(what: self::TWO_FACTOR);
+            $stored2FaCode1 = $session->get(what: self::CODE_ONE);
+            $stored2FaCode2 = $session->get(what: self::CODE_TWO);
+            $stored2FaCode3 = $session->get(what: self::CODE_THREE);
+            if (true === \in_array(needle: null, haystack: [$stored2Fa, $stored2FaCode1, $stored2FaCode2, $stored2FaCode3])) {
+                \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->defaultErrorMessage());
                 $session->reset();
 
-                return $this->redirect(\DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()));
+                return $this->redirect(to: \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()));
             }
             $worker
-                ->setTwoFactorSecret($stored2Fa)
-                ->setTwoFactorRecoverCode1($stored2FaCode1)
-                ->setTwoFactorRecoverCode2($stored2FaCode2)
-                ->setTwoFactorRecoverCode3($stored2FaCode3)
-                ->setTwoFactorRecoverCode1UsedAt(null)
-                ->setTwoFactorRecoverCode2UsedAt(null)
-                ->setTwoFactorRecoverCode3UsedAt(null)
+                ->setTwoFactorSecret(twoFactorSecret: $stored2Fa)
+                ->setTwoFactorRecoverCode1(twoFactorRecoverCode1: $stored2FaCode1)
+                ->setTwoFactorRecoverCode2(twoFactorRecoverCode2: $stored2FaCode2)
+                ->setTwoFactorRecoverCode3(twoFactorRecoverCode3: $stored2FaCode3)
+                ->setTwoFactorRecoverCode1UsedAt(twoFactorRecoverCode1UsedAt: null)
+                ->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: null)
+                ->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: null)
             ;
-            $worker::getRepository()->update($worker);
+            $worker::getRepository()->update(entity: $worker);
             $this
                 ->entityManager
                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->twoFactorEnabled());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->twoFactorEnabled());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
 
         $twoFactorUtility = \DoEveryApp\Util\TwoFactorAuthenticator::Factory();
@@ -73,31 +73,31 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
         $stored2FaCode2   = \Ramsey\Uuid\Uuid::uuid4()->toString();
         $stored2FaCode3   = \Ramsey\Uuid\Uuid::uuid4()->toString();
         $session
-            ->write(self::TWO_FACTOR, $stored2Fa)
-            ->write(self::CODE_ONE, $stored2FaCode1)
-            ->write(self::CODE_TWO, $stored2FaCode2)
-            ->write(self::CODE_THREE, $stored2FaCode3)
+            ->write(what: self::TWO_FACTOR, data: $stored2Fa)
+            ->write(what: self::CODE_ONE, data: $stored2FaCode1)
+            ->write(what: self::CODE_TWO, data: $stored2FaCode2)
+            ->write(what: self::CODE_THREE, data: $stored2FaCode3)
         ;
 
         $base64Encode = base64_encode(
-            (new \Endroid\QrCode\Writer\PngWriter())
+            string: (new \Endroid\QrCode\Writer\PngWriter())
                 ->write(
-                    (\Endroid\QrCode\QrCode::create(
+                    qrCode: (\Endroid\QrCode\QrCode::create(
                         $twoFactorUtility
                             ->getQRCodeUrl(
-                                $worker->getEmail(),
-                                $stored2Fa
+                                login: $worker->getEmail(),
+                                secret: $stored2Fa
                             )
                     ))
                         ->setSize(300)
-                        ->setBackgroundColor(new \Endroid\QrCode\Color\Color(0, 0, 0))
-                        ->setForegroundColor(new \Endroid\QrCode\Color\Color(255, 255, 255))
+                        ->setBackgroundColor(new \Endroid\QrCode\Color\Color(red: 0, green: 0, blue: 0))
+                        ->setForegroundColor(new \Endroid\QrCode\Color\Color(red: 255, green: 255, blue: 255))
                         ->setRoundBlockSizeMode(\Endroid\QrCode\RoundBlockSizeMode::Shrink)
                 )
                 ->getString()
         );
 
-        return $this->render('action/worker/enable-two-factor', [
+        return $this->render(script: 'action/worker/enable-two-factor', data: [
             'worker' => $worker,
             'code1'  => $stored2FaCode1,
             'code2'  => $stored2FaCode2,

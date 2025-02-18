@@ -21,7 +21,7 @@ declare(strict_types=1);
 ?>
 
 <h1>
-    <?= $translator->enableTwoFactorForWorker(\DoEveryApp\Util\View\Worker::get($worker)) ?>
+    <?= $translator->enableTwoFactorForWorker(who: \DoEveryApp\Util\View\Worker::get(worker: $worker)) ?>
 </h1>
 <form action="" method="post" novalidate>
     <div class="row">
@@ -40,9 +40,9 @@ declare(strict_types=1);
                 <legend>
                     <?= $translator->codes() ?>
                 </legend>
-                <?= \DoEveryApp\Util\View\Escaper::escape($code1) ?><br />
-                <?= \DoEveryApp\Util\View\Escaper::escape($code2) ?><br />
-                <?= \DoEveryApp\Util\View\Escaper::escape($code3) ?><br />
+                <?= \DoEveryApp\Util\View\Escaper::escape(value: $code1) ?><br />
+                <?= \DoEveryApp\Util\View\Escaper::escape(value: $code2) ?><br />
+                <?= \DoEveryApp\Util\View\Escaper::escape(value: $code3) ?><br />
             </fieldset>
         </div>
     </div>

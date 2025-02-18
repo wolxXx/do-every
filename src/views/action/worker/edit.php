@@ -17,7 +17,7 @@ declare(strict_types=1);
  */
 ?>
 <h1>
-    <?= $translator->editWorker(\DoEveryApp\Util\View\Worker::get($worker)) ?>
+    <?= $translator->editWorker(who: \DoEveryApp\Util\View\Worker::get(worker: $worker)) ?>
 </h1>
 
-<?= $this->fetchTemplate('action/worker/partial/addEdit.php', ['data' => $data]) ?>
+<?= $this->fetchTemplate(template: 'action/worker/partial/addEdit.php', data: ['data' => $data]) ?>

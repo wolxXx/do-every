@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DoEveryApp\Definition;
 
 class Durations
-{ s
+{
     protected int   $total       = 0;
 
     protected int   $average     = 0;

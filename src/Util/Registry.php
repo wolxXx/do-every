@@ -58,8 +58,8 @@ final class Registry
 
     private function getRow(string $key): ?\DoEveryApp\Entity\Registry
     {
-        if (false === \array_key_exists($key, $this->map, )) {
-            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey($key, );
+        if (false === \array_key_exists(key: $key, array: $this->map, )) {
+            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey(key: $key, );
             $this->map[$key] = $registry;
 
             return $registry;
@@ -71,28 +71,28 @@ final class Registry
 
     private function rowExists(string $key): bool
     {
-        return $this->getRow($key) instanceof \DoEveryApp\Entity\Registry;
+        return $this->getRow(key: $key) instanceof \DoEveryApp\Entity\Registry;
     }
 
 
     private function getOrCreateRow(string $key): \DoEveryApp\Entity\Registry
     {
-        if (false === $this->rowExists($key)) {
+        if (false === $this->rowExists(key: $key)) {
             $registry = (new \DoEveryApp\Entity\Registry())
-                ->setKey($key)
+                ->setKey(key: $key)
             ;
-            $registry::getRepository()->create($registry);
+            $registry::getRepository()->create(entity: $registry);
 
             return $registry;
         }
 
-        return $this->getRow($key);
+        return $this->getRow(key: $key);
     }
 
 
     private function updateRow(\DoEveryApp\Entity\Registry $registry): static
     {
-        $registry::getRepository()->update($registry);
+        $registry::getRepository()->update(entity: $registry);
         DependencyContainer::getInstance()
                            ->getEntityManager()
                            ->flush()
@@ -105,7 +105,7 @@ final class Registry
     public function getAdminUser(): ?\DoEveryApp\Entity\Worker
     {
         return $this
-            ->getRow(self::KEY_ADMIN_USER)
+            ->getRow(key: self::KEY_ADMIN_USER)
             ?->getWorkerCascade()
         ;
     }
@@ -114,9 +114,9 @@ final class Registry
     public function setAdminUser(?\DoEveryApp\Entity\Worker $worker): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_ADMIN_USER)
-                ->setWorkerCascade($worker)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_ADMIN_USER)
+                ->setWorkerCascade(workerCascade: $worker)
         );
     }
 
@@ -126,7 +126,7 @@ final class Registry
     public function getLastCron(): ?\DateTime
     {
         return $this
-            ->getRow(self::KEY_LAST_CRON)
+            ->getRow(key: self::KEY_LAST_CRON)
             ?->getDateValue()
         ;
     }
@@ -135,9 +135,9 @@ final class Registry
     public function setLastCron(?\DateTime $lastCron): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_LAST_CRON)
-                ->setDateValue($lastCron)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_LAST_CRON)
+                ->setDateValue(dateValue: $lastCron)
         );
     }
 
@@ -145,7 +145,7 @@ final class Registry
     public function getCronStarted(): ?\DateTime
     {
         return $this
-            ->getRow(self::KEY_CRON_STARTED)
+            ->getRow(key: self::KEY_CRON_STARTED)
             ?->getDateValue()
         ;
     }
@@ -154,9 +154,9 @@ final class Registry
     public function setCronStarted(\DateTime $cronStarted): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_CRON_STARTED)
-                ->setDateValue($cronStarted)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_CRON_STARTED)
+                ->setDateValue(dateValue: $cronStarted)
         );
     }
 
@@ -164,7 +164,7 @@ final class Registry
     public function isCronRunning(): bool
     {
         return true === $this
-                ->getRow(self::KEY_CRON_LOCK)
+                ->getRow(key: self::KEY_CRON_LOCK)
                 ?->getBoolValue()
         ;
     }
@@ -173,9 +173,9 @@ final class Registry
     public function setCronRunning(bool $cronRunning): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_CRON_LOCK)
-                ->setBoolValue($cronRunning)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_CRON_LOCK)
+                ->setBoolValue(boolValue: $cronRunning)
         );
     }
 
@@ -183,7 +183,7 @@ final class Registry
     public function isNotifierRunning(): bool
     {
         return true === $this
-                ->getRow(self::KEY_NOTIFIER_RUNNING)
+                ->getRow(key: self::KEY_NOTIFIER_RUNNING)
                 ?->getBoolValue()
         ;
     }
@@ -192,9 +192,9 @@ final class Registry
     public function setNotifierRunning(bool $notifierRunning): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_NOTIFIER_RUNNING)
-                ->setBoolValue($notifierRunning)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_NOTIFIER_RUNNING)
+                ->setBoolValue(boolValue: $notifierRunning)
         );
     }
 
@@ -202,7 +202,7 @@ final class Registry
     public function getNotifierLastRun(): ?\DateTime
     {
         return $this
-            ->getRow(self::KEY_NOTIFIER_LAST_RUN)
+            ->getRow(key: self::KEY_NOTIFIER_LAST_RUN)
             ?->getDateValue()
         ;
     }
@@ -211,9 +211,9 @@ final class Registry
     public function setNotifierLastRun(\DateTime $notifierLastRun): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_NOTIFIER_LAST_RUN)
-                ->setDateValue($notifierLastRun)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_NOTIFIER_LAST_RUN)
+                ->setDateValue(dateValue: $notifierLastRun)
         );
     }
 
@@ -224,7 +224,7 @@ final class Registry
     public function getKeepBackupDays(): int
     {
         return $this
-                   ->getRow(self::KEY_KEEP_BACKUP_DAYS)
+                   ->getRow(key: self::KEY_KEEP_BACKUP_DAYS)
                    ?->getIntValue()
                ?? 30;
     }
@@ -233,9 +233,9 @@ final class Registry
     public function setKeepBackupDays(?int $days): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_KEEP_BACKUP_DAYS)
-                ->setIntValue($days)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_KEEP_BACKUP_DAYS)
+                ->setIntValue(intValue: $days)
         );
     }
 
@@ -243,7 +243,7 @@ final class Registry
     public function getLastBackup(): ?\DateTime
     {
         return $this
-            ->getRow(self::KEY_LAST_BACKUP)
+            ->getRow(key: self::KEY_LAST_BACKUP)
             ?->getDateValue()
         ;
     }
@@ -252,9 +252,9 @@ final class Registry
     public function setLastBackup(\DateTime $lastBackup): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_LAST_BACKUP)
-                ->setDateValue($lastBackup)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_LAST_BACKUP)
+                ->setDateValue(dateValue: $lastBackup)
         );
     }
 
@@ -262,7 +262,7 @@ final class Registry
     public function getMaxWorkers(): ?int
     {
         return $this
-            ->getRow(self::KEY_MAX_WORKERS)
+            ->getRow(key: self::KEY_MAX_WORKERS)
             ?->getIntValue()
         ;
     }
@@ -271,9 +271,9 @@ final class Registry
     public function setMaxWorkers(?int $maxWorkers): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_MAX_WORKERS)
-                ->setIntValue($maxWorkers)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_MAX_WORKERS)
+                ->setIntValue(intValue: $maxWorkers)
         );
     }
 
@@ -281,7 +281,7 @@ final class Registry
     public function getMaxTasks(): ?int
     {
         return $this
-            ->getRow(self::KEY_MAX_TASKS)
+            ->getRow(key: self::KEY_MAX_TASKS)
             ?->getIntValue()
         ;
     }
@@ -290,9 +290,9 @@ final class Registry
     public function setMaxTasks(?int $maxTasks): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_MAX_TASKS)
-                ->setIntValue($maxTasks)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_MAX_TASKS)
+                ->setIntValue(intValue: $maxTasks)
         );
     }
 
@@ -300,7 +300,7 @@ final class Registry
     public function getMaxGroups(): ?int
     {
         return $this
-            ->getRow(self::KEY_MAX_GROUPS)
+            ->getRow(key: self::KEY_MAX_GROUPS)
             ?->getIntValue()
         ;
     }
@@ -309,9 +309,9 @@ final class Registry
     public function setMaxGroups(?int $maxGroups): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_MAX_GROUPS)
-                ->setIntValue($maxGroups)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_MAX_GROUPS)
+                ->setIntValue(intValue: $maxGroups)
         );
     }
 
@@ -319,7 +319,7 @@ final class Registry
     public function getPrecisionDue(): int
     {
         return $this
-                   ->getRow(self::KEY_PRECISION_DUE)
+                   ->getRow(key: self::KEY_PRECISION_DUE)
                    ?->getIntValue()
                ?? 3;
     }
@@ -328,9 +328,9 @@ final class Registry
     public function setPrecisionDue(?int $precisionDue): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_PRECISION_DUE)
-                ->setIntValue($precisionDue)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_PRECISION_DUE)
+                ->setIntValue(intValue: $precisionDue)
         );
     }
 
@@ -338,7 +338,7 @@ final class Registry
     public function doFillTimeLine(): bool
     {
         return $this
-            ->getRow(self::KEY_FILL_TIME_LINE)
+            ->getRow(key: self::KEY_FILL_TIME_LINE)
             ?->getBoolValue()
             ?: false;
     }
@@ -347,9 +347,9 @@ final class Registry
     public function setDoFillTimeLine(?bool $fillTimeLine): static
     {
         return $this->updateRow(
-            $this
-                ->getOrCreateRow(self::KEY_FILL_TIME_LINE)
-                ->setBoolValue($fillTimeLine)
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_FILL_TIME_LINE)
+                ->setBoolValue(boolValue: $fillTimeLine)
         );
     }
 }

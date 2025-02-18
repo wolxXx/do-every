@@ -17,6 +17,6 @@ declare(strict_types=1);
  */
 ?>
 <h1>
-    <?= $translator->editTask('"<a href="'. \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) .'">'. \DoEveryApp\Util\View\Escaper::escape($task->getName()) .'</a>"') ?>
+    <?= $translator->editTask(task: '"<a href="'. \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) .'">'. \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) .'</a>"') ?>
 </h1>
-<?= $this->fetchTemplate('action/task/partial/addEdit.php', ['data' => $data]) ?>
+<?= $this->fetchTemplate(template: 'action/task/partial/addEdit.php', data: ['data' => $data]) ?>

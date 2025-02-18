@@ -9,7 +9,7 @@ class CheckListItemTest extends \DoEveryAppTest\TestBase
     #[\PHPUnit\Framework\Attributes\DataProvider('byValueTestDataProvider')]
     public function testByValue(string $expected, string $name, bool $checked, string|null $note = null)
     {
-        $this->assertSame($expected, \DoEveryApp\Util\View\CheckListItem::byValue($name, $checked, $note));
+        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\CheckListItem::byValue(name: $name, checked: $checked, note: $note));
     }
 
 
@@ -48,11 +48,11 @@ class CheckListItemTest extends \DoEveryAppTest\TestBase
     {
         $expected = '<span title="omg asdf"><span style="color: #f00;"><i class="fa-solid fa-xmark"></i></span> foobar</span>';
         $item     = (new \DoEveryApp\Entity\Execution\CheckListItem())
-            ->setName('foobar')
-            ->setNote('omg asdf')
-            ->setChecked(false)
+            ->setName(name: 'foobar')
+            ->setNote(note: 'omg asdf')
+            ->setChecked(checked: false)
         ;
-        $this->assertSame($expected, \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem($item));
+        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem(item: $item));
     }
 
 
@@ -60,10 +60,10 @@ class CheckListItemTest extends \DoEveryAppTest\TestBase
     {
         $expected = '<span title="omg asdf aaaaaaaa"><span style="color: #154709;"><i class="fa-solid fa-check"></i></span> foobar asdf</span>';
         $item     = (new \DoEveryApp\Entity\Execution\CheckListItem())
-            ->setName('foobar asdf')
-            ->setNote('omg asdf aaaaaaaa')
-            ->setChecked(true)
+            ->setName(name: 'foobar asdf')
+            ->setNote(note: 'omg asdf aaaaaaaa')
+            ->setChecked(checked: true)
         ;
-        $this->assertSame($expected, \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem($item));
+        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem(item: $item));
     }
 }

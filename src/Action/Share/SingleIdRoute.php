@@ -8,11 +8,11 @@ trait SingleIdRoute
 {
     public static function getRoute(int $id): string
     {
-        $reflection = new \ReflectionClass(__CLASS__);
-        foreach ($reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class) as $attribute) {
-            return \str_replace('{id:[0-9]+}', '' . $id, $attribute->getArguments()['path']);
+        $reflection = new \ReflectionClass(objectOrClass: __CLASS__);
+        foreach ($reflection->getAttributes(name: \DoEveryApp\Attribute\Action\Route::class) as $attribute) {
+            return \str_replace(search: '{id:[0-9]+}', replace: '' . $id, subject: $attribute->getArguments()['path']);
         }
 
-        throw new \RuntimeException('Could not determine route path');
+        throw new \RuntimeException(message: 'Could not determine route path');
     }
 }

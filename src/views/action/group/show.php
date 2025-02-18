@@ -18,16 +18,16 @@ declare(strict_types=1);
 
 <h1>
     <?= $translator->group() ?>
-    <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
+    <?= \DoEveryApp\Util\View\Escaper::escape(value: $group->getName()) ?>
 </h1>
 <div class="pageButtons buttonRow">
     <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>?group=<?= $group->getId() ?>" class="primaryButton">
         <?= $translator->addTask() ?>
     </a>
-    <a href="<?= \DoEveryApp\Action\Group\EditAction::getRoute($group->getId()) ?>" class="warningButton">
+    <a href="<?= \DoEveryApp\Action\Group\EditAction::getRoute(id: $group->getId()) ?>" class="warningButton">
         <?= $translator->edit() ?>
     </a>
-    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute($group->getId()) ?>">
+    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute(id: $group->getId()) ?>">
         <?= $translator->delete() ?>
     </a>
 </div>
@@ -37,12 +37,12 @@ declare(strict_types=1);
         <div class="grid">
             <?php foreach($group->getTasks() as $task): ?>
                 <div class="column card">
-                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?><br />
-                    <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?><br />
+                    <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?><br />
                     <?php if(null !== $task->getWorkingOn()): ?>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
+                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
                     <?php endif ?>
-                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
                         <?= $translator->show() ?>
                     </a>
                 </div>
@@ -50,6 +50,6 @@ declare(strict_types=1);
         </div>
     </div>
     <div class="column">
-        <?= $this->fetchTemplate('partial/durations.php', ['durations' => \DoEveryApp\Definition\Durations::FactoryByGroup($group)]) ?>
+        <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => \DoEveryApp\Definition\Durations::FactoryByGroup(group: $group)]) ?>
     </div>
 </div>

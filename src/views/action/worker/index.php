@@ -61,16 +61,16 @@ declare(strict_types=1);
         <?php foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
             <tr>
                 <td>
-                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                    <?= \DoEveryApp\Util\View\Worker::get(worker: $worker) ?>
                 </td>
                 <td>
                     <ul>
                     <?php foreach($worker->getTasksWorkingOn() as $task): ?>
                         <li>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
                                 <?php if(null !== $task->getGroup()): ?>
-                                    (<?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>)
+                                    (<?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) ?>)
                                 <?php endif ?>
                             </a>
                         </li>
@@ -79,63 +79,63 @@ declare(strict_types=1);
                     </ul>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $worker->getEmail()) ?>
                 </td>
                 <td>
                     <?php if(null !== $worker->getPassword()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
                     <?php endif ?>
-                    <?= \DoEveryApp\Util\View\Boolean::get(null !== $worker->getPassword()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPassword()) ?>
                 </td>
                 <td>
                     <?php if(true === $worker->isAdmin()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute(id: $worker->getId(), admin: false) ?>">
                             <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <?php endif ?>
                     <?php if(false === $worker->isAdmin()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute(id: $worker->getId(), admin: true) ?>">
                             <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
                     <?php endif ?>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->isAdmin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotifyLogin()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->doNotifyLogin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotify()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->doNotify()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastLogin()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $worker->getLastLogin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastPasswordChange()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $worker->getLastPasswordChange()) ?>
                 </td>
                 <td class="pullRight">
                     <nobr class="buttonRow">
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($worker->getId()) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::list() ?>
                             <?= $translator->log() ?>
                         </a>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::edit() ?>
                         </a>
                         <?php if(null === $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()) ?>">
+                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
                                 <?= \DoEveryApp\Util\View\Icon::on() ?>
                                 <?= $translator->addTwoFactor() ?>
                             </a>
                         <?php endif ?>
                         <?php if(null !== $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute($worker->getId()) ?>">
+                            <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
                                 <?= \DoEveryApp\Util\View\Icon::off() ?>
                                 <?= $translator->removeTwoFactor() ?>
                             </a>
                         <?php endif ?>
-                        <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
+                        <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
                     </nobr>

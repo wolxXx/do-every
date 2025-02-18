@@ -19,7 +19,7 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Task[]      $workingOn
  */
 $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
-$tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
+$tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
 ?>
 
 <h1>
@@ -63,16 +63,16 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
 </script>
 
 <div id="passwordChange">
-    <?php if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange($currentUser)): ?>
+    <?php if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange(worker: $currentUser)): ?>
         <fieldset>
             <legend>
                 <?= $translator->attention() ?>
             </legend>
             <?php if (null !== $currentUser->getLastPasswordChange()): ?>
-                <?= $translator->dashboardLastPasswordChange($currentUser->getLastPasswordChange()) ?><br />
+                <?= $translator->dashboardLastPasswordChange(dateTime: $currentUser->getLastPasswordChange()) ?><br />
             <?php endif ?>
             <?= $translator->dashboardChangePassword() ?>
-            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($currentUser->getId()) ?>">
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute(id: $currentUser->getId()) ?>">
                 <?= $translator->go() ?>
             </a>
         </fieldset>
@@ -85,14 +85,14 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 <?= $translator->attention() ?>
             </legend>
             <?= $translator->dashboardAddTwoFactor() ?>
-            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($currentUser->getId()) ?>">
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $currentUser->getId()) ?>">
                 <?= $translator->go() ?>
             </a>
         </fieldset>
     <?php endif ?>
 </div>
 <div id="workingOn">
-    <?php if (0 !== count($workingOn)): ?>
+    <?php if (0 !== count(value: $workingOn)): ?>
         <fieldset>
             <legend>
                 <?= $translator->currentWorks() ?>
@@ -116,18 +116,18 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 <?php foreach ($workingOn as $workingOnTask): ?>
                     <tr>
                         <td>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($workingOnTask->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Escaper::escape($workingOnTask->getName()) ?>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $workingOnTask->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $workingOnTask->getName()) ?>
                                 <?php if (null !== $workingOnTask->getGroup()): ?>
-                                    (<?= \DoEveryApp\Util\View\Escaper::escape($workingOnTask->getGroup()->getName()) ?>)
+                                    (<?= \DoEveryApp\Util\View\Escaper::escape(value: $workingOnTask->getGroup()->getName()) ?>)
                                 <?php endif ?>
                             </a>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn()) ?>
+                            <?= \DoEveryApp\Util\View\Worker::get(worker: $workingOnTask->getWorkingOn()) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Worker::get($workingOnTask->getAssignee()) ?>
+                            <?= \DoEveryApp\Util\View\Worker::get(worker: $workingOnTask->getAssignee()) ?>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -137,7 +137,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <?php endif ?>
 </div>
 <div id="dueTasks">
-    <?php if (0 !== count($dueTasks)): ?>
+    <?php if (0 !== count(value: $dueTasks)): ?>
         <fieldset>
             <legend>
                 <?= $translator->tasksWithDue() ?>
@@ -146,16 +146,16 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 <?php foreach ($dueTasks as $task): ?>
                     <div class="column card">
                         <nobr>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Due::getByTask($task) ?>: <br />
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?>: <br />
                                 <?php if (null !== $task->getGroup()): ?>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>:
+                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) ?>:
                                 <?php endif ?>
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
                                 <?php foreach ($workingOn as $workingOnTask): ?>
                                     <?php if ($workingOnTask->getId() === $task->getId()): ?>
                                         <br />
-                                        (<?= $translator->isCurrentlyWorkingOn(\DoEveryApp\Util\View\Worker::get($workingOnTask->getWorkingOn())) ?>)
+                                        (<?= $translator->isCurrentlyWorkingOn(who: \DoEveryApp\Util\View\Worker::get(worker: $workingOnTask->getWorkingOn())) ?>)
                                     <?php endif ?>
                                 <?php endforeach ?>
                             </a>
@@ -167,7 +167,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
     <?php endif ?>
 </div>
 <div id="tasks">
-    <?php if (0 !== count($tasks)): ?>
+    <?php if (0 !== count(value: $tasks)): ?>
         <fieldset>
             <legend>
                 <?= $translator->tasks() ?>
@@ -205,52 +205,52 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                 <tbody>
                 <?php foreach($tasks as $task): ?>
                     <?php
-                    $lastExecution = $task::getRepository()->getLastExecution($task)?->getDate();
+                    $lastExecution = $task::getRepository()->getLastExecution(task: $task)?->getDate();
                     ?>
                     <tr>
                         <td>
                             <?php if(null === $task->getGroup()): ?>
                                 -
                             <?php else: ?>
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) ?>
                             <?php endif ?>
                         </td>
                         <td>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
                             </a>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Worker::get($task->getAssignee()) ?>
+                            <?= \DoEveryApp\Util\View\Worker::get(worker: $task->getAssignee()) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Worker::get($task->getWorkingOn()) ?>
+                            <?= \DoEveryApp\Util\View\Worker::get(worker: $task->getWorkingOn()) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($lastExecution) ?>
+                            <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $lastExecution) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Due::getByTask($task) ?><br />
+                            <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?><br />
                             (<?= $task->isNotify() ? $translator->willBeNotified() : $translator->willNotBeNotified() ?>)
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\IntervalHelper::get($task) ?>
+                            <?= \DoEveryApp\Util\View\IntervalHelper::get(task: $task) ?>
                             <?php if(null !== $task->getIntervalType()): ?>
-                                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask($task) ?>)
+                                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask(task: $task) ?>)
                             <?php endif ?>
                         </td>
                         <td class="pullRight">
                             <nobr class="buttonRow">
-                                <a class="primaryButton" title="<?= $translator->show() ?>" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
+                                <a class="primaryButton" title="<?= $translator->show() ?>" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::show() ?>
                                 </a>
-                                <a class="primaryButton" title="<?= $translator->addExecution() ?>" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute($task->getId()) ?>">
+                                <a class="primaryButton" title="<?= $translator->addExecution() ?>" href="<?= \DoEveryApp\Action\Execution\AddAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::add() ?>
                                 </a>
-                                <a class="warningButton" title="<?= $translator->edit() ?>" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute($task->getId()) ?>">
+                                <a class="warningButton" title="<?= $translator->edit() ?>" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                 </a>
-                                <a class="dangerButton confirm" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute($task->getId()) ?>">
+                                <a class="dangerButton confirm" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                 </a>
                             </nobr>
@@ -299,29 +299,29 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
                     <?php foreach($executions as $execution): ?>
                         <tr>
                             <td>
-                                <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
+                                <?= \DoEveryApp\Util\View\ExecutionDate::byExecution(execution: $execution) ?>
                             </td>
                             <td>
                                 <?php if(null === $execution->getTask()->getGroup()): ?>
                                     -
                                 <?php endif?>
                                 <?php if(null !== $execution->getTask()->getGroup()): ?>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
+                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getGroup()->getName()) ?>
                                 <?php endif?>
                             </td>
                             <td>
-                                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
-                                    <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()) ?>">
+                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getName()) ?>
                                 </a>
                             </td>
                             <td>
-                                <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
+                                <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
                             </td>
                             <td>
-                                <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
+                                <?= \DoEveryApp\Util\View\Worker::get(worker: $execution->getWorker()) ?>
                             </td>
                             <td>
-                                <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
+                                <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -330,7 +330,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort($tasks);
             </fieldset>
         </div>
         <div class="column">
-            <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
+            <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
         </div>
     </div>
 </div>

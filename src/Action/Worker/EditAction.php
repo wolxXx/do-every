@@ -23,7 +23,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
         if (true === $this->isGetRequest()) {
-            return $this->render('action/worker/edit', [
+            return $this->render(script: 'action/worker/edit', data: [
                 'worker' => $worker,
                 'data'   => [
                     static::FORM_FIELD_NAME             => $worker->getName(),
@@ -38,18 +38,18 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         $data = [];
         try {
             $data = $this->getRequest()->getParsedBody();
-            $data = $this->filterAndValidate($data);
+            $data = $this->filterAndValidate(data: $data);
             $worker
-                ->setName($data[static::FORM_FIELD_NAME])
-                ->setIsAdmin('1' === $data[static::FORM_FIELD_IS_ADMIN])
-                ->enableNotifications('1' === $data[static::FORM_FIELD_DO_NOTIFY])
-                ->setNotifyLogin('1' === $data[static::FORM_FIELD_DO_NOTIFY_LOGINS])
-                ->setEmail($data[static::FORM_FIELD_EMAIL])
+                ->setName(name: $data[static::FORM_FIELD_NAME])
+                ->setIsAdmin(admin: '1' === $data[static::FORM_FIELD_IS_ADMIN])
+                ->enableNotifications(notify: '1' === $data[static::FORM_FIELD_DO_NOTIFY])
+                ->setNotifyLogin(notifyLogin: '1' === $data[static::FORM_FIELD_DO_NOTIFY_LOGINS])
+                ->setEmail(email: $data[static::FORM_FIELD_EMAIL])
             ;
             if (null !== $data[static::FORM_FIELD_PASSWORD]) {
                 $worker
-                    ->setPassword($data[static::FORM_FIELD_PASSWORD])
-                    ->setLastPasswordChange(\Carbon\Carbon::now())
+                    ->setPassword(password: $data[static::FORM_FIELD_PASSWORD])
+                    ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
                 ;
             }
 
@@ -57,15 +57,15 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 ->entityManager
                 ->flush()
             ;
-            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->workerEdited());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerEdited());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render(
-            'action/worker/edit',
-            [
+            script: 'action/worker/edit',
+            data: [
                 'worker' => $worker,
                 'data'   => $data,
             ]

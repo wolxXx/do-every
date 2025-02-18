@@ -11,7 +11,7 @@ class TaskSortByDue
      */
     public static function sort($tasks): array
     {
-        usort($tasks, function (\DoEveryApp\Entity\Task $a, \DoEveryApp\Entity\Task $b) {
+        usort(array: $tasks, callback: function (\DoEveryApp\Entity\Task $a, \DoEveryApp\Entity\Task $b) {
             $dueA     = $a->getDueValue();
             $dueUnitA = $a->getDueUnit();
             $dueB     = $b->getDueValue();

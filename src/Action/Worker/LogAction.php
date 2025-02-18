@@ -22,10 +22,10 @@ class LogAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render(
-            'action/worker/log',
-            [
+            script: 'action/worker/log',
+            data: [
                 'worker' => $worker,
-                'data'   => \DoEveryApp\Entity\Execution::getRepository()->findForWorker($worker),
+                'data'   => \DoEveryApp\Entity\Execution::getRepository()->findForWorker(worker: $worker),
             ]
         );
     }

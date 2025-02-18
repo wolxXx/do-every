@@ -13,6 +13,6 @@ class ExecutionDate
 
     public static function byValue(\DateTime $date): string
     {
-        return DateTime::getDateTimeMediumDateShortTime($date);
+        return DateTime::getDateTimeMediumDateShortTime(dateTime: $date);
     }
 }

@@ -16,26 +16,26 @@ if (true === $hasSomething) {
 }
 
 $you     = \DoEveryApp\Service\Worker\Creator::execute(
-    (new \DoEveryApp\Service\Worker\Creator\Bag())
-        ->setName('Mazel Tov')
-        ->setIsAdmin(true)
-        ->setEmail('do-every@kwatsh.de')
-        ->setPassword('Passwort')
+    bag: (new \DoEveryApp\Service\Worker\Creator\Bag())
+        ->setName(name: 'Mazel Tov')
+        ->setIsAdmin(admin: true)
+        ->setEmail(email: 'do-every@kwatsh.de')
+        ->setPassword(password: 'Passwort')
 );
 $workers = [];
-foreach (range(2, rand(3, 10)) as $counter) {
+foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
     $workers[] = \DoEveryApp\Service\Worker\Creator::execute(
-        (new \DoEveryApp\Service\Worker\Creator\Bag())
-            ->setName('worker' . $counter)
+        bag: (new \DoEveryApp\Service\Worker\Creator\Bag())
+            ->setName(name: 'worker' . $counter)
     );
 }
 
 $groups = [];
-foreach (range(2, rand(3, 10)) as $counter) {
+foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
     $group    = \DoEveryApp\Service\Task\Group\Creator::execute(
-        (new \DoEveryApp\Service\Task\Group\Creator\Bag())
-            ->setName('group' . $counter)
-            ->setColor(rand(0, 100) > 80 ? \Faker\Factory::create()->hexColor() : null)
+        bag: (new \DoEveryApp\Service\Task\Group\Creator\Bag())
+            ->setName(name: 'group' . $counter)
+            ->setColor(color: rand(min: 0, max: 100) > 80 ? \Faker\Factory::create()->hexColor() : null)
     );
     $groups[] = $group;
 }
@@ -48,28 +48,28 @@ $types = [
     \DoEveryApp\Definition\IntervalType::YEAR,
 ];
 
-foreach (range(0, 20) as $counter) {
+foreach (range(start: 0, end: 20) as $counter) {
     $task = \DoEveryApp\Service\Task\Creator::execute(
-        (new \DoEveryApp\Service\Task\Creator\Bag())
-            ->setGroup(rand(0, 100) > 50 ? $groups[array_rand($groups)] : null)
-            ->setAssignee(rand(0, 100) > 50 ? $workers[array_rand($workers)] : (rand(0, 100) > 50 ? $you : null))
-            ->setWorkingOn(rand(0, 100) > 50 ? $workers[array_rand($workers)] : (rand(0, 100) > 50 ? $you : null))
-            ->setName('task' . $counter)
-            ->setIntervalValue(rand(1, 50))
-            ->setIntervalType($types[array_rand($types)])
-            ->enableNotifications(false)
+        bag: (new \DoEveryApp\Service\Task\Creator\Bag())
+            ->setGroup(group: rand(min: 0, max: 100) > 50 ? $groups[array_rand(input: $groups)] : null)
+            ->setAssignee(assignee: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
+            ->setWorkingOn(workingOn: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
+            ->setName(name: 'task' . $counter)
+            ->setIntervalValue(intervalValue: rand(min: 1, max: 50))
+            ->setIntervalType(intervalType: $types[array_rand(input: $types)])
+            ->enableNotifications(notify: false)
     );
 
-    if (rand(0, 100) > 50) {
+    if (rand(min: 0, max: 100) > 50) {
         continue;
     }
     \DoEveryApp\Service\Task\Execution\Creator::execute(
-        (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
-            ->setTask($task)
-            ->setDate(\Faker\Factory::create()->dateTime)
-            ->setWorker($workers[array_rand($workers)])
-            ->setDuration(rand(1, 50))
-            ->setNote(\Faker\Factory::create()->text(500))
+        bag: (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
+            ->setTask(task: $task)
+            ->setDate(date: \Faker\Factory::create()->dateTime)
+            ->setWorker(worker: $workers[array_rand(input: $workers)])
+            ->setDuration(duration: rand(min: 1, max: 50))
+            ->setNote(note: \Faker\Factory::create()->text(maxNbChars: 500))
     );
 }
 

@@ -11,12 +11,12 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
     public function findOneByPasswordResetToken(string $token): ?\DoEveryApp\Entity\Worker
     {
-        return $this->findOneBy(['passwordResetToken' => $token]);
+        return $this->findOneBy(criteria: ['passwordResetToken' => $token]);
     }
 
     public function findOneByEmail(string $email): ?\DoEveryApp\Entity\Worker
     {
-        return $this->findOneBy(['email' => $email]);
+        return $this->findOneBy(criteria: ['email' => $email]);
     }
 
     /**
@@ -25,8 +25,8 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findIndexed(): array
     {
         return $this
-            ->createQueryBuilder('w')
-            ->orderBy('w.name', 'ASC')
+            ->createQueryBuilder(alias: 'w')
+            ->orderBy(sort: 'w.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
@@ -35,10 +35,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -47,10 +47,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function update(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -60,7 +60,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;

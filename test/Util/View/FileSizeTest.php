@@ -9,7 +9,7 @@ class FileSizeTest extends \PHPUnit\Framework\TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('getTestDataProvider')]
     public function testGet($expected, int $size, ?int $decimals)
     {
-        $this->assertSame($expected, \DoEveryApp\Util\View\FileSize::humanReadable($size));
+        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\FileSize::humanReadable(size: $size));
     }
 
 

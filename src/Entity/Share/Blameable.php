@@ -8,7 +8,7 @@ trait Blameable
 {
     protected function onCreate($model): static
     {
-        if (true === method_exists($model, 'setCreatedBy')) {
+        if (true === method_exists(object_or_class: $model, method: 'setCreatedBy')) {
             $model->setCreatedBy($this->getUser());
         }
 
@@ -27,7 +27,7 @@ trait Blameable
 
     protected function onUpdate($model): static
     {
-        if (true === method_exists($model, 'setUpdatedBy')) {
+        if (true === method_exists(object_or_class: $model, method: 'setUpdatedBy')) {
             $model->setUpdatedBy($this->getUser());
         }
 

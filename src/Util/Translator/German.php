@@ -91,7 +91,7 @@ class German implements \DoEveryApp\Util\Translator
 
     public function dashboardLastPasswordChange(\DateTime $dateTime): string
     {
-        return 'Du hast dein Passwort lange nicht geändert. Das letzte mal ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime($dateTime) . '.';
+        return 'Du hast dein Passwort lange nicht geändert. Das letzte mal ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(dateTime: $dateTime) . '.';
     }
 
     public function dashboardChangePassword(): string
@@ -126,7 +126,7 @@ class German implements \DoEveryApp\Util\Translator
 
     public function isCurrentlyWorkingOn(string $who): string
     {
-        return \DoEveryApp\Util\View\Escaper::escape($who) . ' arbeitet daran';
+        return \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' arbeitet daran';
     }
 
     public function group(): string
@@ -811,12 +811,12 @@ class German implements \DoEveryApp\Util\Translator
 
     public function editWorker(string $who): string
     {
-        return 'Biene ' . \DoEveryApp\Util\View\Escaper::escape($who) . ' bearbeiten';
+        return 'Biene ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' bearbeiten';
     }
 
     public function enableTwoFactorForWorker(string $who): string
     {
-        return '2FA für Biene ' . \DoEveryApp\Util\View\Escaper::escape($who) . ' einrichten';
+        return '2FA für Biene ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' einrichten';
     }
 
     public function twoFactorNotice(): string
@@ -855,12 +855,12 @@ class German implements \DoEveryApp\Util\Translator
 
     public function logFor(string $who): string
     {
-        return 'Arbeitsnachweis für Biene "' . \DoEveryApp\Util\View\Escaper::escape($who) . '"';
+        return 'Arbeitsnachweis für Biene "' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . '"';
     }
 
     public function workerDidNothing(string $who): string
     {
-        return '- ' . \DoEveryApp\Util\View\Escaper::escape($who) . ' hat bisher kein Beitrag geleistet -';
+        return '- ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' hat bisher kein Beitrag geleistet -';
     }
 
     public function needEmailForThisAction(): string

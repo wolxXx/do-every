@@ -49,7 +49,7 @@ class Group
     public function getTasks(): array
     {
         return Task::getRepository()
-                   ->getByGroup($this, null)
+                   ->getByGroup(group: $this, active: null)
         ;
     }
 
@@ -59,7 +59,7 @@ class Group
     public function getActiveTasks(): array
     {
         return Task::getRepository()
-                   ->getByGroup($this, true)
+                   ->getByGroup(group: $this, active: true)
         ;
     }
 
@@ -69,7 +69,7 @@ class Group
     public function getInActiveTasks(): array
     {
         return Task::getRepository()
-                   ->getByGroup($this, false)
+                   ->getByGroup(group: $this, active: false)
         ;
     }
 

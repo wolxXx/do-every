@@ -16,6 +16,6 @@ class HelpAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->render('action/cms/help');
+        return $this->render(script: 'action/cms/help');
     }
 }

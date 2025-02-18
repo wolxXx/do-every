@@ -12,10 +12,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findForWorker(\DoEveryApp\Entity\Worker $worker)
     {
         return $this
-            ->createQueryBuilder('e')
+            ->createQueryBuilder(alias: 'e')
             ->andWhere('e.worker = :worker')
-            ->setParameter('worker', $worker)
-            ->orderBy('e.date', 'DESC')
+            ->setParameter(key: 'worker', value: $worker)
+            ->orderBy(sort: 'e.date', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
@@ -24,13 +24,13 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findForIndex(?int $limit = null)
     {
         $queryBuilder = $this
-            ->createQueryBuilder('e')
-            ->innerJoin('e.task', 't')
-            ->leftJoin('t.group', 'g')
-            ->orderBy('e.date', 'DESC')
+            ->createQueryBuilder(alias: 'e')
+            ->innerJoin(join: 'e.task', alias: 't')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->orderBy(sort: 'e.date', order: 'DESC')
         ;
         if (null !== $limit) {
-            $queryBuilder->setMaxResults($limit);
+            $queryBuilder->setMaxResults(maxResults: $limit);
         }
 
         return $queryBuilder
@@ -42,10 +42,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findIndexed(\DoEveryApp\Entity\Task $param)
     {
         return $this
-            ->createQueryBuilder('e')
+            ->createQueryBuilder(alias: 'e')
             ->andWhere('e.task = :task')
-            ->setParameter('task', $param)
-            ->orderBy('e.date', 'DESC')
+            ->setParameter(key: 'task', value: $param)
+            ->orderBy(sort: 'e.date', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
@@ -54,10 +54,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function create(\DoEveryApp\Entity\Execution $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -66,10 +66,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function update(\DoEveryApp\Entity\Execution $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
@@ -79,7 +79,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;

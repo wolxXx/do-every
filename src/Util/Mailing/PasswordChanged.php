@@ -19,9 +19,9 @@ class PasswordChanged
             TEXT;
 
         \DoEveryApp\Util\Mailer::Factory()
-                               ->addRecipient($worker->getEmail(), $worker->getName())
-                               ->setSubject('Neues Passwort gesetzt auf do-every*')
-                               ->setBody(\nl2br($body))
+                               ->addRecipient(address: $worker->getEmail(), name: $worker->getName())
+                               ->setSubject(subject: 'Neues Passwort gesetzt auf do-every*')
+                               ->setBody(body: \nl2br(string: $body))
                                ->send()
         ;
     }

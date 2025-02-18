@@ -226,7 +226,7 @@ class Worker
 
     public function setPassword(?string $password): static
     {
-        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash($password);
+        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash(password: $password);
 
         return $this;
     }

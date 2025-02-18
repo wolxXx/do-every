@@ -33,7 +33,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 ];
             }
 
-            return $this->render('action/task/edit', [
+            return $this->render(script: 'action/task/edit', data: [
                 'task' => $task,
                 'data' => [
                     'checkListItem'       => $checkListItems,
@@ -52,40 +52,40 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
         $data = [];
         try {
             $data = $this->getRequest()->getParsedBody();
-            $data = $this->filterAndValidate($data);
+            $data = $this->filterAndValidate(data: $data);
 
             $task
-                ->setAssignee($data['assignee'] ? \DoEveryApp\Entity\Worker::getRepository()->find($data['assignee']) : null)
-                ->setGroup($data['group'] ? \DoEveryApp\Entity\Group::getRepository()->find($data['group']) : null)
-                ->setName($data['name'])
-                ->setIntervalType($data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from($data['intervalType'])->value : null)
-                ->setIntervalValue($data['intervalValue'])
-                ->setPriority(\DoEveryApp\Definition\Priority::from($data['priority'])->value)
-                ->setNotify('1' === $data['enableNotifications'])
-                ->setElapsingCronType('1' === $data['elapsingCronType'])
-                ->setNote($data['note'])
+                ->setAssignee(assignee: $data['assignee'] ? \DoEveryApp\Entity\Worker::getRepository()->find(id: $data['assignee']) : null)
+                ->setGroup(group: $data['group'] ? \DoEveryApp\Entity\Group::getRepository()->find(id: $data['group']) : null)
+                ->setName(name: $data['name'])
+                ->setIntervalType(intervalType: $data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from(value: $data['intervalType'])->value : null)
+                ->setIntervalValue(intervalValue: $data['intervalValue'])
+                ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data['priority'])->value)
+                ->setNotify(notify: '1' === $data['enableNotifications'])
+                ->setElapsingCronType(elapsingCronType: '1' === $data['elapsingCronType'])
+                ->setNote(note: $data['note'])
             ;
-            $task::getRepository()->update($task);
+            $task::getRepository()->update(entity: $task);
 
-            $this->handleCheckListItems($task, $data);
+            $this->handleCheckListItems(task: $task, data: $data);
 
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
                                                 ->flush()
             ;
 
-            \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskEdited());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskEdited());
 
-            return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
+            return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
         return $this->render(
-            'action/task/edit',
-            [
-                'task' => $task,
-                'data' => $data,
-            ]
+            script: 'action/task/edit',
+            data  : [
+                        'task' => $task,
+                        'data' => $data,
+                    ]
         );
     }
 }

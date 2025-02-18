@@ -55,29 +55,29 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
             <?php foreach($executions as $execution): ?>
                 <tr>
                     <td>
-                        <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
+                        <?= \DoEveryApp\Util\View\ExecutionDate::byExecution(execution: $execution) ?>
                     </td>
                     <td>
                         <?php if(null === $execution->getTask()->getGroup()): ?>
                             -
                         <?php endif?>
                         <?php if(null !== $execution->getTask()->getGroup()): ?>
-                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
+                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getGroup()->getName()) ?>
                         <?php endif?>
                     </td>
                     <td>
-                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
-                            <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getName()) ?>
                         </a>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
+                        <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\Worker::get($execution->getWorker()) ?>
+                        <?= \DoEveryApp\Util\View\Worker::get(worker: $execution->getWorker()) ?>
                     </td>
                     <td>
-                        <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
+                        <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -86,6 +86,6 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
 
     </div>
     <div class="column">
-        <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
+        <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
     </div>
 </div>

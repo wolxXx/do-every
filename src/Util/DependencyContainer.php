@@ -18,9 +18,9 @@ class DependencyContainer
     {
         $this
             ->setContainer(
-                (new \DI\ContainerBuilder())
-                    ->useAutowiring(false)
-                    ->useAttributes(false)
+                container: (new \DI\ContainerBuilder())
+                    ->useAutowiring(bool: false)
+                    ->useAttributes(bool: false)
                     ->build()
             )
         ;
@@ -49,29 +49,29 @@ class DependencyContainer
          *
          * @var \Doctrine\ORM\EntityManager $entityManager
          */
-        if (true === $this->container->has(\Doctrine\ORM\EntityManager::class)) {
-            return $this->container->get(\Doctrine\ORM\EntityManager::class);
+        if (true === $this->container->has(id: \Doctrine\ORM\EntityManager::class)) {
+            return $this->container->get(id: \Doctrine\ORM\EntityManager::class);
         }
         require ROOT_DIR . DIRECTORY_SEPARATOR . 'doctrineBootstrap.php';
-        $this->container->set(\Doctrine\ORM\EntityManager::class, $entityManager);
+        $this->container->set(name: \Doctrine\ORM\EntityManager::class, value: $entityManager);
 
         return $this->getEntityManager();
     }
 
     public function getRenderer(): \Slim\Views\PhpRenderer
     {
-        return (new \Slim\Views\PhpRenderer(\ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', [], 'layout/main.php'));
+        return (new \Slim\Views\PhpRenderer(templatePath: \ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'views', attributes: [], layout: 'layout/main.php'));
     }
 
     public function getLogger(): \Monolog\Logger
     {
-        if (true === $this->container->has(\Monolog\Logger::class)) {
-            return $this->container->get(\Monolog\Logger::class);
+        if (true === $this->container->has(id: \Monolog\Logger::class)) {
+            return $this->container->get(id: \Monolog\Logger::class);
         }
-        $logger = (new \Monolog\Logger('logger'))
-            ->pushHandler(new \Monolog\Handler\StreamHandler(ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log', \Monolog\Level::Debug))
+        $logger = (new \Monolog\Logger(name: 'logger'))
+            ->pushHandler(handler: new \Monolog\Handler\StreamHandler(stream: ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log', level: \Monolog\Level::Debug))
         ;
-        $this->container->set(\Monolog\Logger::class, $logger);
+        $this->container->set(name: \Monolog\Logger::class, value: $logger);
 
         return $this->getLogger();
     }
@@ -88,8 +88,8 @@ class DependencyContainer
     public function getValidator(): \Symfony\Component\Validator\Validator\RecursiveValidator
     {
         return new \Symfony\Component\Validator\Validator\RecursiveValidator(
-            new \Symfony\Component\Validator\Context\ExecutionContextFactory(
-                new class () implements \Symfony\Contracts\Translation\TranslatorInterface {
+            contextFactory: new \Symfony\Component\Validator\Context\ExecutionContextFactory(
+                translator: new class () implements \Symfony\Contracts\Translation\TranslatorInterface {
                     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
                     {
                         return DependencyContainer::getInstance()
@@ -104,8 +104,8 @@ class DependencyContainer
                     }
                 }
             ),
-            new \Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory(new \Symfony\Component\Validator\Mapping\Loader\StaticMethodLoader()),
-            new \Symfony\Component\Validator\ConstraintValidatorFactory(),
+            metadataFactory: new \Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory(loader: new \Symfony\Component\Validator\Mapping\Loader\StaticMethodLoader()),
+            validatorFactory: new \Symfony\Component\Validator\ConstraintValidatorFactory(),
         );
     }
 }

@@ -18,7 +18,7 @@ class MenuItem
 
     public function __toString()
     {
-        $isActive = true === in_array($this->currentRoutePattern, $this->activeRoutes);
+        $isActive = true === in_array(needle: $this->currentRoutePattern, haystack: $this->activeRoutes);
         $class    = 'nav-link menu-button';
         if (true === $isActive) {
             $class .= ' menu-button-active active';
@@ -73,14 +73,14 @@ class MenuItem
     {
         return $this
             ->clearActiveRoutes()
-            ->addActiveRoutes($activeRoutes)
-        ;;
+            ->addActiveRoutes(routes: $activeRoutes)
+        ;
     }
 
     public function addActiveRoutes(array $routes): static
     {
         foreach ($routes as $route) {
-            $this->addActiveRoute($route);
+            $this->addActiveRoute(route: $route);
         }
 
         return $this;

@@ -21,7 +21,7 @@ class ApplyPasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (true === $this->isGetRequest()) {
-            return $this->render('action/auth/applyPasswordResetToken', ['data' => []]);
+            return $this->render(script: 'action/auth/applyPasswordResetToken', data: ['data' => []]);
         }
         $data = [];
         try {
@@ -29,49 +29,49 @@ class ApplyPasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
                 ->getRequest()
                 ->getParsedBody()
             ;
-            $data     = $this->filterAndValidate($data);
+            $data     = $this->filterAndValidate(data: $data);
             $existing = \DoEveryApp\Entity\Worker::getRepository()
-                                                 ->findOneByPasswordResetToken($data[static::FORM_FIELD_TOKEN])
+                                                 ->findOneByPasswordResetToken(token: $data[static::FORM_FIELD_TOKEN])
             ;
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
+                \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
 
-                return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+                return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
             if (null === $existing->getTokenValidUntil() || $existing->getTokenValidUntil() < \Carbon\Carbon::now()) {
-                \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
+                \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
 
-                return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+                return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
 
-            \DoEveryApp\Util\Session::Factory('passwordReset')
-                                    ->write('id', $existing->getId())
-                                    ->write('token', $existing->getPasswordResetToken())
-                                    ->write('started', \Carbon\Carbon::now()->format('Y-m-d H:i:s'))
+            \DoEveryApp\Util\Session::Factory(namespace: 'passwordReset')
+                                    ->write(what: 'id', data: $existing->getId())
+                                    ->write(what: 'token', data: $existing->getPasswordResetToken())
+                                    ->write(what: 'started', data: \Carbon\Carbon::now()->format(format: 'Y-m-d H:i:s'))
             ;
 
-            return $this->redirect(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
-        return $this->render('action/auth/applyPasswordResetToken', ['data' => $data]);
+        return $this->render(script: 'action/auth/applyPasswordResetToken', data: ['data' => $data]);
     }
 
     protected function filterAndValidate(array &$data): array
     {
         $data[static::FORM_FIELD_TOKEN] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_TOKEN))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_TOKEN))
         ;
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection([
+        $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
                                                                                   static::FORM_FIELD_TOKEN => [
                                                                                       new \Symfony\Component\Validator\Constraints\NotBlank(),
                                                                                   ],
                                                                               ]);
 
-        $this->validate($data, $validators);
+        $this->validate(data: $data, validators: $validators);
 
         return $data;
     }

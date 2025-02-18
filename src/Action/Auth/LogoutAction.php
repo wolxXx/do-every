@@ -19,6 +19,6 @@ class LogoutAction extends \DoEveryApp\Action\AbstractAction
     {
         \DoEveryApp\Util\User\Current::logout();
 
-        return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
     }
 }

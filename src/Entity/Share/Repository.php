@@ -10,7 +10,7 @@ trait Repository
     {
         return \DoEveryApp\Util\DependencyContainer::getInstance()
                                                    ->getEntityManager()
-                                                   ->getRepository(__CLASS__)
+                                                   ->getRepository(className: __CLASS__)
         ;
     }
 }

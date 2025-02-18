@@ -16,21 +16,21 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $group = \DoEveryApp\Entity\Group::getRepository()->find($this->getArgumentSafe());
+        $group = \DoEveryApp\Entity\Group::getRepository()->find(id: $this->getArgumentSafe());
         if (false === $group instanceof \DoEveryApp\Entity\Group) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
 
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
 
-        $group::getRepository()->delete($group);
+        $group::getRepository()->delete(entity: $group);
 
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getEntityManager()
                                             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupDeleted());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupDeleted());
 
-        return $this->redirect(\DoEveryApp\Action\Task\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Task\IndexAction::getRoute());
     }
 }

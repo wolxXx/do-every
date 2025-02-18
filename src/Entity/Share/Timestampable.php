@@ -8,7 +8,7 @@ trait Timestampable
 {
     protected function onCreateTS($model): static
     {
-        if (true === method_exists($model, 'setCreatedAt')) {
+        if (true === method_exists(object_or_class: $model, method: 'setCreatedAt')) {
             $model->setCreatedAt(\Carbon\Carbon::now());
         }
 
@@ -17,7 +17,7 @@ trait Timestampable
 
     protected function onUpdateTS($model): static
     {
-        if (true === method_exists($model, 'setUpdatedAt')) {
+        if (true === method_exists(object_or_class: $model, method: 'setUpdatedAt')) {
             $model->setUpdatedAt(\Carbon\Carbon::now());
         }
 

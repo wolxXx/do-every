@@ -10,12 +10,12 @@ class ErrorStore
 
     public function hasError(string $key): bool
     {
-        return \array_key_exists($key, $this->errors) && 0 !== count($this->errors[$key]);
+        return \array_key_exists(key: $key, array: $this->errors) && 0 !== count(value: $this->errors[$key]);
     }
 
     public function getErrors(string $key): array
     {
-        if (false === $this->hasError($key)) {
+        if (false === $this->hasError(key: $key)) {
             return [];
         }
 
@@ -24,7 +24,7 @@ class ErrorStore
 
     public function addError(string $key, string $message): static
     {
-        if (false === \array_key_exists($key, $this->errors)) {
+        if (false === \array_key_exists(key: $key, array: $this->errors)) {
             $this->errors[$key] = [];
         }
         $this->errors[$key][] = $message;

@@ -1,10 +1,10 @@
 <?php
 $dbName = 'do_every';
-if (true === defined('IS_IN_TEST_ENV') && true === IS_IN_TEST_ENV) {
+if (true === defined(constant_name: 'IS_IN_TEST_ENV') && true === IS_IN_TEST_ENV) {
     $dbName .= '_test';
 }
 
-defined('DISABLE_DOCTRINE_TOOLS') || define('DISABLE_DOCTRINE_TOOLS', false);
+defined(constant_name: 'DISABLE_DOCTRINE_TOOLS') || define(constant_name: 'DISABLE_DOCTRINE_TOOLS', value: false);
 
 return [
     'table_prefix'  => 'do_every_',

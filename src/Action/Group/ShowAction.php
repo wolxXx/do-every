@@ -16,14 +16,14 @@ class ShowAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $group = \DoEveryApp\Entity\Group::getRepository()->find($this->getArgumentSafe());
+        $group = \DoEveryApp\Entity\Group::getRepository()->find(id: $this->getArgumentSafe());
         if (false === $group instanceof \DoEveryApp\Entity\Group) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupNotFound());
 
-            return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
 
-        return $this->render('action/group/show', [
+        return $this->render(script: 'action/group/show', data: [
             'group' => $group,
         ]);
     }

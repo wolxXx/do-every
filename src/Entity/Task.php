@@ -155,7 +155,7 @@ class Task
         if (true === isset($this->dueCacheValue)) {
             return $this->dueCacheValue;
         }
-        $lastExecution = $this::getRepository()->getLastExecution($this);
+        $lastExecution = $this::getRepository()->getLastExecution(task: $this);
         if (null === $lastExecution) {
             $this->dueCacheValue = null;
 
@@ -171,32 +171,32 @@ class Task
 
             return $this->dueCacheValue;
         }
-        $due = \Carbon\Carbon::create($lastExecution->getDate());
+        $due = \Carbon\Carbon::create(year: $lastExecution->getDate());
         $now = \Carbon\Carbon::now();
         switch ($this->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {
-                return $this->calculateDue($due->addMinutes($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addMinutes($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::HOUR->value:
             {
-                return $this->calculateDue($due->addHours($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addHours($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::DAY->value:
             {
-                return $this->calculateDue($due->addDays($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addDays($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::MONTH->value:
             {
-                return $this->calculateDue($due->addMonths($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addMonths($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::YEAR->value:
             {
-                return $this->calculateDue($due->addYears($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addYears($this->getIntervalValue()));
             }
         }
 
-        throw new \RuntimeException('WTF?');
+        throw new \RuntimeException(message: 'WTF?');
     }
 
     protected function calculateDue(?\Carbon\Carbon $due): int|null|float
@@ -205,7 +205,7 @@ class Task
             return null;
         }
         $now  = \Carbon\Carbon::now();
-        $diff = $now->diff($due);
+        $diff = $now->diff(date: $due);
         if (0 !== $diff->y) {
             $dueDays = $diff->y + ($diff->m / 12);
             if ($due < $now) {

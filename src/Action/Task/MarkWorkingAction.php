@@ -16,8 +16,8 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
 
     public static function getRoute(int $id, ?int $workingOn = null): string
     {
-        $reflection = new \ReflectionClass(__CLASS__);
-        foreach ($reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class) as $attribute) {
+        $reflection = new \ReflectionClass(objectOrClass: __CLASS__);
+        foreach ($reflection->getAttributes(name: \DoEveryApp\Attribute\Action\Route::class) as $attribute) {
             $route = '/task/working/' . $id;
             if (null !== $workingOn) {
                 $route .= '/' . $workingOn;
@@ -26,7 +26,7 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
             return $route;
         }
 
-        throw new \RuntimeException('Could not determine route path');
+        throw new \RuntimeException(message: 'Could not determine route path');
     }
 
     public function run(): \Psr\Http\Message\ResponseInterface
@@ -35,26 +35,26 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
         try {
-            $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe('worker'));
+            $worker = \DoEveryApp\Entity\Worker::getRepository()->find(id: $this->getArgumentSafe(argumentName: 'worker'));
             if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->workerNotFound());
+                \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->workerNotFound());
 
-                return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+                return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
-            $task->setWorkingOn($worker);
-            \DoEveryApp\Entity\Task::getRepository()->update($task);
-            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->workerAssigned());
+            $task->setWorkingOn(workingOn: $worker);
+            \DoEveryApp\Entity\Task::getRepository()->update(entity: $task);
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerAssigned());
         } catch (\DoEveryApp\Exception\ArgumentNoSet $exception) {
             // ok, argument was not set...
-            $task->setWorkingOn(null);
-            \DoEveryApp\Entity\Task::getRepository()->update($task);
-            \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->assignmentRemoved());
+            $task->setWorkingOn(workingOn: null);
+            \DoEveryApp\Entity\Task::getRepository()->update(entity: $task);
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->assignmentRemoved());
         }
         $this
             ->entityManager
             ->flush()
         ;
 
-        return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
+        return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
     }
 }

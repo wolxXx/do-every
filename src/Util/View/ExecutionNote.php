@@ -17,7 +17,7 @@ class ExecutionNote
             return '';
         }
 
-        $note = nl2br(\DoEveryApp\Util\View\Escaper::escape($note));
+        $note = nl2br(string: \DoEveryApp\Util\View\Escaper::escape(value: $note));
 
         return '<div class="executionNote">' . $note . '</div>';
     }

@@ -51,7 +51,7 @@ class IntervalHelper
                 return $isPlural ? $translator->dueIsEvery() . ' ' . $intervalValue . ' ' . $translator->years() : $translator->dueIsEveryYear();
             }
         }
-        throw new \InvalidArgumentException('??' . $task->getIntervalType() . $task->getIntervalValue());
+        throw new \InvalidArgumentException(message: '??' . $task->getIntervalType() . $task->getIntervalValue());
     }
 
     public static function map(\DoEveryApp\Definition\IntervalType $intervalType): string
@@ -79,7 +79,7 @@ class IntervalHelper
             }
             default:
             {
-                throw new \InvalidArgumentException('??' . $intervalType->name);
+                throw new \InvalidArgumentException(message: '??' . $intervalType->name);
             }
         }
     }
