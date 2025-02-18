@@ -25,6 +25,16 @@ declare(strict_types=1);
                 <td>
                     <?= $timer->getId() ?>
                 </td>
+                <td>
+                    <?= $timer->getWorker()->getId() ?>
+                    <?= $timer->getWorker()->getName() ?>
+                </td>
+                <td>
+                    <? foreach ($timer->getSections() as $section): ?>
+                        <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($section->getStart()) ?> -
+                        <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getEnd()) ?>
+                    <? endforeach  ?>
+                </td>
             </tr>
         <? endforeach ?>
     </tbody>

@@ -9,20 +9,33 @@ class Timer
     public function isRunning(\DoEveryApp\Entity\Task $task, \DoEveryApp\Entity\Worker $worker): bool
     {
         return null !== \DoEveryApp\Entity\Task\Timer\Section::getRepository()
-                                                             ->createQueryBuilder('section')
-                                                             ->innerJoin('section.timer', 'timer')
-                                                             ->innerJoin('timer.task', 'task')
-                                                             ->andWhere('task.id = :taskId')
-                                                             ->setParameter('taskId', $task->getId())
-                                                             ->andWhere('timer.worker = :workerId')
-                                                             ->setParameter('workerId', $worker->getId())
-                                                             ->getQuery()
-                                                             ->getOneOrNullResult()
-        ;
+                ->createQueryBuilder('section')
+                ->innerJoin('section.timer', 'timer')
+                ->innerJoin('timer.task', 'task')
+                ->andWhere('task.id = :taskId')
+                ->setParameter('taskId', $task->getId())
+                ->andWhere('timer.worker = :workerId')
+                ->setParameter('workerId', $worker->getId())
+                ->andWhere('timer.stopped = false')
+                ->andWhere('section.end IS NULL')
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 
     public function isPaused(\DoEveryApp\Entity\Task $task, \DoEveryApp\Entity\Worker $worker): bool
     {
+        return null === \DoEveryApp\Entity\Task\Timer\Section::getRepository()
+                ->createQueryBuilder('section')
+                ->innerJoin('section.timer', 'timer')
+                ->innerJoin('timer.task', 'task')
+                ->andWhere('task.id = :taskId')
+                ->setParameter('taskId', $task->getId())
+                ->andWhere('timer.worker = :workerId')
+                ->setParameter('workerId', $worker->getId())
+                ->andWhere('timer.stopped = false')
+                ->andWhere('section.end IS NOT NULL')
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 
     public function startOrContinue(\DoEveryApp\Entity\Task $task, \DoEveryApp\Entity\Worker $worker): bool
@@ -40,18 +53,36 @@ class Timer
             ->setParameter('workerId', $worker->getId())
             ->andWhere('timer.stopped = false')
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
+        if (true === $runningTimer instanceof \DoEveryApp\Entity\Task\Timer) {
+            $activeSection = \DoEveryApp\Entity\Task\Timer\Section::getRepository()
+                ->createQueryBuilder('section')
+                ->andWhere('section.timer = :timer')
+                ->setParameter('timer', $runningTimer)
+                ->andWhere('section.end IS NULL')
+                ->getQuery()
+                ->getOneOrNullResult();
+            if (true === $activeSection instanceof \DoEveryApp\Entity\Task\Timer\Section) {
+                return true;
+            }
+            $activeSection = new \DoEveryApp\Entity\Task\Timer\Section()
+                ->setTimer($runningTimer)
+                ->setStart(\Carbon\Carbon::now());
+            $activeSection::getRepository()->create($activeSection);
+            DependencyContainer::getInstance()
+                ->getEntityManager()
+                ->flush();
 
-        $newTimer   = new \DoEveryApp\Entity\Task\Timer()
+            return true;
+        }
+
+        $newTimer = new \DoEveryApp\Entity\Task\Timer()
             ->setWorker($worker)
-            ->setTask($task)
-        ;
+            ->setTask($task);
         $newTimer::getRepository()->create($newTimer);
         $nesSection = new \DoEveryApp\Entity\Task\Timer\Section()
             ->setTimer($newTimer)
-            ->setStart(\Carbon\Carbon::now())
-        ;
+            ->setStart(\Carbon\Carbon::now());
         $nesSection::getRepository()->create($nesSection);
         DependencyContainer::getInstance()->getEntityManager()->flush();
 
