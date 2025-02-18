@@ -24,7 +24,7 @@ class BufferContainer
     {
         \Revolt\EventLoop::run();
 
-        $result               = \implode(' ', $this->bufferContents);
+        $result               = \implode(separator: ' ', array: $this->bufferContents);
         $this->bufferContents = [];
 
         return $result;

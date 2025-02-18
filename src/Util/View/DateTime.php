@@ -15,10 +15,10 @@ class DateTime
         return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE)->format($dateTime) . '</nobr>';
     }
 
-    public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime): string
+    public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime, ?string $emptyValue = null): string
     {
         if (null === $dateTime) {
-            return '-';
+            return $emptyValue ??'-';
         }
 
         return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime) . '</nobr>';

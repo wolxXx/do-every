@@ -9,29 +9,29 @@ class DisplayValue
     public static function do(mixed $value): string
     {
         switch (true) {
-            case \is_null($value):
+            case \is_null(value: $value):
             {
                 return '-null-';
             }
-            case \is_bool($value):
+            case \is_bool(value: $value):
             {
-                return Boolean::get($value);
+                return Boolean::get(value: $value);
             }
-            case \is_int($value):
+            case \is_int(value: $value):
             {
                 return (string)$value;
             }
-            case \is_float($value):
+            case \is_float(value: $value):
             {
-                return \NumberFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \NumberFormatter::PATTERN_DECIMAL)->format($value);
+                return \NumberFormatter::create(locale: \DoEveryApp\Util\User\Current::getLocale(), style: \NumberFormatter::PATTERN_DECIMAL)->format(num: $value);
             }
-            case \is_a($value, \DateTime::class):
+            case \is_a(object_or_class: $value, class: \DateTime::class):
             {
-                return DateTime::getDateTimeMediumDateMediumTime($value);
+                return DateTime::getDateTimeMediumDateMediumTime(dateTime: $value);
             }
             default:
             {
-                return Escaper::escape($value);
+                return Escaper::escape(value: $value);
             }
         }
     }
