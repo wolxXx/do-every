@@ -22,7 +22,8 @@ class Session
     public static function Factory(string $namespace): static
     {
         if (false === static::$hasSetSaveHandler) {
-            \session_set_save_handler(sessionhandler: new SessionSaveHandler(entityManager: DependencyContainer::getInstance()->getEntityManager()));
+
+            \session_set_save_handler(new SessionSaveHandler(entityManager: DependencyContainer::getInstance()->getEntityManager()));
             static::$hasSetSaveHandler = true;
         }
         $instance            = new static();
