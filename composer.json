@@ -20,11 +20,12 @@
     "optimize-autoloader": true,
     "secure-http": false,
     "allow-plugins": {
+      "infection/extension-installer": true,
       "mouf/nodejs-installer": true
     }
   },
   "scripts": {
-    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest --verbose  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox",
+    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox",
     "paratestNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/bin/paratest  --configuration test/phpunit.xml --display-incomplete --display-skipped --display-deprecations",
     "test": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox-html test/testdocs.html --testdox --cache-result",
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
@@ -85,6 +86,7 @@
     "guzzlehttp/guzzle": "*",
     "guzzlehttp/promises": "*",
     "guzzlehttp/psr7": "*",
+    "infection/infection": "*",
     "laminas/laminas-filter": "*",
     "laminas/laminas-json": "*",
     "laminas/laminas-paginator": "*",
