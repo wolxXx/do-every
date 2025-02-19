@@ -9,14 +9,16 @@ class German implements \DoEveryApp\Util\Translator
     public function translate($what, ...$args): string
     {
         switch ($what) {
+            case 'test':
+            {
+                return 'Test!';
+            }
             case 'This value should not be blank.':
             {
                 return 'Es wird eine Eingabe benötigt.';
             }
         }
-        \var_dump($what, ...$args);
-
-        return '' . $what;
+        throw new \InvalidArgumentException('Unknown translation: ' . $what);
     }
 
     public function dashboard(): string

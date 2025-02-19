@@ -79,12 +79,14 @@ class Nothing implements \DoEveryApp\Util\Translator
         return $this->debug();
     }
 
-    public function confirmPassword(): string
+
+    public function dashboardLastPasswordChange(\DateTime $dateTime): string
     {
         return $this->debug();
     }
 
-    public function dashboardLastPasswordChange(\DateTime $dateTime): string
+
+    public function confirmPassword(): string
     {
         return $this->debug();
     }
