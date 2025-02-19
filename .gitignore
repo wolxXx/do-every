@@ -12,6 +12,9 @@
 /test/coverage
 
 /cache
+/docs/.idea
+/docs/webHelpDE2-all
+/docs/webHelpDE2-all.zip
 /docker-volumes/backups
 /log
 /public/vendor
