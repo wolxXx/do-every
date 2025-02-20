@@ -4,7 +4,7 @@ namespace DoEveryApp\Util;
 
 final class JsonGateway
 {
-    public static function Factory($data, \Psr\Http\Message\ResponseInterface $response): \Psr\Http\Message\ResponseInterface
+    public static function Factory(\Psr\Http\Message\ResponseInterface $response, mixed $data = [], int $code = 200, string $reason = 'OK'): \Psr\Http\Message\ResponseInterface
     {
         $jsonObject = \Laminas\Json\Json::encode(
             valueToEncode: $data,
@@ -23,6 +23,8 @@ final class JsonGateway
             ->getBody()
             ->write(string: $jsonObject)
         ;
+        $response->getBody()->rewind();
+        $response = $response->withStatus($code, $reason);
 
         return $response->withHeader(name: 'Content-Type', value: 'application/json');
     }
