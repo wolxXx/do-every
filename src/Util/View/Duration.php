@@ -49,6 +49,6 @@ class Duration
         }
         $duration = round(num: $duration / 24);
 
-        return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->days();
+        return $duration . ' ' . \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->daysPluralized($duration);
     }
 }
