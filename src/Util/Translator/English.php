@@ -391,6 +391,18 @@ class English implements \DoEveryApp\Util\Translator
         return 'days';
     }
 
+    public function daysPluralized(null|int|float $dayAmount = 0): string
+    {
+        if (null === $dayAmount) {
+            return '-';
+        }
+        if (1 === $dayAmount || 1.0 === $dayAmount) {
+            return 'day';
+        }
+        return 'days';
+    }
+
+
     public function month(): string
     {
         return 'month';

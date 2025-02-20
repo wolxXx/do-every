@@ -391,6 +391,18 @@ class German implements \DoEveryApp\Util\Translator
         return 'Tagen';
     }
 
+
+    public function daysPluralized(null|int|float $dayAmount = 0): string
+    {
+        if (null === $dayAmount) {
+            return '-';
+        }
+        if (1 === $dayAmount || 1.0 === $dayAmount) {
+            return 'Tag';
+        }
+        return 'Tage';
+    }
+
     public function month(): string
     {
         return 'Monat';

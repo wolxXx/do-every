@@ -242,6 +242,8 @@ interface Translator
 
     public function days(): string;
 
+    public function daysPluralized(null|int|float $dayAmount = 0): string;
+
 
     public function month(): string;
 

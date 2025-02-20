@@ -391,6 +391,12 @@ class Nothing implements \DoEveryApp\Util\Translator
         return $this->debug();
     }
 
+
+    public function daysPluralized(null|int|float $dayAmount = 0): string
+    {
+        return $this->debug();
+    }
+
     public function month(): string
     {
         return $this->debug();

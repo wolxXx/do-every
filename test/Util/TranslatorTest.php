@@ -88,7 +88,8 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                     unset($parameterType);
                     continue;
                 }
-                switch (get_class($parameter->getType())) { #ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType
+                $parameterTypeClass = get_class($parameter->getType());
+                switch ($parameterTypeClass) { #ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType
 
                     case \ReflectionNamedType::class:
                     {
@@ -105,9 +106,18 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                     case \ReflectionUnionType::class:
                     {
                         /**
-                         * @var \ReflectionUnionType $parameter
+                         * @var \ReflectionUnionType $parameterTypes
                          */
-                        throw new \RuntimeException('Union types are not supported');
+                        $parameterTypes = $parameter->getType();
+                        $unionTypes = $parameterTypes->getTypes();
+                        foreach ($unionTypes as $unionType) {
+                            $unionType = trim(' ' . $unionType . ' ');
+                            if(true === in_array(needle: $unionType, haystack: ['string', 'int', 'DateTime'], strict: true)) {
+                                $parameters[$parameterName] = $unionType;
+                                break 2;
+                            }
+                        }
+                        throw new \RuntimeException('Union types "'. implode(', ', $unionTypes) .'" are not supported');
                         break;
                     }
 
@@ -120,7 +130,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                     }
                     default:
                     {
-                        throw new \RuntimeException('Unknown parameter type "' . get_class($parameter->getType()) . '" for mehtod "' . $method->getName() . '"');
+                        throw new \RuntimeException('Unknown parameter type "' . $parameterTypeClass . '" for mehtod "' . $method->getName() . '"');
                     }
                 }
                 unset($parameter);
