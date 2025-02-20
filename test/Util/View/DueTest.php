@@ -37,6 +37,18 @@ class DueTest extends \DoEveryAppTest\TestBase
             ;
         $inTenDaysTaskExecution::getRepository()->create(entity: $inTenDaysTaskExecution);
 
+        $tenDaysBeforeTask = (new \DoEveryApp\Entity\Task())
+            ->setName(name: 'Test Task')
+            ->setIntervalType(intervalType: \DoEveryApp\Definition\IntervalType::DAY->value)
+            ->setIntervalValue(intervalValue: 12)
+        ;
+        $tenDaysBeforeTask::getRepository()->create(entity: $tenDaysBeforeTask);
+        $tenDaysBeforeTaskExecution = (new \DoEveryApp\Entity\Execution())
+            ->setTask(task: $tenDaysBeforeTask)
+            ->setDate(date: new \DateTime(datetime: '2023-12-25 11:00:00'))
+            ;
+        $tenDaysBeforeTaskExecution::getRepository()->create(entity: $tenDaysBeforeTaskExecution);
+
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getEntityManager()
                                             ->flush()
@@ -46,6 +58,7 @@ class DueTest extends \DoEveryAppTest\TestBase
         return [
             ['jetzt fällig', $nowDueTask],
             ['fällig in 2,958 Tagen', $inTenDaysTask],
+            ['fällig seit 4,042 Tagen', $tenDaysBeforeTask],
         ];
 
     }
