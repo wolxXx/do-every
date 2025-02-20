@@ -10,6 +10,7 @@
 /test/.phpunit.result.cache
 /test/testdocs.html
 /test/coverage
+/.infection.log
 
 /cache
 /docs/.idea
@@ -20,3 +21,4 @@
 /public/vendor
 /vendor
 /.php-cs-fixer.cache
+
