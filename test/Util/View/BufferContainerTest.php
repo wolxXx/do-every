@@ -45,6 +45,6 @@ class BufferContainerTest extends \DoEveryAppTest\TestBase
             echo 'lorl rofl';
             $container->set(registration: $id, content: ob_get_clean());
         }, $container->next());
-        $this->assertSame(expected: 'asdf foobar lorl rofl', actual: $container->get());
+        $this->assertSame(expected: 'asdf foobar lorl rofl', actual: ''.$container);
     }
 }
