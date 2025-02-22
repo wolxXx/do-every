@@ -35,7 +35,7 @@ services:
 
 
   web:
-    image: wolxxxy/php84:lastest
+    image: wolxxxy/php84:latest
     restart: always
     container_name: "do-every-__INSTANCE__-php83-web"
     depends_on:
