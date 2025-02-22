@@ -35,9 +35,7 @@ services:
 
 
   web:
-    build:
-      context: ./
-      no_cache: true
+    image: wolxxxy/php84:lastest
     restart: always
     container_name: "do-every-__INSTANCE__-php83-web"
     depends_on:
