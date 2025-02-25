@@ -4,11 +4,12 @@
 
 <instance-profile id="de"
                  name="Do Every*"
-                 start-page="how-to-install.topic">
+                 start-page="Welcome.topic">
 
-    <toc-element topic="how-to-install.topic"/>
+    <toc-element topic="Welcome.topic"/>
     <toc-element topic="do-foo.topic">
     </toc-element>
+    <toc-element topic="how-to-install.topic"/>
     <toc-element toc-title="New Section">
         <toc-element topic="jajaja.topic"/>
     </toc-element>
