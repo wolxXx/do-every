@@ -41,7 +41,9 @@
     "dbFull": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose && php bin/doctrine orm:schema-tool:update --force --verbose",
     "dbDry": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
     "validateSchema": "php bin/doctrine orm:validate-schema --verbose",
-    "fixtures": "php scripts/fixtures.php"
+    "fixtures": "php scripts/fixtures.php",
+    "post-install-cmd": "./install.sh",
+    "post-update-cmd": "./install.sh"
   },
   "autoload": {
     "psr-4": {
