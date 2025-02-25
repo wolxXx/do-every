@@ -1,4 +1,6 @@
 /.idea
+/docs/Writerside/.idea
+/docs/Writerside/webHelpDE2-all.zip
 /.env
 /app.log
 /docker-compose.yml

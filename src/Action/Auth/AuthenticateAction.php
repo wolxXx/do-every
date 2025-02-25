@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Auth;
 
@@ -12,7 +12,8 @@ namespace DoEveryApp\Action\Auth;
     ],
     authRequired: false
 )]
-class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
+class AuthenticateAction extends
+    \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
@@ -24,18 +25,32 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
     {
         $session = \DoEveryApp\Util\Session::Factory(namespace: '2faValidate');
         $userId  = $session->get(what: 'user');
-        if (null === $userId || false === \DoEveryApp\Entity\Worker::getRepository()->find(id: $userId) instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+        if (
+            null === $userId || false === \DoEveryApp\Entity\Worker::getRepository()
+                                                                   ->find(id: $userId) instanceof \DoEveryApp\Entity\Worker
+        ) {
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                    ->getTranslator()
+                                                                                                    ->defaultErrorMessage(),
+            );
             $session->reset();
 
             return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
         }
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find(id: $userId);
+        $worker = \DoEveryApp\Entity\Worker::getRepository()
+                                           ->find(id: $userId)
+        ;
         if (true === $this->isGetRequest()) {
-            return $this->render(script: 'action/auth/authenticate', data: ['data' => []]);
+            return $this->render(
+                script: 'action/auth/authenticate',
+                data  : ['data' => []],
+            );
         }
         try {
-            $data         = $this->getRequest()->getParsedBody();
+            $data         = $this
+                ->getRequest()
+                ->getParsedBody()
+            ;
             $data         = $this->filterAndValidate(data: $data);
             $code         = $data['code'];
             $recoveryCode = $data['recoveryCode'];
@@ -45,7 +60,10 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                 $verified         = $twoFactorUtility->verify(token: $code, secret: $worker->getTwoFactorSecret());
                 if (false === $verified) {
                     $session->reset();
-                    \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+                    \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                            ->getTranslator()
+                                                                                                            ->defaultErrorMessage(),
+                    );
 
                     return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
                 }
@@ -62,7 +80,9 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                             throw new \InvalidArgumentException();
                         }
                         $worker->setTwoFactorRecoverCode1UsedAt(twoFactorRecoverCode1UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()->update(entity: $worker);
+                        $worker::getRepository()
+                               ->update(entity: $worker)
+                        ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
@@ -76,7 +96,9 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                             throw new \InvalidArgumentException();
                         }
                         $worker->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()->update(entity: $worker);
+                        $worker::getRepository()
+                               ->update(entity: $worker)
+                        ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
@@ -90,7 +112,9 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                             throw new \InvalidArgumentException();
                         }
                         $worker->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()->update(entity: $worker);
+                        $worker::getRepository()
+                               ->update(entity: $worker)
+                        ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
@@ -101,41 +125,50 @@ class AuthenticateAction extends \DoEveryApp\Action\AbstractAction
                     }
                 } catch (\Throwable) {
                     $session->reset();
-                    \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+                    \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                            ->getTranslator()
+                                                                                                            ->defaultErrorMessage(),
+                    );
 
                     return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
                 }
             }
 
             $session->reset();
-            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                    ->getTranslator()
+                                                                                                    ->defaultErrorMessage(),
+            );
 
             return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
-        return $this->render(script: 'action/auth/authenticate', data: ['data' => []]);
+        return $this->render(
+            script: 'action/auth/authenticate',
+            data  : ['data' => []],
+        );
     }
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_CODE]          = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_CODE]          = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CODE))
         ;
-        $data[static::FORM_FIELD_RECOVERY_CODE] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_RECOVERY_CODE] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_RECOVERY_CODE))
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
-                                                                                  static::FORM_FIELD_CODE          => [
-                                                                                  ],
-                                                                                  static::FORM_FIELD_RECOVERY_CODE => [
-                                                                                  ],
-                                                                              ]);
+                                                                                          static::FORM_FIELD_CODE          => [
+                                                                                          ],
+                                                                                          static::FORM_FIELD_RECOVERY_CODE => [
+                                                                                          ],
+                                                                                      ]);
 
         $this->validate(data: $data, validators: $validators);
 

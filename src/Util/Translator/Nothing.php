@@ -1,17 +1,22 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
-class Nothing implements \DoEveryApp\Util\Translator
+use DoEveryApp\Util\Debugger;
+
+class Nothing implements
+    \DoEveryApp\Util\Translator
 {
     protected function debug(): string
     {
         #return '.';
         return (new \InvalidArgumentException())->getTrace()[1]['function'] . '()';
 
-        return \Faker\Factory::create()->word();
+        return \Faker\Factory::create()
+                             ->word()
+        ;
     }
 
     public function translate($what, ...$args): string
@@ -878,6 +883,86 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
     public function help(): string
+    {
+        return $this->debug();
+    }
+
+    public function areYouSure(): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToDeleteTask(string $name): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToDeleteGroup(string $name): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToResetTask(string $name): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToDeleteExecution(): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToDeleteWorker(string $name): string
+    {
+        return $this->debug();
+    }
+
+    public function reallyWantToResetTwoFactor(string $name): string
+    {
+        return $this->debug();
+    }
+
+    public function noGroupsFound(): string
+    {
+        return $this->debug();
+    }
+
+    public function noTasksFound(): string
+    {
+        return $this->debug();
+    }
+
+    public function welcomeUser(string $useName): string
+    {
+        return $this->debug();
+    }
+
+    public function timerStart(): string
+    {
+        return $this->debug();
+    }
+
+    public function timerPause(): string
+    {
+        return $this->debug();
+    }
+
+    public function timerStop(): string
+    {
+        return $this->debug();
+    }
+
+    public function timerReset(): string
+    {
+        return $this->debug();
+    }
+
+    public function timerTakeTime(): string
+    {
+        return $this->debug();
+    }
+
+    public function timer(): string
     {
         return $this->debug();
     }

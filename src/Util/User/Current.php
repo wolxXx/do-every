@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Util\User;
 
+use DoEveryApp\Util\DependencyContainer;
+
 class Current
 {
     public const string LANGUAGE_GERMAN  = 'de';
@@ -57,7 +59,8 @@ class Current
                                             ->flush()
         ;
 
-        \DoEveryApp\Util\FlashMessenger::addSuccess(message: 'welcome, ' . \DoEveryApp\Util\View\Worker::get(worker: $user));
+
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: DependencyContainer::getInstance()->getTranslator()->welcomeUser(\DoEveryApp\Util\View\Worker::get(worker: $user)));
     }
 
     public static function isAuthenticated(): bool

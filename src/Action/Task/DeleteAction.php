@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Task;
 
-#[\DoEveryApp\Attribute\Action\Route(
-    path   : '/task/delete/{id:[0-9]+}',
-    methods: [
+#[\DoEveryApp\Attribute\Action\Route(path: '/task/delete/{id:[0-9]+}', methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
-    ],
-)]
-class DeleteAction extends \DoEveryApp\Action\AbstractAction
+    ],)]
+class DeleteAction extends
+    \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
     use \DoEveryApp\Action\Share\Task;
@@ -21,12 +19,13 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
 
-        $task::getRepository()->delete(entity: $task);
-        $this
-            ->entityManager
-            ->flush()
+        $task::getRepository()
+             ->delete(entity: $task)
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskDeleted());
+        $this->entityManager->flush();
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                 ->getTranslator()
+                                                                                                 ->taskDeleted());
 
         return $this->redirect(to: \DoEveryApp\Action\Task\IndexAction::getRoute());
     }

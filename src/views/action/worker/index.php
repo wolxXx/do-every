@@ -130,12 +130,12 @@ declare(strict_types=1);
                             </a>
                         <?php endif ?>
                         <?php if(null !== $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
+                            <a class="warningButton confirm" data-messge="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTwoFactor(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
                                 <?= \DoEveryApp\Util\View\Icon::off() ?>
                                 <?= $translator->removeTwoFactor() ?>
                             </a>
                         <?php endif ?>
-                        <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute(id: $worker->getId()) ?>">
+                        <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteWorker(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
                     </nobr>

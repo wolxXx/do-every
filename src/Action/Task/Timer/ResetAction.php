@@ -6,12 +6,12 @@ namespace DoEveryApp\Action\Task\Timer;
 
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/task/timer/run/{id:[0-9]+}',
+    path   : '/task/timer/reset/{id:[0-9]+}',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
 )]
-class RunAction extends
+class ResetAction extends
     \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SingleIdRoute;
@@ -20,10 +20,11 @@ class RunAction extends
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (false === ($task = $this->getTask()) instanceof \DoEveryApp\Entity\Task) {
-            return $task;
+            return \DoEveryApp\Util\JsonGateway::Factory(response: $this->getResponse(), data: ['message' => 'task not found'], code: 404);
         }
         \DoEveryApp\Util\QueryLogger::$disabled = true;
-        new \DoEveryApp\Util\Timer()->startOrContinue(task: $task, worker: \DoEveryApp\Util\User\Current::get());
+
+        new \DoEveryApp\Util\Timer()->reset(task: $task, worker: \DoEveryApp\Util\User\Current::get());
 
         return \DoEveryApp\Util\JsonGateway::Factory(response: $this->getResponse());
     }

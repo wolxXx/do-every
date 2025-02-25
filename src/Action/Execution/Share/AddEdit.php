@@ -73,6 +73,7 @@ trait AddEdit
         $data[static::FORM_FIELD_DURATION] = (new \Laminas\Filter\FilterChain())
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
+            ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(static::FORM_FIELD_DURATION))
         ;
         $data[static::FORM_FIELD_NOTE]     = (new \Laminas\Filter\FilterChain())

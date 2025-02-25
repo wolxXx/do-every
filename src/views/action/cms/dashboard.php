@@ -63,7 +63,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
 </script>
 
 <div id="passwordChange">
-    <?php if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswortChange(worker: $currentUser)): ?>
+    <?php if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $currentUser)): ?>
         <fieldset>
             <legend>
                 <?= $translator->attention() ?>
@@ -250,7 +250,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
                                 <a class="warningButton" title="<?= $translator->edit() ?>" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                 </a>
-                                <a class="dangerButton confirm" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
+                                <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteTask(name: $task->getName())) ?>" title="<?= $translator->delete() ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                 </a>
                             </nobr>

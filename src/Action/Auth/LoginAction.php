@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Auth;
 
@@ -12,7 +12,8 @@ namespace DoEveryApp\Action\Auth;
     ],
     authRequired: false
 )]
-class LoginAction extends \DoEveryApp\Action\AbstractAction
+class LoginAction extends
+    \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
@@ -22,25 +23,46 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        $currentUser = \DoEveryApp\Util\User\Current::get();
         if (true === \DoEveryApp\Util\User\Current::isAuthenticated()) {
             return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
         }
 
         if (true === $this->isGetRequest()) {
-            return $this->render(script: 'action/auth/login', data: ['data' => []]);
+            return $this->render(
+                script: 'action/auth/login',
+                data  : ['data' => []],
+            );
         }
         $data = [];
         try {
-            $data     = $this->getRequest()->getParsedBody();
+            $data     = $this
+                ->getRequest()
+                ->getParsedBody()
+            ;
             $data     = $this->filterAndValidate(data: $data);
-            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail(email: $data[static::FORM_FIELD_EMAIL]);
+            $existing = \DoEveryApp\Entity\Worker::getRepository()
+                                                 ->findOneByEmail(email: $data[static::FORM_FIELD_EMAIL])
+            ;
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                $this->getErrorStore()->addError(key: static::FORM_FIELD_EMAIL, message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->userNotFound());
+                $this
+                    ->getErrorStore()
+                    ->addError(
+                        key    : static::FORM_FIELD_EMAIL,
+                        message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                     ->getTranslator()
+                                                                     ->userNotFound())
+                ;
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
             if (false === \DoEveryApp\Util\Password::verify(password: $data[static::FORM_FIELD_PASSWORD], hash: $existing->getPassword())) {
-                $this->getErrorStore()->addError(key: static::FORM_FIELD_EMAIL, message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->userNotFound());
+                $this
+                    ->getErrorStore()
+                    ->addError(
+                        key    : static::FORM_FIELD_EMAIL,
+                        message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                     ->getTranslator()
+                                                                     ->userNotFound())
+                ;
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
@@ -54,7 +76,7 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\User\Current::login(user: $existing);
 
             return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/auth/login', data: ['data' => $data]);
@@ -62,25 +84,25 @@ class LoginAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_EMAIL]    = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_EMAIL]    = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_EMAIL))
         ;
-        $data[static::FORM_FIELD_PASSWORD] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD))
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
-                                                                                  static::FORM_FIELD_EMAIL    => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                                  static::FORM_FIELD_PASSWORD => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                              ]);
+                                                                                          static::FORM_FIELD_EMAIL    => [
+                                                                                              new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                          ],
+                                                                                          static::FORM_FIELD_PASSWORD => [
+                                                                                              new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                          ],
+                                                                                      ]);
 
         $this->validate(data: $data, validators: $validators);
 

@@ -54,10 +54,9 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
         <?= \DoEveryApp\Util\View\Icon::edit() ?>
         <?= $translator->edit() ?>
     </a>
-    <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute(id: $task->getId()) ?>">
+    <a class="warningButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTask(name: $task->getName()))  ?>" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::refresh() ?>
         <?= $translator->reset() ?>
-
     </a>
     <?php if(true === $task->isActive()): ?>
         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute(id: $task->getId(), active: false) ?>">
@@ -72,7 +71,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
         </a>
     <?php endif ?>
 
-    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
+    <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteTask(name: $task->getName())) ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::trash() ?>
         <?= $translator->delete() ?>
     </a>
@@ -232,7 +231,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                                     <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                     <?= $translator->edit() ?>
                                 </a>
-                                <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute(id: $execution->getId()) ?>">
+                                <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteExecution()) ?>" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute(id: $execution->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::trash() ?>
                                     <?= $translator->delete() ?>
                                 </a>

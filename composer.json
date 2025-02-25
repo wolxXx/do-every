@@ -20,8 +20,10 @@
     "optimize-autoloader": true,
     "secure-http": false,
     "allow-plugins": {
+      "composer/installers": true,
       "infection/extension-installer": true,
-      "mouf/nodejs-installer": true
+      "mouf/nodejs-installer": true,
+      "oomphinc/composer-installers-extender": true
     }
   },
   "scripts": {
@@ -92,6 +94,7 @@
     "laminas/laminas-paginator": "*",
     "laminas/laminas-session": "*",
     "laminas/laminas-validator": "*",
+    "moment/moment": "*",
     "monolog/monolog": "*",
     "mouf/nodejs-installer": "*",
     "nesbot/carbon": "*",

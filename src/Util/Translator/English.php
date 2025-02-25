@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
-class English implements \DoEveryApp\Util\Translator
+class English implements
+    \DoEveryApp\Util\Translator
 {
     public function translate($what, ...$args): string
     {
@@ -399,6 +400,7 @@ class English implements \DoEveryApp\Util\Translator
         if (1 === $dayAmount || 1.0 === $dayAmount) {
             return 'day';
         }
+
         return 'days';
     }
 
@@ -888,5 +890,85 @@ Then click the "Save" button to complete the process and digitally secure the da
     public function help(): string
     {
         return 'help';
+    }
+
+    public function areYouSure(): string
+    {
+        return 'Are you sure?';
+    }
+
+    public function reallyWantToDeleteTask(string $name): string
+    {
+        return 'Do you really want to delete the task "' . $name . '"?';
+    }
+
+    public function reallyWantToDeleteGroup(string $name): string
+    {
+        return 'Do you really want to delete the group "' . $name . '"?';
+    }
+
+    public function reallyWantToResetTask(string $name): string
+    {
+        return 'Do you really want to reset the task "' . $name . '"?';
+    }
+
+    public function reallyWantToDeleteExecution(): string
+    {
+        return 'Do you really want to delete the execution?';
+    }
+
+    public function reallyWantToDeleteWorker(string $name): string
+    {
+        return 'Do you really want to delete the worker "' . $name . '"?';
+    }
+
+    public function reallyWantToResetTwoFactor(string $name): string
+    {
+        return 'Do you really want to reset the two-factor authentication for the worker "' . $name . '"?';
+    }
+
+    public function noGroupsFound(): string
+    {
+        return 'no groups found';
+    }
+
+    public function noTasksFound(): string
+    {
+        return 'no tasks found';
+    }
+
+    public function welcomeUser(string $useName): string
+    {
+        return 'Welcome, ' . $useName . '!';
+    }
+
+    public function timerStart(): string
+    {
+        return 'start';
+    }
+
+    public function timerPause(): string
+    {
+        return 'pause';
+    }
+
+    public function timerStop(): string
+    {
+        return 'stop';
+    }
+
+    public function timerReset(): string
+    {
+        return 'reset';
+    }
+
+    public function timerTakeTime(): string
+    {
+        return 'take';
+    }
+
+    public function timer(): string
+    {
+        return 'timer';
     }
 }

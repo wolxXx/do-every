@@ -27,7 +27,7 @@ declare(strict_types=1);
     <a href="<?= \DoEveryApp\Action\Group\EditAction::getRoute(id: $group->getId()) ?>" class="warningButton">
         <?= $translator->edit() ?>
     </a>
-    <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute(id: $group->getId()) ?>">
+    <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteGroup(name: $group->getName())) ?>" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute(id: $group->getId()) ?>">
         <?= $translator->delete() ?>
     </a>
 </div>

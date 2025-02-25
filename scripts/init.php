@@ -51,12 +51,12 @@ $types = [
 foreach (range(start: 0, end: 20) as $counter) {
     $task = \DoEveryApp\Service\Task\Creator::execute(
         bag: (new \DoEveryApp\Service\Task\Creator\Bag())
-            ->setGroup(group: rand(min: 0, max: 100) > 50 ? $groups[array_rand(input: $groups)] : null)
-            ->setAssignee(assignee: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
-            ->setWorkingOn(workingOn: rand(min: 0, max: 100) > 50 ? $workers[array_rand(input: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
+            ->setGroup(group: rand(min: 0, max: 100) > 50 ? $groups[array_rand(array: $groups)] : null)
+            ->setAssignee(assignee: rand(min: 0, max: 100) > 50 ? $workers[array_rand(array: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
+            ->setWorkingOn(workingOn: rand(min: 0, max: 100) > 50 ? $workers[array_rand(array: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
             ->setName(name: 'task' . $counter)
             ->setIntervalValue(intervalValue: rand(min: 1, max: 50))
-            ->setIntervalType(intervalType: $types[array_rand(input: $types)])
+            ->setIntervalType(intervalType: $types[array_rand(array: $types)])
             ->enableNotifications(notify: false)
     );
 
@@ -67,7 +67,7 @@ foreach (range(start: 0, end: 20) as $counter) {
         bag: (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
             ->setTask(task: $task)
             ->setDate(date: \Faker\Factory::create()->dateTime)
-            ->setWorker(worker: $workers[array_rand(input: $workers)])
+            ->setWorker(worker: $workers[array_rand(array: $workers)])
             ->setDuration(duration: rand(min: 1, max: 50))
             ->setNote(note: \Faker\Factory::create()->text(maxNbChars: 500))
     );

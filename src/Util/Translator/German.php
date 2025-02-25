@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
-class German implements \DoEveryApp\Util\Translator
+class German implements
+    \DoEveryApp\Util\Translator
 {
     public function translate($what, ...$args): string
     {
@@ -400,6 +401,7 @@ class German implements \DoEveryApp\Util\Translator
         if (1 === $dayAmount || 1.0 === $dayAmount) {
             return 'Tag';
         }
+
         return 'Tage';
     }
 
@@ -890,5 +892,86 @@ class German implements \DoEveryApp\Util\Translator
     public function help(): string
     {
         return 'Hilfe';
+    }
+
+    public function areYouSure(): string
+    {
+        return 'Bist du sicher?';
+    }
+
+    public function reallyWantToDeleteTask(string $name): string
+    {
+        return 'Willst du wirklich die Aufgabe "' . $name . '" löschen?';
+    }
+
+    public function reallyWantToDeleteGroup(string $name): string
+    {
+        return 'Willst du wirklich die Gruppe "' . $name . '" löschen?';
+    }
+
+    public function reallyWantToResetTask(string $name): string
+    {
+        return 'Willst du wirklich die Aufgabe "' . $name . '" zurücksetzen?';
+    }
+
+    public function reallyWantToDeleteExecution(): string
+    {
+        return 'Willst du wirklich die Ausführung löschen?';
+    }
+
+    public function reallyWantToDeleteWorker(string $name): string
+    {
+        return 'Willst du wirklich die Biene "' . $name . '" löschen?';
+    }
+
+    public function reallyWantToResetTwoFactor(string $name): string
+    {
+        return 'Willst du wirklich die Zwei-Faktor-Authentifizierung von Biene "' . $name . '" zurücksetzen?';
+    }
+
+
+    public function noGroupsFound(): string
+    {
+        return 'keine Gruppen gefunden';
+    }
+
+    public function noTasksFound(): string
+    {
+        return 'keine Aufgaben gefunden';
+    }
+
+    public function welcomeUser(string $useName): string
+    {
+        return 'Willkommen,  ' . $useName . '!';
+    }
+
+    public function timerStart(): string
+    {
+        return 'Start';
+    }
+
+    public function timerPause(): string
+    {
+        return 'Pause';
+    }
+
+    public function timerStop(): string
+    {
+        return 'Stopp';
+    }
+
+    public function timerReset(): string
+    {
+        return 'Neu';
+    }
+
+    public function timerTakeTime(): string
+    {
+        return 'Übernehmen';
+    }
+
+    public function timer(): string
+    {
+        return 'Stoppuhr';
     }
 }

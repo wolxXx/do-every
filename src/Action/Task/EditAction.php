@@ -1,17 +1,15 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Task;
 
-#[\DoEveryApp\Attribute\Action\Route(
-    path   : '/task/edit/{id:[0-9]+}',
-    methods: [
-        \Fig\Http\Message\RequestMethodInterface::METHOD_POST,
-        \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
-    ],
-)]
-class EditAction extends \DoEveryApp\Action\AbstractAction
+#[\DoEveryApp\Attribute\Action\Route(path: '/task/edit/{id:[0-9]+}', methods: [
+    \Fig\Http\Message\RequestMethodInterface::METHOD_POST,
+    \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
+],)]
+class EditAction extends
+    \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Task\Share\AddEdit;
     use \DoEveryApp\Action\Share\SingleIdRoute;
@@ -26,46 +24,57 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             $checkListItems = [];
             foreach ($task->getCheckListItems() as $checkListItem) {
                 $checkListItems[] = [
-                    'id'       => $checkListItem->getId(),
-                    'name'     => $checkListItem->getName(),
-                    'note'     => $checkListItem->getNote(),
-                    'position' => $checkListItem->getPosition(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_ID       => $checkListItem->getId(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_NAME     => $checkListItem->getName(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_NOTE     => $checkListItem->getNote(),
+                    static::FORM_FIELD_CHECK_LIST_ITEM_POSITION => $checkListItem->getPosition(),
                 ];
             }
 
-            return $this->render(script: 'action/task/edit', data: [
-                'task' => $task,
-                'data' => [
-                    'checkListItem'       => $checkListItems,
-                    'name'                => $task->getName(),
-                    'assignee'            => $task->getAssignee()?->getId(),
-                    'group'               => $task->getGroup()?->getId(),
-                    'intervalType'        => $task->getIntervalType(),
-                    'intervalValue'       => $task->getIntervalValue(),
-                    'priority'            => $task->getPriority(),
-                    'enableNotifications' => $task->isNotify() ? '1' : '0',
-                    'elapsingCronType'    => $task->isElapsingCronType() ? '1' : '0',
-                    'note'                => $task->getNote(),
-                ],
-            ]);
+            return $this->render(script: 'action/task/edit',
+                                 data  : [
+                                             'task' => $task,
+                                             'data' => [
+                                                 static::FORM_FIELD_CHECK_LIST_ITEM      => $checkListItems,
+                                                 static::FORM_FIELD_NAME                 => $task->getName(),
+                                                 static::FORM_FIELD_ASSIGNEE             => $task
+                                                     ->getAssignee()
+                                                     ?->getId(),
+                                                 static::FORM_FIELD_GROUP                => $task
+                                                     ->getGroup()
+                                                     ?->getId(),
+                                                 static::FORM_FIELD_INTERVAL_TYPE        => $task->getIntervalType(),
+                                                 static::FORM_FIELD_INTERVAL_VALUE       => $task->getIntervalValue(),
+                                                 static::FORM_FIELD_PRIORITY             => $task->getPriority(),
+                                                 static::FORM_FIELD_ENABLE_NOTIFICATIONS => $task->isNotify() ? '1' : '0',
+                                                 static::FORM_FIELD_ELAPSING_CRON_TYPE   => $task->isElapsingCronType() ? '1' : '0',
+                                                 static::FORM_FIELD_NOTE                 => $task->getNote(),
+                                             ],
+                                         ]);
         }
         $data = [];
         try {
-            $data = $this->getRequest()->getParsedBody();
-            $data = $this->filterAndValidate(data: $data);
-
-            $task
-                ->setAssignee(assignee: $data['assignee'] ? \DoEveryApp\Entity\Worker::getRepository()->find(id: $data['assignee']) : null)
-                ->setGroup(group: $data['group'] ? \DoEveryApp\Entity\Group::getRepository()->find(id: $data['group']) : null)
-                ->setName(name: $data['name'])
-                ->setIntervalType(intervalType: $data['intervalType'] ? \DoEveryApp\Definition\IntervalType::from(value: $data['intervalType'])->value : null)
-                ->setIntervalValue(intervalValue: $data['intervalValue'])
-                ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data['priority'])->value)
-                ->setNotify(notify: '1' === $data['enableNotifications'])
-                ->setElapsingCronType(elapsingCronType: '1' === $data['elapsingCronType'])
-                ->setNote(note: $data['note'])
+            $data = $this
+                ->getRequest()
+                ->getParsedBody()
             ;
-            $task::getRepository()->update(entity: $task);
+            $data = $this->filterAndValidate(data: $data);
+            $task
+                ->setAssignee(assignee: $data[static::FORM_FIELD_ASSIGNEE] ? \DoEveryApp\Entity\Worker::getRepository()
+                                                                                                      ->find(id: $data[static::FORM_FIELD_ASSIGNEE]) : null)
+                ->setGroup(group: $data[static::FORM_FIELD_GROUP] ? \DoEveryApp\Entity\Group::getRepository()
+                                                                                            ->find(id: $data[static::FORM_FIELD_GROUP]) : null)
+                ->setName(name: $data[static::FORM_FIELD_NAME])
+                ->setIntervalType(intervalType: $data[static::FORM_FIELD_INTERVAL_TYPE] ? \DoEveryApp\Definition\IntervalType::from(value: $data[static::FORM_FIELD_INTERVAL_TYPE])->value : null)
+                ->setIntervalValue(intervalValue: $data[static::FORM_FIELD_INTERVAL_VALUE])
+                ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data[static::FORM_FIELD_PRIORITY])->value)
+                ->setNotify(notify: '1' === $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS])
+                ->setElapsingCronType(elapsingCronType: '1' === $data[static::FORM_FIELD_ELAPSING_CRON_TYPE])
+                ->setNote(note: $data[static::FORM_FIELD_NOTE])
+            ;
+            $task::getRepository()
+                 ->update(entity: $task)
+            ;
 
             $this->handleCheckListItems(task: $task, data: $data);
 
@@ -74,18 +83,18 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                                                 ->flush()
             ;
 
-            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->taskEdited());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                     ->getTranslator()
+                                                                                                     ->taskEdited());
 
             return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
         } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
         }
 
-        return $this->render(
-            script: 'action/task/edit',
-            data  : [
-                        'task' => $task,
-                        'data' => $data,
-                    ]
-        );
+        return $this->render(script: 'action/task/edit',
+                             data  : [
+                                         'task' => $task,
+                                         'data' => $data,
+                                     ]);
     }
 }
