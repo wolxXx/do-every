@@ -172,6 +172,11 @@ class English implements
         return 'add execution';
     }
 
+    public function editExecution(): string
+    {
+        return 'edit execution';
+    }
+
     public function edit(): string
     {
         return 'edit';

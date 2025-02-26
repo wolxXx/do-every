@@ -172,6 +172,11 @@ class German implements
         return 'Ausführung eintragen';
     }
 
+    public function editExecution(): string
+    {
+        return 'Ausführung bearbeiten';
+    }
+
     public function edit(): string
     {
         return 'bearbeiten';

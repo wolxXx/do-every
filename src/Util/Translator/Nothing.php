@@ -176,6 +176,11 @@ class Nothing implements
         return $this->debug();
     }
 
+    public function editExecution(): string
+    {
+        return $this->debug();
+    }
+
     public function edit(): string
     {
         return $this->debug();

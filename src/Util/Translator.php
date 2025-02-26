@@ -109,6 +109,8 @@ interface Translator
 
     public function addExecution(): string;
 
+    public function editExecution(): string;
+
 
     public function edit(): string;
 
