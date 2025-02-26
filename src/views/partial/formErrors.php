@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 /**
  * @var \Slim\Views\PhpRenderer        $this
- * @var \MyDMS\Util\ErrorStore         $errorStore
+ * @var \DoEveryApp\Util\ErrorStore    $errorStore
  * @var string                         $currentRoute
  * @var string                         $currentRoutePattern
- * @var \MyDMS\Model\User|null         $currentUser
- * @var \MyDMS\Model\InternalUser|null $currentInternalUser
- * @var \MyDMS\Util\Translator         $translator
- * @var string                         $title
- * @var \MyDMS\Model\Space[]           $spaces
+ * @var \DoEveryApp\Entity\Worker|null $currentUser
+ * @var \DoEveryApp\Util\Translator    $translator
  */
 /**
  * @var string[] $errors
@@ -19,9 +16,9 @@ declare(strict_types=1);
 ?>
 
 <div class="errors">
-    <? foreach($errors as $error): ?>
+    <?php foreach($errors as $error): ?>
         <span class="error">
             <?= $error ?>
         </span>
-    <? endforeach ?>
+    <?php endforeach ?>
 </div>

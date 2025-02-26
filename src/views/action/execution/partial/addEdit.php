@@ -20,10 +20,10 @@ declare(strict_types=1);
 
 <h1>
     <?php if (null === $execution): ?>
-        Ausführung hinzufügen
+        <?= $translator->addExecution() ?>
     <?php endif ?>
     <?php if (null !== $execution): ?>
-        Ausführung bearbeiten
+        <?= $translator->editExecution() ?>
     <?php endif ?>
 </h1>
 <fieldset>
@@ -284,11 +284,7 @@ declare(strict_types=1);
                                 </option>
                             <?php endforeach ?>
                         </select>
-                        <div class="errors">
-                            <?php foreach ($errorStore->getErrors(key: 'assignee') as $error): ?>
-                                <?= $error ?><br/>
-                            <?php endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: 'worker')]) ?>
                     </div>
                 </div>
                 <div class="column">
