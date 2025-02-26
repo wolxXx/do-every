@@ -14,6 +14,7 @@ class BaseTest extends \DoEveryAppTest\TestBase
         $phpRenderer->setAttributes(attributes: [
                                         'currentRoute'        => '',
                                         'currentRoutePattern' => '',
+                                        'translator' => new \DoEveryApp\Util\Translator\German(),
                                     ]);
         $response = $phpRenderer->render(response: $response, template: 'action/cms/index.php');
         $response->getBody()->rewind();
