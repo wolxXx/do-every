@@ -30,57 +30,57 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
     <div class="column">
         <table>
             <thead>
-            <tr>
-                <th>
-                    <?= $translator->date() ?>
-                </th>
-                <th>
-                    <?= $translator->group() ?>
-                </th>
-                <th>
-                    <?= $translator->task() ?>
-                </th>
-                <th>
-                    <?= $translator->effort() ?>
-                </th>
-                <th>
-                    <?= $translator->worker() ?>
-                </th>
-                <th>
-                    <?= $translator->note() ?>
-                </th>
-            </tr>
+                <tr>
+                    <th>
+                        <?= $translator->date() ?>
+                    </th>
+                    <th>
+                        <?= $translator->group() ?>
+                    </th>
+                    <th>
+                        <?= $translator->task() ?>
+                    </th>
+                    <th>
+                        <?= $translator->effort() ?>
+                    </th>
+                    <th>
+                        <?= $translator->worker() ?>
+                    </th>
+                    <th>
+                        <?= $translator->note() ?>
+                    </th>
+                </tr>
             </thead>
             <tbody>
-            <?php foreach($executions as $execution): ?>
-                <tr>
-                    <td>
-                        <?= \DoEveryApp\Util\View\ExecutionDate::byExecution(execution: $execution) ?>
-                    </td>
-                    <td>
-                        <?php if(null === $execution->getTask()->getGroup()): ?>
-                            -
-                        <?php endif?>
-                        <?php if(null !== $execution->getTask()->getGroup()): ?>
-                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getGroup()->getName()) ?>
-                        <?php endif?>
-                    </td>
-                    <td>
-                        <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()) ?>">
-                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getName()) ?>
-                        </a>
-                    </td>
-                    <td>
-                        <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
-                    </td>
-                    <td>
-                        <?= \DoEveryApp\Util\View\Worker::get(worker: $execution->getWorker()) ?>
-                    </td>
-                    <td>
-                        <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
-                    </td>
-                </tr>
-            <?php endforeach ?>
+                <?php foreach($executions as $execution): ?>
+                    <tr>
+                        <td>
+                            <?= \DoEveryApp\Util\View\ExecutionDate::byExecution(execution: $execution) ?>
+                        </td>
+                        <td>
+                            <?php if(null === $execution->getTask()->getGroup()): ?>
+                                -
+                            <?php endif?>
+                            <?php if(null !== $execution->getTask()->getGroup()): ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getGroup()->getName()) ?>
+                            <?php endif?>
+                        </td>
+                        <td>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getName()) ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\Worker::get(worker: $execution->getWorker()) ?>
+                        </td>
+                        <td>
+                            <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
             </tbody>
         </table>
 

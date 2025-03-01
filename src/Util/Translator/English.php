@@ -18,6 +18,10 @@ class English implements
             {
                 return 'This value should not be blank.';
             }
+            case 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.':
+            {
+                return 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.';
+            }
         }
         throw new \InvalidArgumentException('Unknown translation: ' . $what);
     }

@@ -14,8 +14,6 @@ declare(strict_types=1);
 /**
  * @var array $data
  */
-$groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
-
 ?>
 <h1>
     <?= $translator->addTask() ?>

@@ -76,7 +76,8 @@ function initRowRemover() {
             return;
         }
         element.addEventListener('click', function () {
-            element.closest('.row').remove();
+            element.closest('.row')?.remove();
+            element.closest('.rowSimple')?.remove();
         });
         element.dataset['bound'] = '1';
     });

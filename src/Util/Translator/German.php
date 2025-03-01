@@ -18,6 +18,10 @@ class German implements
             {
                 return 'Es wird eine Eingabe benötigt.';
             }
+            case 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.':
+            {
+                return str_replace('{{ limit }}', $args[0]['{{ limit }}'], 'Der Wert ist zu lang. Er sollte {{ limit }} Zeichen oder weniger haben.');
+            }
         }
         throw new \InvalidArgumentException('Unknown translation: ' . $what);
     }

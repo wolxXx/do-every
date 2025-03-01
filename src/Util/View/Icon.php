@@ -10,6 +10,10 @@ class Icon
     {
         return '<i class="fa fa-plus"></i>';
     }
+    public static function save(): string
+    {
+        return '<i class="fa-solid fa-floppy-disk"></i>';
+    }
 
     public static function check(): string
     {

@@ -86,10 +86,9 @@ declare(strict_types=1);
         </div>
     </div>
 
-
-
-
     <div class="form-footer">
-        <input class="primaryButton" type="submit" value="<?= $translator->save() ?>">
+        <button type="submit" class="primaryButton">
+            <?= \DoEveryApp\Util\View\Icon::save() ?>
+        </button>
     </div>
 </form>

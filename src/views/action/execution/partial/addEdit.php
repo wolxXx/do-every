@@ -33,19 +33,19 @@ declare(strict_types=1);
 <div style="margin: 10px 0; padding: 10px;" id="timerArea">
 </div>
 <div>
-    <button id="startTimer">
+    <button id="startTimer" class="primaryButton">
         <?= $translator->timerStart() ?>
     </button>
-    <button id="pauseTimer">
+    <button id="pauseTimer" class="primaryButton">
         <?= $translator->timerPause() ?>
     </button>
-    <button id="stopTimer">
+    <button id="stopTimer" class="primaryButton">
         <?= $translator->timerStop() ?>
     </button>
-    <button id="resetTimer">
+    <button id="resetTimer" class="primaryButton">
         <?= $translator->timerReset() ?>
     </button>
-    <button id="takeTime">
+    <button id="takeTime" class="primaryButton">
         <?= $translator->timerTakeTime() ?>
     </button>
 </div>

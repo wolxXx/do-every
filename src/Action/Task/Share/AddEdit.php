@@ -201,10 +201,18 @@ trait AddEdit
                 ->attach(callback: new \Laminas\Filter\ToNull())
                 ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] ?? '')
             ;
+
             $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM] = [];
+
             $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NAME];
             $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
+                new \Symfony\Component\Validator\Constraints\Length(max: 20),
+            ];
+
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE];
+            $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = [
+                new \Symfony\Component\Validator\Constraints\Length(max: 200),
             ];
         }
 

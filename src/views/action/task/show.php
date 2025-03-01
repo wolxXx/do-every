@@ -52,7 +52,6 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::edit() ?>
-        <?= $translator->edit() ?>
     </a>
     <a class="warningButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTask(name: $task->getName()))  ?>" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::refresh() ?>
@@ -73,7 +72,6 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
 
     <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteTask(name: $task->getName())) ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::trash() ?>
-        <?= $translator->delete() ?>
     </a>
 </div>
 
@@ -129,37 +127,32 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                 </legend>
                 <table>
                     <thead>
-                    <tr>
-                        <th>
-                            <?= $translator->step() ?>
-                        </th>
-                        <th>
-                            <?= $translator->notice() ?>
-                        </th>
-                    </tr>
+                        <tr>
+                            <th>
+                                <?= $translator->step() ?>
+                            </th>
+                            <th>
+                                <?= $translator->notice() ?>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($task->getCheckListItems() as $checkListItem): ?>
-                        <tr>
-                            <td>
-                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName()) ?>
-                            </td>
-                            <td>
-                                <?= \DoEveryApp\Util\View\CheckListItemNote::byTaskCheckListItem(item: $checkListItem) ?>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
+                        <?php foreach($task->getCheckListItems() as $checkListItem): ?>
+                            <tr>
+                                <td>
+                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName()) ?>
+                                </td>
+                                <td>
+                                    <?= \DoEveryApp\Util\View\CheckListItemNote::byTaskCheckListItem(item: $checkListItem) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </fieldset>
-
-
         </div>
     <?php endif ?>
 </div>
-
-
-
 
 <?php if(0 !== count(value: $executions)): ?>
     <hr />
@@ -229,11 +222,9 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                             <div class="buttonRow">
                                 <a class="primaryButton" href="<?= \DoEveryApp\Action\Execution\EditAction::getRoute(id: $execution->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::edit() ?>
-                                    <?= $translator->edit() ?>
                                 </a>
                                 <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteExecution()) ?>" href="<?= \DoEveryApp\Action\Execution\DeleteAction::getRoute(id: $execution->getId()) ?>">
                                     <?= \DoEveryApp\Util\View\Icon::trash() ?>
-                                    <?= $translator->delete() ?>
                                 </a>
                             </div>
                         </td>
