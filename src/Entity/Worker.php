@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Entity;
 
@@ -47,21 +47,21 @@ class Worker
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string                                                                         $language = null;
+    protected ?string                                                                         $language                    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'email',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string                                                                         $email    = null;
+    protected ?string                                                                         $email                       = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'password',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string                                                                         $password = null;
+    protected ?string                                                                         $password                    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_admin',
@@ -71,7 +71,7 @@ class Worker
             "default" => 0,
         ],
     )]
-    protected bool                                                                            $admin    = false;
+    protected bool                                                                            $admin                       = false;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
@@ -81,28 +81,28 @@ class Worker
             "default" => 1,
         ],
     )]
-    protected bool                                                                            $notify   = true;
+    protected bool                                                                            $notify                      = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'password_reset_token',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string $passwordResetToken = null;
+    protected ?string                                                                         $passwordResetToken          = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'password_reset_token_valid_until',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $tokenValidUntil = null;
+    protected ?\DateTime                                                                      $tokenValidUntil             = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_login',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $lastLogin = null;
+    protected ?\DateTime                                                                      $lastLogin                   = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'notify_login',
@@ -112,63 +112,63 @@ class Worker
             "default" => 1,
         ],
     )]
-    protected bool $notifyLogin = true;
+    protected bool                                                                            $notifyLogin                 = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_password_change',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $lastPasswordChange          = null;
+    protected ?\DateTime                                                                      $lastPasswordChange          = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_secret',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $twoFactorSecret             = null;
+    protected ?string                                                                         $twoFactorSecret             = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_1',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $twoFactorRecoverCode1       = null;
+    protected ?string                                                                         $twoFactorRecoverCode1       = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_1_used_at',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $twoFactorRecoverCode1UsedAt = null;
+    protected ?\DateTime                                                                      $twoFactorRecoverCode1UsedAt = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_2',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $twoFactorRecoverCode2       = null;
+    protected ?string                                                                         $twoFactorRecoverCode2       = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_2_used_at',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $twoFactorRecoverCode2UsedAt = null;
+    protected ?\DateTime                                                                      $twoFactorRecoverCode2UsedAt = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_3',
         type    : \Doctrine\DBAL\Types\Types::STRING,
         nullable: true
     )]
-    protected ?string    $twoFactorRecoverCode3       = null;
+    protected ?string                                                                         $twoFactorRecoverCode3       = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'two_factor_recover_code_3_used_at',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $twoFactorRecoverCode3UsedAt = null;
+    protected ?\DateTime                                                                      $twoFactorRecoverCode3UsedAt = null;
 
     public function __construct()
     {
