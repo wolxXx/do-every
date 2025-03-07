@@ -1,23 +1,29 @@
+:root {
+    --fontColorMain: #eee;
+    --backgroundColorMain: #333;
+}
+
 body, html {
     margin: 0;
     padding: 0;
-    background: #000;
-    color: #fff;
+    background: var(--backgroundColorMain);
+    color: var(--fontColorMain);
+    font-family: sans-serif;
 }
 
 a {
-    color: #fff;
+    color: color-mix(in srgb, var(--fontColorMain) 80%, #000);
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
-    color: #ccc;
-    background: #333;
+    background: var(--backgroundColorMain);
+    color: var(--fontColorMain);
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
-    background: #000;
-    color: #fff;
-    border: solid 1px #ccc;
+    background: var(--backgroundColorMain);
+    color: var(--fontColorMain);
+    border: solid 1px color-mix(in srgb, var(--fontColorMain) 60%, #000);
 }
 
 select {
@@ -35,7 +41,7 @@ label {
 }
 
 label.required {
-    color: #eee;
+    color: color-mix(in srgb, var(--fontColorMain) 90%, #000);
     font-weight: bolder;
 }
 
@@ -45,11 +51,11 @@ label.required:after {
 
 table {
     width: 100%;
-    border: solid 1px #666;
+    border: solid 1px color-mix(in srgb, var(--fontColorMain) 60%, #000);
 }
 
 tr:hover {
-    background: #333;
+    background: color-mix(in srgb, var(--fontColorMain) 30%, #000);
 }
 
 td, th {
