@@ -476,6 +476,10 @@ h1:before, h1:after {
 .executionNote:hover {
     max-height: 200px;
     overflow: auto;
+    position: absolute;
+    width: 100%;
+    background: #333;
+    color: #eee;
 }
 
 .taskNote {
