@@ -6,4 +6,10 @@
        title="Welcome @ do every*" id="Welcome">
 
     <p>What is "do every*" ?</p>
+    <p></p>
+    <p>There are tasks, that need to be run in several periods. You can register them, add steps, set the period.</p>
+    <p>You can track every execution of the tasks, add time consumed and get a nice overview, how much time you spent the last months or years.</p>
+    <p>You will receive notifications if a task has a due.</p>
+    <p>You can add your co-workers and assign tasks to them.</p>
+    <p>Every worker can mark a task, so everyone knows who is working on a task.</p>
 </topic>
