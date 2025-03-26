@@ -44,7 +44,9 @@
     "fixtures": "php scripts/fixtures.php",
     "health": [
       "@paratestNoCoverage",
-      "@validateSchema"
+      "@validateSchema",
+      "@lint",
+      "@lintVendor"
     ],
     "post-install-cmd": "./install.sh",
     "post-update-cmd": "./install.sh"
