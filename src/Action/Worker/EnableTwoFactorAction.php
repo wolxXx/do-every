@@ -80,29 +80,32 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $base64Encode = base64_encode(
-            string: (new \Endroid\QrCode\Writer\PngWriter())
-                ->write(
-                    qrCode: (\Endroid\QrCode\QrCode::create(
-                        $twoFactorUtility
-                            ->getQRCodeUrl(
-                                login: $worker->getEmail(),
-                                secret: $stored2Fa
-                            )
-                    ))
-                        ->setSize(300)
-                        ->setBackgroundColor(new \Endroid\QrCode\Color\Color(red: 0, green: 0, blue: 0))
-                        ->setForegroundColor(new \Endroid\QrCode\Color\Color(red: 255, green: 255, blue: 255))
-                        ->setRoundBlockSizeMode(\Endroid\QrCode\RoundBlockSizeMode::Shrink)
-                )
-                ->getString()
+            string: new \Endroid\QrCode\Writer\PngWriter()
+                        ->write(
+                            qrCode: new \Endroid\QrCode\QrCode(
+                                        data              : $twoFactorUtility
+                                                                ->getQRCodeUrl(
+                                                                    login : $worker->getEmail(),
+                                                                    secret: $stored2Fa
+                                                                ),
+                                        size              : 300,
+                                        roundBlockSizeMode: \Endroid\QrCode\RoundBlockSizeMode::Shrink,
+                                        foregroundColor   : new \Endroid\QrCode\Color\Color(red: 255, green: 255, blue: 255),
+                                        backgroundColor   : new \Endroid\QrCode\Color\Color(red: 0, green: 0, blue: 0)
+                                    )
+                        )
+                        ->getString()
         );
 
-        return $this->render(script: 'action/worker/enable-two-factor', data: [
-            'worker' => $worker,
-            'code1'  => $stored2FaCode1,
-            'code2'  => $stored2FaCode2,
-            'code3'  => $stored2FaCode3,
-            'image'  => '<img style="max-width: 100%; max-height: 300px;" src="data:image/gif;base64,' . $base64Encode . '">',
-        ]);
+        return $this->render(
+            script: 'action/worker/enable-two-factor',
+            data  : [
+                        'worker' => $worker,
+                        'code1'  => $stored2FaCode1,
+                        'code2'  => $stored2FaCode2,
+                        'code3'  => $stored2FaCode3,
+                        'image'  => '<img style="max-width: 100%; max-height: 300px;" src="data:image/gif;base64,' . $base64Encode . '">',
+                    ]
+        );
     }
 }
