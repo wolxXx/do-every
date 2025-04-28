@@ -10,7 +10,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
 
     protected function executeTranslation(\DoEveryApp\Util\Translator $translator, string $method, array $parameters = [])
     {
-        if (0 === count($parameters)) {
+        if (0 === count(value: $parameters)) {
             $translator->$method();
             return;
         }
@@ -34,16 +34,16 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                 }
                 case 'DateTime':
                 {
-                    $randomParameters[$name] = new \DateTime('2021-01-01 00:00:00');
+                    $randomParameters[$name] = new \DateTime(datetime: '2021-01-01 00:00:00');
                     break;
                 }
                 default:
                 {
-                    throw new \RuntimeException('Unknown parameter type "' . $parameterType . '" for mehtod "' . $method . '"');
+                    throw new \RuntimeException(message: 'Unknown parameter type "' . $parameterType . '" for mehtod "' . $method . '"');
                 }
             }
         }
-        call_user_func_array(array($translator, $method), $randomParameters);
+        call_user_func_array(callback: array($translator, $method), args: $randomParameters);
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
@@ -88,7 +88,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                     unset($parameterType);
                     continue;
                 }
-                $parameterTypeClass = get_class($parameter->getType());
+                $parameterTypeClass = get_class(object: $parameter->getType());
                 switch ($parameterTypeClass) { #ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType
 
                     case \ReflectionNamedType::class:
@@ -96,7 +96,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                         /**
                          * @var \ReflectionNamedType $parameterType
                          */
-                        $parameterTypeName = trim(' ' . $parameterType->getName() . ' ');
+                        $parameterTypeName = trim(string: ' ' . $parameterType->getName() . ' ');
                         $parameters[$parameterName] = $parameterTypeName;
                         unset($parameterTypeName);
 
@@ -111,13 +111,13 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                         $parameterTypes = $parameter->getType();
                         $unionTypes = $parameterTypes->getTypes();
                         foreach ($unionTypes as $unionType) {
-                            $unionType = trim(' ' . $unionType . ' ');
+                            $unionType = trim(string: ' ' . $unionType . ' ');
                             if(true === in_array(needle: $unionType, haystack: ['string', 'int', 'DateTime'], strict: true)) {
                                 $parameters[$parameterName] = $unionType;
                                 break 2;
                             }
                         }
-                        throw new \RuntimeException('Union types "'. implode(', ', $unionTypes) .'" are not supported');
+                        throw new \RuntimeException(message: 'Union types "'. implode(separator: ', ', array: $unionTypes) .'" are not supported');
                         break;
                     }
 
@@ -126,11 +126,11 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                         /**
                          * @var \ReflectionIntersectionType $parameter
                          */
-                        throw new \RuntimeException('Intersection types are not supported');
+                        throw new \RuntimeException(message: 'Intersection types are not supported');
                     }
                     default:
                     {
-                        throw new \RuntimeException('Unknown parameter type "' . $parameterTypeClass . '" for mehtod "' . $method->getName() . '"');
+                        throw new \RuntimeException(message: 'Unknown parameter type "' . $parameterTypeClass . '" for mehtod "' . $method->getName() . '"');
                     }
                 }
                 unset($parameter);

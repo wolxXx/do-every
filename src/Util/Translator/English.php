@@ -23,7 +23,7 @@ class English implements
                 return 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.';
             }
         }
-        throw new \InvalidArgumentException('Unknown translation: ' . $what);
+        throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
 
     public function dashboard(): string

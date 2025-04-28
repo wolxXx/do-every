@@ -184,9 +184,9 @@ class Timer
     {
         $paused = $this->getPaused(task: $task, worker: $worker);
         if (true === $paused instanceof \DoEveryApp\Entity\Task\Timer) {
-            $paused->setStopped(true);
+            $paused->setStopped(stopped: true);
             $paused::getRepository()
-                   ->update($paused)
+                   ->update(entity: $paused)
             ;
             DependencyContainer::getInstance()
                                ->getEntityManager()
@@ -199,15 +199,15 @@ class Timer
         if (true === $running instanceof \DoEveryApp\Entity\Task\Timer) {
             foreach ($running->getSections() as $section) {
                 if (null === $section->getEnd()) {
-                    $section->setEnd(\Carbon\Carbon::now());
+                    $section->setEnd(end: \Carbon\Carbon::now());
                     $section::getRepository()
-                            ->update($section)
+                            ->update(entity: $section)
                     ;
                 }
             }
-            $running->setStopped(true);
+            $running->setStopped(stopped: true);
             $running::getRepository()
-                    ->update($running)
+                    ->update(entity: $running)
             ;
             DependencyContainer::getInstance()
                                ->getEntityManager()
@@ -223,12 +223,12 @@ class Timer
     public function getLast(\DoEveryApp\Entity\Task $task, \DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Task\Timer
     {
         $timers = \DoEveryApp\Entity\Task\Timer::getRepository()
-                                               ->createQueryBuilder('timer')
+                                               ->createQueryBuilder(alias: 'timer')
                                                ->andWhere('timer.task = :taskId')
                                                ->setParameter(key: 'taskId', value: $task->getId())
                                                ->andWhere('timer.worker = :workerId')
                                                ->setParameter(key: 'workerId', value: $worker->getId())
-                                               ->orderBy('timer.id', 'DESC')
+                                               ->orderBy(sort: 'timer.id', order: 'DESC')
                                                ->getQuery()
                                                ->execute()
         ;
@@ -244,7 +244,7 @@ class Timer
         DependencyContainer::getInstance()
                            ->getEntityManager()
                            ->createQueryBuilder()
-                           ->delete(\DoEveryApp\Entity\Task\Timer::class, 'timer')
+                           ->delete(delete: \DoEveryApp\Entity\Task\Timer::class, alias: 'timer')
                            ->andWhere('timer.task = :taskId')
                            ->setParameter(key: 'taskId', value: $task->getId())
                            ->andWhere('timer.worker = :workerId')

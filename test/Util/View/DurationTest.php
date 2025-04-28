@@ -14,7 +14,7 @@ class DurationTest extends \PHPUnit\Framework\TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('getTestDataProvider')]
     public function testGet($expected, int|null $duration)
     {
-        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\Duration::byExecution(new \DoEveryApp\Entity\Execution()->setDuration(duration: $duration)));
+        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\Duration::byExecution(execution: new \DoEveryApp\Entity\Execution()->setDuration(duration: $duration)));
     }
 
 

@@ -147,10 +147,10 @@ declare(strict_types=1);
             </a>
         </div>
         <div>
-            <? if (0 === count(\DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
+            <? if (0 === count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
                 <?= $translator->noGroupsFound() ?>
             <? endif ?>
-            <? if (0 !== count(\DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
+            <? if (0 !== count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
 
                 <table>
                     <thead>

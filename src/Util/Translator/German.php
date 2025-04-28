@@ -20,10 +20,10 @@ class German implements
             }
             case 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.':
             {
-                return str_replace('{{ limit }}', $args[0]['{{ limit }}'], 'Der Wert ist zu lang. Er sollte {{ limit }} Zeichen oder weniger haben.');
+                return str_replace(search: '{{ limit }}', replace: $args[0]['{{ limit }}'], subject: 'Der Wert ist zu lang. Er sollte {{ limit }} Zeichen oder weniger haben.');
             }
         }
-        throw new \InvalidArgumentException('Unknown translation: ' . $what);
+        throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
 
     public function dashboard(): string

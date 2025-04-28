@@ -26,20 +26,20 @@ class BufferContainerTest extends \DoEveryAppTest\TestBase
 
     {
         $container = new \DoEveryApp\Util\View\BufferContainer();
-        \Amp\async(function ($id) use ($container) {
+        \Amp\async(function ($id) use ($container): void {
             ob_start();
             usleep(microseconds: rand(1000, 2000));
             echo 'asdf';
             $container->set(registration: $id, content: ob_get_clean());
         }, $container->next());
-        \Amp\async(function ($id) use ($container) {
+        \Amp\async(function ($id) use ($container): void {
             ob_start();
             usleep(microseconds: rand(400000, 1000000));
             sleep(seconds: rand(2, 5));
             echo 'foobar';
             $container->set(registration: $id, content: ob_get_clean());
         }, $container->next());
-        \Amp\async(function ($id) use ($container) {
+        \Amp\async(function ($id) use ($container): void {
             ob_start();
             usleep(microseconds: rand(400000, 1000000));
             echo 'lorl rofl';

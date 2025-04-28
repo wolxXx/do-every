@@ -27,7 +27,7 @@ class StatusAction extends
         $last    = new \DoEveryApp\Util\Timer()->getLast(task: $task, worker: \DoEveryApp\Util\User\Current::get());
         $format    = 'Y-m-d H:i:s';
         $data    = [
-            'now' => \Carbon\Carbon::now()->format($format),
+            'now' => \Carbon\Carbon::now()->format(format: $format),
             'startedAt' => null,
             'offset'    => null,
             'minutes'   => null,
@@ -73,7 +73,7 @@ class StatusAction extends
                     $data['slices'][] = [
                         'start'  => $section
                             ->getStart()
-                            ->format($format),
+                            ->format(format: $format),
                         'end'    => $section
                             ->getEnd()
                             ->format($format),
@@ -94,7 +94,7 @@ class StatusAction extends
             if (null === $section->getEnd()) {
                 $startedAt        = $section
                     ->getStart()
-                    ->format($format)
+                    ->format(format: $format)
                 ;
                 $data['slices'][] = [
                     'start' => $startedAt,
@@ -129,10 +129,10 @@ class StatusAction extends
             $data['slices'][] = [
                 'start'  => $section
                     ->getStart()
-                    ->format($format),
+                    ->format(format: $format),
                 'end'    => $section
                     ->getEnd()
-                    ->format($format),
+                    ->format(format: $format),
                 'offset' => $sectionOffset,
             ];
         }
