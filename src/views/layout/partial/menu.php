@@ -78,13 +78,15 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName(name: 'Log')
         ?>
-        <?= $menuItem
-            ->setTarget(target: \DoEveryApp\Action\Task\Timer\IndexAction::getRoute())
-            ->setActiveRoutes(activeRoutes: [
-                                  \DoEveryApp\Action\Task\Timer\IndexAction::getRoutePattern(),
-                              ])
-            ->setName(name: 'Timers')
-        ?>
+        <? if (true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
+            <?= $menuItem
+                ->setTarget(target: \DoEveryApp\Action\Task\Timer\IndexAction::getRoute())
+                ->setActiveRoutes(activeRoutes: [
+                                      \DoEveryApp\Action\Task\Timer\IndexAction::getRoutePattern(),
+                                  ])
+                ->setName(name: $translator->timer())
+            ?>
+        <? endif ?>
         <?= $menuItem
             ->setTarget(target: \DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setActiveRoutes(activeRoutes: [
