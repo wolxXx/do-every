@@ -21,6 +21,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
     public const string FORM_FIELD_PRECISION_DUE  = 'precisionDue';
 
+    public const string FORM_FIELD_USE_TIMER      = 'useTimer';
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $registry = \DoEveryApp\Util\Registry::getInstance();
@@ -29,6 +31,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                 static::FORM_FIELD_KEEP_BACKUPS   => $registry->getKeepBackupDays(),
                 static::FORM_FIELD_FILL_TIME_LINE => $registry->doFillTimeLine(),
                 static::FORM_FIELD_PRECISION_DUE  => $registry->getPrecisionDue(),
+                static::FORM_FIELD_USE_TIMER      => $registry->doUseTimer(),
             ];
 
             return $this->render(script: 'action/cms/editSettings', data: ['data' => $data]);
@@ -42,6 +45,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             $registry
                 ->setKeepBackupDays(days: $data[static::FORM_FIELD_KEEP_BACKUPS])
                 ->setDoFillTimeLine(fillTimeLine: '1' === $data[static::FORM_FIELD_FILL_TIME_LINE])
+                ->enableTimer(useTimer: '1' === $data[static::FORM_FIELD_USE_TIMER])
                 ->setPrecisionDue(precisionDue: $data[static::FORM_FIELD_PRECISION_DUE])
             ;
             \DoEveryApp\Util\DependencyContainer::getInstance()
@@ -69,6 +73,11 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_FILL_TIME_LINE))
         ;
+        $data[static::FORM_FIELD_USE_TIMER] = (new \Laminas\Filter\FilterChain())
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_USE_TIMER))
+        ;
         $data[static::FORM_FIELD_PRECISION_DUE]  = (new \Laminas\Filter\FilterChain())
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToInt())
@@ -79,6 +88,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                                                                                   static::FORM_FIELD_KEEP_BACKUPS   => [
                                                                                   ],
                                                                                   static::FORM_FIELD_FILL_TIME_LINE => [
+                                                                                  ],
+                                                                                  static::FORM_FIELD_USE_TIMER => [
                                                                                   ],
                                                                                   static::FORM_FIELD_PRECISION_DUE  => [
                                                                                   ],

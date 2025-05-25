@@ -59,5 +59,13 @@ declare(strict_types=1);
                 <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
             </td>
         </tr>
+        <tr>
+            <td>
+                <?= $translator->useTimer() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
+            </td>
+        </tr>
     </tbody>
 </table>

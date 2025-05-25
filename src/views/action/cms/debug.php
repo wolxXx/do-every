@@ -150,6 +150,17 @@ declare(strict_types=1);
             </tr>
             <tr>
                 <td>
+                    Timer nutzen:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     maximale Anzahl Worker:
                 </td>
                 <td>
@@ -259,7 +270,7 @@ declare(strict_types=1);
             <tr>
                 <?php foreach((array) $entry as $key => $value): ?>
                     <th>
-                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $key) ?>
+                       <?= \DoEveryApp\Util\View\Escaper::escape(value: str_replace(search: '*', replace: '', subject: $key)) ?>
                     </th>
                 <?php endforeach ?>
             </tr>
