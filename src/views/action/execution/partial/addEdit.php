@@ -26,226 +26,224 @@ declare(strict_types=1);
         <?= $translator->editExecution() ?>
     <?php endif ?>
 </h1>
-<fieldset>
-    <legend><?= $translator->timer() ?></legend>
+<? if(true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
+    <fieldset>
+        <legend><?= $translator->timer() ?></legend>
 
+        <div style="margin: 10px 0; padding: 10px;" id="timerArea">
+        </div>
+        <div>
+            <button id="startTimer" class="primaryButton">
+                <?= $translator->timerStart() ?>
+            </button>
+            <button id="pauseTimer" class="primaryButton">
+                <?= $translator->timerPause() ?>
+            </button>
+            <button id="stopTimer" class="primaryButton">
+                <?= $translator->timerStop() ?>
+            </button>
+            <button id="resetTimer" class="primaryButton">
+                <?= $translator->timerReset() ?>
+            </button>
+            <button id="takeTime" class="primaryButton">
+                <?= $translator->timerTakeTime() ?>
+            </button>
+        </div>
+    </fieldset>
 
-<div style="margin: 10px 0; padding: 10px;" id="timerArea">
-</div>
-<div>
-    <button id="startTimer" class="primaryButton">
-        <?= $translator->timerStart() ?>
-    </button>
-    <button id="pauseTimer" class="primaryButton">
-        <?= $translator->timerPause() ?>
-    </button>
-    <button id="stopTimer" class="primaryButton">
-        <?= $translator->timerStop() ?>
-    </button>
-    <button id="resetTimer" class="primaryButton">
-        <?= $translator->timerReset() ?>
-    </button>
-    <button id="takeTime" class="primaryButton">
-        <?= $translator->timerTakeTime() ?>
-    </button>
-</div>
-</fieldset>
-<script>
-    const timeOut = 5000;
-    let info = null;
-    let interval = null;
+    <script>
+        const timeOut = 300;
+        let info = null;
+        let interval = null;
 
-    function showStartButton() {
-        document.querySelector('#startTimer').style.display = 'inline-block'
-    }
-    function hideStartButton() {
-        document.querySelector('#startTimer').style.display = 'none'
-    }
+        function showStartButton() {
+            document.querySelector('#startTimer').style.display = 'inline-block'
+        }
+        function hideStartButton() {
+            document.querySelector('#startTimer').style.display = 'none'
+        }
 
-    function showPauseButton() {
-        document.querySelector('#pauseTimer').style.display = 'inline-block'
-    }
-    function hidePauseButton() {
-        document.querySelector('#pauseTimer').style.display = 'none'
-    }
+        function showPauseButton() {
+            document.querySelector('#pauseTimer').style.display = 'inline-block'
+        }
+        function hidePauseButton() {
+            document.querySelector('#pauseTimer').style.display = 'none'
+        }
 
-    function showStopButton() {
-        document.querySelector('#stopTimer').style.display = 'inline-block'
-    }
-    function hideStopButton() {
-        document.querySelector('#stopTimer').style.display = 'none'
-    }
+        function showStopButton() {
+            document.querySelector('#stopTimer').style.display = 'inline-block'
+        }
+        function hideStopButton() {
+            document.querySelector('#stopTimer').style.display = 'none'
+        }
 
-    function showResetButton() {
-        document.querySelector('#resetTimer').style.display = 'inline-block'
-    }
-    function hideResetButton() {
-        document.querySelector('#resetTimer').style.display = 'none'
-    }
+        function showResetButton() {
+            document.querySelector('#resetTimer').style.display = 'inline-block'
+        }
+        function hideResetButton() {
+            document.querySelector('#resetTimer').style.display = 'none'
+        }
 
-    function showTakeButton() {
-        document.querySelector('#takeTime').style.display = 'inline-block'
-    }
-    function hideTakeButton() {
-        document.querySelector('#takeTime').style.display = 'none'
-    }
+        function showTakeButton() {
+            document.querySelector('#takeTime').style.display = 'inline-block'
+        }
+        function hideTakeButton() {
+            document.querySelector('#takeTime').style.display = 'none'
+        }
 
-    function showStatus() {
-        hideStartButton()
-        hidePauseButton()
-        hideStopButton()
-        hideResetButton()
-        hideTakeButton()
-        const timerAreaElement = document.querySelector('#timerArea');
-        if (null === info) {
-            timerAreaElement.innerHTML = '??';
-            showStartButton()
+        function showStatus() {
+            hideStartButton()
             hidePauseButton()
             hideStopButton()
             hideResetButton()
             hideTakeButton()
-            return
-        }
-
-        timerAreaElement.innerHTML = '<span id="now">now: ' + moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a") +'</span>'
-        console.log(moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a"))
-        clearInterval(interval)
-        interval = setInterval(function () {
-            document.querySelector('#now').innerHTML = 'now: ' + moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
-        }, 200)
-
-        if (true === info.running) {
-            hideStartButton()
-            showPauseButton()
-            showStopButton()
-            showResetButton()
-            showTakeButton()
-            timerAreaElement.innerHTML += '<br>running timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
-            return;
-        }
-        if (true === info.paused) {
-            showStartButton()
-            hidePauseButton()
-            showStopButton()
-            showResetButton()
-            showTakeButton()
-            timerAreaElement.innerHTML += '<br>paused timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
-            return;
-        }
-
-        showResetButton()
-        showStartButton()
-        if(null === info.last) {
-            hideTakeButton()
-        }
-        if(null !== info.last) {
-            timerAreaElement.innerHTML += '<br>last time: ' + info.last + ' min'
-            showTakeButton()
-        }
-
-
-    }
-    function fetchStatus(fetchNew = true) {
-        fetch('<?= \DoEveryApp\Action\Task\Timer\StatusAction::getRoute(id: $task->getId()) ?>', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+            const timerAreaElement = document.querySelector('#timerArea');
+            if (null === info) {
+                timerAreaElement.innerHTML = '??';
+                showStartButton()
+                hidePauseButton()
+                hideStopButton()
+                hideResetButton()
+                hideTakeButton()
+                return
             }
-        })
-            .then(response => {
-                if (!response.ok) {
+
+            timerAreaElement.innerHTML = '<span id="now">now: ' + moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a") +'</span>'
+            console.log(moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a"))
+            clearInterval(interval)
+            interval = setInterval(function () {
+                document.querySelector('#now').innerHTML = 'now: ' + moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+            }, 200)
+
+            if (true === info.running) {
+                hideStartButton()
+                showPauseButton()
+                showStopButton()
+                showResetButton()
+                showTakeButton()
+                timerAreaElement.innerHTML += '<br>running timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
+                return;
+            }
+            if (true === info.paused) {
+                showStartButton()
+                hidePauseButton()
+                showStopButton()
+                showResetButton()
+                showTakeButton()
+                timerAreaElement.innerHTML += '<br>paused timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
+                return;
+            }
+
+            showResetButton()
+            showStartButton()
+            if(null === info.last) {
+                hideTakeButton()
+            }
+            if(null !== info.last) {
+                timerAreaElement.innerHTML += '<br>last time: ' + info.last + ' min'
+                showTakeButton()
+            }
+
+
+        }
+        function fetchStatus(fetchNew = true) {
+            fetch('<?= \DoEveryApp\Action\Task\Timer\StatusAction::getRoute(id: $task->getId()) ?>', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        if(fetchNew) {
+                            setTimeout(fetchStatus, timeOut);
+                        }
+                        info = null
+                        showStatus()
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
                     if(fetchNew) {
                         setTimeout(fetchStatus, timeOut);
                     }
-                    info = null
+                    return response.json();
+                })
+                .then(data => {
+                    info = data;
                     showStatus()
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                if(fetchNew) {
-                    setTimeout(fetchStatus, timeOut);
-                }
-                return response.json();
-            })
-            .then(data => {
-                info = data;
-                showStatus()
-                console.log('Data fetched successfully:', data);
-                // Perform actions with the fetched data here
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-        moment.locale('de')
-        document.querySelector('#startTimer').addEventListener('click', function (event) {
-            event.stopPropagation()
-            event.preventDefault()
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            moment.locale('de')
+            document.querySelector('#startTimer').addEventListener('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
 
-            fetch('<?= \DoEveryApp\Action\Task\Timer\RunAction::getRoute(id: $task->getId()) ?>', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(()=>{
-                fetchStatus(false)
+                fetch('<?= \DoEveryApp\Action\Task\Timer\RunAction::getRoute(id: $task->getId()) ?>', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(()=>{
+                    fetchStatus(false)
+                })
+                return false
             })
-            return false
-        })
-        document.querySelector('#pauseTimer').addEventListener('click', function (event) {
-            event.stopPropagation()
-            event.preventDefault()
+            document.querySelector('#pauseTimer').addEventListener('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
 
-            fetch('<?= \DoEveryApp\Action\Task\Timer\PauseAction::getRoute(id: $task->getId()) ?>', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(()=>{
-                fetchStatus(false)
+                fetch('<?= \DoEveryApp\Action\Task\Timer\PauseAction::getRoute(id: $task->getId()) ?>', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(()=>{
+                    fetchStatus(false)
+                })
+                return false
             })
-            return false
-        })
-        document.querySelector('#stopTimer').addEventListener('click', function (event) {
-            event.stopPropagation()
-            event.preventDefault()
+            document.querySelector('#stopTimer').addEventListener('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
 
-            fetch('<?= \DoEveryApp\Action\Task\Timer\StopAction::getRoute(id: $task->getId()) ?>', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(()=>{
-                fetchStatus(false)
+                fetch('<?= \DoEveryApp\Action\Task\Timer\StopAction::getRoute(id: $task->getId()) ?>', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(()=>{
+                    fetchStatus(false)
+                })
+                return false
             })
-            return false
-        })
-        document.querySelector('#resetTimer').addEventListener('click', function (event) {
-            event.stopPropagation()
-            event.preventDefault()
+            document.querySelector('#resetTimer').addEventListener('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
 
-            fetch('<?= \DoEveryApp\Action\Task\Timer\ResetAction::getRoute(id: $task->getId()) ?>', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(()=>{
-                fetchStatus(false)
+                fetch('<?= \DoEveryApp\Action\Task\Timer\ResetAction::getRoute(id: $task->getId()) ?>', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(()=>{
+                    fetchStatus(false)
+                })
+                return false
             })
-            return false
-        })
-        document.querySelector('#takeTime').addEventListener('click', function (event) {
-            event.stopPropagation()
-            event.preventDefault()
+            document.querySelector('#takeTime').addEventListener('click', function (event) {
+                event.stopPropagation()
+                event.preventDefault()
 
-            console.log(info.last)
-            document.querySelector('#duration').value = info.last
-            return false
-        })
-        fetchStatus()
-    });
-</script>
-
+                document.querySelector('#duration').value = info.last
+                return false
+            })
+            fetchStatus()
+        });
+    </script>
+<? endif ?>
 <div>
     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
         <?= $translator->task() ?>: <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
@@ -332,13 +330,15 @@ declare(strict_types=1);
                         <?php foreach ($data['checkListItems'] as $index =>  $checkListItem): ?>
                             <tr>
                                 <td>
-                                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem['name']) ?>
+                                    <label for="clid<?= $checkListItem['reference'] ?>">
+                                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem['name']) ?>
+                                    </label>
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][checked]" value="0">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][reference]" value="<?= $checkListItem['reference'] ?>">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][id]" value="<?= $checkListItem['id'] ?>">
                                 </td>
                                 <td>
-                                    <input type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
+                                    <input id="clid<?= $checkListItem['reference'] ?>" type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
                                 </td>
                                 <td>
                                     <?= \DoEveryApp\Util\View\CheckListItemNote::byValue(note: $checkListItem['referenceNote']) ?>
