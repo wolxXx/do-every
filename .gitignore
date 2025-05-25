@@ -21,6 +21,7 @@
 /docker-volumes/backups
 /log
 /public/vendor
+/public/node_modules
 /vendor
 /.php-cs-fixer.cache
 
