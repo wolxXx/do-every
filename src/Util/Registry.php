@@ -32,6 +32,8 @@ final class Registry
 
     public const string KEY_NOTIFIER_LAST_RUN = '4cf10630-b664-43cd-9693-0effe0934844';
 
+    public const string KEY_USE_TIMER         = 'cd72b7ae-af93-4b88-8404-680c76f90b9b';
+
     private static Registry $instance;
 
     private array $map = [];
@@ -350,6 +352,26 @@ final class Registry
             registry: $this
                 ->getOrCreateRow(key: self::KEY_FILL_TIME_LINE)
                 ->setBoolValue(boolValue: $fillTimeLine)
+        );
+    }
+
+
+    public function doUseTimer(): bool
+    {
+        return $this
+                ->getRow(key: self::KEY_USE_TIMER)
+                ?->getBoolValue()
+                ?: false
+        ;
+    }
+
+
+    public function enableTimer(?bool $useTimer): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_USE_TIMER)
+                          ->setBoolValue(boolValue: $useTimer)
         );
     }
 }
