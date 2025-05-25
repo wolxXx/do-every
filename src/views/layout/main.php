@@ -38,41 +38,17 @@ declare(strict_types=1);
             - <?= $pageTitle ?>
         <?php endif ?>
     </title>
+    <style>
+        :root {
+
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <div id="menu">
             <div style="text-align: right">
                 <img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">
-
-                <svg
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 200 200"
-                        width="200" height="200">
-
-                    <!-- Äußere Uhr -->
-                    <circle cx="100" cy="100" r="60" stroke="#ac1212" stroke-width="8" fill="none" />
-
-                    <!-- Obere Knöpfe -->
-                    <rect x="85" y="25" width="12" height="10" fill="#ac1212" />
-                    <rect x="105" y="25" width="12" height="10" fill="#ac1212" />
-
-                    <!-- Innere Uhr -->
-                    <circle cx="100" cy="100" r="50" stroke="#ac1212" stroke-width="4" fill="none" />
-
-                    <!-- Markierungen -->
-                    <line x1="100" y1="50" x2="100" y2="55" stroke="#ac1212" stroke-width="4" />
-                    <line x1="100" y1="145" x2="100" y2="150" stroke="#ac1212" stroke-width="4" />
-                    <line x1="55" y1="100" x2="50" y2="100" stroke="#ac1212" stroke-width="4" />
-                    <line x1="145" y1="100" x2="150" y2="100" stroke="#ac1212" stroke-width="4" />
-
-                    <!-- Zeiger -->
-                    <line x1="100" y1="100" x2="120" y2="80" stroke="#ac1212" stroke-width="6" stroke-linecap="round" />
-
-                    <!-- Text "Do Every" -->
-                    <text x="100" y="180" font-size="18" font-family="Arial, sans-serif" fill="#ac1212" text-anchor="middle">Do Every</text>
-                </svg>
             </div>
 
             <div id="appTitle">
