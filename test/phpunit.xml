@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Bootstrap.php" colors="true"
-         backupGlobals="false" processIsolation="true" stopOnError="false" stopOnFailure="false"
-         stopOnIncomplete="false" stopOnSkipped="false"
-         timeoutForSmallTests="1"
-         timeoutForMediumTests="3"
-         timeoutForLargeTests="5"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd" cacheDirectory=".phpunit.cache"
+         backupGlobals="false"
+         processIsolation="true"
+         stopOnError="true"
+         stopOnFailure="true"
+         stopOnIncomplete="true"
+         stopOnSkipped="true"
+         timeoutForSmallTests="10"
+         timeoutForMediumTests="10"
+         timeoutForLargeTests="60"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+         cacheDirectory=".phpunit.cache"
          backupStaticProperties="true">
     <testsuites>
         <testsuite name="Test">
