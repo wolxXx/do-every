@@ -567,4 +567,10 @@ interface Translator
     public function timerTakeTime(): string;
 
     public function timer(): string;
+
+    public function useTimer(): string;
+
+    public function running(): string;
+
+    public function sections(): string;
 }

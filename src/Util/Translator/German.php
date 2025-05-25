@@ -983,4 +983,19 @@ class German implements
     {
         return 'Stoppuhr';
     }
+
+    public function useTimer(): string
+    {
+        return 'Stoppuhr verwenden';
+    }
+
+    public function running(): string
+    {
+        return 'läuft';
+    }
+
+    public function sections(): string
+    {
+        return 'Abschnitte';
+    }
 }

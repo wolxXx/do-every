@@ -980,4 +980,19 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'timer';
     }
+
+    public function useTimer(): string
+    {
+        return 'use timer';
+    }
+
+    public function running(): string
+    {
+        return 'running';
+    }
+
+    public function sections(): string
+    {
+        return 'sections';
+    }
 }

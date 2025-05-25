@@ -971,4 +971,19 @@ class Nothing implements
     {
         return $this->debug();
     }
+
+    public function useTimer(): string
+    {
+        return $this->debug();
+    }
+
+    public function running(): string
+    {
+        return $this->debug();
+    }
+
+    public function sections(): string
+    {
+        return $this->debug();
+    }
 }
