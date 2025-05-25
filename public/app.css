@@ -1,6 +1,11 @@
 :root {
     --fontColorMain: #eee;
-    --backgroundColorMain: #333;
+    --backgroundColorMain: #111;
+    --mixin: #333;
+    --dark90Mixin: color-mix(in srgb, var(--fontColorMain) 90%, var(--mixin));
+    --dark80Mixin: color-mix(in srgb, var(--fontColorMain) 80%, var(--mixin));
+    --dark60Mixin: color-mix(in srgb, var(--fontColorMain) 60%, var(--mixin));
+    --dark30Mixin: color-mix(in srgb, var(--fontColorMain) 30%, var(--mixin));
 }
 
 body, html {
@@ -12,18 +17,24 @@ body, html {
 }
 
 a {
-    color: color-mix(in srgb, var(--fontColorMain) 80%, #000);
+    color: var(--dark80Mixin);
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
-    background: var(--backgroundColorMain);
+    background: var(--dark30Mixin);
     color: var(--fontColorMain);
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
-    background: var(--backgroundColorMain);
+    background: var(--dark60Mixin);
     color: var(--fontColorMain);
-    border: solid 1px color-mix(in srgb, var(--fontColorMain) 60%, #000);
+    border: solid 3px var(--dark30Mixin);
+    border-radius: 5px;
+    text-align: center;
+    width: 400px;
+}
+textarea{
+    text-align: left;
 }
 
 select {
@@ -37,11 +48,13 @@ textarea {
 }
 
 label {
-    display: block;
+    margin-bottom: 1px;
+    width: 100%;
+    display: inline-block;
 }
 
 label.required {
-    color: color-mix(in srgb, var(--fontColorMain) 90%, #000);
+    color: var(--dark90Mixin);
     font-weight: bolder;
 }
 
@@ -51,11 +64,11 @@ label.required:after {
 
 table {
     width: 100%;
-    border: solid 1px color-mix(in srgb, var(--fontColorMain) 60%, #000);
+    border: solid 1px var(--dark60Mixin);
 }
 
 tr:hover {
-    background: color-mix(in srgb, var(--fontColorMain) 30%, #000);
+    background: var(--dark30Mixin);
 }
 
 td, th {
@@ -64,7 +77,7 @@ td, th {
 }
 
 th {
-    border-bottom: solid 3px #fff;
+    border-bottom: solid 3px var(--dark60Mixin);
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -95,11 +108,6 @@ hr{
     box-shadow: 0 0 10px #fff;
 }
 
-label {
-    display: block;
-    width: 100%;
-    margin-bottom: 1px;
-}
 
 table.withActions tr td:last-child, td.pullRight {
     width: 1%;
@@ -468,22 +476,22 @@ h1:before, h1:after {
 }
 
 .executionNote {
-    border: solid 1px #fff;
+    border: solid 1px var(--dark30Mixin);
     max-height: 1.1em;
     overflow: hidden;
 }
 
 .executionNote:hover {
-    max-height: 200px;
+    max-height: 300px;
     overflow: auto;
     position: absolute;
-    width: 100%;
+    width: 300px;
     background: #333;
     color: #eee;
 }
 
 .taskNote {
-    border: solid 1px #fff;
+    border: solid 1px var(--dark30Mixin);
     padding: 15px;
     margin-bottom: 20px;
 }
@@ -492,7 +500,7 @@ h1:before, h1:after {
     background: #000;
     z-index: 1000;
     position: absolute;
-    border-top: solid 3px #fff;
+    border-top: solid 3px var(--dark30Mixin);
     margin-top: 250px;
     width: 100%;
     right: 0;
