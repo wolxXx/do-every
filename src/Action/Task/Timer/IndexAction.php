@@ -18,7 +18,8 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
     {
         $timers = \DoEveryApp\Entity\Task\Timer::getRepository()
             ->createQueryBuilder(alias: 't')
-            ->orderBy(sort: 't.id', order: 'DESC')
+            ->orderBy(sort: 't.stopped', order: 'ASC')
+            ->addOrderBy(sort: 't.id', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
