@@ -15,24 +15,46 @@ declare(strict_types=1);
  */
 ?>
 
-<h1>Timer</h1>
+<h1><?= $translator->timer() ?></h1>
 <table class="app-table">
     <thead>
+        <tr>
+            <th>
+                <?= $translator->running() ?>
+            </th>
+            <th>
+                <?= $translator->task() ?>
+            </th>
+            <th>
+                <?= $translator->worker() ?>
+            </th>
+            <th>
+                <?= $translator->sections() ?>
+            </th>
+        </tr>
     </thead>
     <tbody>
         <? foreach ($timers as $timer): ?>
             <tr>
                 <td>
-                    <?= $timer->getId() ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(false === $timer->isStopped()) ?>
                 </td>
                 <td>
-                    <?= $timer->getWorker()->getId() ?>
+                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($timer->getTask()->getId()) ?>">
+                        <?= $timer->getTask()->getName() ?>
+                        <? if(null !== $timer->getTask()->getGroup()): ?>
+                            (<?= $timer->getTask()->getGroup()->getName() ?>)
+                        <? endif ?>
+                    </a>
+                </td>
+                <td>
                     <?= $timer->getWorker()->getName() ?>
                 </td>
                 <td>
                     <? foreach ($timer->getSections() as $section): ?>
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getStart()) ?> -
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getEnd()) ?>
+                        <br />
                     <? endforeach  ?>
                 </td>
             </tr>
