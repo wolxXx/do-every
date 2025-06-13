@@ -1,5 +1,3 @@
-version: '3.5'
-
 volumes:
   vol-database-mariadb:
     name: "do-every-__INSTANCE__-php83-db-mariadb-volume"
