@@ -5,6 +5,44 @@ set -e
 HERE=$(dirname $(readlink -f "$0"));
 cd "$HERE";
 
+
+
+check_docker() {
+    if ! command -v docker &> /dev/null; then
+        echo "Error: docker is not installed"
+        exit 1
+    fi
+}
+
+check_docker_compose() {
+    if ! docker compose version &> /dev/null; then
+        echo "Error: docker compose is not installed"
+        exit 1
+    fi
+}
+
+check_env_file() {
+  if [ ! -f ".env" ]; then
+      echo ".env file is missing."
+      echo "Creating .env file from .env.dist."
+      echo "please adjust the ports and names to your needs."
+      cp .env.dist .env
+
+      read -p "Do you want to edit the .env file with vim? (y/N): " response
+      if [[ "$response" =~ ^[Yy]$ ]]; then
+          vim .env
+      else
+          exit 0
+      fi
+  fi
+}
+
+
+check_docker
+check_docker_compose
+check_env_file
+
+
 source .env
 
 
