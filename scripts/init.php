@@ -2,15 +2,11 @@
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-$hasSomething
-    = 0 !== \DoEveryApp\Entity\Execution::getRepository()->count()
-      && 0 !== \DoEveryApp\Entity\Notification::getRepository()->count()
-      && 0 !== \DoEveryApp\Entity\Task::getRepository()->count()
-      && 0 !== \DoEveryApp\Entity\Worker::getRepository()->count();
+$hasSomething = 0 !== \DoEveryApp\Entity\Worker::getRepository()->count();
 
 
 if (true === $hasSomething) {
-    echo 'nothing to do';
+    echo 'nothing to do' . PHP_EOL . PHP_EOL;
 
     return;
 }
