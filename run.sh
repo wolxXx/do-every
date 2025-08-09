@@ -62,4 +62,5 @@ fi
 
 docker compose up -d --build --force-recreate --pull always
 
-echo "running under http://localhost:$WEB_PORT"
+echo "web running under http://localhost:$WEB_PORT"
+echo "db running under port $DB_PORT"
