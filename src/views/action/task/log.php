@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 /**
  * @var \DoEveryApp\Entity\Execution[] $executions
+ * @var array                          $stats
  * @var \DoEveryApp\Entity\Task[]      $tasks
  * @var \DoEveryApp\Entity\Task[]      $tasksWithoutGroup
  * @var \DoEveryApp\Entity\Group[]     $groups
@@ -87,5 +88,51 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
     </div>
     <div class="column">
         <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <?= $translator->task() ?>
+                        </th>
+                        <th>
+                            <?= $translator->effort() ?>
+                        </th>
+                        <th>
+                            <?= $translator->executions() ?>
+                        </th>
+                        <th>
+                            <?= $translator->group() ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($stats as $stat): ?>
+                        <tr>
+                            <td>
+                                <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $stat['task_id']) ?>">
+                                    <?= $stat['task_name'] ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?= \DoEveryApp\Util\View\Duration::byValue((int)$stat['sums']) ?>
+                            </td>
+                            <td>
+                                <?= $stat['executions'] ?>
+                            </td>
+                            <td>
+                                <?php if (null === $stat['group_name']): ?>
+                                    -
+                                <?php else: ?>
+                                    <a href="<?= \DoEveryApp\Action\Group\ShowAction::getRoute(id: $stat['group_id']) ?>">
+                                        <?= $stat['group_name'] ?>
+                                    </a>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
