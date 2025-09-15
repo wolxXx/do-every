@@ -573,4 +573,9 @@ interface Translator
     public function running(): string;
 
     public function sections(): string;
+    public function davEnabled(): string;
+    public function enableDav(): string;
+    public function davUser(): string;
+    public function davPassword(): string;
+    public function davUrl(): string;
 }
