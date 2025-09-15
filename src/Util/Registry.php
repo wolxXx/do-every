@@ -33,6 +33,8 @@ final class Registry
     public const string KEY_NOTIFIER_LAST_RUN = '4cf10630-b664-43cd-9693-0effe0934844';
 
     public const string KEY_USE_TIMER         = 'cd72b7ae-af93-4b88-8404-680c76f90b9b';
+    public const string KEY_DAV_USER          = 'a92e3013-54c6-449c-a977-4850b34a9474';
+    public const string KEY_DAV_PASSWORD      = '52ea3f65-81f2-4347-86b9-5a9fce56cfdd';
 
     private static Registry $instance;
 
@@ -372,6 +374,40 @@ final class Registry
             registry: $this
                           ->getOrCreateRow(key: self::KEY_USE_TIMER)
                           ->setBoolValue(boolValue: $useTimer)
+        );
+    }
+
+    public function getDavUser(): ?string
+    {
+        return $this
+            ->getRow(key: self::KEY_DAV_USER)
+            ?->getStringValue()
+        ;
+    }
+
+    public function setDavUser(?string $davUser): static
+    {
+        return $this->updateRow(
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_DAV_USER)
+                ->setStringValue(stringValue: $davUser)
+        );
+    }
+
+    public function getDavPassword(): ?string
+    {
+        return $this
+            ->getRow(key: self::KEY_DAV_PASSWORD)
+            ?->getStringValue()
+        ;
+    }
+
+    public function setDavPassword(?string $davPassword): static
+    {
+        return $this->updateRow(
+            registry: $this
+                ->getOrCreateRow(key: self::KEY_DAV_PASSWORD)
+                ->setStringValue(stringValue: $davPassword)
         );
     }
 }
