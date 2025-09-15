@@ -27,8 +27,8 @@
     }
   },
   "scripts": {
-    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest -p 200 --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox",
-    "paratestNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/bin/paratest -p 200  --configuration test/phpunit.xml --display-incomplete --display-skipped --display-deprecations",
+    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest -p 50 --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations",
+    "paratestNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/bin/paratest -p 50 --configuration test/phpunit.xml --display-incomplete --display-skipped --display-deprecations",
     "test": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox-html test/testdocs.html --testdox --cache-result",
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
     "stan": "vendor/bin/phpstan analyse src | tee stan.log",
@@ -117,6 +117,7 @@
     "pragmarx/google2fa": "*",
     "ramsey/uuid": "*",
     "rector/rector": "*",
+    "sabre/dav": "*",
     "savinmikhail/add_named_arguments_rector": "*",
     "slim/http": "*",
     "slim/php-view": "*",
