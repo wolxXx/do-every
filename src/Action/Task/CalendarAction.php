@@ -17,6 +17,9 @@ use
         \Fig\Http\Message\RequestMethodInterface::METHOD_POST,
         \Fig\Http\Message\RequestMethodInterface::METHOD_HEAD,
         \Fig\Http\Message\RequestMethodInterface::METHOD_OPTIONS,
+        \Fig\Http\Message\RequestMethodInterface::METHOD_TRACE,
+        \Fig\Http\Message\RequestMethodInterface::METHOD_PUT,
+        'PROPFIND',
     ],
     authRequired: false,
 )]
@@ -31,6 +34,53 @@ class CalendarAction extends \DoEveryApp\Action\AbstractAction
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug('CalendarAction');
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(\Safe\json_encode($this->getRequest()->getHeaders(), JSON_PRETTY_PRINT));
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(\Safe\json_encode($this->getRequest()->getParsedBody(), JSON_PRETTY_PRINT));
+
+
+        // ==== Authentifizierung prüfen ====
+        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+            header('WWW-Authenticate: Basic realm="Kalender"');
+            header('HTTP/1.0 401 Unauthorized');
+            echo 'Authentifizierung erforderlich';
+            exit;
+        }
+
+        if ($_SERVER['PHP_AUTH_USER'] !== \DoEveryApp\Util\Registry::getInstance()->getDavUser() || $_SERVER['PHP_AUTH_PW'] !== \DoEveryApp\Util\Registry::getInstance()->getDavPassword()) {
+            header('HTTP/1.0 403 Forbidden');
+            echo 'Zugang verweigert';
+            exit;
+        }
+
+        // ==== Kalender erzeugen ====
+        $vcalendar = new \Sabre\VObject\Component\VCalendar();
+
+        foreach (\DoEveryApp\Entity\Task::getRepository()->findAllForIndex() as $task) {
+            $due = $task->getDueValue();
+            $start = new \DateTime(datetime: 'now', timezone: new \DateTimeZone('Europe/Berlin'));
+            if ($due !== null && $due > 0) {
+                $start->modify('+'.$due.' '.$task->getIntervalType().'s');
+            }
+            \DoEveryApp\Util\Debugger::dieDebug($due, $start->format('Y-m-d H:i:s'), $task->getIntervalType());
+
+            $end   = (clone $start)->modify('+1 hour');
+
+            $vcalendar->add('VEVENT', [
+                'UID' => $task->getId().'@do-every',
+                'SUMMARY' => $task->getName(),
+                'DTSTART' => $start,
+                'DTEND'   => $end,
+            ]);
+        }
+
+
+        // ==== Ausgabe ====
+        header('Content-Type: text/calendar; charset=utf-8');
+        header('Content-Disposition: inline; filename="kalender.ics"');
+
+        echo $vcalendar->serialize();
+
+        die();
+
+
 
         $pdo = new \PDO('mysql:host=mysql;dbname=do_every', 'root', 'root');
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
