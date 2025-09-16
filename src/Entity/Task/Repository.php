@@ -14,6 +14,9 @@ class Repository extends \Doctrine\ORM\EntityRepository
      */
     protected array $map = [];
 
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
     public function getDueTasks(): array
     {
         $tasks = $this
