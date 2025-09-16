@@ -24,9 +24,6 @@ ini_set(option: 'opcache.file_cache', value: ROOT_DIR . DIRECTORY_SEPARATOR . 'c
 $app = \Slim\Factory\AppFactory::create();
 $app->addErrorMiddleware(displayErrorDetails: true, logErrors: true, logErrorDetails: true, logger: \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger());
 
-$app->options(pattern: '/{routes:.+}', callable: function ($request, $response, $args) {
-    return $response;
-});
 
 $app->add(middleware: function ($request, $handler) {
     $response = $handler->handle($request);
@@ -64,6 +61,11 @@ foreach ($Regex as $files) {
         }
     }
 }
+
+
+$app->options(pattern: '/{routes:.+}', callable: function ($request, $response, $args) {
+    return $response;
+});
 
 $app->map(methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], pattern: '/{routes:.+}', callable: function ($request, $response): void {
     throw new \Slim\Exception\HttpNotFoundException(request: $request);
