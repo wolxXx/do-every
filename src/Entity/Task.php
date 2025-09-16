@@ -145,6 +145,45 @@ class Task
         return static::getRepositoryByClassName();
     }
 
+    public function toVCalendarEvent(): array
+    {
+        $task = $this;
+        $due = $task->getDueValue();
+        $start = new \DateTime(datetime: 'now', timezone: new \DateTimeZone('Europe/Berlin'));
+        if ($due !== null && $due > 0) {
+            $due = (int) $due;
+            $modifier = '+' . $due . ' ' . $task->getIntervalType() . 's';
+            $start->modify($modifier);
+        }
+
+        $modifier1 = '+1 hour';
+        $executionCount     = count(value: $task->getExecutions());
+        if(0 !== $executionCount) {
+            $sum = 0;
+            foreach ($task->getExecutions() as $execution) {
+                $sum += $execution->getDuration();
+            }
+            $sum = (int)($sum / $executionCount);
+            if(0 === $sum) {
+                $sum = 60;
+            }
+            $modifier1 = '+' . $sum . ' minutes';
+        }
+        $end       = (clone $start)->modify($modifier1);
+
+        $name = $task->getName();
+        if(null !== $task->getGroup()) {
+            $name = $task->getGroup()->getName() . ' - ' . $name;
+        }
+
+        return  [
+            'UID' => $task->getId().'@do-every',
+            'SUMMARY' => $name,
+            'DTSTART' => $start,
+            'DTEND'   => $end,
+        ];
+    }
+
     public function getDueUnit(): ?string
     {
         return $this->dueCacheUnit;
