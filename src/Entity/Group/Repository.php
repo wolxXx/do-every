@@ -15,50 +15,46 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findIndexed(): array
     {
         return $this
-            ->createQueryBuilder('g')
-            ->orderBy('g.name', 'ASC')
+            ->createQueryBuilder(alias: 'g')
+            ->orderBy(sort: 'g.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
     }
 
-
     public function create(\DoEveryApp\Entity\Group $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Group $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function delete(\DoEveryApp\Entity\Group $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -72,7 +68,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Group[]
      */
@@ -80,7 +75,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -94,7 +88,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

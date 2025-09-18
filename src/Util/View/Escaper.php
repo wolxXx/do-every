@@ -12,6 +12,6 @@ class Escaper
             return $nullRepresenting;
         }
 
-        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars(string: $value, flags: ENT_QUOTES, encoding: 'UTF-8');
     }
 }

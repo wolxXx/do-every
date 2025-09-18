@@ -13,7 +13,7 @@ class Backup
                                             ->getLastBackup()
         ;
         if (null !== $lastRun) {
-            $lastRun = \Carbon\Carbon::create($lastRun);
+            $lastRun = \Carbon\Carbon::create(year: $lastRun);
             $lastRun->addHours(2);
             if ($lastRun->gt($now)) {
                 return;
@@ -25,18 +25,17 @@ class Backup
 
         $now = \Carbon\Carbon::now();
 
-        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad('' . $now->month, 2, '0', STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad('' . $now->day, 2, '0', STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
-        if (false === \is_dir($path)) {
-            mkdir($path, 0777, true);
+        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad(string: '' . $now->month, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad(string: '' . $now->day, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
+        if (false === \is_dir(filename: $path)) {
+            mkdir(directory: $path, permissions: 0777, recursive: true);
         }
-        $path    = $path . 'backup_' . date('Y-m-d_H-i-s') . '.sql';
+        $path    = $path . 'backup_' . date(format: 'Y-m-d_H-i-s') . '.sql';
         $command = sprintf($command, $dbParams['user'], $dbParams['password'], $dbParams['port'], $dbParams['host'], $dbParams['dbname'], $path);
 
-        exec($command);
-
+        exec(command: $command);
 
         \DoEveryApp\Util\Registry::getInstance()
-                                 ->setLastBackup(\Carbon\Carbon::now())
+                                 ->setLastBackup(lastBackup: \Carbon\Carbon::now())
         ;
     }
 }

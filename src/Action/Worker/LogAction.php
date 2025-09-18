@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DoEveryApp\Action\Worker;
 
 #[\DoEveryApp\Attribute\Action\Route(
-    path   : '/worker/log/{id:[0-9]+}',
+    path: '/worker/log/{id:[0-9]+}',
     methods: [
         \Fig\Http\Message\RequestMethodInterface::METHOD_GET,
     ],
@@ -22,10 +22,10 @@ class LogAction extends \DoEveryApp\Action\AbstractAction
         }
 
         return $this->render(
-            'action/worker/log',
-            [
+            script: 'action/worker/log',
+            data: [
                 'worker' => $worker,
-                'data'   => \DoEveryApp\Entity\Execution::getRepository()->findForWorker($worker),
+                'data'   => \DoEveryApp\Entity\Execution::getRepository()->findForWorker(worker: $worker),
             ]
         );
     }

@@ -21,18 +21,18 @@ class DeleteAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
         if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->itIsYou());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->itIsYou());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
 
-        $worker::getRepository()->delete($worker);
+        $worker::getRepository()->delete(entity: $worker);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->workerDeleted());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerDeleted());
 
-        return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }

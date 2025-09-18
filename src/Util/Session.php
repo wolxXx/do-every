@@ -22,13 +22,14 @@ class Session
     public static function Factory(string $namespace): static
     {
         if (false === static::$hasSetSaveHandler) {
-            \session_set_save_handler(new SessionSaveHandler(DependencyContainer::getInstance()->getEntityManager()));
+
+            \session_set_save_handler(new SessionSaveHandler(entityManager: DependencyContainer::getInstance()->getEntityManager()));
             static::$hasSetSaveHandler = true;
         }
         $instance            = new static();
         $instance->namespace = $namespace;
-        if (false === \array_key_exists($namespace, static::$containers)) {
-            static::$containers[$namespace] = new SessionContainer($namespace);
+        if (false === \array_key_exists(key: $namespace, array: static::$containers)) {
+            static::$containers[$namespace] = new SessionContainer(name: $namespace);
         }
 
         return $instance;
@@ -37,16 +38,16 @@ class Session
 
     public function has(string $what): bool
     {
-        return static::$containers[$this->namespace]->offsetExists($what);
+        return static::$containers[$this->namespace]->offsetExists(key: $what);
     }
 
 
     public function get(string $what, $default = null)
     {
-        if (false === $this->has($what)) {
+        if (false === $this->has(what: $what)) {
             return $default;
         }
-        $stored = static::$containers[$this->namespace]->offsetGet($what);
+        $stored = static::$containers[$this->namespace]->offsetGet(key: $what);
         if (null === $stored) {
             return $default;
         }
@@ -57,7 +58,7 @@ class Session
 
     public function write(string $what, $data): self
     {
-        static::$containers[$this->namespace]->offsetSet($what, $data);
+        static::$containers[$this->namespace]->offsetSet(key: $what, data: $data);
 
         return $this;
     }
@@ -65,7 +66,7 @@ class Session
 
     public function clear(string $what): self
     {
-        static::$containers[$this->namespace]->offsetUnset($what);
+        static::$containers[$this->namespace]->offsetUnset(key: $what);
 
         return $this;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Auth;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -16,6 +18,7 @@ class LogoutAction extends \DoEveryApp\Action\AbstractAction
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         \DoEveryApp\Util\User\Current::logout();
-        return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
+
+        return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
     }
 }

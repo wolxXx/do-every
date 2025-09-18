@@ -3,16 +3,17 @@
 namespace DoEveryAppTest;
 
 
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-if (false === defined('IS_IN_TEST_ENV')) {
-    define('IS_IN_TEST_ENV', true);
+error_reporting(error_level: E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+if (false === defined(constant_name: 'IS_IN_TEST_ENV')) {
+    define(constant_name: 'IS_IN_TEST_ENV', value: true);
 }
-defined('ROOT_DIR') || define('ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..' );
+defined(constant_name: 'ROOT_DIR') || define(constant_name: 'ROOT_DIR', value: __DIR__ . DIRECTORY_SEPARATOR . '..' );
 require_once __DIR__ . '/TestBase.php';
-ini_set('xdebug.var_display_max_data', '1000000');
-ini_set('xdebug.var_display_max_children', '1000000');
-ini_set('xdebug.var_display_max_depth', '1000000');
-
+ini_set(option: 'xdebug.var_display_max_data', value: '1000000');
+ini_set(option: 'xdebug.var_display_max_children', value: '1000000');
+ini_set(option: 'xdebug.var_display_max_depth', value: '1000000');
+ini_set(option: 'zend.exception_ignore_args', value: '1');
+\DoEveryApp\Util\QueryLogger::$disabled = true;
 class Bootstrap
 {
 
@@ -30,7 +31,7 @@ class Bootstrap
 
     public static function chroot(): void
     {
-        chdir(__DIR__ . \DIRECTORY_SEPARATOR . '..');
+        chdir(directory: __DIR__ . \DIRECTORY_SEPARATOR . '..');
     }
 }
 

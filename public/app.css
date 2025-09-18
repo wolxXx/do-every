@@ -1,18 +1,40 @@
+:root {
+    --fontColorMain: #eee;
+    --backgroundColorMain: #111;
+    --mixin: #333;
+    --dark90Mixin: color-mix(in srgb, var(--fontColorMain) 90%, var(--mixin));
+    --dark80Mixin: color-mix(in srgb, var(--fontColorMain) 80%, var(--mixin));
+    --dark60Mixin: color-mix(in srgb, var(--fontColorMain) 60%, var(--mixin));
+    --dark30Mixin: color-mix(in srgb, var(--fontColorMain) 30%, var(--mixin));
+}
+
 body, html {
     margin: 0;
     padding: 0;
-    background: #000;
-    color: #fff;
+    background: var(--backgroundColorMain);
+    color: var(--fontColorMain);
+    font-family: sans-serif;
 }
 
 a {
-    color: #fff;
+    color: var(--dark80Mixin);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+    background: var(--dark30Mixin);
+    color: var(--fontColorMain);
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
-    color: #fff;
-    background: #333;
-    border: solid 1px #ccc;
+    background: var(--dark60Mixin);
+    color: var(--fontColorMain);
+    border: solid 3px var(--dark30Mixin);
+    border-radius: 5px;
+    text-align: center;
+    width: 400px;
+}
+textarea{
+    text-align: left;
 }
 
 select {
@@ -26,11 +48,13 @@ textarea {
 }
 
 label {
-    display: block;
+    margin-bottom: 1px;
+    width: 100%;
+    display: inline-block;
 }
 
 label.required {
-    color: #eee;
+    color: var(--dark90Mixin);
     font-weight: bolder;
 }
 
@@ -40,11 +64,11 @@ label.required:after {
 
 table {
     width: 100%;
-    border: solid 1px #666;
+    border: solid 1px var(--dark60Mixin);
 }
 
 tr:hover {
-    background: #333;
+    background: var(--dark30Mixin);
 }
 
 td, th {
@@ -53,7 +77,7 @@ td, th {
 }
 
 th {
-    border-bottom: solid 3px #fff;
+    border-bottom: solid 3px var(--dark60Mixin);
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -69,12 +93,21 @@ fieldset {
     margin-bottom: 30px;
 }
 
-fieldset > legend {
+fieldset > legend{
     margin-left: 10px;
     border: solid 1px #fff;
+    border-radius: 4px;
     padding-left: 20px;
     padding-right: 20px;
+    background: #999;
+    color: #000;
+    box-shadow: 0 0 10px #fff;
 }
+
+hr{
+    box-shadow: 0 0 10px #fff;
+}
+
 
 table.withActions tr td:last-child, td.pullRight {
     width: 1%;
@@ -134,6 +167,35 @@ hr {
     border-radius: 3px;
     color: #000;
     cursor: pointer;
+
+
+    align-self: center;
+    background-color: #fff;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 2px 1px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 20px;
+    outline: none;
+
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .primaryButton, .btn-close, .rowAdder {
@@ -145,6 +207,12 @@ hr {
     color: #333;
     background: #fff;
     border: solid 3px #ccc;
+
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+}
+.primaryButton:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
 .dangerButton {
@@ -408,18 +476,22 @@ h1:before, h1:after {
 }
 
 .executionNote {
-    border: solid 1px #fff;
+    border: solid 1px var(--dark30Mixin);
     max-height: 1.1em;
     overflow: hidden;
 }
 
 .executionNote:hover {
-    max-height: 200px;
+    max-height: 300px;
     overflow: auto;
+    position: absolute;
+    width: 300px;
+    background: #333;
+    color: #eee;
 }
 
 .taskNote {
-    border: solid 1px #fff;
+    border: solid 1px var(--dark30Mixin);
     padding: 15px;
     margin-bottom: 20px;
 }
@@ -428,7 +500,7 @@ h1:before, h1:after {
     background: #000;
     z-index: 1000;
     position: absolute;
-    border-top: solid 3px #fff;
+    border-top: solid 3px var(--dark30Mixin);
     margin-top: 250px;
     width: 100%;
     right: 0;

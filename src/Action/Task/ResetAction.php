@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -19,20 +21,20 @@ class ResetAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
         foreach ($task->getExecutions() as $execution) {
-            $execution::getRepository()->delete($execution);
+            $execution::getRepository()->delete(entity: $execution);
         }
         $task
-            ->setActive(true)
-            ->setNotify(true)
-            ->setWorkingOn(null)
+            ->setActive(active: true)
+            ->setNotify(notify: true)
+            ->setWorkingOn(workingOn: null)
         ;
-        \DoEveryApp\Entity\Task::getRepository()->update($task);
+        \DoEveryApp\Entity\Task::getRepository()->update(entity: $task);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->taskReset());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->taskReset());
 
-        return $this->redirect(\DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()));
+        return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
     }
 }

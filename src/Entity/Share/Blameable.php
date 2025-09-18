@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Entity\Share;
 
 trait Blameable
 {
     protected function onCreate($model): static
     {
-        if (true === method_exists($model, 'setCreatedBy')) {
+        if (true === method_exists(object_or_class: $model, method: 'setCreatedBy')) {
             $model->setCreatedBy($this->getUser());
         }
 
         return $this;
     }
-
 
     private function getUser(): string
     {
@@ -24,10 +25,9 @@ trait Blameable
         return $user->getName();
     }
 
-
     protected function onUpdate($model): static
     {
-        if (true === method_exists($model, 'setUpdatedBy')) {
+        if (true === method_exists(object_or_class: $model, method: 'setUpdatedBy')) {
             $model->setUpdatedBy($this->getUser());
         }
 

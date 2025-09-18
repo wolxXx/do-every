@@ -9,23 +9,23 @@ class Creator
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Worker
     {
         $defaultWorker = (new \DoEveryApp\Entity\Worker())
-            ->setName($bag->getName())
-            ->setIsAdmin($bag->isAdmin())
-            ->enableNotifications($bag->doNotify())
-            ->setNotifyLogin($bag->doNotifyLogins())
+            ->setName(name: $bag->getName())
+            ->setIsAdmin(admin: $bag->isAdmin())
+            ->enableNotifications(notify: $bag->doNotify())
+            ->setNotifyLogin(notifyLogin: $bag->doNotifyLogins())
         ;
         if (null !== $bag->getEmail()) {
-            $defaultWorker->setEmail($bag->getEmail());
+            $defaultWorker->setEmail(email: $bag->getEmail());
         }
 
         if (null !== $bag->getPassword()) {
             $defaultWorker
-                ->setHashedPassword($bag->getPassword())
-                ->setLastPasswordChange(\Carbon\Carbon::now())
+                ->setHashedPassword(password: $bag->getPassword())
+                ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
             ;
         }
 
-        $defaultWorker::getRepository()->create($defaultWorker);
+        $defaultWorker::getRepository()->create(entity: $defaultWorker);
 
         return $defaultWorker;
     }

@@ -4,54 +4,49 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Registry;
 
-
 class Repository extends \Doctrine\ORM\EntityRepository
 {
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-
     public function getByKey(string $key): ?\DoEveryApp\Entity\Registry
     {
-        return $this->findOneBy(['key' => $key]);
+        return $this->findOneBy(criteria: ['key' => $key]);
     }
 
     public function create(\DoEveryApp\Entity\Registry $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Registry $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function delete(\DoEveryApp\Entity\Registry $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -65,7 +60,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Registry[]
      */
@@ -73,7 +67,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -87,7 +80,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

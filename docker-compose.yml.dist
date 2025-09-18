@@ -1,17 +1,15 @@
-version: '3.5'
-
 volumes:
   vol-database-mariadb:
-    name: "do-every-__INSTANCE__-php83-db-mariadb-volume"
+    name: "do-every-__INSTANCE__-db-mariadb-volume"
 
 services:
   mysql:
-    image: mariadb:11.3
+    image: mariadb:11.8
     platform: linux/amd64
     security_opt:
       - "seccomp=unconfined"
     restart: always
-    container_name: "do-every-__INSTANCE__-php83-db"
+    container_name: "do-every-__INSTANCE__-db"
     ports:
       - "127.0.0.1:__DB_PORT__:3306"
     environment:
@@ -35,11 +33,9 @@ services:
 
 
   web:
-    build:
-      context: ./
-      no_cache: true
+    image: wolxxxy/php84:latest
     restart: always
-    container_name: "do-every-__INSTANCE__-php83-web"
+    container_name: "do-every-__INSTANCE__-web"
     depends_on:
       mysql:
         condition: service_healthy
@@ -67,7 +63,7 @@ services:
   ofelia:
     image: mcuadros/ofelia:latest
     restart: always
-    container_name: "do-every-__INSTANCE__-php83-ofelia"
+    container_name: "do-every-__INSTANCE__-ofelia"
     depends_on:
       - web
     command: daemon --docker
@@ -79,4 +75,4 @@ services:
 
 networks:
   do-every-network:
-    name: "do-every-__INSTANCE__-php83-network"
+    name: "do-every-__INSTANCE__-network"

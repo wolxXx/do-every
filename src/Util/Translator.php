@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types = 1);
 
 namespace DoEveryApp\Util;
@@ -109,6 +108,8 @@ interface Translator
 
 
     public function addExecution(): string;
+
+    public function editExecution(): string;
 
 
     public function edit(): string;
@@ -241,6 +242,8 @@ interface Translator
 
 
     public function days(): string;
+
+    public function daysPluralized(null|int|float $dayAmount = 0): string;
 
 
     public function month(): string;
@@ -532,4 +535,47 @@ interface Translator
 
 
     public function help(): string;
+
+    public function areYouSure(): string;
+
+    public function reallyWantToDeleteTask(string $name): string;
+
+    public function reallyWantToDeleteGroup(string $name): string;
+
+    public function reallyWantToResetTask(string $name): string;
+
+    public function reallyWantToDeleteExecution(): string;
+
+    public function reallyWantToDeleteWorker(string $name): string;
+
+    public function reallyWantToResetTwoFactor(string $name): string;
+
+    public function noGroupsFound(): string;
+
+    public function noTasksFound(): string;
+
+    public function welcomeUser(string $useName): string;
+
+    public function timerStart(): string;
+
+    public function timerPause(): string;
+
+    public function timerStop(): string;
+
+    public function timerReset(): string;
+
+    public function timerTakeTime(): string;
+
+    public function timer(): string;
+
+    public function useTimer(): string;
+
+    public function running(): string;
+
+    public function sections(): string;
+    public function davEnabled(): string;
+    public function enableDav(): string;
+    public function davUser(): string;
+    public function davPassword(): string;
+    public function davUrl(): string;
 }

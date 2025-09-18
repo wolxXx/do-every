@@ -11,9 +11,8 @@ class ExecutionDate
         return static::byValue($execution->getDate());
     }
 
-
     public static function byValue(\DateTime $date): string
     {
-        return DateTime::getDateTimeMediumDateShortTime($date);
+        return DateTime::getDateTimeMediumDateShortTime(dateTime: $date);
     }
 }

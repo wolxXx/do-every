@@ -8,13 +8,13 @@ class CheckListItemNote
 {
     public static function byTaskCheckListItem(\DoEveryApp\Entity\Task\CheckListItem $item): string
     {
-        return static::byValue($item->getNote());
-    }
-    public static function byExecutionCheckListItem(\DoEveryApp\Entity\Execution\CheckListItem $item): string
-    {
-        return static::byValue($item->getNote());
+        return static::byValue(note: $item->getNote());
     }
 
+    public static function byExecutionCheckListItem(\DoEveryApp\Entity\Execution\CheckListItem $item): string
+    {
+        return static::byValue(note: $item->getNote());
+    }
 
     public static function byValue(?string $note = null): string
     {
@@ -22,7 +22,7 @@ class CheckListItemNote
             return '';
         }
 
-        $note = nl2br(\DoEveryApp\Util\View\Escaper::escape($note));
+        $note = nl2br(string: \DoEveryApp\Util\View\Escaper::escape(value: $note));
 
         return '<div class="checkListItemNote">' . $note . '</div>';
     }

@@ -15,16 +15,16 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Execution[] $data
  * @var \DoEveryApp\Entity\Worker      $worker
  */
-$durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
+$durations = \DoEveryApp\Definition\Durations::FactoryByWorker(worker: $worker);
 ?>
 <h1>
-    <?= $translator->logFor(\DoEveryApp\Util\View\Worker::get($worker)) ?>
+    <?= $translator->logFor(who: \DoEveryApp\Util\View\Worker::get(worker: $worker)) ?>
 </h1>
 
-<? if(0 === count($data)): ?>
-    <?= $translator->workerDidNothing(\DoEveryApp\Util\View\Worker::get($worker)) ?>
-<? endif ?>
-<? if(0 !== count($data)): ?>
+<?php if(0 === count(value: $data)): ?>
+    <?= $translator->workerDidNothing(who: \DoEveryApp\Util\View\Worker::get(worker: $worker)) ?>
+<?php endif ?>
+<?php if(0 !== count(value: $data)): ?>
     <div class="row">
         <div class="column">
             <table>
@@ -48,37 +48,37 @@ $durations = \DoEveryApp\Definition\Durations::FactoryByWorker($worker);
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach($data as $execution): ?>
+                <?php foreach($data as $execution): ?>
                     <tr>
                         <td>
-                            <?= \DoEveryApp\Util\View\ExecutionDate::byExecution($execution) ?>
+                            <?= \DoEveryApp\Util\View\ExecutionDate::byExecution(execution: $execution) ?>
                         </td>
                         <td>
-                            <? if(null === $execution->getTask()->getGroup()): ?>
+                            <?php if(null === $execution->getTask()->getGroup()): ?>
                                 <?= $translator->noValue() ?>
-                            <? endif ?>
-                            <? if(null !== $execution->getTask()->getGroup()): ?>
-                                <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getGroup()->getName()) ?>
-                            <? endif ?>
+                            <?php endif ?>
+                            <?php if(null !== $execution->getTask()->getGroup()): ?>
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getGroup()->getName()) ?>
+                            <?php endif ?>
                         </td>
                         <td>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($execution->getTask()->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Escaper::escape($execution->getTask()->getName()) ?>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $execution->getTask()->getName()) ?>
                             </a>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\Duration::byExecution($execution) ?>
+                            <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\ExecutionNote::byExecution($execution) ?>
+                            <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
                         </td>
                     </tr>
-                <? endforeach ?>
+                <?php endforeach ?>
                 </tbody>
             </table>
         </div>
         <div class="column">
-            <?= $this->fetchTemplate('partial/durations.php', ['durations' => $durations]) ?>
+            <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
         </div>
     </div>
-<? endif ?>
+<?php endif ?>

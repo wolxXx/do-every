@@ -13,7 +13,7 @@ class TwoFactorAuthenticator
     {
         $instance          = new static();
         $instance->utility = new \PragmaRX\Google2FA\Google2FA();
-        $instance->utility->setOneTimePasswordLength(6);
+        $instance->utility->setOneTimePasswordLength(oneTimePasswordLength: 6);
 
         return $instance;
     }
@@ -24,9 +24,9 @@ class TwoFactorAuthenticator
         return $this
             ->utility
             ->getQRCodeUrl(
-                '*do every*',
-                $login,
-                $secret
+                company: '*do every*',
+                holder: $login,
+                secret: $secret
             )
         ;
     }
@@ -45,7 +45,7 @@ class TwoFactorAuthenticator
     {
         return false !== $this
                 ->utility
-                ->verify($token, $secret)
+                ->verify(key: $token, secret: $secret)
         ;
     }
 }

@@ -14,10 +14,8 @@ declare(strict_types=1);
 /**
  * @var array $data
  */
-$groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
-
 ?>
 <h1>
     <?= $translator->addTask() ?>
 </h1>
-<?= $this->fetchTemplate('action/task/partial/addEdit.php', ['data' => $data]) ?>
+<?= $this->fetchTemplate(template: 'action/task/partial/addEdit.php', data: ['data' => $data]) ?>

@@ -1,11 +1,10 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Action\Execution\Share;
 
-trait  AddEdit
+trait AddEdit
 {
     public const string FORM_FIELD_DURATION                       = 'duration';
 
@@ -32,17 +31,18 @@ trait  AddEdit
     protected function handleCheckListItems(\DoEveryApp\Entity\Execution $execution, array $data): static
     {
         foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEMS] ?? [] as $item) {
-            $checkListItemReference = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find($item[static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE]);
+            $checkListItemReference = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find(id: $item[static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE]);
             $checkListItem          = (new \DoEveryApp\Entity\Execution\CheckListItem())
-                ->setExecution($execution)
-                ->setChecked('1' === $item[static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED])
-                ->setNote($item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
-                ->setCheckListItem($checkListItemReference)
-                ->setName($checkListItemReference->getName())
-                ->setPosition($checkListItemReference->getPosition())
+                ->setExecution(execution: $execution)
+                ->setChecked(checked: '1' === $item[static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED])
+                ->setNote(note: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
+                ->setCheckListItem(checkListItem: $checkListItemReference)
+                ->setName(name: $checkListItemReference->getName())
+                ->setPosition(position: $checkListItemReference->getPosition())
             ;
-            $checkListItem::getRepository()->create($checkListItem);
+            $checkListItem::getRepository()->create(entity: $checkListItem);
         }
+
         return $this;
     }
 
@@ -57,13 +57,13 @@ trait  AddEdit
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
             static::FORM_FIELD_WORKER   => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function ($value): void {
                     if (null === $value) {
                         return;
                     }
-                    $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
+                    $assignee = \DoEveryApp\Entity\Worker::getRepository()->find(id: $value);
                     if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
-                        throw new \InvalidArgumentException(\DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->workerNotFound());
+                        throw new \InvalidArgumentException(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->workerNotFound());
                     }
                 }),
             ],
@@ -71,31 +71,32 @@ trait  AddEdit
         ];
 
         $data[static::FORM_FIELD_DURATION] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_DURATION))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->attach(callback: new \Laminas\Filter\ToInt())
+            ->filter(value: $this->getFromBody(static::FORM_FIELD_DURATION))
         ;
         $data[static::FORM_FIELD_NOTE]     = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_NOTE))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(static::FORM_FIELD_NOTE))
         ;
         $data[static::FORM_FIELD_DATE]     = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_DATE))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(static::FORM_FIELD_DATE))
         ;
         $data[static::FORM_FIELD_WORKER]   = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody(static::FORM_FIELD_WORKER))
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(static::FORM_FIELD_WORKER))
         ;
 
         foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEMS] ?? [] as $index => $item) {
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID]                             = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item[static::FORM_FIELD_CHECK_LIST_ITEM_ID])
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_ID])
             ;
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_ID]               = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID];
             $constraints[static::FORM_FIELD_CHECK_LIST_ITEMS]                                                                     = [];
@@ -103,27 +104,27 @@ trait  AddEdit
 
             ];
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED]                        = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item[static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED])
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED])
             ;
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED]          = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED];
             $constraints[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_CHECKED]   = [
 
             ];
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE]                           = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
             ;
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE]             = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE];
             $constraints[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE]      = [
 
             ];
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE]                      = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item[static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE])
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE])
             ;
             $data[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE]        = $data[static::FORM_FIELD_CHECK_LIST_ITEMS][$index][static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE];
             $constraints[static::FORM_FIELD_CHECK_LIST_ITEMS . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_REFERENCE] = [
@@ -131,7 +132,7 @@ trait  AddEdit
             ];
         }
 
-        $this->validate($data, new \Symfony\Component\Validator\Constraints\Collection($constraints));
+        $this->validate($data, new \Symfony\Component\Validator\Constraints\Collection(fields: $constraints));
 
         return $data;
     }

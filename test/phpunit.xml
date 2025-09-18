@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Bootstrap.php" colors="true" backupGlobals="false" processIsolation="true" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="true">
-  <testsuites>
-    <testsuite name="Test">
-      <directory>./</directory>
-    </testsuite>
-  </testsuites>
-  <extensions>
-      <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
-        <parameter name="maximum-count" value="3"/>
-        <parameter name="maximum-duration" value="250"/>
-      </bootstrap>
-  </extensions>
-  <php>
-    <ini name="zend.enable_gc" value="1"/>
-  </php>
-  <source>
-    <include>
-      <directory suffix=".php">../src</directory>
-    </include>
-    <exclude>
-      <directory>../test/</directory>
-      <directory>../configs/</directory>
-      <directory>../devops/</directory>
-      <directory>../public/</directory>
-      <directory>../scripts/</directory>
-      <directory>../vendor/</directory>
-      <directory>../views/</directory>
-      <directory>../doctrineBootstrap.php</directory>
-      <directory>../doctrineConfig.php</directory>
-    </exclude>
-  </source>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Bootstrap.php" colors="true"
+         backupGlobals="false"
+         processIsolation="true"
+         stopOnError="true"
+         stopOnFailure="true"
+         stopOnIncomplete="true"
+         stopOnSkipped="true"
+         timeoutForSmallTests="10"
+         timeoutForMediumTests="10"
+         timeoutForLargeTests="60"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="true">
+    <testsuites>
+        <testsuite name="Test">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
+            <parameter name="maximum-count" value="3"/>
+            <parameter name="maximum-duration" value="250"/>
+        </bootstrap>
+    </extensions>
+    <php>
+        <ini name="zend.enable_gc" value="1"/>
+        <ini name="zend.exception_ignore_args" value="1"/>
+    </php>
+    <source>
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+        <exclude>
+            <directory>../test/</directory>
+            <directory>../configs/</directory>
+            <directory>../devops/</directory>
+            <directory>../public/</directory>
+            <directory>../scripts/</directory>
+            <directory>../vendor/</directory>
+            <directory>../views/</directory>
+            <directory>../doctrineBootstrap.php</directory>
+            <directory>../doctrineConfig.php</directory>
+        </exclude>
+    </source>
 </phpunit>

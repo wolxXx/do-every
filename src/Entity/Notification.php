@@ -25,7 +25,6 @@ class Notification
 
     public const string TABLE_NAME = 'task_notification';
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Task::class
     )]
@@ -35,7 +34,6 @@ class Notification
     )]
     protected Task $task;
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Worker::class
     )]
@@ -43,27 +41,24 @@ class Notification
         nullable: false,
         onDelete: 'CASCADE'
     )]
-    protected Worker $worker;
+    protected Worker    $worker;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'date',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: false
     )]
-    protected \DateTime  $date;
-
+    protected \DateTime $date;
 
     public static function getRepository(): Notification\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
     public function getTask(): Task
     {
         return $this->task;
     }
-
 
     public function setTask(Task $task): static
     {
@@ -72,12 +67,10 @@ class Notification
         return $this;
     }
 
-
     public function getWorker(): Worker
     {
         return $this->worker;
     }
-
 
     public function setWorker(Worker $worker): static
     {
@@ -86,12 +79,10 @@ class Notification
         return $this;
     }
 
-
     public function getDate(): \DateTime
     {
         return $this->date;
     }
-
 
     public function setDate(\DateTime $date): static
     {

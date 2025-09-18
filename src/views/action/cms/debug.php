@@ -43,10 +43,10 @@ declare(strict_types=1);
                     super admin admin :<br />
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Worker::get(\DoEveryApp\Util\Registry::getInstance()->getAdminUser()) ?>
+                    <?= \DoEveryApp\Util\View\Worker::get(worker: \DoEveryApp\Util\Registry::getInstance()->getAdminUser()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_ADMIN_USER) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_ADMIN_USER) ?>
                 </td>
             </tr>
             <tr>
@@ -54,10 +54,10 @@ declare(strict_types=1);
                     cron läuft:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isCronRunning()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isCronRunning()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_LOCK) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_CRON_LOCK) ?>
                 </td>
             </tr>
             <tr>
@@ -65,10 +65,10 @@ declare(strict_types=1);
                     cron gestartet:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getCronStarted()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getCronStarted()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_CRON_STARTED) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_CRON_STARTED) ?>
                 </td>
             </tr>
             <tr>
@@ -76,10 +76,10 @@ declare(strict_types=1);
                     letzte cron ausführung:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastCron()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getLastCron()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_CRON) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_LAST_CRON) ?>
                 </td>
             </tr>
             <tr>
@@ -87,10 +87,10 @@ declare(strict_types=1);
                     notifier läuft:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
                 </td>
             </tr>
             <tr>
@@ -98,10 +98,10 @@ declare(strict_types=1);
                     letzte notifier ausführung:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_NOTIFIER_LAST_RUN) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_NOTIFIER_LAST_RUN) ?>
                 </td>
             </tr>
             <tr>
@@ -109,10 +109,10 @@ declare(strict_types=1);
                     letztes backup:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(\DoEveryApp\Util\Registry::getInstance()->getLastBackup()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getLastBackup()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
                 </td>
             </tr>
             <tr>
@@ -123,7 +123,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_KEEP_BACKUP_DAYS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_KEEP_BACKUP_DAYS) ?>
                 </td>
             </tr>
             <tr>
@@ -134,7 +134,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_PRECISION_DUE) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_PRECISION_DUE) ?>
                 </td>
             </tr>
             <tr>
@@ -142,10 +142,21 @@ declare(strict_types=1);
                     Zeitlinie auffüllen:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_FILL_TIME_LINE) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_FILL_TIME_LINE) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Timer nutzen:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>
                 </td>
             </tr>
             <tr>
@@ -153,10 +164,10 @@ declare(strict_types=1);
                     maximale Anzahl Worker:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxWorkers(), '-') ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxWorkers(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_WORKERS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_WORKERS) ?>
                 </td>
             </tr>
             <tr>
@@ -164,10 +175,10 @@ declare(strict_types=1);
                     maximale Anzahl Aufgaben:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxTasks(), '-') ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxTasks(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_TASKS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_TASKS) ?>
                 </td>
             </tr>
             <tr>
@@ -175,10 +186,10 @@ declare(strict_types=1);
                     maximale Anzahl Gruppen:
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), '-') ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(\DoEveryApp\Util\Registry::KEY_MAX_GROUPS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_GROUPS) ?>
                 </td>
             </tr>
             <tr>
@@ -197,14 +208,14 @@ declare(strict_types=1);
 </fieldset>
 
 
-<? if (0 !== count($backupFiles)): ?>
+<?php if (0 !== count(value: $backupFiles)): ?>
 
     <fieldset>
         <legend>
             Backup-Dateien
         </legend>
         <div class="pageButtons">
-            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(base64_encode('all')) ?>">
+            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(path: base64_encode(string: 'all')) ?>">
                 alle herunterladen
             </a>
         </div>
@@ -223,31 +234,31 @@ declare(strict_types=1);
                 </tr>
             </thead>
             <tbody>
-                <? foreach($backupFiles as $debugFile => $fileSize): ?>
+                <?php foreach($backupFiles as $debugFile => $fileSize): ?>
                     <tr>
                         <td>
 
-                            <?
-                            $date = str_replace(['backup_', '.sql', '_'], ['','', ' '], basename($debugFile));
-                            $dateSplit = explode(' ', $date);
-                            $date = $dateSplit[0] . ' '. str_replace('-', ':', $dateSplit[1]);
-                            ?>
-                            <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(new \DateTime($date)) ?>
+                            <?php
+                            $date = str_replace(search: ['backup_', '.sql', '_'], replace: ['','', ' '], subject: basename(path: $debugFile));
+                    $dateSplit = explode(separator: ' ', string: $date);
+                    $date = $dateSplit[0] . ' '. str_replace(search: '-', replace: ':', subject: $dateSplit[1]);
+                    ?>
+                            <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(dateTime: new \DateTime(datetime: $date)) ?>
                         </td>
                         <td>
-                            <?= \DoEveryApp\Util\View\FileSize::humanReadable($fileSize) ?>
+                            <?= \DoEveryApp\Util\View\FileSize::humanReadable(size: $fileSize) ?>
                         </td>
                         <td class="pullRight">
-                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(base64_encode($debugFile)) ?>">
+                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Cms\DownloadBackupAction::getRoute(path: base64_encode(string: $debugFile)) ?>">
                                 herunterladen
                             </a>
                         </td>
                     </tr>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tbody>
         </table>
     </fieldset>
-<? endif ?>
+<?php endif ?>
 
 <fieldset>
     <legend>
@@ -255,27 +266,27 @@ declare(strict_types=1);
     </legend>
     <table>
         <thead>
-        <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
+        <?php foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $key => $value): ?>
+                <?php foreach((array) $entry as $key => $value): ?>
                     <th>
-                        <?= \DoEveryApp\Util\View\Escaper::escape($key) ?>
+                       <?= \DoEveryApp\Util\View\Escaper::escape(value: str_replace(search: '*', replace: '', subject: $key)) ?>
                     </th>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tr>
-            <? break ?>
-        <? endforeach ?>
+            <?php break ?>
+        <?php endforeach ?>
         </thead>
         <tbody>
-        <? foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
+        <?php foreach(\DoEveryApp\Entity\Registry::getRepository()->findAll() as $entry): ?>
             <tr>
-                <? foreach((array) $entry as $value): ?>
+                <?php foreach((array) $entry as $value): ?>
                     <td>
-                        <?= \DoEveryApp\Util\View\DisplayValue::do($value) ?>
+                        <?= \DoEveryApp\Util\View\DisplayValue::do(value: $value) ?>
                     </td>
-                <? endforeach ?>
+                <?php endforeach ?>
             </tr>
-        <? endforeach ?>
+        <?php endforeach ?>
         </tbody>
     </table>
 </fieldset>

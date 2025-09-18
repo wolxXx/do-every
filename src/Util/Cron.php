@@ -8,9 +8,10 @@ class Cron
 {
     public function __construct()
     {
-        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug('start cron object');
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'start cron object');
         if (true === Registry::getInstance()->isCronRunning()) {
-            DependencyContainer::getInstance()->getLogger()->debug('Cron is already running.');
+            DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron is already running.');
+
             return;
         }
         $now      = \Carbon\Carbon::now();
@@ -18,21 +19,22 @@ class Cron
                                              ->getLastCron()
         ;
         if (null !== $lastCron) {
-            $lastCron = \Carbon\Carbon::create($lastCron);
+            $lastCron = \Carbon\Carbon::create(year: $lastCron);
             $lastCron->addMinutes(5);
             if ($lastCron->gt($now)) {
-                DependencyContainer::getInstance()->getLogger()->debug('Cron has no due...');
+                DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron has no due...');
+
                 return;
             }
         }
         Registry::getInstance()
-                ->setCronRunning(true)
-                ->setCronStarted(\Carbon\Carbon::now())
+                ->setCronRunning(cronRunning: true)
+                ->setCronStarted(cronStarted: \Carbon\Carbon::now())
         ;
 
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getLogger()
-                                            ->debug('bar')
+                                            ->debug(message: 'bar')
         ;
 
         echo "foo";
@@ -42,22 +44,21 @@ class Cron
 
         \DoEveryApp\Util\Debugger::debug('asdf');
 
-        \Amp\async(function (): void {
+        \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\Backup();
         });
-        \Amp\async(function (): void {
+        \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\BackupRotation();
         });
-        \Amp\async(function (): void {
+        \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\Notify();
         });
 
         \Revolt\EventLoop::run();
 
-
         Registry::getInstance()
-                ->setLastCron(\Carbon\Carbon::now())
+                ->setLastCron(lastCron: \Carbon\Carbon::now())
         ;
-        Registry::getInstance()->setCronRunning(false);
+        Registry::getInstance()->setCronRunning(cronRunning: false);
     }
 }

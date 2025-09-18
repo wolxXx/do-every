@@ -16,17 +16,17 @@ declare(strict_types=1);
  * @var \DoEveryApp\Util\Translator    \$translator
 PHP;
 
-$directoryIterator = new \RecursiveDirectoryIterator(ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views');
-$iterator          = new \RecursiveIteratorIterator($directoryIterator);
-$regexIterator     = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
+$directoryIterator = new \RecursiveDirectoryIterator(directory: ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views');
+$iterator          = new \RecursiveIteratorIterator(iterator: $directoryIterator);
+$regexIterator     = new \RegexIterator(iterator: $iterator, pattern: '/^.+\.php$/i', mode: \RecursiveRegexIterator::GET_MATCH);
 foreach ($regexIterator as $current) {
     $file    = $current[0];
-    $path    = realpath($file);
-    $content = file_get_contents($path);
+    $path    = realpath(path: $file);
+    $content = file_get_contents(filename: $path);
     $until   = ' */';
     while (true) {
-        $firstLine = explode("\n", $content, 2)[0];
-        $content   = substr($content, strpos($content, "\n") + 1);
+        $firstLine = explode(separator: "\n", string: $content, limit: 2)[0];
+        $content   = substr(string: $content, offset: strpos(haystack: $content, needle: "\n") + 1);
         if ($until === $firstLine) {
             break;
         }
@@ -39,5 +39,5 @@ foreach ($regexIterator as $current) {
 
     $content = $newHeader . PHP_EOL . $until . PHP_EOL . $content;
 
-    file_put_contents($path, $content);
+    file_put_contents(filename: $path, data: $content);
 }

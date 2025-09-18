@@ -107,7 +107,6 @@ class Task
     )]
     protected int               $priority         = 100;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'do_notify',
         type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
@@ -117,7 +116,6 @@ class Task
         ],
     )]
     protected bool $notify = false;
-
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_active',
@@ -136,32 +134,67 @@ class Task
     )]
     protected ?string $note   = null;
 
-
     public function __construct()
     {
         $this->checkListItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->executions     = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     public static function getRepository(): Task\Repository
     {
         return static::getRepositoryByClassName();
     }
 
+    public function toVCalendarEvent(): array
+    {
+        $task = $this;
+        $due = $task->getDueValue();
+        $start = new \DateTime(datetime: 'now', timezone: new \DateTimeZone('Europe/Berlin'));
+        if ($due !== null && $due > 0) {
+            $due = (int) $due;
+            $modifier = '+' . $due . ' ' . $task->getIntervalType() . 's';
+            $start->modify($modifier);
+        }
+
+        $modifier1 = '+1 hour';
+        $executionCount     = count(value: $task->getExecutions());
+        if(0 !== $executionCount) {
+            $sum = 0;
+            foreach ($task->getExecutions() as $execution) {
+                $sum += $execution->getDuration();
+            }
+            $sum = (int)($sum / $executionCount);
+            if(0 === $sum) {
+                $sum = 60;
+            }
+            $modifier1 = '+' . $sum . ' minutes';
+        }
+        $end       = (clone $start)->modify($modifier1);
+
+        $name = $task->getName();
+        if(null !== $task->getGroup()) {
+            $name = $task->getGroup()->getName() . ' - ' . $name;
+        }
+
+        return  [
+            'UID' => $task->getId().'@do-every',
+            'SUMMARY' => $name,
+            'DTSTART' => $start,
+            'DTEND'   => $end,
+        ];
+    }
 
     public function getDueUnit(): ?string
     {
         return $this->dueCacheUnit;
     }
 
-
     public function getDueValue(): int|float|null
     {
         if (true === isset($this->dueCacheValue)) {
             return $this->dueCacheValue;
         }
-        $lastExecution = $this::getRepository()->getLastExecution($this);
+        $lastExecution = $this::getRepository()->getLastExecution(task: $this);
         if (null === $lastExecution) {
             $this->dueCacheValue = null;
 
@@ -177,34 +210,33 @@ class Task
 
             return $this->dueCacheValue;
         }
-        $due = \Carbon\Carbon::create($lastExecution->getDate());
+        $due = \Carbon\Carbon::create(year: $lastExecution->getDate());
         $now = \Carbon\Carbon::now();
         switch ($this->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {
-                return $this->calculateDue($due->addMinutes($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addMinutes($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::HOUR->value:
             {
-                return $this->calculateDue($due->addHours($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addHours($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::DAY->value:
             {
-                return $this->calculateDue($due->addDays($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addDays($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::MONTH->value:
             {
-                return $this->calculateDue($due->addMonths($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addMonths($this->getIntervalValue()));
             }
             case \DoEveryApp\Definition\IntervalType::YEAR->value:
             {
-                return $this->calculateDue($due->addYears($this->getIntervalValue()));
+                return $this->calculateDue(due: $due->addYears($this->getIntervalValue()));
             }
         }
 
-        throw new \RuntimeException('WTF?');
+        throw new \RuntimeException(message: 'WTF?');
     }
-
 
     protected function calculateDue(?\Carbon\Carbon $due): int|null|float
     {
@@ -212,7 +244,7 @@ class Task
             return null;
         }
         $now  = \Carbon\Carbon::now();
-        $diff = $now->diff($due);
+        $diff = $now->diff(date: $due);
         if (0 !== $diff->y) {
             $dueDays = $diff->y + ($diff->m / 12);
             if ($due < $now) {
@@ -266,10 +298,8 @@ class Task
         $this->dueCacheValue = null;
         $this->dueCacheUnit  = \DoEveryApp\Definition\IntervalType::MINUTE->value;
 
-
         return $this->dueCacheValue;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Task\CheckListItem[]
@@ -279,7 +309,6 @@ class Task
         return $this->checkListItems->toArray();
     }
 
-
     /**
      * @return Execution[]
      */
@@ -288,12 +317,10 @@ class Task
         return $this->executions->toArray();
     }
 
-
     public function getGroup(): ?Group
     {
         return $this->group;
     }
-
 
     public function setGroup(?Group $group): static
     {
@@ -302,12 +329,10 @@ class Task
         return $this;
     }
 
-
     public function getWorkingOn(): ?Worker
     {
         return $this->workingOn;
     }
-
 
     public function setWorkingOn(?Worker $workingOn): static
     {
@@ -316,12 +341,10 @@ class Task
         return $this;
     }
 
-
     public function getAssignee(): ?Worker
     {
         return $this->assignee;
     }
-
 
     public function setAssignee(?Worker $assignee): static
     {
@@ -330,12 +353,10 @@ class Task
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -344,12 +365,10 @@ class Task
         return $this;
     }
 
-
     public function getIntervalType(): ?string
     {
         return $this->intervalType;
     }
-
 
     public function setIntervalType(?string $intervalType): static
     {
@@ -358,12 +377,10 @@ class Task
         return $this;
     }
 
-
     public function getIntervalValue(): ?int
     {
         return $this->intervalValue;
     }
-
 
     public function setIntervalValue(?int $intervalValue): static
     {
@@ -372,12 +389,10 @@ class Task
         return $this;
     }
 
-
     public function getPriority(): int
     {
         return $this->priority;
     }
-
 
     public function setPriority(int $priority): static
     {
@@ -386,12 +401,10 @@ class Task
         return $this;
     }
 
-
     public function isNotify(): bool
     {
         return $this->notify;
     }
-
 
     public function setNotify(bool $notify): static
     {
@@ -400,12 +413,10 @@ class Task
         return $this;
     }
 
-
     public function isActive(): bool
     {
         return $this->active;
     }
-
 
     public function setActive(bool $active): static
     {
@@ -414,12 +425,10 @@ class Task
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {
@@ -428,12 +437,10 @@ class Task
         return $this;
     }
 
-
     public function isElapsingCronType(): bool
     {
         return $this->elapsingCronType;
     }
-
 
     public function setElapsingCronType(bool $elapsingCronType): static
     {

@@ -19,4 +19,4 @@ declare(strict_types=1);
     <?= $translator->addWorker() ?>
 </h1>
 
-<?= $this->fetchTemplate('action/worker/partial/addEdit.php', ['data' => $data]) ?>
+<?= $this->fetchTemplate(template: 'action/worker/partial/addEdit.php', data: ['data' => $data]) ?>

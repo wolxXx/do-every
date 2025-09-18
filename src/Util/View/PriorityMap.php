@@ -1,18 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace DoEveryApp\Util\View;
 
 class PriorityMap
 {
-    public static function getByTask(\DoEveryApp\Entity\Task $task,): string
+    public static function getByTask(\DoEveryApp\Entity\Task $task): string
     {
-        return static::mapName(\DoEveryApp\Definition\Priority::from($task->getPriority(),),);
+        return static::mapName(\DoEveryApp\Definition\Priority::from(value: $task->getPriority()));
     }
 
-
-    public static function mapName(\DoEveryApp\Definition\Priority $priority,): string
+    public static function mapName(\DoEveryApp\Definition\Priority $priority): string
     {
         switch ($priority->name) {
             case \DoEveryApp\Definition\Priority::LOW->name:
@@ -32,6 +31,6 @@ class PriorityMap
                 return \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->priorityUrgent();
             }
         }
-        throw new \InvalidArgumentException('??' . $priority->name,);
+        throw new \InvalidArgumentException(message: '??' . $priority->name,);
     }
 }

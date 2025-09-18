@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Definition;
@@ -35,60 +34,58 @@ class Durations
 
     protected int   $lastYear    = 0;
 
-
     protected static function byTasks(array $tasks): static
     {
         $instance = new static();
         foreach ($tasks as $task) {
             $executions = $task->getExecutions();
             foreach ($executions as $execution) {
-                $instance->addExecution($execution);
+                $instance->addExecution(execution: $execution);
             }
         }
 
         return $instance->finalize();
     }
 
-
     protected function finalize(): static
     {
-        if (0 !== count($this->durations)) {
-            $this->average = (int)\ceil(\array_sum($this->durations) / count($this->durations));
+        if (0 !== count(value: $this->durations)) {
+            $this->average = (int)\ceil(num: \array_sum(array: $this->durations) / count(value: $this->durations));
         }
-        if (0 !== count($this->years)) {
-            $firstYear = \array_key_last($this->years);
-            $lastYear  = \array_key_first($this->years);
+        if (0 !== count(value: $this->years)) {
+            $firstYear = \array_key_last(array: $this->years);
+            $lastYear  = \array_key_first(array: $this->years);
             if (true === \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) {
-                foreach (range($firstYear, $lastYear) as $year) {
-                    if (false === \array_key_exists($year, $this->years)) {
+                foreach (range(start: $firstYear, end: $lastYear) as $year) {
+                    if (false === \array_key_exists(key: $year, array: $this->years)) {
                         $this->years[$year] = 0;
                     }
                 }
             }
-            \ksort($this->years, \SORT_DESC);
-            $this->years = \array_reverse($this->years, true);
+            \ksort(array: $this->years, flags: \SORT_DESC);
+            $this->years = \array_reverse(array: $this->years, preserve_keys: true);
         }
 
-        if (0 !== count($this->months)) {
-            $firstYearMonth = \explode('/', \array_key_last($this->months));
-            $lastYearMonth  = explode('/', \array_key_first($this->months));
-            $begin          = \Carbon\Carbon::now()->year((int)$firstYearMonth[0])->month((int)$firstYearMonth[1]);
-            $end            = \Carbon\Carbon::now()->year((int)$lastYearMonth[0])->month((int)$lastYearMonth[1]);
+        if (0 !== count(value: $this->months)) {
+            $firstYearMonth = \explode(separator: '/', string: \array_key_last(array: $this->months));
+            $lastYearMonth  = explode(separator: '/', string: \array_key_first(array: $this->months));
+            $begin          = \Carbon\Carbon::now()->year(value: (int)$firstYearMonth[0])->month(value: (int)$firstYearMonth[1]);
+            $end            = \Carbon\Carbon::now()->year(value: (int)$lastYearMonth[0])->month(value: (int)$lastYearMonth[1]);
             if (true === \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) {
                 while ($begin <= $end) {
-                    $yearMonthFormatted = $begin->format('Y') . ' / ' . $begin->format('m');
+                    $yearMonthFormatted = $begin->format(format: 'Y') . ' / ' . $begin->format(format: 'm');
 
-                    if (false === array_key_exists($yearMonthFormatted, $this->months)) {
+                    if (false === array_key_exists(key: $yearMonthFormatted, array: $this->months)) {
                         $this->months[$yearMonthFormatted] = 0;
                     }
                     $begin->addMonth();
                 }
             }
-            \uksort($this->months, static function ($a, $b) {
-                $firstYearMonth = \explode('/', $a);
-                $lastYearMonth  = explode('/', $b);
-                $begin          = \Carbon\Carbon::now()->year((int)$firstYearMonth[0])->month((int)$firstYearMonth[1]);
-                $end            = \Carbon\Carbon::now()->year((int)$lastYearMonth[0])->month((int)$lastYearMonth[1]);
+            \uksort(array: $this->months, callback: static function ($a, $b) {
+                $firstYearMonth = \explode(separator: '/', string: $a);
+                $lastYearMonth  = explode(separator: '/', string: $b);
+                $begin          = \Carbon\Carbon::now()->year(value: (int)$firstYearMonth[0])->month(value: (int)$firstYearMonth[1]);
+                $end            = \Carbon\Carbon::now()->year(value: (int)$lastYearMonth[0])->month(value: (int)$lastYearMonth[1]);
 
                 return $begin <= $end ? 1 : -1;
             });
@@ -96,7 +93,6 @@ class Durations
 
         return $this;
     }
-
 
     protected function addExecution(\DoEveryApp\Entity\Execution $execution): static
     {
@@ -115,12 +111,12 @@ class Durations
             return $this;
         }
 
-        $yearFormatted      = $execution->getDate()->format('Y');
-        $yearMonthFormatted = $execution->getDate()->format('Y') . ' / ' . $execution->getDate()->format('m');
-        if (false === array_key_exists($yearFormatted, $this->years)) {
+        $yearFormatted      = $execution->getDate()->format(format: 'Y');
+        $yearMonthFormatted = $execution->getDate()->format(format: 'Y') . ' / ' . $execution->getDate()->format(format: 'm');
+        if (false === array_key_exists(key: $yearFormatted, array: $this->years)) {
             $this->years[$yearFormatted] = 0;
         }
-        if (false === array_key_exists($yearMonthFormatted, $this->months)) {
+        if (false === array_key_exists(key: $yearMonthFormatted, array: $this->months)) {
             $this->months[$yearMonthFormatted] = 0;
         }
         $this->years[$yearFormatted]       += $execution->getDuration();
@@ -154,23 +150,22 @@ class Durations
         return $this;
     }
 
-
     public static function FactoryForGlobal(): static
     {
         $tasks = \DoEveryApp\Entity\Task::getRepository()
-            ->createQueryBuilder('t')
-            ->leftJoin('t.group', 'g')
-            ->leftJoin('t.assignee', 'a')
-            ->leftJoin('t.workingOn', 'w')
-            ->leftJoin('t.executions', 'e')
-            ->getQuery()
-            ->execute()
+                                        ->createQueryBuilder(alias: 't')
+                                        ->leftJoin(join: 't.group', alias: 'g')
+                                        ->leftJoin(join: 't.assignee', alias: 'a')
+                                        ->leftJoin(join: 't.workingOn', alias: 'w')
+                                        ->leftJoin(join: 't.executions', alias: 'e')
+                                        ->getQuery()
+                                        ->execute()
         ;
+
         return (static::byTasks($tasks))
             ->finalize()
         ;
     }
-
 
     public static function FactoryByTask(\DoEveryApp\Entity\Task $task): static
     {
@@ -179,7 +174,6 @@ class Durations
         ;
     }
 
-
     public static function FactoryByGroup(\DoEveryApp\Entity\Group $group): static
     {
         return (static::byTasks($group->getTasks()))
@@ -187,89 +181,75 @@ class Durations
         ;
     }
 
-
     public static function FactoryByWorker(\DoEveryApp\Entity\Worker $worker): static
     {
         $instance = new static();
-        foreach (\DoEveryApp\Entity\Execution::getRepository()->findForWorker($worker) as $execution) {
-            $instance->addExecution($execution);
+        foreach (\DoEveryApp\Entity\Execution::getRepository()->findForWorker(worker: $worker) as $execution) {
+            $instance->addExecution(execution: $execution);
         }
 
         return $instance->finalize();
     }
-
 
     public function getTotal(): int
     {
         return $this->total;
     }
 
-
     public function getDay(): int
     {
         return $this->day;
     }
-
 
     public function getLastDay(): int
     {
         return $this->lastDay;
     }
 
-
     public function getWeek(): int
     {
         return $this->week;
     }
-
 
     public function getLastWeek(): int
     {
         return $this->lastWeek;
     }
 
-
     public function getMonth(): int
     {
         return $this->month;
     }
-
 
     public function getLastMonth(): int
     {
         return $this->lastMonth;
     }
 
-
     public function getYear(): int
     {
         return $this->year;
     }
-
 
     public function getLastYear(): int
     {
         return $this->lastYear;
     }
 
-
     public function getAverage(): int
     {
         return $this->average;
     }
-
 
     public function getWithoutDate(): array
     {
         return $this->withoutDate;
     }
 
-
     public function getYears(): array
     {
         return $this->years;
     }
-
 
     public function getMonths(): array
     {

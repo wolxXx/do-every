@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Cms;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -16,15 +18,15 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (false === \DoEveryApp\Util\User\Current::isAuthenticated()) {
-            return $this->render('action/cms/index');
+            return $this->render(script: 'action/cms/index');
         }
 
-        return $this->render('action/cms/dashboard', [
-            'executions'        => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(5),
-            'dueTasks'          => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
-            'tasks'             => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
-            'workingOn'         => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
-            'workers'           => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
+        return $this->render(script: 'action/cms/dashboard', data: [
+            'executions' => \DoEveryApp\Entity\Execution::getRepository()->findForIndex(limit: 5),
+            'dueTasks'   => \DoEveryApp\Entity\Task::getRepository()->getDueTasks(),
+            'tasks'      => \DoEveryApp\Entity\Task::getRepository()->findForIndex(),
+            'workingOn'  => \DoEveryApp\Entity\Task::getRepository()->getWorkingOn(),
+            'workers'    => \DoEveryApp\Entity\Worker::getRepository()->findIndexed(),
         ]);
     }
 }

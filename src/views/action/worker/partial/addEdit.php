@@ -23,11 +23,11 @@ declare(strict_types=1);
                 <label for="name">
                     <?= $translator->name() ?>
                 </label>
-                <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
+                <input id="name" type="text" name="name" value="<?= array_key_exists(key: 'name', array: $data) ? $data['name'] : '' ?>"/>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('name') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'name') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -36,11 +36,11 @@ declare(strict_types=1);
                 <label for="email">
                     <?= $translator->eMail() ?>
                 </label>
-                <input id="email" type="email" name="email" value="<?= array_key_exists('email', $data) ? $data['email'] : '' ?>"/>
+                <input id="email" type="email" name="email" value="<?= array_key_exists(key: 'email', array: $data) ? $data['email'] : '' ?>"/>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('email') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'email') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -49,11 +49,11 @@ declare(strict_types=1);
                 <label for="password">
                     <?= $translator->password() ?>
                 </label>
-                <input id="password" type="password" name="password" value="<?= array_key_exists('password', $data) ? $data['password'] : '' ?>"/>
+                <input id="password" type="password" name="password" value="<?= array_key_exists(key: 'password', array: $data) ? $data['password'] : '' ?>"/>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('password') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'password') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -66,17 +66,17 @@ declare(strict_types=1);
                     <?= $translator->isAdminQuestion() ?>
                 </label>
                 <select name="is_admin" id="is_admin">
-                    <option <?= array_key_exists('is_admin', $data) && $data['is_admin'] == '1' ? 'selected'  : '' ?>  value="1">
+                    <option <?= array_key_exists(key: 'is_admin', array: $data) && $data['is_admin'] == '1' ? 'selected' : '' ?>  value="1">
                         <?= $translator->yes() ?>
                     </option>
-                    <option <?=  false === array_key_exists('is_admin', $data) || $data['is_admin'] == '0' ? 'selected'  : '' ?>  value="0">
+                    <option <?=  false === array_key_exists(key: 'is_admin', array: $data) || $data['is_admin'] == '0' ? 'selected' : '' ?>  value="0">
                         <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('is_admin') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'is_admin') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -86,17 +86,17 @@ declare(strict_types=1);
                     <?= $translator->doNotifyLoginsQuestion() ?>
                 </label>
                 <select name="do_notify_logins" id="do_notify_logins">
-                    <option <?= array_key_exists('do_notify_logins', $data) && $data['do_notify_logins'] == '1' ? 'selected'  : '' ?>  value="1">
+                    <option <?= array_key_exists(key: 'do_notify_logins', array: $data) && $data['do_notify_logins'] == '1' ? 'selected' : '' ?>  value="1">
                         <?= $translator->yes() ?>
                     </option>
-                    <option <?= false === array_key_exists('do_notify_logins', $data) || $data['do_notify_logins'] == '0' ? 'selected'  : '' ?>  value="0">
+                    <option <?= false === array_key_exists(key: 'do_notify_logins', array: $data) || $data['do_notify_logins'] == '0' ? 'selected' : '' ?>  value="0">
                         <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('do_notify_logins') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'do_notify_logins') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
@@ -106,17 +106,17 @@ declare(strict_types=1);
                     <?= $translator->doNotifyDueTasksQuestion() ?>
                 </label>
                 <select name="do_notify" id="do_notify">
-                    <option <?= array_key_exists('do_notify', $data) && $data['do_notify'] == '1' ? 'selected'  : '' ?>  value="1">
+                    <option <?= array_key_exists(key: 'do_notify', array: $data) && $data['do_notify'] == '1' ? 'selected' : '' ?>  value="1">
                         <?= $translator->yes() ?>
                     </option>
-                    <option <?= false === array_key_exists('do_notify', $data) || $data['do_notify'] == '0' ? 'selected'  : '' ?>  value="0">
+                    <option <?= false === array_key_exists(key: 'do_notify', array: $data) || $data['do_notify'] == '0' ? 'selected' : '' ?>  value="0">
                         <?= $translator->no() ?>
                     </option>
                 </select>
                 <div class="errors">
-                    <? foreach ($errorStore->getErrors('do_notify') as $error): ?>
+                    <?php foreach ($errorStore->getErrors(key: 'do_notify') as $error): ?>
                         <?= $error ?><br/>
-                    <? endforeach ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>

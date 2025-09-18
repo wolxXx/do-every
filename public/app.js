@@ -7,7 +7,11 @@ function captureConfirmElements() {
         }
 
         element.addEventListener('click', (e) => {
-            if (!confirm('Bist du sicher?')) {
+            let message = element.getAttribute('data-message');
+            if (null === message) {
+                message = Translations['are you sure?'];
+            }
+            if (!confirm(message)) {
                 e.stopPropagation();
                 e.preventDefault();
             }
@@ -72,7 +76,8 @@ function initRowRemover() {
             return;
         }
         element.addEventListener('click', function () {
-            element.closest('.row').remove();
+            element.closest('.row')?.remove();
+            element.closest('.rowSimple')?.remove();
         });
         element.dataset['bound'] = '1';
     });
@@ -125,3 +130,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     captureElements();
     initDragHAndler();
 });
+
+class Translations {
+
+}

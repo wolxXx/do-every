@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Task;
 
@@ -14,23 +14,27 @@ class Repository extends \Doctrine\ORM\EntityRepository
      */
     protected array $map = [];
 
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
     public function getDueTasks(): array
     {
         $tasks = $this
-            ->createQueryBuilder('t')
-            ->leftJoin('t.group', 'g')
-            ->leftJoin('t.workingOn', 'w')
-            ->leftJoin('t.assignee', 'a')
-            ->andWhere('t.active = :active',)
-            ->setParameter('active', true,)
+            ->createQueryBuilder(alias: 't')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->leftJoin(join: 't.workingOn', alias: 'w')
+            ->leftJoin(join: 't.assignee', alias: 'a')
+            ->andWhere('t.active = :active')
+            ->setParameter(key: 'active', value: true)
             ->getQuery()
             ->execute()
-            ;
-        return \array_filter($tasks, function(\DoEveryApp\Entity\Task $task,) {
+        ;
+
+        return \array_filter(array: $tasks, callback: function (\DoEveryApp\Entity\Task $task) {
             if (false === $task->isActive()) {
                 return false;
             }
-            $lastExecution = $this->getLastExecution($task,);
+            $lastExecution = $this->getLastExecution(task: $task);
             if (null === $lastExecution) {
                 return true;
             }
@@ -46,26 +50,24 @@ class Repository extends \Doctrine\ORM\EntityRepository
         },);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Task[]
      */
     public function findForIndex()
     {
         return $this
-            ->createQueryBuilder('t',)
-            ->addSelect('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path',)
-            ->leftJoin('t.group', 'g',)
-            ->leftJoin('t.assignee', 'a')
-            ->leftJoin('t.workingOn', 'w')
-            ->andWhere('t.active = :active',)
-            ->setParameter('active', true,)
-            ->orderBy('path',)
+            ->createQueryBuilder(alias: 't')
+            ->addSelect('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->leftJoin(join: 't.assignee', alias: 'a')
+            ->leftJoin(join: 't.workingOn', alias: 'w')
+            ->andWhere('t.active = :active')
+            ->setParameter(key: 'active', value: true)
+            ->orderBy(sort: 'path')
             ->getQuery()
             ->execute()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Task[]
@@ -73,72 +75,68 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findAllForIndex()
     {
         return $this
-            ->createQueryBuilder('t',)
-            ->addSelect('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path',)
-            ->leftJoin('t.group', 'g',)
-            ->orderBy('path',)
+            ->createQueryBuilder(alias: 't')
+            ->addSelect('t, concat(COALESCE(g.name, \' \'), \'__\', t.name) as hidden path')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->orderBy(sort: 'path')
             ->getQuery()
             ->execute()
         ;
     }
-
 
     public function getWorkingOn(): array
     {
         return $this
-            ->createQueryBuilder('t',)
-            ->leftJoin('t.workingOn', 'w',)
-            ->leftJoin('t.assignee', 'a',)
-            ->leftJoin('t.group', 'g',)
-            ->andWhere('t.workingOn IS NOT NULL',)
+            ->createQueryBuilder(alias: 't')
+            ->leftJoin(join: 't.workingOn', alias: 'w')
+            ->leftJoin(join: 't.assignee', alias: 'a')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->andWhere('t.workingOn IS NOT NULL')
             ->getQuery()
             ->execute()
         ;
     }
 
-
-    public function getLastExecution(\DoEveryApp\Entity\Task $task,): ?\DoEveryApp\Entity\Execution
+    public function getLastExecution(\DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Execution
     {
-        if(true === \array_key_exists($task->getId(), $this->map)) {
+        if (true === \array_key_exists(key: $task->getId(), array: $this->map)) {
             return $this->map[$task->getId()];
         }
         $lastExecution = \DoEveryApp\Entity\Execution::getRepository()
-                                                       ->createQueryBuilder('e',)
-                                                       ->andWhere('e.task = :task',)
-                                                       ->setParameter('task', $task,)
-                                                       ->orderBy('e.date', 'DESC',)
-                                                       ->setMaxResults(1,)
-                                                       ->getQuery()
-                                                       ->getOneOrNullResult()
+                                                     ->createQueryBuilder(alias: 'e')
+                                                     ->andWhere('e.task = :task')
+                                                     ->setParameter(key: 'task', value: $task)
+                                                     ->orderBy(sort: 'e.date', order: 'DESC')
+                                                     ->setMaxResults(maxResults: 1)
+                                                     ->getQuery()
+                                                     ->getOneOrNullResult()
         ;
 
-        $this->map[$task->getId()]  = $lastExecution;
-        return $lastExecution
-        ;
+        $this->map[$task->getId()] = $lastExecution;
+
+        return $lastExecution;
     }
 
-
-    public function getByGroup(\DoEveryApp\Entity\Group $group, ?bool $active = null,): array
+    public function getByGroup(\DoEveryApp\Entity\Group $group, ?bool $active = null): array
     {
         $queryBuilder = $this
-            ->createQueryBuilder('t',)
-            ->andWhere('t.group = :group',)
-            ->setParameter('group', $group,)
+            ->createQueryBuilder(alias: 't')
+            ->andWhere('t.group = :group')
+            ->setParameter(key: 'group', value: $group)
         ;
         if (true === $active) {
-            $queryBuilder->andWhere('t.active = true',);
+            $queryBuilder->andWhere('t.active = true');
         }
         if (false === $active) {
-            $queryBuilder->andWhere('t.active = false',);
+            $queryBuilder->andWhere('t.active = false');
         }
 
         return $queryBuilder
-            ->orderBy('t.name', 'ASC',)
+            ->orderBy(sort: 't.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Task[]
@@ -146,51 +144,47 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getWithoutGroup(): array
     {
         return $this
-            ->createQueryBuilder('t',)
-            ->andWhere('t.group IS NULL',)
-            ->orderBy('t.name', 'ASC',)
+            ->createQueryBuilder(alias: 't')
+            ->andWhere('t.group IS NULL')
+            ->orderBy(sort: 't.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
     }
 
-
-    public function create(\DoEveryApp\Entity\Task $entity,): static
+    public function create(\DoEveryApp\Entity\Task $entity): static
     {
         $this
-            ->onCreateTS($entity,)
-            ->onCreate($entity,)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity,)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
 
-
-    public function update(\DoEveryApp\Entity\Task $entity,): static
+    public function update(\DoEveryApp\Entity\Task $entity): static
     {
         $this
-            ->onUpdate($entity,)
-            ->onUpdateTS($entity,)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity,)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
 
-
-    public function delete(\DoEveryApp\Entity\Task $entity,): static
+    public function delete(\DoEveryApp\Entity\Task $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity,)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -199,11 +193,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Task | null
      */
-    public function find($id, $lockMode = null, int|null $lockVersion = null,): ?\DoEveryApp\Entity\Task
+    public function find($id, $lockMode = null, int|null $lockVersion = null): ?\DoEveryApp\Entity\Task
     {
-        return parent::find($id, $lockMode, $lockVersion,);
+        return parent::find($id, $lockMode, $lockVersion);
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Task[]
@@ -213,7 +206,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::findAll();
     }
 
-
     /**
      * @param array      $criteria
      * @param array|null $orderBy
@@ -222,11 +214,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Task[]
      */
-    public function findBy(array $criteria, array|null $orderBy = null, $limit = null, $offset = null,): array
+    public function findBy(array $criteria, array|null $orderBy = null, $limit = null, $offset = null): array
     {
-        return parent::findBy($criteria, $orderBy, $limit, $offset,);
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria
@@ -234,8 +225,8 @@ class Repository extends \Doctrine\ORM\EntityRepository
      *
      * @return \DoEveryApp\Entity\Task | null
      */
-    public function findOneBy(array $criteria, array|null $orderBy = null,): ?\DoEveryApp\Entity\Task
+    public function findOneBy(array $criteria, array|null $orderBy = null): ?\DoEveryApp\Entity\Task
     {
-        return parent::findOneBy($criteria, $orderBy,);
+        return parent::findOneBy($criteria, $orderBy);
     }
 }

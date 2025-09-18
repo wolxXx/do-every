@@ -23,11 +23,11 @@ declare(strict_types=1);
         <label for="password">
             <?= $translator->password() ?>
         </label>
-        <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD] : '' ?>"/>
+        <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD, array: $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD] : '' ?>"/>
         <div class="errors">
-            <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD) as $error): ?>
+            <?foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD) as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 
@@ -35,11 +35,11 @@ declare(strict_types=1);
         <label for="confirm_password">
             <?= $translator->confirmPassword() ?>
         </label>
-        <input id="confirm_password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM ?>" value="<?= array_key_exists(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM, $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM] : '' ?>"/>
+        <input id="confirm_password" type="password" name="<?= \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM, array: $data) ? $data[\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM] : '' ?>"/>
         <div class="errors">
-            <?foreach ($errorStore->getErrors(\DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM) as $error): ?>
+            <?foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD_CONFIRM) as $error): ?>
                 <?= $error ?><br/>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
     </div>
 

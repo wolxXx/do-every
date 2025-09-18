@@ -9,6 +9,6 @@ class ErrorStoreTest extends \DoEveryAppTest\TestBase
 {
     public function testInstantiation()
     {
-        $this->assertSame(\get_class((new \DoEveryApp\Util\ErrorStore())), \DoEveryApp\Util\ErrorStore::class);
+        $this->assertSame(expected: \get_class(object: new \DoEveryApp\Util\ErrorStore()), actual: \DoEveryApp\Util\ErrorStore::class);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "do-every",
+  "version": "1.0.0",
+  "description": "do-every",
+  "author": "wolxXx <devops@wolxXx.de>",
+  "license": "ISC",
+  "dependencies": {
+    "@wolxxx/completer": "git+https://github.com/wolxXx/completer.git"
+  },
+  "devDependencies": {
+
+  }
+}

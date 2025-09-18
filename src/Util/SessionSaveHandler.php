@@ -14,13 +14,13 @@ class SessionSaveHandler implements \SessionHandlerInterface
     public function __construct(\Doctrine\ORM\EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->gc(60 * 60);
+        $this->gc(max_lifetime: 60 * 60);
     }
 
 
     protected function findByName(string $name): ?\DoEveryApp\Entity\Session
     {
-        return \DoEveryApp\Entity\Session::getRepository()->findOneByName($name);
+        return \DoEveryApp\Entity\Session::getRepository()->findOneByName(name: $name);
     }
 
 
@@ -32,9 +32,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     public function destroy(string $id): bool
     {
-        $entity = $this->findByName($id);
+        $entity = $this->findByName(name: $id);
         if (null !== $entity) {
-            \DoEveryApp\Entity\Session::getRepository()->delete($entity);
+            \DoEveryApp\Entity\Session::getRepository()->delete(entity: $entity);
             $this
                 ->entityManager
                 ->flush()
@@ -47,7 +47,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     public function gc(int $max_lifetime): int|false
     {
-        \DoEveryApp\Entity\Session::getRepository()->garbageCollection($max_lifetime);
+        \DoEveryApp\Entity\Session::getRepository()->garbageCollection(maxLifeTime: $max_lifetime);
 
         return 1;
     }
@@ -60,7 +60,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     public function read(string $id): string|false
     {
-        $existing = $this->findByName($id);
+        $existing = $this->findByName(name: $id);
         if (null === $existing) {
             return '';
         }
@@ -74,25 +74,25 @@ class SessionSaveHandler implements \SessionHandlerInterface
             return true;
         }
         try {
-            $existing = $this->findByName($id);
+            $existing = $this->findByName(name: $id);
             if (null === $existing) {
                 $existing = new \DoEveryApp\Entity\Session();
-                $existing::getRepository()->create($existing);
+                $existing::getRepository()->create(entity: $existing);
             }
             $existing
-                ->setName($id)
-                ->setContent($data)
-                ->setExpires((new \DateTime())->add(new \DateInterval('PT1H'))->format('Y-m-d H:i:s'))
-                ->setExpires((new \DateTime())->format('Y-m-d H:i:s'))
+                ->setName(name: $id)
+                ->setContent(content: $data)
+                ->setExpires(expires: (new \DateTime())->add(interval: new \DateInterval(duration: 'PT1H'))->format(format: 'Y-m-d H:i:s'))
+                ->setExpires(expires: (new \DateTime())->format(format: 'Y-m-d H:i:s'))
             ;
-            $existing::getRepository()->update($existing);
+            $existing::getRepository()->update(entity: $existing);
             $this
                 ->entityManager
                 ->flush()
             ;
             return true;
         } catch (\Exception $exception) {
-            DependencyContainer::getInstance()->getLogger()->emergency('cannot save session: ' . $exception->getMessage() . ' ' . $exception->getTraceAsString());
+            DependencyContainer::getInstance()->getLogger()->emergency(message: 'cannot save session: ' . $exception->getMessage() . ' ' . $exception->getTraceAsString());
             return false;
         }
     }

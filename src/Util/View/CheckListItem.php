@@ -8,24 +8,23 @@ class CheckListItem
 {
     public static function byExecutionCheckListItem(\DoEveryApp\Entity\Execution\CheckListItem $item): string
     {
-        return static::byValue($item->getName(), $item->isChecked(), $item->getNote());
+        return static::byValue(name: $item->getName(), checked: $item->isChecked(), note: $item->getNote());
     }
-
 
     public static function byValue(string $name, bool $checked, string|null $note = null): string
     {
         $color = '#ff00a0';
         if (true === $checked) {
-            $icon = Icon::check();
+            $icon  = Icon::check();
             $color = '#154709';
         }
         if (false === $checked) {
-            $icon = Icon::cross();
+            $icon  = Icon::cross();
             $color = '#f00';
         }
         $icon   = '<span style="color: ' . $color . ';">' . $icon . '</span>';
-        $result = '<span title="' . $note . '">' . $icon . ' ' . Escaper::escape($name) . '</span>';
-        $result = \str_replace(\PHP_EOL, '', $result);
+        $result = '<span title="' . $note . '">' . $icon . ' ' . Escaper::escape(value: $name) . '</span>';
+        $result = \str_replace(search: \PHP_EOL, replace: '', subject: $result);
 
         return $result;
     }

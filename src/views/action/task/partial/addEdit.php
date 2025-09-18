@@ -20,198 +20,144 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
-            <div class="row">
-                <? if(0 !== count($groups)): ?>
+            <div class="grid">
+                <?php if(0 !== count(value: $groups)): ?>
                     <div class="column">
                         <div>
-                            <label for="group">
+                            <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP ?>">
                                 <?= $translator->group() ?>
                             </label>
-                            <select name="group" id="group">
-                                <option <?= false === array_key_exists('group', $data) || null === $data['group'] ? 'selected'  : '' ?>  value="">
+                            <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP ?>">
+                                <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP, array: $data) || null === $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP] ? 'selected' : '' ?>  value="">
                                     - <?= $translator->without() ?> -
                                 </option>
-                                <? foreach($groups as $group): ?>
-                                    <option <?= array_key_exists('group', $data) && $data['group'] == $group->getId() ? 'selected'  : '' ?> value="<?= $group->getId() ?>">
-                                        <?= \DoEveryApp\Util\View\Escaper::escape($group->getName()) ?>
+                                <?php foreach($groups as $group): ?>
+                                    <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP] == $group->getId() ? 'selected' : '' ?> value="<?= $group->getId() ?>">
+                                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $group->getName()) ?>
                                     </option>
-                                <? endforeach ?>
+                                <?php endforeach ?>
                             </select>
-                            <div class="errors">
-                                <? foreach ($errorStore->getErrors('group') as $error): ?>
-                                    <?= $error ?><br/>
-                                <? endforeach ?>
-                            </div>
+                            <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_GROUP)]) ?>
                         </div>
                     </div>
-                <? endif ?>
+                <?php endif ?>
+
                 <div class="column">
                     <div>
-                        <label for="name" class="required">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" class="required">
                             <?= $translator->name() ?>
                         </label>
-                        <input id="name" type="text" name="name" value="<?= array_key_exists('name', $data) ? $data['name'] : '' ?>"/>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('name') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" type="text" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME] : '' ?>"/>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME)]) ?>
                     </div>
                 </div>
             </div>
 
-
-            <div class="row">
+            <div class="grid">
                 <div class="column">
                     <div>
-                        <label for="assignee">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE ?>">
                             <?= $translator->assignedTo() ?>
                         </label>
-                        <select name="assignee" id="assignee">
-                            <option <?= false === array_key_exists('assignee', $data) || null === $data['assignee'] ? 'selected'  : '' ?>  value="">
+                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE ?>">
+                            <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE, array: $data) || null === $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE] ? 'selected' : '' ?>  value="">
                                 - <?= $translator->nobody() ?> -
                             </option>
-                            <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
-                                <option <?= array_key_exists('assignee', $data) && $data['assignee'] == $worker->getId() ? 'selected'  : '' ?> value="<?= $worker->getId() ?>">
-                                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                            <?php foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+                                <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE] == $worker->getId() ? 'selected' : '' ?> value="<?= $worker->getId() ?>">
+                                    <?= \DoEveryApp\Util\View\Worker::get(worker: $worker) ?>
                                 </option>
-                            <? endforeach ?>
+                            <?php endforeach ?>
                         </select>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('assignee') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ASSIGNEE)]) ?>
                     </div>
                 </div>
                 <div class="column">
                     <div>
-                        <label for="enableNotifications">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS ?>">
                             <?= $translator->doNotifyDueTasksQuestion() ?>
                         </label>
-                        <select name="enableNotifications" id="enableNotifications">
-                            <option <?= array_key_exists('enableNotifications', $data) && $data['enableNotifications'] == '1' ? 'selected'  : '' ?>  value="1">
+                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS ?>">
+                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS] == '1' ? 'selected' : '' ?>  value="1">
                                 <?= $translator->yes() ?>
                             </option>
-                            <option <?=  false === array_key_exists('enableNotifications', $data) || $data['enableNotifications'] == '0' ? 'selected'  : '' ?>  value="0">
+                            <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS, array: $data) || $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS] == '0' ? 'selected' : '' ?>  value="0">
                                 <?= $translator->no() ?>
                             </option>
                         </select>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('priority') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS)]) ?>
                     </div>
                 </div>
                 <div class="column">
-
                     <div>
-                        <label for="priority">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY ?>">
                             <?= $translator->priority() ?>
                         </label>
-                        <select name="priority" id="priority">
-                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::LOW->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::LOW->value ?>">
-                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::LOW) ?>
-                            </option>
-                            <option <?= false === array_key_exists('priority', $data) || $data['priority'] == \DoEveryApp\Definition\Priority::NORMAL->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::NORMAL->value ?>">
-                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::NORMAL) ?>
-                            </option>
-                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::HIGH->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::HIGH->value ?>">
-                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::HIGH) ?>
-                            </option>
-                            <option <?= array_key_exists('priority', $data) && $data['priority'] == \DoEveryApp\Definition\Priority::URGENT->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\Priority::URGENT->value ?>">
-                                <?= \DoEveryApp\Util\View\PriorityMap::mapName(\DoEveryApp\Definition\Priority::URGENT) ?>
-                            </option>
+                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY ?>">
+                            <?php foreach(\DoEveryApp\Definition\Priority::cases() as $priorityCase): ?>
+                                <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY] == $priorityCase->value ? 'selected' : '' ?>  value="<?= $priorityCase->value ?>">
+                                    <?= \DoEveryApp\Util\View\PriorityMap::mapName(priority: $priorityCase) ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('priority') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY)]) ?>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="grid">
                 <div class="column">
                     <div>
-                        <label for="intervalType">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE ?>">
                             <?= $translator->intervalType() ?>
                         </label>
-                        <select name="intervalType" id="intervalType">
-                            <option <?= false === array_key_exists('intervalType', $data) || null === $data['intervalType'] ? 'selected'  : '' ?>  value="">
+                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE ?>">
+                            <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE, array: $data) || null === $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE] ? 'selected' : '' ?>  value="">
                                 - <?= $translator->without() ?> -
                             </option>
-                            <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::MINUTE->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::MINUTE->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::MINUTE) ?>
-                            </option>
-                            <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::HOUR->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::HOUR->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::HOUR) ?>
-                            </option>
-                            <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::DAY->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::DAY->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::DAY) ?>
-                            </option>
-                            <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::MONTH->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::MONTH->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::MONTH) ?>
-                            </option>
-                            <option <?= array_key_exists('intervalType', $data) && $data['intervalType'] == \DoEveryApp\Definition\IntervalType::YEAR->value ? 'selected'  : '' ?>  value="<?= \DoEveryApp\Definition\IntervalType::YEAR->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::map(\DoEveryApp\Definition\IntervalType::YEAR) ?>
-                            </option>
+                            <?php foreach(\DoEveryApp\Definition\IntervalType::cases() as $intervalTypeCase): ?>
+                                <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE] == $intervalTypeCase->value ? 'selected' : '' ?>  value="<?= $intervalTypeCase->value ?>">
+                                    <?= \DoEveryApp\Util\View\IntervalHelper::map(intervalType: $intervalTypeCase) ?>
+                                </option>
+                            <?php endforeach ?>
                         </select>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('intervalType') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE)]) ?>
                     </div>
                 </div>
                 <div class="column">
                     <div>
-                        <label for="intervalValue">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>">
                             <?= $translator->intervalValue() ?>
                         </label>
-                        <input id="intervalValue" type="number" name="intervalValue" value="<?= array_key_exists('intervalValue', $data) ? $data['intervalValue'] : '' ?>"/>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('intervalValue') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" type="number" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE] : '' ?>"/>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE)]) ?>
                     </div>
                 </div>
                 <div class="column">
                     <div>
-                        <label for="elapsingCronType">
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>">
                             <?= $translator->intervalMode() ?>
                         </label>
-                        <select name="elapsingCronType" id="elapsingCronType">
-                            <option <?= false === array_key_exists('elapsingCronType', $data) || $data['elapsingCronType'] == '1' ? 'selected'  : '' ?>  value="1">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(true) ?>
+                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>">
+                            <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE, array: $data) || $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE] == '1' ? 'selected' : '' ?>  value="1">
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(elapsing: true) ?>
                             </option>
-                            <option <?= array_key_exists('elapsingCronType', $data) && $data['elapsingCronType'] == '0' ? 'selected'  : '' ?>  value="0">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(false) ?>
+                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE] == '0' ? 'selected' : '' ?>  value="0">
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(elapsing: false) ?>
                             </option>
                         </select>
-                        <div class="errors">
-                            <? foreach ($errorStore->getErrors('elapsingCronType') as $error): ?>
-                                <?= $error ?><br/>
-                            <? endforeach ?>
-                        </div>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="column">
             <div>
-                <label for="note">
+                <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE ?>">
                     <?= $translator->notice() ?>
                 </label>
-                <textarea name="note" id="note" rows="10000" cols="10000"><?= array_key_exists('note', $data) ? $data['note'] : '' ?></textarea>
-                <div class="errors">
-                    <? foreach ($errorStore->getErrors('note') as $error): ?>
-                        <?= $error ?><br/>
-                    <? endforeach ?>
-                </div>
+                <textarea name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE ?>" rows="10000" cols="10000"><?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE] : '' ?></textarea>
+                <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NOTE)]) ?>
             </div>
         </div>
     </div>
@@ -228,7 +174,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             <?= $translator->add() ?>
         </i>
         <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
-            <? foreach ($data['checkListItem']??[] as $index => $item): ?>
+            <?php foreach ($data['checkListItem'] ?? [] as $index => $item): ?>
                 <div class="rowSimple" draggable="true">
                     <div class="column">
                         <span class="dangerButton rowRemover">
@@ -236,23 +182,26 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                         </span>
                     </div>
                     <div class="column">
-                        <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
+                        <?php $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
                         <label for="<?= $id ?>">
                             <?= $translator->step() ?>
                         </label>
                         <input type="hidden" readonly name="checkListItem[<?= $index ?>][id]" value="<?= $item['id'] ?? '' ?>" />
                         <input type="hidden" readonly name="checkListItem[<?= $index ?>][position]" value="<?= $item['position'] ?? '' ?>" />
                         <input id="<?= $id ?>" type="text" name="checkListItem[<?= $index ?>][name]" value="<?= $item['name'] ?>" />
+
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . \DoEveryApp\Action\Task\AddAction::FORM_FIELD_CHECK_LIST_ITEM_NAME)]) ?>
                     </div>
                     <div class="column">
-                        <? $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
+                        <?php $id = \Ramsey\Uuid\Uuid::uuid4()->toString() ?>
                         <label for="<?= $id ?>">
                             <?= $translator->notice() ?>
                         </label>
                         <textarea id="<?= $id ?>" rows="1000" cols="1000" name="checkListItem[<?= $index ?>][note]"><?= $item['note'] ?? '' ?></textarea>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . \DoEveryApp\Action\Task\AddAction::FORM_FIELD_CHECK_LIST_ITEM_NOTE)]) ?>
                     </div>
                 </div>
-            <? endforeach ?>
+            <?php endforeach ?>
         </div>
         <template>
             <div class="rowSimple" draggable="true">

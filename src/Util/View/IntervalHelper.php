@@ -6,12 +6,10 @@ namespace DoEveryApp\Util\View;
 
 class IntervalHelper
 {
-
     public static function getElapsingTypeByTask(\DoEveryApp\Entity\Task $task): string
     {
         return static::getElapsingTypeByBoolean($task->isElapsingCronType());
     }
-
 
     public static function getElapsingTypeByBoolean(bool $elapsing): string
     {
@@ -22,7 +20,6 @@ class IntervalHelper
 
         return $translator->intervalTypeCyclic();
     }
-
 
     public static function get(\DoEveryApp\Entity\Task $task): string
     {
@@ -54,9 +51,8 @@ class IntervalHelper
                 return $isPlural ? $translator->dueIsEvery() . ' ' . $intervalValue . ' ' . $translator->years() : $translator->dueIsEveryYear();
             }
         }
-        throw new \InvalidArgumentException('??' . $task->getIntervalType() . $task->getIntervalValue());
+        throw new \InvalidArgumentException(message: '??' . $task->getIntervalType() . $task->getIntervalValue());
     }
-
 
     public static function map(\DoEveryApp\Definition\IntervalType $intervalType): string
     {
@@ -83,7 +79,7 @@ class IntervalHelper
             }
             default:
             {
-                throw new \InvalidArgumentException('??' . $intervalType->name);
+                throw new \InvalidArgumentException(message: '??' . $intervalType->name);
             }
         }
     }

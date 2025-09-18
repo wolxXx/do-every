@@ -1,6 +1,6 @@
 <?php
 $dbName = 'do_every';
-if (true === defined('IS_IN_TEST_ENV') && true === IS_IN_TEST_ENV) {
+if (true === defined(constant_name: 'IS_IN_TEST_ENV') && true === IS_IN_TEST_ENV) {
     $dbName .= '_test';
 }
 

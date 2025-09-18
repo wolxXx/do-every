@@ -7,82 +7,168 @@ namespace DoEveryAppTest\Util;
 
 class TranslatorTest extends \DoEveryAppTest\TestBase
 {
+
+    protected function executeTranslation(\DoEveryApp\Util\Translator $translator, string $method, array $parameters = [])
+    {
+        if (0 === count(value: $parameters)) {
+            $translator->$method();
+            return;
+        }
+
+        $randomParameters = [];
+        foreach ($parameters as $name => $parameterType) {
+            if (null === $parameterType) {
+                $randomParameters[$name] = 'test';
+                continue;
+            }
+            switch ($parameterType) {
+                case 'string':
+                {
+                    $randomParameters[$name] = 'test string';
+                    break;
+                }
+                case 'int':
+                {
+                    $randomParameters[$name] = 1337;
+                    break;
+                }
+                case 'DateTime':
+                {
+                    $randomParameters[$name] = new \DateTime(datetime: '2021-01-01 00:00:00');
+                    break;
+                }
+                default:
+                {
+                    throw new \RuntimeException(message: 'Unknown parameter type "' . $parameterType . '" for mehtod "' . $method . '"');
+                }
+            }
+        }
+        call_user_func_array(callback: array($translator, $method), args: $randomParameters);
+    }
+
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testNothingTranslations($method, $parameters)
     {
-        if (0 === \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\Nothing())->{$method}();
-        }
-        if (0 !== \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\Nothing())->{$method}(rand(0,1000));
-        }
-        $this->assertTrue(true);
+        $this->executeTranslation(new \DoEveryApp\Util\Translator\Nothing(), $method, $parameters);
+        $this->assertTrue(condition: true);
     }
+
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testGermanTranslations($method, $parameters)
     {
-        if (0 === \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\German())->{$method}();
-        }
-        if (0 !== \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\German())->{$method}(rand(0,1000));
-        }
-        $this->assertTrue(true);
+        $this->executeTranslation(new \DoEveryApp\Util\Translator\German(), $method, $parameters);
+        $this->assertTrue(condition: true);
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testEnglishTranslations($method, $parameters)
     {
-        if (0 === \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\English())->{$method}();
-        }
-        if (0 !== \count($parameters)) {
-            (new \DoEveryApp\Util\Translator\English())->{$method}(rand(0,1000));
-        }
-        $this->assertTrue(true);
+        $this->executeTranslation(new \DoEveryApp\Util\Translator\English(), $method, $parameters);
+        $this->assertTrue(condition: true);
     }
 
 
-    public static function translationsTestDataProvider()
+    /**
+     * Provides test data for translation methods by reflecting on public methods of the Translator class.
+     *
+     * @return array An array of method names along with their parameters and respective types, or null for untyped parameters.
+     */
+    public static function translationsTestDataProvider(): array
     {
-        $methods           = [];
-        $reflection        = new \ReflectionClass(\DoEveryApp\Util\Translator::class);
-        $reflectionMethods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
+        $methods = [];
+        $reflection = new \ReflectionClass(objectOrClass: \DoEveryApp\Util\Translator::class);
+        $reflectionMethods = $reflection->getMethods(filter: \ReflectionMethod::IS_PUBLIC);
         foreach ($reflectionMethods as $method) {
             $parameters = [];
             foreach ($method->getParameters() as $parameter) {
-                $parameters[$parameter->getName()] = $parameter->getType();
+                $parameterType = $parameter->getType();
+                $parameterName = $parameter->getName();
+                if (null === $parameterType) {
+                    $parameters[$parameterName] = null;
+                    unset($parameterType);
+                    continue;
+                }
+                $parameterTypeClass = get_class(object: $parameter->getType());
+                switch ($parameterTypeClass) { #ReflectionNamedType|ReflectionUnionType|ReflectionIntersectionType
+
+                    case \ReflectionNamedType::class:
+                    {
+                        /**
+                         * @var \ReflectionNamedType $parameterType
+                         */
+                        $parameterTypeName = trim(string: ' ' . $parameterType->getName() . ' ');
+                        $parameters[$parameterName] = $parameterTypeName;
+                        unset($parameterTypeName);
+
+                        break;
+                    }
+
+                    case \ReflectionUnionType::class:
+                    {
+                        /**
+                         * @var \ReflectionUnionType $parameterTypes
+                         */
+                        $parameterTypes = $parameter->getType();
+                        $unionTypes = $parameterTypes->getTypes();
+                        foreach ($unionTypes as $unionType) {
+                            $unionType = trim(string: ' ' . $unionType . ' ');
+                            if(true === in_array(needle: $unionType, haystack: ['string', 'int', 'DateTime'], strict: true)) {
+                                $parameters[$parameterName] = $unionType;
+                                break 2;
+                            }
+                        }
+                        throw new \RuntimeException(message: 'Union types "'. implode(separator: ', ', array: $unionTypes) .'" are not supported');
+                        break;
+                    }
+
+                    case \ReflectionIntersectionType::class:
+                    {
+                        /**
+                         * @var \ReflectionIntersectionType $parameter
+                         */
+                        throw new \RuntimeException(message: 'Intersection types are not supported');
+                    }
+                    default:
+                    {
+                        throw new \RuntimeException(message: 'Unknown parameter type "' . $parameterTypeClass . '" for mehtod "' . $method->getName() . '"');
+                    }
+                }
+                unset($parameter);
+                unset($parameterType);
             }
             $methods[] = [$method->getName(), $parameters];
+            unset($method);
         }
+
+        unset($reflection, $reflectionMethods);
 
         return $methods;
     }
 
 
-    public function testGermanInstantiation()
+    public function testGermanInstantiation(): void
     {
         $translator = new \DoEveryApp\Util\Translator\German();
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator::class, $translator);
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator\German::class, $translator);
-        $this->assertSame('Dashboard', ($translator)->dashboard());
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\German::class, actual: $translator);
+        $this->assertSame(expected: 'Dashboard', actual: ($translator)->dashboard());
     }
 
 
-    public function testEnglishInstantiation()
+    public function testEnglishInstantiation(): void
     {
         $translator = new \DoEveryApp\Util\Translator\English();
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator::class, $translator);
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator\English::class, $translator);
-        $this->assertSame('dashboard', ($translator)->dashboard());
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\English::class, actual: $translator);
+        $this->assertSame(expected: 'dashboard', actual: ($translator)->dashboard());
     }
 
 
-    public function testNothingInstantiation()
+    public function testNothingInstantiation(): void
     {
         $translator = new \DoEveryApp\Util\Translator\Nothing();
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator::class, $translator);
-        $this->assertInstanceOf(\DoEveryApp\Util\Translator\Nothing::class, $translator);
-        $this->assertSame('dashboard()', ($translator)->dashboard());
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\Nothing::class, actual: $translator);
+        $this->assertSame(expected: 'dashboard()', actual: ($translator)->dashboard());
     }
 }

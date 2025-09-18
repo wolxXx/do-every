@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -19,7 +21,7 @@ class ShowAction extends \DoEveryApp\Action\AbstractAction
             return $task;
         }
 
-        return $this->render('action/task/show', [
+        return $this->render(script: 'action/task/show', data: [
             'task' => $task,
         ]);
     }

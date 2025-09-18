@@ -6,4 +6,4 @@ $command  = 'mysql -u%s -p%s -P%s -h%s -e "create database if not exists %s"';
 
 $command = sprintf($command, $dbParams['user'], $dbParams['password'], $dbParams['port'], $dbParams['host'], $dbParams['dbname']);
 
-exec($command);
+exec(command: $command);

@@ -12,16 +12,15 @@ class Mailer
 
     protected mixed                          $mailFrom = '';
 
-
     final private function __construct()
     {
         $instance             = $this
-            ->setInstance(new \PHPMailer\PHPMailer\PHPMailer(true))
+            ->setInstance(mailer: new \PHPMailer\PHPMailer\PHPMailer(exceptions: true))
             ->getInstance()
         ;
         $pathToMailConfigFile = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'mailConfiguration.php';
-        if (false === \file_exists($pathToMailConfigFile)) {
-            throw new \InvalidArgumentException('mail config file does not exist at ' . $pathToMailConfigFile);
+        if (false === \file_exists(filename: $pathToMailConfigFile)) {
+            throw new \InvalidArgumentException(message: 'mail config file does not exist at ' . $pathToMailConfigFile);
         }
         $configuration  = require $pathToMailConfigFile;
         $requiredFields = [
@@ -37,12 +36,12 @@ class Mailer
             'debug',
             'secure',
         ];
-        if (false === is_array($configuration)) {
-            throw new \Exception($pathToMailConfigFile.' did not return an array');
+        if (false === is_array(value: $configuration)) {
+            throw new \Exception(message: $pathToMailConfigFile . ' did not return an array');
         }
         foreach ($requiredFields as $requiredField) {
-            if (false === array_key_exists($requiredField, $configuration)) {
-                throw new \Exception('missing field "' . $requiredField . '" in '.$pathToMailConfigFile);
+            if (false === array_key_exists(key: $requiredField, array: $configuration)) {
+                throw new \Exception(message: 'missing field "' . $requiredField . '" in ' . $pathToMailConfigFile);
             }
         }
         $mailSkipSend      = $configuration['skipSend'];
@@ -79,23 +78,21 @@ class Mailer
             $instance->SMTPDebug = 4;
         }
         $instance->Port = $mailPort;
-        $instance->setLanguage('de');
-        $instance->setFrom($this->mailFrom, $mailFromName);
-        $instance->addReplyTo($address, $name);
+        $instance->setLanguage(langcode: 'de');
+        $instance->setFrom(address: $this->mailFrom, name: $mailFromName);
+        $instance->addReplyTo(address: $address, name: $name);
         foreach ($mailAddBcc as $bcc) {
-            $instance->addBCC($bcc);
+            $instance->addBCC(address: $bcc);
         }
-        $instance->isHTML(true);
-        $instance->addCustomHeader('foo', 'bar');
-        $instance->addCustomHeader('bar', 'foo');
+        $instance->isHTML(isHtml: true);
+        $instance->addCustomHeader(name: 'foo', value: 'bar');
+        $instance->addCustomHeader(name: 'bar', value: 'foo');
     }
-
 
     protected function getInstance(): \PHPMailer\PHPMailer\PHPMailer
     {
         return $this->instance;
     }
-
 
     protected function setInstance(\PHPMailer\PHPMailer\PHPMailer $mailer): static
     {
@@ -104,32 +101,29 @@ class Mailer
         return $this;
     }
 
-
     public static function Factory(): static
     {
         return new static();
     }
 
-
     public function send(): bool
     {
         $directoryName = \ROOT_DIR . DIRECTORY_SEPARATOR . 'log' . DIRECTORY_SEPARATOR . 'mail' . DIRECTORY_SEPARATOR;
-        if (false === is_dir($directoryName)) {
-            mkdir($directoryName, 0777, true);
+        if (false === is_dir(filename: $directoryName)) {
+            mkdir(directory: $directoryName, permissions: 0777, recursive: true);
         }
-        file_put_contents($directoryName . (new \DateTime())->format('Y-m-d_H:i:s') . uniqid() . '.html', $this->getInstance()->Body);
+        file_put_contents(filename: $directoryName . (new \DateTime())->format(format: 'Y-m-d_H:i:s') . uniqid() . '.html', data: $this->getInstance()->Body);
         if (true === $this->skipSend) {
             return true;
         }
-        set_time_limit(10);
+        set_time_limit(seconds: 10);
         $result = $this->getInstance()->send();
         if (false === $result) {
-            throw new \Exception($this->getInstance()->ErrorInfo);
+            throw new \Exception(message: $this->getInstance()->ErrorInfo);
         }
 
         return true;
     }
-
 
     public function setSubject(string $subject): static
     {
@@ -138,41 +132,36 @@ class Mailer
         return $this;
     }
 
-
     public function addRecipient(string $address, ?string $name = null): static
     {
-        $this->getInstance()->addAddress($address, $name);
+        $this->getInstance()->addAddress(address: $address, name: $name);
 
         return $this;
     }
-
 
     public function addCc(string $address, ?string $name = null): static
     {
-        $this->getInstance()->addCC($address, $name);
+        $this->getInstance()->addCC(address: $address, name: $name);
 
         return $this;
     }
-
 
     public function addBcc(string $address, ?string $name = null): static
     {
-        $this->getInstance()->addBCC($address, $name);
+        $this->getInstance()->addBCC(address: $address, name: $name);
 
         return $this;
     }
-
 
     public function setHtml(string $html): static
     {
         $this
             ->getInstance()
-            ->msgHTML($html)
+            ->msgHTML(message: $html)
         ;
 
         return $this;
     }
-
 
     public function setBody(string $body): static
     {
@@ -181,7 +170,6 @@ class Mailer
         return $this;
     }
 
-
     public function setAlternativeBody(string $body): static
     {
         $this->getInstance()->AltBody = $body;
@@ -189,12 +177,10 @@ class Mailer
         return $this;
     }
 
-
     public function isSkipSend(): bool
     {
         return $this->skipSend;
     }
-
 
     public function getMailFrom(): string
     {

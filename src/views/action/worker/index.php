@@ -58,89 +58,89 @@ declare(strict_types=1);
         </tr>
     </thead>
     <tbody>
-        <? foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
+        <?php foreach(\DoEveryApp\Entity\Worker::getRepository()->findIndexed() as $worker): ?>
             <tr>
                 <td>
-                    <?= \DoEveryApp\Util\View\Worker::get($worker) ?>
+                    <?= \DoEveryApp\Util\View\Worker::get(worker: $worker) ?>
                 </td>
                 <td>
                     <ul>
-                    <? foreach($worker->getTasksWorkingOn() as $task): ?>
+                    <?php foreach($worker->getTasksWorkingOn() as $task): ?>
                         <li>
-                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($task->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Escaper::escape($task->getName()) ?>
-                                <? if(null !== $task->getGroup()): ?>
-                                    (<?= \DoEveryApp\Util\View\Escaper::escape($task->getGroup()->getName()) ?>)
-                                <? endif ?>
+                            <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
+                                <?php if(null !== $task->getGroup()): ?>
+                                    (<?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getGroup()->getName()) ?>)
+                                <?php endif ?>
                             </a>
                         </li>
 
-                    <? endforeach ?>
+                    <?php endforeach ?>
                     </ul>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape($worker->getEmail()) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $worker->getEmail()) ?>
                 </td>
                 <td>
-                    <? if(null !== $worker->getPassword()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute($worker->getId()) ?>">
+                    <?php if(null !== $worker->getPassword()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
-                    <? endif ?>
-                    <?= \DoEveryApp\Util\View\Boolean::get(null !== $worker->getPassword()) ?>
+                    <?php endif ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPassword()) ?>
                 </td>
                 <td>
-                    <? if(true === $worker->isAdmin()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), false  ) ?>">
+                    <?php if(true === $worker->isAdmin()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute(id: $worker->getId(), admin: false) ?>">
                             <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
-                    <? endif ?>
-                    <? if(false === $worker->isAdmin()): ?>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute($worker->getId(), true) ?>">
+                    <?php endif ?>
+                    <?php if(false === $worker->isAdmin()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\MarkAdminAction::getRoute(id: $worker->getId(), admin: true) ?>">
                             <?= \DoEveryApp\Util\View\Icon::refresh() ?>
                         </a>
-                    <? endif ?>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->isAdmin()) ?>
+                    <?php endif ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->isAdmin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotifyLogin()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->doNotifyLogin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Boolean::get($worker->doNotify()) ?>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: $worker->doNotify()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastLogin()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $worker->getLastLogin()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime($worker->getLastPasswordChange()) ?>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $worker->getLastPasswordChange()) ?>
                 </td>
                 <td class="pullRight">
                     <nobr class="buttonRow">
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute($worker->getId()) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\LogAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::list() ?>
                             <?= $translator->log() ?>
                         </a>
-                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute($worker->getId()) ?>">
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::edit() ?>
                         </a>
-                        <? if(null === $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute($worker->getId()) ?>">
+                        <?php if(null === $worker->getTwoFactorSecret()): ?>
+                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
                                 <?= \DoEveryApp\Util\View\Icon::on() ?>
                                 <?= $translator->addTwoFactor() ?>
                             </a>
-                        <? endif ?>
-                        <? if(null !== $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute($worker->getId()) ?>">
+                        <?php endif ?>
+                        <?php if(null !== $worker->getTwoFactorSecret()): ?>
+                            <a class="warningButton confirm" data-messge="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTwoFactor(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
                                 <?= \DoEveryApp\Util\View\Icon::off() ?>
                                 <?= $translator->removeTwoFactor() ?>
                             </a>
-                        <? endif ?>
-                        <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute($worker->getId()) ?>">
+                        <?php endif ?>
+                        <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteWorker(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
                     </nobr>
                 </td>
             </tr>
-        <? endforeach ?>
+        <?php endforeach ?>
     </tbody>
 </table>

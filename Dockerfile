@@ -41,4 +41,8 @@ RUN sed -i '/opcache.enable=/c\opcache.enable = 1' "/etc/php/$phpVersion/apache2
 
 WORKDIR /var/www
 
+# https://getcomposer.org/doc/03-cli.md#bash-completions: RUN php composer.phar completion bash > /etc/bash_completion.d/composer // get via wget!
+RUN wget https://raw.githubusercontent.com/wolxXx/toolz/main/composer_auto_complete.sh && mv composer_auto_complete.sh /etc/bash_completion.d/composer
+RUN echo ". /etc/bash_completion" >> /root/.bashrc
+
 CMD ["apachectl", "-D", "FOREGROUND"]

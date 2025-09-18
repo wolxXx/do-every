@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoEveryApp\Action\Task;
 
 #[\DoEveryApp\Attribute\Action\Route(
@@ -16,6 +18,6 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
     {
         $tasks = \DoEveryApp\Entity\Task::getRepository()->findAllForIndex();
 
-        return $this->render('action/task/index', ['tasks' => $tasks]);
+        return $this->render(script: 'action/task/index', data: ['tasks' => $tasks]);
     }
 }

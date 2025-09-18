@@ -6,27 +6,26 @@ namespace DoEveryApp\Entity\Session;
 
 class Repository extends \Doctrine\ORM\EntityRepository
 {
-
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-    public function findOneByName(string $name) : ?\DoEveryApp\Entity\Session
+    public function findOneByName(string $name): ?\DoEveryApp\Entity\Session
     {
-        return $this->findOneBy(['name' => $name]);
+        return $this->findOneBy(criteria: ['name' => $name]);
     }
 
     public function garbageCollection(int $maxLifeTime): static
     {
-        $sub = \DateInterval::createFromDateString($maxLifeTime . ' Seconds');
+        $sub = \DateInterval::createFromDateString(datetime: $maxLifeTime . ' Seconds');
         $max = (new \DateTime())
-            ->sub($sub)
-            ->format('Y-m-d H:i:s')
+            ->sub(interval: $sub)
+            ->format(format: 'Y-m-d H:i:s')
         ;
         $this
-            ->createQueryBuilder('s')
-            ->delete(\DoEveryApp\Entity\Session::class, 's')
+            ->createQueryBuilder(alias: 's')
+            ->delete(delete: \DoEveryApp\Entity\Session::class, alias: 's')
             ->andWhere('s.expires < :max')
-            ->setParameter('max', $max)
+            ->setParameter(key: 'max', value: $max)
             ->getQuery()
             ->execute()
         ;
@@ -37,39 +36,36 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function create(\DoEveryApp\Entity\Session $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Session $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function delete(\DoEveryApp\Entity\Session $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -83,7 +79,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Session[]
      */
@@ -91,7 +86,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -105,7 +99,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

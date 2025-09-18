@@ -11,29 +11,30 @@ class BaseTest extends \DoEveryAppTest\TestBase
     {
         $response    = (new \Slim\Psr7\Response());
         $phpRenderer = \DoEveryApp\Util\DependencyContainer::getInstance()->getRenderer();
-        $phpRenderer->setAttributes([
+        $phpRenderer->setAttributes(attributes: [
                                         'currentRoute'        => '',
                                         'currentRoutePattern' => '',
+                                        'translator' => new \DoEveryApp\Util\Translator\German(),
                                     ]);
-        $response = $phpRenderer->render($response, 'action/cms/index.php');
+        $response = $phpRenderer->render(response: $response, template: 'action/cms/index.php');
         $response->getBody()->rewind();
         $body = $response->getBody()->getContents();
-        $this->assertTrue(\str_contains($body, '<img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">'));
+        $this->assertTrue(condition: \str_contains(haystack: $body, needle: '<img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">'));
     }
     public function testDashboard()
     {
         \DoEveryApp\Util\User\Current::$forcedLoggedInUser = (new \DoEveryApp\Entity\Worker())
-        ->setId(1)
+        ->setId(id: 1)
         ;
         $response    = (new \Slim\Psr7\Response());
         $phpRenderer = \DoEveryApp\Util\DependencyContainer::getInstance()->getRenderer();
-        $phpRenderer->setAttributes([
+        $phpRenderer->setAttributes(attributes: [
                                         'currentRoute'        => '',
                                         'currentRoutePattern' => '',
                                         'translator' => new \DoEveryApp\Util\Translator\German(),
                                         'currentUser' => \DoEveryApp\Util\User\Current::$forcedLoggedInUser,
                                     ]);
-        $response = $phpRenderer->render($response, 'action/cms/dashboard.php', [
+        $response = $phpRenderer->render(response: $response, template: 'action/cms/dashboard.php', data: [
             'tasks' => [],
             'workingOn' => [],
             'workers' => [],
@@ -44,6 +45,6 @@ class BaseTest extends \DoEveryAppTest\TestBase
         ]);
         $response->getBody()->rewind();
         $body = $response->getBody()->getContents();
-        $this->assertTrue(\str_contains($body, '<img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">'));
+        $this->assertTrue(condition: \str_contains(haystack: $body, needle: '<img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">'));
     }
 }

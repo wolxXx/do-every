@@ -15,20 +15,20 @@ echo "dn port: $DB_PORT"
 git pull
 ./docker.sh
 set +e
-docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
-docker exec -it do-every-$INSTANCE-php83-web bash -c "rm -rf cache/doctrine*"
+docker exec -it do-every-$INSTANCE-web bash -c "rm /tmp/__CG__*"
+docker exec -it do-every-$INSTANCE-web bash -c "rm -rf cache/doctrine*"
 set -e
-docker-compose up --build -d
-docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar install"
-docker exec -it do-every-$INSTANCE-php83-web bash -c "./install.sh"
-docker exec -it do-every-$INSTANCE-php83-web bash -c "php composer.phar dbFull"
+docker compose up --build -d
+docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar install"
+docker exec -it do-every-$INSTANCE-web bash -c "./install.sh"
+docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar dbFull"
 set +e
-docker exec -it do-every-$INSTANCE-php83-web bash -c "rm /tmp/__CG__*"
-docker exec -it do-every-$INSTANCE-php83-web bash -c "echo '' > app.log"
-docker stop do-every-$INSTANCE-php83-ofelia
-docker rm do-every-$INSTANCE-php83-ofelia
+docker exec -it do-every-$INSTANCE-web bash -c "rm /tmp/__CG__*"
+docker exec -it do-every-$INSTANCE-web bash -c "echo '' > app.log"
+docker stop do-every-$INSTANCE-ofelia
+docker rm do-every-$INSTANCE-ofelia
 set -e
-docker-compose up --build -d
+docker compose up --build -d
 
 echo ""
 echo "done!"

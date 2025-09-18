@@ -32,6 +32,9 @@ declare(strict_types=1);
             <th>
                 <?= $translator->value() ?>
             </th>
+            <th>
+                <?= $translator->actions() ?>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +43,7 @@ declare(strict_types=1);
                 <?= $translator->fillTimeLineQuestion() ?>
             </td>
             <td>
-                <?= \DoEveryApp\Util\View\Boolean::get(\DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
             </td>
         </tr>
         <tr>
@@ -57,6 +60,34 @@ declare(strict_types=1);
             </td>
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->useTimer() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->davEnabled() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: null !== \DoEveryApp\Util\Registry::getInstance()->getDavUser()) ?>
+            </td>
+            <td>
+                <a href="<?= \DoEveryApp\Action\Cms\DisableDavAction::getRoute() ?>">
+                    delete
+                </a>
+                <a href="<?= \DoEveryApp\Action\Cms\ResetDavAction::getRoute() ?>">
+                    reset
+                </a>
+                <br />
+                <?= $translator->davUser() ?>: <?= \DoEveryApp\Util\Registry::getInstance()->getDavUser() ?><br />
+                <?= $translator->davPassword() ?>: <?= \DoEveryApp\Util\Registry::getInstance()->getDavPassword() ?><br />
+                <?= $translator->davUrl() ?>: <?= $_SERVER['REQUEST_SCHEME'] ?>://<?= $_SERVER['HTTP_HOST'] ?><?= \DoEveryApp\Action\Task\CalendarAction::getRoute() ?><br />
             </td>
         </tr>
     </tbody>

@@ -15,29 +15,27 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getForWorker(\DoEveryApp\Entity\Worker $worker): array
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
-            ->orderBy('n.createdAt', 'DESC')
+            ->setParameter(key: 'worker', value: $worker)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
     }
 
-
     public function getLastForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Notification
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
-            ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(1)
+            ->setParameter(key: 'worker', value: $worker)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
+            ->setMaxResults(maxResults: 1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Notification[]
@@ -45,17 +43,16 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): array
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
+            ->setParameter(key: 'worker', value: $worker)
             ->andWhere('n.task = :task')
-            ->setParameter('task', $task)
-            ->orderBy('n.createdAt', 'DESC')
+            ->setParameter(key: 'task', value: $task)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Notification[]
@@ -63,55 +60,51 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function getLastForWorkerAndTask(\DoEveryApp\Entity\Worker $worker, \DoEveryApp\Entity\Task $task): ?\DoEveryApp\Entity\Notification
     {
         return $this
-            ->createQueryBuilder('n')
+            ->createQueryBuilder(alias: 'n')
             ->andWhere('n.worker = :worker')
-            ->setParameter('worker', $worker)
+            ->setParameter(key: 'worker', value: $worker)
             ->andWhere('n.task = :task')
-            ->setParameter('task', $task)
-            ->orderBy('n.createdAt', 'DESC')
-            ->setMaxResults(1)
+            ->setParameter(key: 'task', value: $task)
+            ->orderBy(sort: 'n.createdAt', order: 'DESC')
+            ->setMaxResults(maxResults: 1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
 
-
     public function create(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function delete(\DoEveryApp\Entity\Notification $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -125,7 +118,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Notification[]
      */
@@ -133,7 +125,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -147,7 +138,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

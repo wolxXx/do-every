@@ -11,59 +11,57 @@ class BackupRotation
         $now = \Carbon\Carbon::now();
         \DoEveryApp\Util\DependencyContainer::getInstance()
                                             ->getLogger()
-                                            ->debug('backup rotation')
+                                            ->debug(message: 'backup rotation')
         ;
         $path      = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
-        $Directory = new \RecursiveDirectoryIterator($path);
-        $Iterator  = new \RecursiveIteratorIterator($Directory);
-        $Regex     = new \RegexIterator($Iterator, '/^.+\.sql/i', \RegexIterator::GET_MATCH);
+        $Directory = new \RecursiveDirectoryIterator(directory: $path);
+        $Iterator  = new \RecursiveIteratorIterator(iterator: $Directory);
+        $Regex     = new \RegexIterator(iterator: $Iterator, pattern: '/^.+\.sql/i', mode: \RegexIterator::GET_MATCH);
         foreach ($Regex as $files) {
             foreach ($files as $file) {
-                $realPath     = \realpath($file);
-                $fileName     = basename($realPath);
-                $filename     = \str_replace(['backup_', '.sql', '_'], ['', '', ' '], $fileName);
-                $split        = explode(' ', $filename);
-                $filename     = $split[0] . ' ' . \str_replace('-', ':', $split[1]);
-                $creationDate = \Carbon\Carbon::create($filename);
+                $realPath     = \realpath(path: $file);
+                $fileName     = basename(path: $realPath);
+                $filename     = \str_replace(search: ['backup_', '.sql', '_'], replace: ['', '', ' '], subject: $fileName);
+                $split        = explode(separator: ' ', string: $filename);
+                $filename     = $split[0] . ' ' . \str_replace(search: '-', replace: ':', subject: $split[1]);
+                $creationDate = \Carbon\Carbon::create(year: $filename);
                 $diff         = $creationDate->diff($now, true, ['y', 'm'])->d;
                 if ($diff >= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays()) {
-                    if (false === \unlink($realPath)) {
+                    if (false === \unlink(filename: $realPath)) {
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getLogger()
-                                                            ->error('Failed to delete backup file: ' . $realPath)
+                                                            ->error(message: 'Failed to delete backup file: ' . $realPath)
                         ;
                     }
                 }
             }
         }
-        $this->deleteEmptyDirectories($path);
+        $this->deleteEmptyDirectories(path: $path);
     }
-
 
     protected function deleteEmptyDirectories($path): void
     {
-        $fileCount = $this->countFiles($path);
+        $fileCount = $this->countFiles(path: $path);
         if (0 === $fileCount) {
-            if (false === \rmdir($path)) {
+            if (false === \rmdir(directory: $path)) {
                 \DoEveryApp\Util\DependencyContainer::getInstance()
                                                     ->getLogger()
-                                                    ->error('Failed to delete empty directory: ' . $path)
+                                                    ->error(message: 'Failed to delete empty directory: ' . $path)
                 ;
             }
 
             return;
         }
-        foreach (\scandir($path) as $childPath) {
+        foreach (\scandir(directory: $path) as $childPath) {
             if ('.' === $childPath || '..' === $childPath) {
                 continue;
             }
             $childPath = $path . $childPath;
-            if (true === \is_dir($childPath)) {
-                $this->deleteEmptyDirectories($childPath . \DIRECTORY_SEPARATOR);
+            if (true === \is_dir(filename: $childPath)) {
+                $this->deleteEmptyDirectories(path: $childPath . \DIRECTORY_SEPARATOR);
             }
         }
     }
-
 
     protected function countFiles($path): int
     {
@@ -71,7 +69,7 @@ class BackupRotation
          * @var \SplFileInfo $pathToScan
          */
         $count        = 0;
-        $pathIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        $pathIterator = new \RecursiveIteratorIterator(iterator: new \RecursiveDirectoryIterator(directory: $path));
         foreach ($pathIterator as $pathToScan) {
             if (false === $pathToScan->isDir()) {
                 $count++;
@@ -81,7 +79,7 @@ class BackupRotation
             if ('.' === $basename || '..' === $basename) {
                 continue;
             }
-            $count += $this->countFiles($pathToScan->getRealPath());
+            $count += $this->countFiles(path: $pathToScan->getRealPath());
         }
 
         return $count;

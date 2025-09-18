@@ -9,14 +9,14 @@ class Creator
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Execution
     {
         $execution = (new \DoEveryApp\Entity\Execution())
-            ->setTask($bag->getTask())
-            ->setWorker($bag->getWorker())
-            ->setDate($bag->getDate())
-            ->setNote($bag->getNote())
-            ->setDuration($bag->getDuration())
+            ->setTask(task: $bag->getTask())
+            ->setWorker(worker: $bag->getWorker())
+            ->setDate(date: $bag->getDate())
+            ->setNote(note: $bag->getNote())
+            ->setDuration(duration: $bag->getDuration())
         ;
 
-        $execution::getRepository()->create($execution);
+        $execution::getRepository()->create(entity: $execution);
 
         return $execution;
     }

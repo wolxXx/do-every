@@ -15,10 +15,9 @@ class Debugger
         die('die debug called. stopping here...' . PHP_EOL);
     }
 
-
     public static function debug(...$debug): void
     {
-        $backtrace = debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT);
+        $backtrace = debug_backtrace(options: \DEBUG_BACKTRACE_PROVIDE_OBJECT);
         $trace     = $backtrace[0];
         if (__FILE__ === $trace['file']) {
             $trace = $backtrace[1];
@@ -33,18 +32,17 @@ class Debugger
             $post = '</pre>';
             $last = '</div>';
         }
-        $text = 'debug from ' . (str_replace(getcwd(), '', $file)) . ' line ' . $line . ':' . PHP_EOL;
+        $text = 'debug from ' . (str_replace(search: getcwd(), replace: '', subject: $file)) . ' line ' . $line . ':' . PHP_EOL;
         echo sprintf('%s%s%s', $pre, $text, $post);
         foreach (func_get_args() as $arg) {
-            var_dump($arg);
+            var_dump(value: $arg);
             echo PHP_EOL;
             echo PHP_EOL;
             echo '<hr>';
-            print_r($arg);
+            print_r(value: $arg);
         }
         echo $last;
     }
-
 
     public static function isCli(): bool
     {

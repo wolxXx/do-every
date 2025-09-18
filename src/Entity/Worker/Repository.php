@@ -9,18 +9,15 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
-
     public function findOneByPasswordResetToken(string $token): ?\DoEveryApp\Entity\Worker
     {
-        return $this->findOneBy(['passwordResetToken' => $token]);
+        return $this->findOneBy(criteria: ['passwordResetToken' => $token]);
     }
-
 
     public function findOneByEmail(string $email): ?\DoEveryApp\Entity\Worker
     {
-        return $this->findOneBy(['email' => $email]);
+        return $this->findOneBy(criteria: ['email' => $email]);
     }
-
 
     /**
      * @return \DoEveryApp\Entity\Worker[]
@@ -28,50 +25,46 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function findIndexed(): array
     {
         return $this
-            ->createQueryBuilder('w')
-            ->orderBy('w.name', 'ASC')
+            ->createQueryBuilder(alias: 'w')
+            ->orderBy(sort: 'w.name', order: 'ASC')
             ->getQuery()
             ->execute()
         ;
     }
 
-
     public function create(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
-            ->onCreateTS($entity)
-            ->onCreate($entity)
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function update(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
-            ->onUpdate($entity)
-            ->onUpdateTS($entity)
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
             ->getEntityManager()
-            ->persist($entity)
+            ->persist(object: $entity)
         ;
 
         return $this;
     }
-
 
     public function delete(\DoEveryApp\Entity\Worker $entity): static
     {
         $this
             ->getEntityManager()
-            ->remove($entity)
+            ->remove(object: $entity)
         ;
 
         return $this;
     }
-
 
     /**
      * @param mixed          $id
@@ -85,7 +78,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
         return parent::find($id, $lockMode, $lockVersion);
     }
 
-
     /**
      * @return \DoEveryApp\Entity\Worker[]
      */
@@ -93,7 +85,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findAll();
     }
-
 
     /**
      * @param array      $criteria
@@ -107,7 +98,6 @@ class Repository extends \Doctrine\ORM\EntityRepository
     {
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
-
 
     /**
      * @param array        $criteria

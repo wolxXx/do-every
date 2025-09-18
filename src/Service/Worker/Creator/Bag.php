@@ -18,12 +18,10 @@ class Bag
 
     protected bool    $notifyLogins = false;
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -32,12 +30,10 @@ class Bag
         return $this;
     }
 
-
     public function isAdmin(): bool
     {
         return $this->admin;
     }
-
 
     public function setIsAdmin(bool $admin): static
     {
@@ -46,12 +42,10 @@ class Bag
         return $this;
     }
 
-
     public function getEmail(): ?string
     {
         return $this->email;
     }
-
 
     public function setEmail(?string $email): static
     {
@@ -60,12 +54,10 @@ class Bag
         return $this;
     }
 
-
     public function getPassword(): ?string
     {
         return $this->password;
     }
-
 
     public function setHashedPassword(string $password): static
     {
@@ -74,20 +66,17 @@ class Bag
         return $this;
     }
 
-
     public function setPassword(?string $password): static
     {
-        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash($password);
+        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash(password: $password);
 
         return $this;
     }
-
 
     public function doNotify(): bool
     {
         return $this->notify;
     }
-
 
     public function enableNotifications(bool $notify): static
     {
@@ -96,12 +85,10 @@ class Bag
         return $this;
     }
 
-
     public function doNotifyLogins(): bool
     {
         return $this->notifyLogins;
     }
-
 
     public function enableLoginNotifications(bool $notifyLogins): static
     {

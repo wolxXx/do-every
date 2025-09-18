@@ -8,9 +8,9 @@ trait Worker
 {
     public function getWorker(string $argumentName = 'id'): \Psr\Http\Message\ResponseInterface|\DoEveryApp\Entity\Worker
     {
-        $worker = \DoEveryApp\Entity\Worker::getRepository()->find($this->getArgumentSafe($argumentName));
+        $worker = \DoEveryApp\Entity\Worker::getRepository()->find(id: $this->getArgumentSafe($argumentName));
         if (false === $worker instanceof \DoEveryApp\Entity\Worker) {
-            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->workerNotFound());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->workerNotFound());
 
             return $this->redirect(\DoEveryApp\Action\Cms\IndexAction::getRoute());
         }

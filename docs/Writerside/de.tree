@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="de"
+                 name="Do Every*"
+                 start-page="Welcome.topic">
+
+    <toc-element topic="Welcome.topic"/>
+    <toc-element topic="do-foo.topic">
+    </toc-element>
+    <toc-element topic="how-to-install.topic"/>
+    <toc-element toc-title="New Section">
+        <toc-element topic="jajaja.topic"/>
+    </toc-element>
+    <toc-element topic="first-use.topic"/>
+</instance-profile>

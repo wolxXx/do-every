@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace DoEveryApp\Entity\Execution;
@@ -26,7 +25,6 @@ class CheckListItem
 
     public const string TABLE_NAME = 'task_execution_check_list_item';
 
-
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Execution::class
     )]
@@ -35,7 +33,6 @@ class CheckListItem
         onDelete: 'CASCADE'
     )]
     protected \DoEveryApp\Entity\Execution $execution;
-
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task\CheckListItem::class
@@ -63,14 +60,12 @@ class CheckListItem
     )]
     protected string                                 $name;
 
-
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'note',
         type    : \Doctrine\DBAL\Types\Types::TEXT,
         nullable: true
     )]
     protected ?string $note = null;
-
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'checked',
@@ -82,18 +77,15 @@ class CheckListItem
     )]
     protected bool $checked = false;
 
-
     public static function getRepository(): CheckListItem\Repository
     {
         return static::getRepositoryByClassName();
     }
 
-
     public function getExecution(): \DoEveryApp\Entity\Execution
     {
         return $this->execution;
     }
-
 
     public function setExecution(\DoEveryApp\Entity\Execution $execution): static
     {
@@ -102,12 +94,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getCheckListItem(): ?\DoEveryApp\Entity\Task\CheckListItem
     {
         return $this->checkListItem;
     }
-
 
     public function setCheckListItem(?\DoEveryApp\Entity\Task\CheckListItem $checkListItem): static
     {
@@ -116,12 +106,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getPosition(): int
     {
         return $this->position;
     }
-
 
     public function setPosition(int $position): static
     {
@@ -130,12 +118,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getName(): string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): static
     {
@@ -144,12 +130,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function getNote(): ?string
     {
         return $this->note;
     }
-
 
     public function setNote(?string $note): static
     {
@@ -158,12 +142,10 @@ class CheckListItem
         return $this;
     }
 
-
     public function isChecked(): bool
     {
         return $this->checked;
     }
-
 
     public function setChecked(bool $checked): static
     {

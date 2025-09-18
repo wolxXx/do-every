@@ -13,19 +13,19 @@ namespace DoEveryApp\Action\Worker;
 class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\Worker;
+
     public static function getRoute(int $id, bool $admin = true): string
     {
-        $reflection = new \ReflectionClass(__CLASS__);
-        foreach ($reflection->getAttributes(\DoEveryApp\Attribute\Action\Route::class) as $attribute) {
+        $reflection = new \ReflectionClass(objectOrClass: __CLASS__);
+        foreach ($reflection->getAttributes(name: \DoEveryApp\Attribute\Action\Route::class) as $attribute) {
             $route = '/worker/admin/' . $id;
             $route .= '/' . ($admin ? '1' : '0');
 
             return $route;
         }
 
-        throw new \RuntimeException('Could not determine route path');
+        throw new \RuntimeException(message: 'Could not determine route path');
     }
-
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
@@ -33,18 +33,18 @@ class MarkAdminAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
         if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
-            \DoEveryApp\Util\FlashMessenger::addDanger($this->translator->itIsYou());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->itIsYou());
 
-            return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+            return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
-        $worker->setIsAdmin('1' === $this->getArgumentSafe('admin'));
-        $worker::getRepository()->update($worker);
+        $worker->setIsAdmin(admin: '1' === $this->getArgumentSafe(argumentName: 'admin'));
+        $worker::getRepository()->update(entity: $worker);
         $this
             ->entityManager
             ->flush()
         ;
-        \DoEveryApp\Util\FlashMessenger::addSuccess($this->translator->setAdminFlag());
+        \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->setAdminFlag());
 
-        return $this->redirect(\DoEveryApp\Action\Worker\IndexAction::getRoute());
+        return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
     }
 }

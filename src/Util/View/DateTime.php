@@ -12,19 +12,17 @@ class DateTime
             return '-';
         }
 
-        return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE)->format($dateTime) . '</nobr>';
+        return '<nobr>' . \IntlDateFormatter::create(locale: \DoEveryApp\Util\User\Current::getLocale(), dateType: \IntlDateFormatter::MEDIUM, timeType: \IntlDateFormatter::NONE)->format(datetime: $dateTime) . '</nobr>';
     }
 
-
-    public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime): string
+    public static function getDateTimeMediumDateMediumTime(?\DateTime $dateTime, ?string $emptyValue = null): string
     {
         if (null === $dateTime) {
-            return '-';
+            return $emptyValue ??'-';
         }
 
-        return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::MEDIUM)->format($dateTime) . '</nobr>';
+        return '<nobr>' . \IntlDateFormatter::create(locale: \DoEveryApp\Util\User\Current::getLocale(),  dateType: \IntlDateFormatter::MEDIUM,  timeType: \IntlDateFormatter::MEDIUM)->format(datetime: $dateTime) . '</nobr>';
     }
-
 
     public static function getDateTimeMediumDateShortTime(?\DateTime $dateTime): string
     {
@@ -32,6 +30,6 @@ class DateTime
             return '-';
         }
 
-        return '<nobr>' . \IntlDateFormatter::create(\DoEveryApp\Util\User\Current::getLocale(), \IntlDateFormatter::RELATIVE_MEDIUM, \IntlDateFormatter::SHORT)->format($dateTime) . '</nobr>';
+        return '<nobr>' . \IntlDateFormatter::create(locale: \DoEveryApp\Util\User\Current::getLocale(), dateType: \IntlDateFormatter::RELATIVE_MEDIUM, timeType: \IntlDateFormatter::SHORT)->format($dateTime) . '</nobr>';
     }
 }

@@ -11,54 +11,54 @@ declare(strict_types=1);
  * @var \DoEveryApp\Util\Translator    $translator
  */
 $menuItem = (new \DoEveryApp\Util\View\MenuItem())
-    ->setCurrentRoute($currentRoute)
-    ->setCurrentRoutePattern($currentRoutePattern)
+    ->setCurrentRoute(currentRoute: $currentRoute)
+    ->setCurrentRoutePattern(currentRoutePattern: $currentRoutePattern)
 ;
 ?>
 <ul>
 
-    <? if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+    <?php if (false === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Cms\IndexAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Cms\IndexAction::getRoutePattern(),
                               ])
-            ->setName('Start')
+            ->setName(name: 'Start')
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Auth\LoginAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Auth\LoginAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Auth\LoginAction::getRoutePattern(),
                               ])
-            ->setName('einloggen')
+            ->setName(name: 'einloggen')
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Auth\RequirePasswordResetTokenAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Auth\RequirePasswordResetTokenAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Auth\RequirePasswordResetTokenAction::getRoutePattern(),
                               ])
-            ->setName('Passwort vergessen')
+            ->setName(name: 'Passwort vergessen')
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoutePattern(),
                               ])
-            ->setName('Code eingeben')
+            ->setName(name: 'Code eingeben')
         ?>
-    <? endif ?>
+    <?php endif ?>
 
-    <? if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
+    <?php if (true === \DoEveryApp\Util\User\Current::isAuthenticated()): ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Cms\IndexAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Cms\IndexAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Cms\IndexAction::getRoutePattern(),
                               ])
-            ->setName($translator->dashboard())
+            ->setName(name: $translator->dashboard())
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Task\IndexAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Task\IndexAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Task\IndexAction::getRoutePattern(),
                                   \DoEveryApp\Action\Task\AddAction::getRoutePattern(),
                                   \DoEveryApp\Action\Task\EditAction::getRoutePattern(),
@@ -69,55 +69,64 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                                   \DoEveryApp\Action\Group\EditAction::getRoutePattern(),
                                   \DoEveryApp\Action\Group\ShowAction::getRoutePattern(),
                               ])
-            ->setName($translator->tasks())
+            ->setName(name: $translator->tasks())
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Task\LogAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Task\LogAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Task\LogAction::getRoutePattern(),
                               ])
-            ->setName('Log')
+            ->setName(name: 'Log')
         ?>
+        <? if (true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
+            <?= $menuItem
+                ->setTarget(target: \DoEveryApp\Action\Task\Timer\IndexAction::getRoute())
+                ->setActiveRoutes(activeRoutes: [
+                                      \DoEveryApp\Action\Task\Timer\IndexAction::getRoutePattern(),
+                                  ])
+                ->setName(name: $translator->timer())
+            ?>
+        <? endif ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Worker\IndexAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Worker\IndexAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Worker\AddAction::getRoutePattern(),
                                   \DoEveryApp\Action\Worker\EditAction::getRoutePattern(),
                                   \DoEveryApp\Action\Worker\IndexAction::getRoutePattern(),
                                   \DoEveryApp\Action\Worker\LogAction::getRoutePattern(),
                                   \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoutePattern(),
                               ])
-            ->setName($translator->workers())
+            ->setName(name: $translator->workers())
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Cms\ShowSettingsAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Cms\ShowSettingsAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Cms\ShowSettingsAction::getRoutePattern(),
                                   \DoEveryApp\Action\Cms\EditSettingsAction::getRoutePattern(),
                               ])
-            ->setName($translator->settings())
+            ->setName(name: $translator->settings())
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Cms\DebugAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Cms\DebugAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Cms\DebugAction::getRoutePattern(),
                               ])
-            ->setName('debug')
+            ->setName(name: 'debug')
         ?>
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Cms\HelpAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Cms\HelpAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Cms\HelpAction::getRoutePattern(),
                               ])
-            ->setName($translator->help())
+            ->setName(name: $translator->help())
         ?>
         <hr />
         <?= $menuItem
-            ->setTarget(\DoEveryApp\Action\Auth\LogoutAction::getRoute())
-            ->setActiveRoutes([
+            ->setTarget(target: \DoEveryApp\Action\Auth\LogoutAction::getRoute())
+            ->setActiveRoutes(activeRoutes: [
                                   \DoEveryApp\Action\Auth\LogoutAction::getRoutePattern(),
                               ])
-            ->setName($translator->logout())
+            ->setName(name: $translator->logout())
         ?>
-    <? endif ?>
+    <?php endif ?>
 </ul>

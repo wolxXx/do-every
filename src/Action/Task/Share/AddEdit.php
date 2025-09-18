@@ -1,182 +1,223 @@
 <?php
 
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Task\Share;
 
-trait  AddEdit
+trait AddEdit
 {
+    public const string FORM_FIELD_CHECK_LIST_ITEM          = 'checkListItem';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_ID       = 'id';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_NAME     = 'name';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_NOTE     = 'note';
+
+    public const string FORM_FIELD_CHECK_LIST_ITEM_POSITION = 'position';
+
+    public const string FORM_FIELD_ELAPSING_CRON_TYPE       = 'elapsingCronType';
+
+    public const string FORM_FIELD_NOTE                     = 'note';
+
+    public const string FORM_FIELD_NAME                     = 'name';
+
+    public const string FORM_FIELD_ASSIGNEE                 = 'assignee';
+
+    public const string FORM_FIELD_GROUP                    = 'group';
+
+    public const string FORM_FIELD_INTERVAL_TYPE            = 'intervalType';
+
+    public const string FORM_FIELD_INTERVAL_VALUE           = 'intervalValue';
+
+    public const string FORM_FIELD_PRIORITY                 = 'priority';
+
+    public const string FORM_FIELD_ENABLE_NOTIFICATIONS     = 'enableNotifications';
 
     protected function handleCheckListItems(\DoEveryApp\Entity\Task $task, array $data): static
     {
-        foreach ($data['checkListItem'] ?? [] as $position => $item) {
-            if (null === $item['id']) {
-                $checkListItem = (new \DoEveryApp\Entity\Task\CheckListItem())
-                    ->setTask($task)
-                    ->setName($item['name'])
-                    ->setNote($item['note'])
-                    ->setPosition($position)
+        foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEM] ?? [] as $position => $item) {
+            if (null === $item[static::FORM_FIELD_CHECK_LIST_ITEM_ID]) {
+                $checkListItem = new \DoEveryApp\Entity\Task\CheckListItem()
+                    ->setTask(task: $task)
+                    ->setName(name: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NAME])
+                    ->setNote(note: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
+                    ->setPosition(position: $position)
                 ;
-                $checkListItem::getRepository()->create($checkListItem);
+                $checkListItem::getRepository()
+                              ->create(entity: $checkListItem)
+                ;
+
                 continue;
             }
-            $checkListItem = \DoEveryApp\Entity\Task\CheckListItem::getRepository()->find($item['id'])
-                                                                  ->setTask($task)
-                                                                  ->setName($item['name'])
-                                                                  ->setNote($item['note'])
-                                                                  ->setPosition($position)
+            $checkListItem = \DoEveryApp\Entity\Task\CheckListItem::getRepository()
+                                                                  ->find(id: $item[static::FORM_FIELD_CHECK_LIST_ITEM_ID])
+                                                                  ->setTask(task: $task)
+                                                                  ->setName(name: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NAME])
+                                                                  ->setNote(note: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE])
+                                                                  ->setPosition(position: $position)
             ;
-            $checkListItem::getRepository()->update($checkListItem);
+            $checkListItem::getRepository()
+                          ->update(entity: $checkListItem)
+            ;
         }
 
         return $this;
     }
 
-
     protected function filterAndValidate(array &$data): array
     {
-        $validatorCollection         = [
-            'elapsingCronType'    => [
-            ],
-            'note'                => [
-            ],
-            'name'                => [
+        $validatorCollection = [
+            static::FORM_FIELD_ELAPSING_CRON_TYPE   => [],
+            static::FORM_FIELD_NOTE                 => [],
+            static::FORM_FIELD_NAME                 => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
-            'assignee'            => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
+            static::FORM_FIELD_ASSIGNEE             => [
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function($value): void {
                     if (null === $value) {
                         return;
                     }
-                    $assignee = \DoEveryApp\Entity\Worker::getRepository()->find($value);
+                    $assignee = \DoEveryApp\Entity\Worker::getRepository()
+                                                         ->find(id: $value)
+                    ;
                     if (false === $assignee instanceof \DoEveryApp\Entity\Worker) {
-                        throw new \InvalidArgumentException('worker not found');
+                        throw new \InvalidArgumentException(message: 'worker not found');
                     }
                 }),
             ],
-            'group'               => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
+            static::FORM_FIELD_GROUP                => [
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function($value): void {
                     if (null === $value) {
                         return;
                     }
-                    $group = \DoEveryApp\Entity\Group::getRepository()->find($value);
+                    $group = \DoEveryApp\Entity\Group::getRepository()
+                                                     ->find(id: $value)
+                    ;
                     if (false === $group instanceof \DoEveryApp\Entity\Group) {
-                        throw new \InvalidArgumentException('group not found');
+                        throw new \InvalidArgumentException(message: 'group not found');
                     }
                 }),
             ],
-            'intervalType'        => [
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
+            static::FORM_FIELD_INTERVAL_TYPE        => [
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function($value): void {
                     if (null === $value) {
                         return;
                     }
-                    \DoEveryApp\Definition\IntervalType::from($value);
-                }),
-            ],
-            'intervalValue'       => [
-                new \Symfony\Component\Validator\Constraints\GreaterThan(0),
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
-                    if (null === $value) {
-                        return;
+                    if (null === \DoEveryApp\Definition\IntervalType::tryFrom(value: $value)) {
+                        throw new \InvalidArgumentException(message: 'invalid interval type');
                     }
                 }),
             ],
-            'priority'            => [
+            static::FORM_FIELD_INTERVAL_VALUE       => [
+                new \Symfony\Component\Validator\Constraints\GreaterThan(value: 0),
+            ],
+            static::FORM_FIELD_PRIORITY             => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value): void {
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function($value): void {
                     if (null === $value) {
                         return;
                     }
-                    \DoEveryApp\Definition\Priority::from($value);
+                    if (null === \DoEveryApp\Definition\Priority::tryFrom(value: $value)) {
+                        throw new \InvalidArgumentException(message: 'invalid priority');
+                    }
                 }),
             ],
-            'enableNotifications' => [
+            static::FORM_FIELD_ENABLE_NOTIFICATIONS => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
-                new \Symfony\Component\Validator\Constraints\Callback(function ($value) {
+                new \Symfony\Component\Validator\Constraints\Callback(callback: function($value) {
                     if (null === $value) {
-                        return $value;
+                        return null;
                     }
 
                     return $value === '1' || $value === '0';
                 }),
             ],
         ];
-        $data['name']                = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('name'))
+        $data[static::FORM_FIELD_NAME] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_NAME))
         ;
-        $data['note']                = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('note'))
+        $data[static::FORM_FIELD_NOTE] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_NOTE))
         ;
-        $data['assignee']            = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('assignee'))
+        $data[static::FORM_FIELD_ASSIGNEE] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_ASSIGNEE))
         ;
-        $data['group']               = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('group'))
+        $data[static::FORM_FIELD_GROUP] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_GROUP))
         ;
-        $data['intervalType']        = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('intervalType'))
+        $data[static::FORM_FIELD_INTERVAL_TYPE] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_INTERVAL_TYPE))
         ;
-        $data['intervalValue']       = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->filter($this->getFromBody('intervalValue'))
+        $data[static::FORM_FIELD_INTERVAL_VALUE] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->attach(callback: new \Laminas\Filter\ToInt())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_INTERVAL_VALUE))
         ;
-        $data['priority']            = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->attach(new \Laminas\Filter\ToNull())
-            ->attach(new \Laminas\Filter\ToInt())
-            ->filter($this->getFromBody('priority'))
+        $data[static::FORM_FIELD_PRIORITY] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->attach(callback: new \Laminas\Filter\ToInt())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PRIORITY))
         ;
-        $data['enableNotifications'] = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->filter($this->getFromBody('enableNotifications'))
+        $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_ENABLE_NOTIFICATIONS))
         ;
-        $data['elapsingCronType']    = (new \Laminas\Filter\FilterChain())
-            ->attach(new \Laminas\Filter\StringTrim())
-            ->filter($this->getFromBody('elapsingCronType'))
+        $data[static::FORM_FIELD_ELAPSING_CRON_TYPE] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_ELAPSING_CRON_TYPE))
         ;
 
-        foreach ($data['checkListItem'] ?? [] as $index => $item) {
-            $data['checkListItem'][$index]['id']                      = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item['id'] ?? '')
+        foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEM] ?? [] as $index => $item) {
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID] = new \Laminas\Filter\FilterChain()
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_ID] ?? '')
             ;
-            $data['checkListItem'][$index]['position']                = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item['position'] ?? '')
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_POSITION] = new \Laminas\Filter\FilterChain()
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_POSITION] ?? '')
             ;
-            $data['checkListItem'][$index]['name']                    = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item['name'] ?? '')
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = new \Laminas\Filter\FilterChain()
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NAME] ?? '')
             ;
-            $data['checkListItem'][$index]['note']                    = (new \Laminas\Filter\FilterChain())
-                ->attach(new \Laminas\Filter\StringTrim())
-                ->attach(new \Laminas\Filter\ToNull())
-                ->filter($item['note'] ?? '')
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = new \Laminas\Filter\FilterChain()
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $item[static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] ?? '')
             ;
-            $validatorCollection['checkListItem']                     = [];
-            $data['checkListItem_' . $index . '_name']                = $data['checkListItem'][$index]['name'];
-            $validatorCollection['checkListItem_' . $index . '_name'] = [
+
+            $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM] = [];
+
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NAME];
+            $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
+                new \Symfony\Component\Validator\Constraints\Length(max: 20),
+            ];
+
+            $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE];
+            $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = [
+                new \Symfony\Component\Validator\Constraints\Length(max: 200),
             ];
         }
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection($validatorCollection);
-        $this->validate($data, $validators);
+        $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: $validatorCollection);
+        $this->validate(data: $data, validators: $validators);
 
         return $data;
     }

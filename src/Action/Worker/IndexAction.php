@@ -16,6 +16,6 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        return $this->render('action/worker/index');
+        return $this->render(script: 'action/worker/index');
     }
 }
