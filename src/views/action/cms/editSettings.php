@@ -15,17 +15,7 @@ declare(strict_types=1);
  * @var array $data
  */
 ?>
-<script src="/vendor/completer.js"></script>
-<script>
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const conf = new AutocompleteConfiguration()
-        conf.setElement(document.getElementById('fillTimeLine'))
-        new Autocomplete(conf)
-    });
-
-
-</script>
 <h1>
     <?= $translator->editSettings() ?>
 </h1>

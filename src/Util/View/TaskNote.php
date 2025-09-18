@@ -17,8 +17,14 @@ class TaskNote
             return '';
         }
 
-        $note       = nl2br(string: \DoEveryApp\Util\View\Escaper::escape(value: $note));
-        $noteLegend = \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->notice();
+        $note       = new \FastVolt\Helper\Markdown(sanitize: true)
+            ->setContent($note)
+            ->toHtml()
+        ;
+        $noteLegend = \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                          ->getTranslator()
+                                                          ->notice()
+        ;
 
         return '<fieldset class="taskNote"><legend>' . $noteLegend . '</legend>' . $note . '</fieldset>';
     }

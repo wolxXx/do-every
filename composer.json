@@ -90,6 +90,7 @@
     "endroid/qr-code": "*",
     "ergebnis/phpunit-slow-test-detector": "*",
     "fakerphp/faker": "*",
+    "fastvolt/markdown": "*",
     "fortawesome/font-awesome": "*",
     "friendsofphp/php-cs-fixer": "*",
     "gedmo/doctrine-extensions": "*",
