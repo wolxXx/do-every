@@ -424,7 +424,7 @@ final class Registry
     {
         return $this
             ->getRow(key: self::KEY_MARKDOWN_TRANSFORMER_ACTIVE)
-            ->getBoolValue();
+            ?->getBoolValue() ?: false;
     }
 
     public function setMarkdownTransformerActive(bool $active): static
