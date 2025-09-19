@@ -1,44 +1,48 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util;
 
 final class Registry
 {
-    public const string KEY_ADMIN_USER        = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
+    public const string KEY_ADMIN_USER                  = '7e0b853b-7e45-4e17-9458-89803fcd2c1e';
 
-    public const string KEY_CRON_LOCK         = '84c29c0a-cbd9-4bc6-8532-feb785f4c59d';
+    public const string KEY_CRON_LOCK                   = '84c29c0a-cbd9-4bc6-8532-feb785f4c59d';
 
-    public const string KEY_CRON_STARTED      = '05226812-dcf8-4e36-89ac-1dccc3e06047';
+    public const string KEY_CRON_STARTED                = '05226812-dcf8-4e36-89ac-1dccc3e06047';
 
-    public const string KEY_FILL_TIME_LINE    = '49a4421b-b6f4-458e-a7cd-5253a78305db';
+    public const string KEY_FILL_TIME_LINE              = '49a4421b-b6f4-458e-a7cd-5253a78305db';
 
-    public const string KEY_KEEP_BACKUP_DAYS  = 'fbc976e8-629c-4f49-b17c-88a82482def3';
+    public const string KEY_KEEP_BACKUP_DAYS            = 'fbc976e8-629c-4f49-b17c-88a82482def3';
 
-    public const string KEY_LAST_BACKUP       = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
+    public const string KEY_LAST_BACKUP                 = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
 
-    public const string KEY_LAST_CRON         = '449b1579-5540-4d06-b076-dfcfea73ff3c';
+    public const string KEY_LAST_CRON                   = '449b1579-5540-4d06-b076-dfcfea73ff3c';
 
-    public const string KEY_MAX_GROUPS        = 'e15e9173-2776-4848-9419-0dfc0112db62';
+    public const string KEY_MAX_GROUPS                  = 'e15e9173-2776-4848-9419-0dfc0112db62';
 
-    public const string KEY_MAX_TASKS         = 'd5a3211d-7e3f-4db8-98f0-339036409289';
+    public const string KEY_MAX_TASKS                   = 'd5a3211d-7e3f-4db8-98f0-339036409289';
 
-    public const string KEY_MAX_WORKERS       = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
+    public const string KEY_MAX_WORKERS                 = '0e18481e-767b-41c7-b74a-31b4ffc6bc01';
 
-    public const string KEY_PRECISION_DUE     = '902069d4-7b4a-4c04-9af5-0d1432ac105d';
+    public const string KEY_PRECISION_DUE               = '902069d4-7b4a-4c04-9af5-0d1432ac105d';
 
-    public const string KEY_NOTIFIER_RUNNING  = 'bd0f21dd-da3c-4986-b660-51c47edf6eeb';
+    public const string KEY_NOTIFIER_RUNNING            = 'bd0f21dd-da3c-4986-b660-51c47edf6eeb';
 
-    public const string KEY_NOTIFIER_LAST_RUN = '4cf10630-b664-43cd-9693-0effe0934844';
+    public const string KEY_NOTIFIER_LAST_RUN           = '4cf10630-b664-43cd-9693-0effe0934844';
 
-    public const string KEY_USE_TIMER         = 'cd72b7ae-af93-4b88-8404-680c76f90b9b';
-    public const string KEY_DAV_USER          = 'a92e3013-54c6-449c-a977-4850b34a9474';
-    public const string KEY_DAV_PASSWORD      = '52ea3f65-81f2-4347-86b9-5a9fce56cfdd';
+    public const string KEY_USE_TIMER                   = 'cd72b7ae-af93-4b88-8404-680c76f90b9b';
+
+    public const string KEY_DAV_USER                    = 'a92e3013-54c6-449c-a977-4850b34a9474';
+
+    public const string KEY_DAV_PASSWORD                = '52ea3f65-81f2-4347-86b9-5a9fce56cfdd';
+
+    public const string KEY_MARKDOWN_TRANSFORMER_ACTIVE = '941dd2a5-b648-4ce1-9403-cc88b8a22793';
 
     private static Registry $instance;
 
-    private array $map = [];
+    private array           $map = [];
 
 
     public static function getInstance(): static
@@ -54,7 +58,8 @@ final class Registry
     final private function __construct()
     {
         $this->map = [];
-        foreach (\DoEveryApp\Entity\Registry::getRepository()->findAll() as $registry) {
+        foreach (\DoEveryApp\Entity\Registry::getRepository()
+                                            ->findAll() as $registry) {
             $this->map[$registry->getKey()] = $registry;
         }
     }
@@ -62,8 +67,10 @@ final class Registry
 
     private function getRow(string $key): ?\DoEveryApp\Entity\Registry
     {
-        if (false === \array_key_exists(key: $key, array: $this->map, )) {
-            $registry = \DoEveryApp\Entity\Registry::getRepository()->getByKey(key: $key, );
+        if (false === \array_key_exists(key: $key, array: $this->map)) {
+            $registry        = \DoEveryApp\Entity\Registry::getRepository()
+                                                          ->getByKey(key: $key)
+            ;
             $this->map[$key] = $registry;
 
             return $registry;
@@ -82,10 +89,11 @@ final class Registry
     private function getOrCreateRow(string $key): \DoEveryApp\Entity\Registry
     {
         if (false === $this->rowExists(key: $key)) {
-            $registry = (new \DoEveryApp\Entity\Registry())
-                ->setKey(key: $key)
+            \DoEveryApp\Entity\Registry::getRepository()
+                                       ->create(entity: $registry = new \DoEveryApp\Entity\Registry()
+                                           ->setKey(key: $key)
+                                       )
             ;
-            $registry::getRepository()->create(entity: $registry);
 
             return $registry;
         }
@@ -96,7 +104,9 @@ final class Registry
 
     private function updateRow(\DoEveryApp\Entity\Registry $registry): static
     {
-        $registry::getRepository()->update(entity: $registry);
+        $registry::getRepository()
+                 ->update(entity: $registry)
+        ;
         DependencyContainer::getInstance()
                            ->getEntityManager()
                            ->flush()
@@ -119,8 +129,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_ADMIN_USER)
-                ->setWorkerCascade(workerCascade: $worker)
+                          ->getOrCreateRow(key: self::KEY_ADMIN_USER)
+                          ->setWorkerCascade(workerCascade: $worker),
         );
     }
 
@@ -140,8 +150,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_LAST_CRON)
-                ->setDateValue(dateValue: $lastCron)
+                          ->getOrCreateRow(key: self::KEY_LAST_CRON)
+                          ->setDateValue(dateValue: $lastCron),
         );
     }
 
@@ -159,8 +169,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_CRON_STARTED)
-                ->setDateValue(dateValue: $cronStarted)
+                          ->getOrCreateRow(key: self::KEY_CRON_STARTED)
+                          ->setDateValue(dateValue: $cronStarted),
         );
     }
 
@@ -178,8 +188,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_CRON_LOCK)
-                ->setBoolValue(boolValue: $cronRunning)
+                          ->getOrCreateRow(key: self::KEY_CRON_LOCK)
+                          ->setBoolValue(boolValue: $cronRunning),
         );
     }
 
@@ -197,8 +207,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_NOTIFIER_RUNNING)
-                ->setBoolValue(boolValue: $notifierRunning)
+                          ->getOrCreateRow(key: self::KEY_NOTIFIER_RUNNING)
+                          ->setBoolValue(boolValue: $notifierRunning),
         );
     }
 
@@ -216,8 +226,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_NOTIFIER_LAST_RUN)
-                ->setDateValue(dateValue: $notifierLastRun)
+                          ->getOrCreateRow(key: self::KEY_NOTIFIER_LAST_RUN)
+                          ->setDateValue(dateValue: $notifierLastRun),
         );
     }
 
@@ -238,8 +248,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_KEEP_BACKUP_DAYS)
-                ->setIntValue(intValue: $days)
+                          ->getOrCreateRow(key: self::KEY_KEEP_BACKUP_DAYS)
+                          ->setIntValue(intValue: $days),
         );
     }
 
@@ -257,8 +267,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_LAST_BACKUP)
-                ->setDateValue(dateValue: $lastBackup)
+                          ->getOrCreateRow(key: self::KEY_LAST_BACKUP)
+                          ->setDateValue(dateValue: $lastBackup),
         );
     }
 
@@ -276,8 +286,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_MAX_WORKERS)
-                ->setIntValue(intValue: $maxWorkers)
+                          ->getOrCreateRow(key: self::KEY_MAX_WORKERS)
+                          ->setIntValue(intValue: $maxWorkers),
         );
     }
 
@@ -295,8 +305,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_MAX_TASKS)
-                ->setIntValue(intValue: $maxTasks)
+                          ->getOrCreateRow(key: self::KEY_MAX_TASKS)
+                          ->setIntValue(intValue: $maxTasks),
         );
     }
 
@@ -314,8 +324,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_MAX_GROUPS)
-                ->setIntValue(intValue: $maxGroups)
+                          ->getOrCreateRow(key: self::KEY_MAX_GROUPS)
+                          ->setIntValue(intValue: $maxGroups),
         );
     }
 
@@ -333,8 +343,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_PRECISION_DUE)
-                ->setIntValue(intValue: $precisionDue)
+                          ->getOrCreateRow(key: self::KEY_PRECISION_DUE)
+                          ->setIntValue(intValue: $precisionDue),
         );
     }
 
@@ -352,8 +362,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_FILL_TIME_LINE)
-                ->setBoolValue(boolValue: $fillTimeLine)
+                          ->getOrCreateRow(key: self::KEY_FILL_TIME_LINE)
+                          ->setBoolValue(boolValue: $fillTimeLine),
         );
     }
 
@@ -361,10 +371,9 @@ final class Registry
     public function doUseTimer(): bool
     {
         return $this
-                ->getRow(key: self::KEY_USE_TIMER)
-                ?->getBoolValue()
-                ?: false
-        ;
+            ->getRow(key: self::KEY_USE_TIMER)
+            ?->getBoolValue()
+            ?: false;
     }
 
 
@@ -373,7 +382,7 @@ final class Registry
         return $this->updateRow(
             registry: $this
                           ->getOrCreateRow(key: self::KEY_USE_TIMER)
-                          ->setBoolValue(boolValue: $useTimer)
+                          ->setBoolValue(boolValue: $useTimer),
         );
     }
 
@@ -389,8 +398,8 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_DAV_USER)
-                ->setStringValue(stringValue: $davUser)
+                          ->getOrCreateRow(key: self::KEY_DAV_USER)
+                          ->setStringValue(stringValue: $davUser),
         );
     }
 
@@ -406,8 +415,24 @@ final class Registry
     {
         return $this->updateRow(
             registry: $this
-                ->getOrCreateRow(key: self::KEY_DAV_PASSWORD)
-                ->setStringValue(stringValue: $davPassword)
+                          ->getOrCreateRow(key: self::KEY_DAV_PASSWORD)
+                          ->setStringValue(stringValue: $davPassword),
+        );
+    }
+
+    public function isMarkdownTransformerActive(): bool
+    {
+        return $this
+            ->getRow(key: self::KEY_MARKDOWN_TRANSFORMER_ACTIVE)
+            ->getBoolValue();
+    }
+
+    public function setMarkdownTransformerActive(bool $active): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_MARKDOWN_TRANSFORMER_ACTIVE)
+                          ->setBoolValue(boolValue: $active),
         );
     }
 }

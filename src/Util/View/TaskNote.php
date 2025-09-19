@@ -17,10 +17,12 @@ class TaskNote
             return '';
         }
 
-        $note       = new \FastVolt\Helper\Markdown(sanitize: true)
-            ->setContent($note)
-            ->toHtml()
-        ;
+        if (true === \DoEveryApp\Util\Registry::getInstance()->isMarkdownTransformerActive()) {
+            $note = new \FastVolt\Helper\Markdown(sanitize: true)
+                ->setContent($note)
+                ->toHtml()
+            ;
+        }
         $noteLegend = \DoEveryApp\Util\DependencyContainer::getInstance()
                                                           ->getTranslator()
                                                           ->notice()

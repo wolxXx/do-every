@@ -107,6 +107,28 @@ declare(strict_types=1);
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="column">
+            <div>
+                <label for="markdownEnabled">
+                    <?= $translator->markdownTransformationEnabled() ?>
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED ?>" id="markdownEnabled">
+                    <option <?= array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED, array: $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED] == '1' ? 'selected' : '' ?>  value="1">
+                        <?= $translator->yes() ?>
+                    </option>
+                    <option <?=  false === array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED, array: $data) || $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED] == '0' ? 'selected' : '' ?>  value="0">
+                        <?= $translator->no() ?>
+                    </option>
+                </select>
+                <div class="errors">
+                    <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED) as $error): ?>
+                        <?= $error ?><br/>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="form-footer">
         <button type="submit" class="primaryButton">

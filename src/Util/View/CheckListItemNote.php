@@ -22,10 +22,12 @@ class CheckListItemNote
             return '';
         }
 
-        $note = new \FastVolt\Helper\Markdown(sanitize: true)
-            ->setContent($note)
-            ->toHtml()
+        if (true === \DoEveryApp\Util\Registry::getInstance()->isMarkdownTransformerActive()) {
+            $note = new \FastVolt\Helper\Markdown(sanitize: true)
+                ->setContent($note)
+                ->toHtml()
             ;
+        }
 
         return '<div class="checkListItemNote">' . $note . '</div>';
     }

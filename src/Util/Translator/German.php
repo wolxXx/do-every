@@ -1220,4 +1220,10 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'DAV-URL';
     }
+
+    #[\Override]
+    public function markdownTransformationEnabled(): string
+    {
+        return 'Markdown-Transformation aktiviert';
+    }
 }
