@@ -17,4 +17,8 @@ cp -vR vendor/moment/moment/dist/locale/en-gb.js public/vendor/moment/locale_en-
 cp -vR vendor/moment/moment/min/locales.js public/vendor/moment/locales.js
 cp -vR vendor/moment/moment/moment.js public/vendor/moment/moment.js
 
+cd public
+npm install
+cp -vR node_modules/@wolxxx/completer/dist/completer.js vendor/completer.js
+
 exit 0;

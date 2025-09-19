@@ -1217,4 +1217,10 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'DAV URL';
     }
+
+    #[\Override]
+    public function markdownTransformationEnabled(): string
+    {
+        return 'markdown transformation enabled';
+    }
 }

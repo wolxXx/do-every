@@ -15,17 +15,7 @@ declare(strict_types=1);
  * @var array $data
  */
 ?>
-<script src="/vendor/completer.js"></script>
-<script>
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const conf = new AutocompleteConfiguration()
-        conf.setElement(document.getElementById('fillTimeLine'))
-        new Autocomplete(conf)
-    });
-
-
-</script>
 <h1>
     <?= $translator->editSettings() ?>
 </h1>
@@ -111,6 +101,28 @@ declare(strict_types=1);
                 </select>
                 <div class="errors">
                     <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_USE_TIMER) as $error): ?>
+                        <?= $error ?><br/>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <div>
+                <label for="markdownEnabled">
+                    <?= $translator->markdownTransformationEnabled() ?>
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED ?>" id="markdownEnabled">
+                    <option <?= array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED, array: $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED] == '1' ? 'selected' : '' ?>  value="1">
+                        <?= $translator->yes() ?>
+                    </option>
+                    <option <?=  false === array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED, array: $data) || $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED] == '0' ? 'selected' : '' ?>  value="0">
+                        <?= $translator->no() ?>
+                    </option>
+                </select>
+                <div class="errors">
+                    <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_MARKDOWN_ENABLED) as $error): ?>
                         <?= $error ?><br/>
                     <?php endforeach ?>
                 </div>

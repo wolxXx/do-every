@@ -72,6 +72,14 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
+                <?= $translator->markdownTransformationEnabled() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isMarkdownTransformerActive()) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <?= $translator->davEnabled() ?>
             </td>
             <td>

@@ -1208,4 +1208,10 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function markdownTransformationEnabled(): string
+    {
+        return $this->debug();
+    }
 }

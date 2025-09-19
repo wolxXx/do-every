@@ -4,12 +4,25 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Util;
 
+use Carbon\Carbon;
+
 class Cron
 {
     public function __construct()
     {
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'start cron object');
         if (true === Registry::getInstance()->isCronRunning()) {
+            if (null !== Registry::getInstance()->getCronStarted() && \Carbon\Carbon::instance(Registry::getInstance()->getCronStarted())->addMinutes(value: 30)->lt(Carbon::now())) {
+                try {
+                    Mailing\CronHanging::send();
+                } catch (\Throwable) {
+
+                }
+                Registry::getInstance()
+                        ->setCronRunning(cronRunning: false)
+                        ->setNotifierRunning(notifierRunning: false)
+                ;
+            }
             DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron is already running.');
 
             return;
