@@ -151,7 +151,7 @@ class Task
         $due = $task->getDueValue();
         $start = new \DateTime(datetime: 'now', timezone: new \DateTimeZone('Europe/Berlin'));
         if ($due !== null && $due > 0) {
-            $due = (int) $due;
+            $due = ((int) $due) + 1;
             $modifier = '+' . $due . ' ' . $task->getIntervalType() . 's';
             $start->modify($modifier);
         }
