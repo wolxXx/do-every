@@ -20,5 +20,6 @@ cp -vR vendor/moment/moment/moment.js public/vendor/moment/moment.js
 cd public
 npm install
 cp -vR node_modules/@wolxxx/completer/dist/completer.js vendor/completer.js
+cp -vR node_modules/html5sortable/dist/html5sortable.js vendor/sortable.js
 
 exit 0;

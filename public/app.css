@@ -31,7 +31,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     border: solid 3px var(--dark30Mixin);
     border-radius: 5px;
     text-align: center;
-    width: 400px;
+    max-width: 400px;
 }
 textarea{
     text-align: left;
@@ -289,7 +289,7 @@ hr {
 .grid > .column {
     flex: 1;
     justify-content: space-between;
-    max-width: 300px;
+    max-width: 500px;
 }
 
 .row > .column {

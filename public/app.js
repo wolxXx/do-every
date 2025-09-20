@@ -55,6 +55,7 @@ function captureElements() {
     captureConfirmElements();
     initRowAdder();
     initRowRemover();
+    initDropHAndler();
 }
 
 function initRowAdder() {
@@ -65,7 +66,9 @@ function initRowAdder() {
             let newRow = document.createElement('div');
             newRow.innerHTML = element.parentElement.querySelector('template').innerHTML.replaceAll('__INDEX__', index);
             element.parentElement.appendChild(newRow);
+            // Re-bind dynamic behaviors for newly added content
             initRowRemover();
+            initDropHAndler();
         });
     });
 }
@@ -83,37 +86,11 @@ function initRowRemover() {
     });
 }
 
-function dragstartHandler(ev) {
-    // Add different types of drag data
-    ev.dataTransfer.setData("text/plain", ev.target.innerText);
-    ev.dataTransfer.setData("text/html", ev.target.outerHTML);
-    ev.dataTransfer.setData(
-        "text/uri-list",
-        ev.target.ownerDocument.location.href,
-    );
+
+function initDropHAndler() {
+    sortable('.rows', {})
 }
 
-
-
-function initDragHAndler() {
-    // Get the element by id
-    document.querySelectorAll('*[draggable="true"]').forEach(function (element) {
-        console.log(element)
-        element.addEventListener("dragstart", dragstartHandler);
-    });
-}
-
-function dragoverHandler(ev) {
-    ev.preventDefault();
-    ev.dataTransfer.dropEffect = "move";
-}
-
-function dropHandler(ev) {
-    ev.preventDefault();
-    // Get the id of the target and add the moved element to the target's DOM
-    const data = ev.dataTransfer.getData("text/plain");
-    ev.target.appendChild(document.getElementById(data));
-}
 
 function reactOnScroll() {
     let menu = document.getElementById('menu');
@@ -128,7 +105,6 @@ addEventListener("scroll", (event) => {
 document.addEventListener('DOMContentLoaded', (event) => {
     reactOnScroll();
     captureElements();
-    initDragHAndler();
 });
 
 class Translations {

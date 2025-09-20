@@ -5,7 +5,8 @@
   "author": "wolxXx <devops@wolxXx.de>",
   "license": "ISC",
   "dependencies": {
-    "@wolxxx/completer": "git+https://github.com/wolxXx/completer.git"
+    "@wolxxx/completer": "git+https://github.com/wolxXx/completer.git",
+    "html5sortable": "*"
   },
   "devDependencies": {
 
