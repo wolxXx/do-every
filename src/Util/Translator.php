@@ -585,4 +585,8 @@ interface Translator
     public function davUrl(): string;
 
     public function markdownTransformationEnabled(): string;
+
+    public function reallyWantToDeleteTimer(): string;
+
+    public function timerDeleted(): string;
 }

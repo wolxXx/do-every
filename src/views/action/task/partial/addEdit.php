@@ -125,16 +125,13 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </div>
                 </div>
                 <div class="column">
-                    <div>
-                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>">
-                            <?= $translator->intervalValue() ?>
-                        </label>
-                        <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" type="number" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE] : '' ?>"/>
-                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE)]) ?>
-                    </div>
+                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>">
+                        <?= $translator->intervalValue() ?>
+                    </label>
+                    <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" type="number" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE] : '' ?>"/>
+                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE)]) ?>
                 </div>
                 <div class="column">
-                    <div>
                         <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>">
                             <?= $translator->intervalMode() ?>
                         </label>
@@ -147,7 +144,6 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                             </option>
                         </select>
                         <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -173,9 +169,9 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
             <?= \DoEveryApp\Util\View\Icon::add() ?>
             <?= $translator->add() ?>
         </i>
-        <div class="rows" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+        <div class="rows">
             <?php foreach ($data['checkListItem'] ?? [] as $index => $item): ?>
-                <div class="rowSimple" draggable="true">
+                <div class="rowSimple sortable">
                     <div class="column">
                         <span class="dangerButton rowRemover">
                             <i class="fa fa-minus"></i>
@@ -233,3 +229,7 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
     </div>
 
 </form>
+
+<script>
+
+</script>

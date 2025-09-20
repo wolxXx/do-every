@@ -1223,4 +1223,16 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'markdown transformation enabled';
     }
+
+    #[\Override]
+    public function reallyWantToDeleteTimer(): string
+    {
+        return 'Do you really want to delete the timer?';
+    }
+
+    #[\Override]
+    public function timerDeleted(): string
+    {
+        return 'timer deleted';
+    }
 }

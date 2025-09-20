@@ -1226,4 +1226,16 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Markdown-Transformation aktiviert';
     }
+
+    #[\Override]
+    public function reallyWantToDeleteTimer(): string
+    {
+        return 'Willst du wirklich den Timer löschen?';
+    }
+
+    #[\Override]
+    public function timerDeleted(): string
+    {
+        return 'Timer gelöscht.';
+    }
 }

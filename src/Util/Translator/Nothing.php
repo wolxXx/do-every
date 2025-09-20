@@ -1214,4 +1214,16 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function reallyWantToDeleteTimer(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function timerDeleted(): string
+    {
+        return $this->debug();
+    }
 }

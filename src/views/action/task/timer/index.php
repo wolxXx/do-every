@@ -31,6 +31,9 @@ declare(strict_types=1);
             <th>
                 <?= $translator->sections() ?>
             </th>
+            <th>
+                <?= $translator->actions() ?>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -56,6 +59,11 @@ declare(strict_types=1);
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getEnd()) ?>
                         <br />
                     <? endforeach  ?>
+                </td>
+                <td>
+                    <a href="<?= \DoEveryApp\Action\Task\Timer\DeleteAction::getRoute(id: $timer->getId()) ?>" class="dangerButton confirm" data-message="<?= $translator->reallyWantToDeleteTimer() ?>">
+                        <?= \DoEveryApp\Util\View\Icon::trash() ?>
+                    </a>
                 </td>
             </tr>
         <? endforeach ?>
