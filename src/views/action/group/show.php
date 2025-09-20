@@ -22,12 +22,15 @@ declare(strict_types=1);
 </h1>
 <div class="pageButtons buttonRow">
     <a href="<?= \DoEveryApp\Action\Task\AddAction::getRoute() ?>?group=<?= $group->getId() ?>" class="primaryButton">
+        <?= \DoEveryApp\Util\View\Icon::add() ?>
         <?= $translator->addTask() ?>
     </a>
     <a href="<?= \DoEveryApp\Action\Group\EditAction::getRoute(id: $group->getId()) ?>" class="warningButton">
+        <?= \DoEveryApp\Util\View\Icon::edit() ?>
         <?= $translator->edit() ?>
     </a>
     <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteGroup(name: $group->getName())) ?>" href="<?= \DoEveryApp\Action\Group\DeleteAction::getRoute(id: $group->getId()) ?>">
+        <?= \DoEveryApp\Util\View\Icon::trash() ?>
         <?= $translator->delete() ?>
     </a>
 </div>
