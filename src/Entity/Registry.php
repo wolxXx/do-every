@@ -53,7 +53,7 @@ class Registry
             'default' => 1,
         ]
     )]
-    protected bool       $visible           = false;
+    protected bool       $visible           = true;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'int_value',
