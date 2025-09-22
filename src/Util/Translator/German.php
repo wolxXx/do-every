@@ -1274,4 +1274,10 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'laufende Stoppuhr';
     }
+
+    #[\Override]
+    public function taskType(): string
+    {
+        return 'Aufgabentyp';
+    }
 }

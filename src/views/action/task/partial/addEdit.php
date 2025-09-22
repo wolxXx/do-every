@@ -132,18 +132,15 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE)]) ?>
                 </div>
                 <div class="column">
-                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>">
-                            <?= $translator->intervalMode() ?>
-                        </label>
-                        <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE ?>">
-                            <option <?= false === array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE, array: $data) || $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE] == '1' ? 'selected' : '' ?>  value="1">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(elapsing: true) ?>
-                            </option>
-                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE] == '0' ? 'selected' : '' ?>  value="0">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByBoolean(elapsing: false) ?>
-                            </option>
-                        </select>
-                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
+                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
+                        <?= $translator->taskType() ?>
+                    </label>
+                    <?php foreach(\DoEveryApp\Definition\TaskType::cases() as $taskTypeCase): ?>
+                        <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE] == $taskTypeCase->value ? 'selected' : '' ?>  value="<?= $taskTypeCase->value ?>">
+                            <?= \DoEveryApp\Util\View\TaskTypeHelper::map(taskType: $taskTypeCase) ?>
+                        </option>
+                    <?php endforeach ?>
+                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
                 </div>
             </div>
         </div>

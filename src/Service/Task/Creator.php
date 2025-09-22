@@ -8,11 +8,12 @@ class Creator
 {
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Task
     {
-        $task = (new \DoEveryApp\Entity\Task())
+        $task = new \DoEveryApp\Entity\Task()
             ->setGroup(group: $bag->getGroup())
             ->setAssignee(assignee: $bag->getAssignee())
             ->setWorkingOn(workingOn: $bag->getWorkingOn())
             ->setName(name: $bag->getName())
+            ->setType($bag->getTaskType())
             ->setNotify(notify: $bag->doNotify())
             ->setActive(active: $bag->isActive())
             ->setPriority(priority: $bag->getPriority()->value)

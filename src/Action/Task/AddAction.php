@@ -53,6 +53,7 @@ class AddAction
                          ->setIntervalType(intervalType: $data[static::FORM_FIELD_INTERVAL_TYPE] ? \DoEveryApp\Definition\IntervalType::from(value: $data[static::FORM_FIELD_INTERVAL_TYPE]) : null)
                          ->setIntervalValue(intervalValue: $data[static::FORM_FIELD_INTERVAL_VALUE])
                          ->setElapsingCronType(elapsingCronType: '1' === $data[static::FORM_FIELD_ELAPSING_CRON_TYPE])
+                         ->setTaskType(taskType: \DoEveryApp\Definition\TaskType::from($data[static::FORM_FIELD_TASK_TYPE]))
                          ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data[static::FORM_FIELD_PRIORITY]))
                          ->enableNotifications(notify: '1' === $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS])
                          ->setActive(active: true)

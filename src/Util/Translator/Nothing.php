@@ -1262,4 +1262,10 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function taskType(): string
+    {
+        return $this->debug();
+    }
 }
