@@ -37,20 +37,47 @@ declare(strict_types=1);
 
 <div class="row">
     <div class="column">
-        <div class="grid">
-            <?php foreach($group->getTasks() as $task): ?>
-                <div class="column card">
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?><br />
-                    <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?><br />
-                    <?php if(null !== $task->getWorkingOn()): ?>
-                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
-                    <?php endif ?>
-                    <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
-                        <?= $translator->show() ?>
-                    </a>
-                </div>
-            <?php endforeach ?>
-        </div>
+        <fieldset>
+            <legend>
+                <?= $translator->enabledTasks() ?>
+            </legend>
+            <div class="grid">
+                <?php foreach($group->getActiveTasks() as $task): ?>
+                    <div class="column card">
+                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?><br />
+                        <?= $translator->active() ?>? <?= $task->isActive()? $translator->yes() : $translator->no() ?><br />
+                        <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?><br />
+                        <?php if(null !== $task->getWorkingOn()): ?>
+                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
+                        <?php endif ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                            <?= $translator->show() ?>
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </fieldset>
+        <hr />
+        <fieldset>
+            <legend>
+                <?= $translator->disabledTasks() ?>
+            </legend>
+            <div class="grid">
+                <?php foreach($group->getInActiveTasks() as $task): ?>
+                    <div class="column card">
+                        <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?><br />
+                        <?= $translator->active() ?>? <?= $task->isActive()? $translator->yes() : $translator->no() ?><br />
+                        <?= \DoEveryApp\Util\View\Due::getByTask(task: $task) ?><br />
+                        <?php if(null !== $task->getWorkingOn()): ?>
+                            <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getWorkingOn()->getName()) ?> <?= $translator->currentlyWorkingOn() ?><br />
+                        <?php endif ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
+                            <?= $translator->show() ?>
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </fieldset>
     </div>
     <div class="column">
         <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => \DoEveryApp\Definition\Durations::FactoryByGroup(group: $group)]) ?>

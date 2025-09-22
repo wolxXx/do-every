@@ -1238,4 +1238,16 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Timer gelöscht.';
     }
+
+    #[\Override]
+    public function disabledTasks(): string
+    {
+        return 'deaktivierte Aufgaben';
+    }
+
+    #[\Override]
+    public function enabledTasks(): string
+    {
+        return 'aktivierte Aufgaben';
+    }
 }

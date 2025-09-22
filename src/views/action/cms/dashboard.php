@@ -15,6 +15,7 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Execution[] $executions
  * @var \DoEveryApp\Entity\Task[]      $dueTasks
  * @var \DoEveryApp\Entity\Task[]      $tasks
+ * @var \DoEveryApp\Entity\Task[]      $disabledTasks
  * @var \DoEveryApp\Entity\Worker[]    $workers
  * @var \DoEveryApp\Entity\Task[]      $workingOn
  */
@@ -333,4 +334,48 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
             <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
         </div>
     </div>
+</div>
+
+<div id="disabledTasks">
+    <?php if (0 !== count(value: $disabledTasks)): ?>
+        <fieldset>
+            <legend>
+                <?= $translator->disabledTasks() ?>
+            </legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <?= $translator->group() ?>
+                        </th>
+                        <th>
+                            <?= $translator->task() ?>
+                        </th>
+                        <th>
+                            <?= $translator->actions() ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($disabledTasks as $task): ?>
+                        <tr>
+                            <td>
+                                <?= $task->getGroup()?->getName() ?: '-' ?>
+                            </td>
+                            <td>
+                                <?= $task->getName() ?>
+                            </td>
+                            <td>
+                                <nobr class="buttonRow">
+                                    <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>" class="primaryButton">
+                                        <?= \DoEveryApp\Util\View\Icon::show() ?>
+                                    </a>
+                                </nobr>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </fieldset>
+    <?php endif ?>
 </div>

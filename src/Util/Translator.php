@@ -589,4 +589,8 @@ interface Translator
     public function reallyWantToDeleteTimer(): string;
 
     public function timerDeleted(): string;
+
+    public function disabledTasks(): string;
+
+    public function enabledTasks(): string;
 }

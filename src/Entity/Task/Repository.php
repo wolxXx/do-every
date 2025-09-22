@@ -72,6 +72,25 @@ class Repository extends \Doctrine\ORM\EntityRepository
     /**
      * @return \DoEveryApp\Entity\Task[]
      */
+    public function findDisabledTasks()
+    {
+        return $this
+            ->createQueryBuilder(alias: 't')
+            ->addSelect('t, concat(COALESCE(g.name, \'__\'), t.name) as hidden path')
+            ->leftJoin(join: 't.group', alias: 'g')
+            ->leftJoin(join: 't.assignee', alias: 'a')
+            ->leftJoin(join: 't.workingOn', alias: 'w')
+            ->andWhere('t.active = :active')
+            ->setParameter(key: 'active', value: false)
+            ->orderBy(sort: 'path')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    /**
+     * @return \DoEveryApp\Entity\Task[]
+     */
     public function findAllForIndex()
     {
         return $this

@@ -1235,4 +1235,16 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'timer deleted';
     }
+
+    #[\Override]
+    public function disabledTasks(): string
+    {
+        return 'disabled tasks';
+    }
+
+    #[\Override]
+    public function enabledTasks(): string
+    {
+        return 'enabled tasks';
+    }
 }
