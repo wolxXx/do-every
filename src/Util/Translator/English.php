@@ -1247,4 +1247,16 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'enabled tasks';
     }
+
+    #[\Override]
+    public function cloneTask(string $task): string
+    {
+        return 'clone task ' . $task;
+    }
+
+    #[\Override]
+    public function taskCloned(): string
+    {
+        return 'task cloned';
+    }
 }

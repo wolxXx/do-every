@@ -1250,4 +1250,16 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'aktivierte Aufgaben';
     }
+
+    #[\Override]
+    public function cloneTask(string $task): string
+    {
+        return 'Aufgabe ' . $task . ' duplizieren';
+    }
+
+    #[\Override]
+    public function taskCloned(): string
+    {
+        return 'Aufgabe dupliziert.';
+    }
 }

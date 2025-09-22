@@ -207,7 +207,7 @@ trait AddEdit
             $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NAME];
             $validatorCollection[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NAME] = [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
-                new \Symfony\Component\Validator\Constraints\Length(max: 20),
+                new \Symfony\Component\Validator\Constraints\Length(max: 30),
             ];
 
             $data[static::FORM_FIELD_CHECK_LIST_ITEM . '_' . $index . '_' . static::FORM_FIELD_CHECK_LIST_ITEM_NOTE] = $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_NOTE];

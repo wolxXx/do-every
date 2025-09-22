@@ -53,6 +53,9 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::edit() ?>
     </a>
+    <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\CloneAction::getRoute(id: $task->getId()) ?>">
+        <?= \DoEveryApp\Util\View\Icon::clone() ?>
+    </a>
     <a class="warningButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTask(name: $task->getName()))  ?>" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::refresh() ?>
         <?= $translator->reset() ?>

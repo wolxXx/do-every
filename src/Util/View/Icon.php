@@ -20,6 +20,11 @@ class Icon
         return '<i class="fa-solid fa-check"></i>';
     }
 
+    public static function clone(): string
+    {
+        return '<i class="fa-solid fa-clone"></i>';
+    }
+
     public static function cross(): string
     {
         return '<i class="fa-solid fa-xmark"></i>';

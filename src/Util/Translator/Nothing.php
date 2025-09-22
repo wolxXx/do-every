@@ -1238,4 +1238,16 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function cloneTask(string $task): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function taskCloned(): string
+    {
+        return $this->debug();
+    }
 }

@@ -488,6 +488,8 @@ interface Translator
 
     public function editTask(string $task): string;
 
+    public function cloneTask(string $task): string;
+
 
     public function groups(): string;
 
@@ -593,4 +595,6 @@ interface Translator
     public function disabledTasks(): string;
 
     public function enabledTasks(): string;
+
+    public function taskCloned(): string;
 }
