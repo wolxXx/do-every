@@ -1250,4 +1250,16 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function now(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function runningTimer(): string
+    {
+        return $this->debug();
+    }
 }

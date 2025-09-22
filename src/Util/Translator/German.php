@@ -1262,4 +1262,16 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Aufgabe dupliziert.';
     }
+
+    #[\Override]
+    public function now(): string
+    {
+        return 'jetzt';
+    }
+
+    #[\Override]
+    public function runningTimer(): string
+    {
+        return 'laufende Stoppuhr';
+    }
 }

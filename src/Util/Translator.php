@@ -597,4 +597,8 @@ interface Translator
     public function enabledTasks(): string;
 
     public function taskCloned(): string;
+
+    public function now(): string;
+
+    public function runningTimer(): string;
 }

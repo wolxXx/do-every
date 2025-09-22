@@ -26,7 +26,7 @@ declare(strict_types=1);
         <?= $translator->editExecution() ?>
     <?php endif ?>
 </h1>
-<? if(true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
+<?php if (true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
     <fieldset>
         <legend><?= $translator->timer() ?></legend>
 
@@ -108,11 +108,10 @@ declare(strict_types=1);
                 return
             }
 
-            timerAreaElement.innerHTML = '<span id="now">now: ' + moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a") +'</span>'
-            console.log(moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a"))
+            timerAreaElement.innerHTML = '<span id="now"><?= $translator->now() ?>: ' + moment(info.now).format("dddd, MMMM Do YYYY, h:mm:ss a") +'</span>'
             clearInterval(interval)
             interval = setInterval(function () {
-                document.querySelector('#now').innerHTML = 'now: ' + moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+                document.querySelector('#now').innerHTML = '<?= $translator->now() ?>: ' + moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
             }, 200)
 
             if (true === info.running) {
@@ -121,7 +120,7 @@ declare(strict_types=1);
                 showStopButton()
                 showResetButton()
                 showTakeButton()
-                timerAreaElement.innerHTML += '<br>running timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
+                timerAreaElement.innerHTML += '<br><?= $translator->runningTimer() ?>running timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
                 return;
             }
             if (true === info.paused) {
@@ -305,8 +304,6 @@ declare(strict_types=1);
             </div>
 
 
-
-
             <?php if (0 !== count(value: $data['checkListItems'])): ?>
                 <hr>
                 <table>
@@ -341,7 +338,9 @@ declare(strict_types=1);
                                     <input id="clid<?= $checkListItem['reference'] ?>" type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
                                 </td>
                                 <td>
-                                    <?= \DoEveryApp\Util\View\CheckListItemNote::byValue(note: $checkListItem['referenceNote']) ?>
+                                    <label for="clid<?= $checkListItem['reference'] ?>">
+                                        <?= \DoEveryApp\Util\View\CheckListItemNote::byValue(note: $checkListItem['referenceNote']) ?>
+                                    </label>
                                 </td>
                                 <td>
                                     <textarea rows="1000" cols="1000" name="checkListItems[<?= $index ?>][note]"><?= $checkListItem['note'] ?></textarea>
@@ -354,7 +353,6 @@ declare(strict_types=1);
             <?php endif ?>
         </div>
         <div class="column">
-
             <div>
                 <label for="note">
                     Notiz

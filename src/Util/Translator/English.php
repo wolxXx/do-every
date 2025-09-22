@@ -1259,4 +1259,16 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'task cloned';
     }
+
+    #[\Override]
+    public function now(): string
+    {
+        return 'now';
+    }
+
+    #[\Override]
+    public function runningTimer(): string
+    {
+        return 'running timer';
+    }
 }

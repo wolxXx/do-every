@@ -36,6 +36,7 @@ class BaseTest extends \DoEveryAppTest\TestBase
                                     ]);
         $response = $phpRenderer->render(response: $response, template: 'action/cms/dashboard.php', data: [
             'tasks' => [],
+            'disabledTasks' => [],
             'workingOn' => [],
             'workers' => [],
             'groups' => [],
