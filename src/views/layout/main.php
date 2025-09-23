@@ -22,6 +22,7 @@ declare(strict_types=1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/app.css?t=<?= filemtime(filename: 'public/app.css') ?>" media="screen" rel="stylesheet" type="text/css"/>
     <script src="/app.js?t=<?= filemtime(filename: 'public/app.js') ?>"></script>
+    <script src="/refresh.js?t=<?= filemtime(filename: 'public/refresh.js') ?>"></script>
     <script>
         Translations['are you sure?'] = '<?= $translator->areYouSure() ?>';
     </script>
