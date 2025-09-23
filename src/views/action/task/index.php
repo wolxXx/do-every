@@ -110,6 +110,9 @@ declare(strict_types=1);
                                         <a class="warningButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
                                             <?= \DoEveryApp\Util\View\Icon::edit() ?>
                                         </a>
+                                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\CloneAction::getRoute(id: $task->getId()) ?>">
+                                            <?= \DoEveryApp\Util\View\Icon::clone() ?>
+                                        </a>
                                         <?php if (true === $task->isActive()): ?>
                                             <a class="warningButton" href="<?= \DoEveryApp\Action\Task\MarkActiveAction::getRoute(id: $task->getId(), active: false) ?>">
                                                 <?= \DoEveryApp\Util\View\Icon::off() ?>
