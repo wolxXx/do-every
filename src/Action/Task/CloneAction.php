@@ -47,7 +47,7 @@ class CloneAction extends
                                                  static::FORM_FIELD_INTERVAL_VALUE       => $task->getIntervalValue(),
                                                  static::FORM_FIELD_PRIORITY             => $task->getPriority(),
                                                  static::FORM_FIELD_ENABLE_NOTIFICATIONS => $task->isNotify() ? '1' : '0',
-                                                 static::FORM_FIELD_ELAPSING_CRON_TYPE   => $task->isElapsingCronType() ? '1' : '0',
+                                                 static::FORM_FIELD_TASK_TYPE            => $task->getType()->value,
                                                  static::FORM_FIELD_NOTE                 => $task->getNote(),
                                              ],
                                          ]);
@@ -69,7 +69,7 @@ class CloneAction extends
                 ->setIntervalValue(intervalValue: $data[static::FORM_FIELD_INTERVAL_VALUE])
                 ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data[static::FORM_FIELD_PRIORITY])->value)
                 ->setNotify(notify: '1' === $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS])
-                ->setElapsingCronType(elapsingCronType: '1' === $data[static::FORM_FIELD_ELAPSING_CRON_TYPE])
+                ->setType(type: \DoEveryApp\Definition\TaskType::from($data[static::FORM_FIELD_TASK_TYPE]))
                 ->setNote(note: $data[static::FORM_FIELD_NOTE])
             ;
             $task::getRepository()

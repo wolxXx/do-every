@@ -162,16 +162,4 @@ class Bag
 
         return $this;
     }
-
-    public function isElapsingCronType(): bool
-    {
-        return $this->elapsingCronType;
-    }
-
-    public function setElapsingCronType(bool $elapsingCronType): static
-    {
-        $this->elapsingCronType = $elapsingCronType;
-
-        return $this;
-    }
 }

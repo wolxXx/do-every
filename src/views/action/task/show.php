@@ -92,7 +92,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
 
             <?= $translator->interval() ?>: <?= \DoEveryApp\Util\View\IntervalHelper::get(task: $task) ?>
             <?php if(null !== $task->getIntervalType()): ?>
-                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask(task: $task) ?>)
+                (<?= \DoEveryApp\Util\View\IntervalHelper::getTypeByTask(task: $task) ?>)
             <?php endif ?>
             |
 

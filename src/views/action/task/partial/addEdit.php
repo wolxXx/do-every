@@ -135,11 +135,13 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
                         <?= $translator->taskType() ?>
                     </label>
-                    <?php foreach(\DoEveryApp\Definition\TaskType::cases() as $taskTypeCase): ?>
-                        <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE] == $taskTypeCase->value ? 'selected' : '' ?>  value="<?= $taskTypeCase->value ?>">
-                            <?= \DoEveryApp\Util\View\TaskTypeHelper::map(taskType: $taskTypeCase) ?>
-                        </option>
-                    <?php endforeach ?>
+                    <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
+                        <?php foreach(\DoEveryApp\Definition\TaskType::cases() as $taskTypeCase): ?>
+                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE] == $taskTypeCase->value ? 'selected' : '' ?>  value="<?= $taskTypeCase->value ?>">
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getType(type: $taskTypeCase) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
                     <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
                 </div>
             </div>
