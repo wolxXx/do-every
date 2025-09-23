@@ -1280,4 +1280,10 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Aufgabentyp';
     }
+
+    #[\Override]
+    public function intervalTypeOneTime(): string
+    {
+        return 'einmalig';
+    }
 }

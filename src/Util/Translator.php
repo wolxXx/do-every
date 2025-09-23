@@ -603,4 +603,6 @@ interface Translator
     public function runningTimer(): string;
 
     public function taskType(): string;
+
+    public function intervalTypeOneTime(): string;
 }

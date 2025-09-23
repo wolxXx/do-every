@@ -1268,4 +1268,10 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function intervalTypeOneTime(): string
+    {
+        return $this->debug();
+    }
 }

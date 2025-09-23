@@ -1277,4 +1277,10 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'task type';
     }
+
+    #[\Override]
+    public function intervalTypeOneTime(): string
+    {
+        return 'one time';
+    }
 }
