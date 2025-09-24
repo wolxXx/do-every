@@ -211,6 +211,13 @@ class Task
 
     public function getDueValue(): int|float|null
     {
+        if (\DoEveryApp\Definition\TaskType::ONE_TIME === $this->getType()) {
+            if(null === $this->getDueDate()) {
+                return $this->calculateDue(due: \Carbon\Carbon::now());
+            }
+            return $this->calculateDue(due: \Carbon\Carbon::create($this->getDueDate()));
+        }
+
         if (true === isset($this->dueCacheValue)) {
             return $this->dueCacheValue;
         }
@@ -231,7 +238,6 @@ class Task
             return $this->dueCacheValue;
         }
         $due = \Carbon\Carbon::create(year: $lastExecution->getDate());
-        $now = \Carbon\Carbon::now();
         switch ($this->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {

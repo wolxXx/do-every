@@ -19,6 +19,8 @@ class Creator
             ->setPriority(priority: $bag->getPriority()->value)
             ->setIntervalType(intervalType: $bag->getIntervalType()?->value)
             ->setIntervalValue(intervalValue: $bag->getIntervalValue())
+            ->setDueDate(dueDate: $bag->getDueDate())
+            ->setRemindDate(remindDate: $bag->getRemindDate())
             ->setNote(note: $bag->getNote())
         ;
 

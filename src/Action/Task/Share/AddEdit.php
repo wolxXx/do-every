@@ -16,8 +16,6 @@ trait AddEdit
 
     public const string FORM_FIELD_CHECK_LIST_ITEM_POSITION = 'position';
 
-    public const string FORM_FIELD_ELAPSING_CRON_TYPE       = 'elapsingCronType';
-
     public const string FORM_FIELD_TASK_TYPE                = 'taskType';
 
     public const string FORM_FIELD_NOTE                     = 'note';
@@ -35,6 +33,11 @@ trait AddEdit
     public const string FORM_FIELD_PRIORITY                 = 'priority';
 
     public const string FORM_FIELD_ENABLE_NOTIFICATIONS     = 'enableNotifications';
+
+    public const string FORM_FIELD_DUE_DATE                 = 'dueDate';
+
+    public const string FORM_FIELD_REMIND_DATE              = 'remindDate';
+
 
     protected function handleCheckListItems(\DoEveryApp\Entity\Task $task, array $data): static
     {
@@ -70,8 +73,9 @@ trait AddEdit
     protected function filterAndValidate(array &$data): array
     {
         $validatorCollection                           = [
-            static::FORM_FIELD_ELAPSING_CRON_TYPE   => [],
             static::FORM_FIELD_NOTE                 => [],
+            static::FORM_FIELD_DUE_DATE                 => [],
+            static::FORM_FIELD_REMIND_DATE                 => [],
             static::FORM_FIELD_NAME                 => [
                 new \Symfony\Component\Validator\Constraints\NotBlank(),
             ],
@@ -192,10 +196,6 @@ trait AddEdit
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_ENABLE_NOTIFICATIONS))
         ;
-        $data[static::FORM_FIELD_ELAPSING_CRON_TYPE]   = new \Laminas\Filter\FilterChain()
-            ->attach(callback: new \Laminas\Filter\StringTrim())
-            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_ELAPSING_CRON_TYPE))
-        ;
 
         foreach ($data[static::FORM_FIELD_CHECK_LIST_ITEM] ?? [] as $index => $item) {
             $data[static::FORM_FIELD_CHECK_LIST_ITEM][$index][static::FORM_FIELD_CHECK_LIST_ITEM_ID]       = new \Laminas\Filter\FilterChain()
@@ -237,5 +237,39 @@ trait AddEdit
         $this->validate(data: $data, validators: $validators);
 
         return $data;
+    }
+
+    protected function handleEditOrClone(\DoEveryApp\Entity\Task $task, array $data): static
+    {
+        $task
+            ->setAssignee(assignee: $data[static::FORM_FIELD_ASSIGNEE] ? \DoEveryApp\Entity\Worker::getRepository()
+                                                                                                  ->find(id: $data[static::FORM_FIELD_ASSIGNEE]) : null)
+            ->setGroup(group: $data[static::FORM_FIELD_GROUP] ? \DoEveryApp\Entity\Group::getRepository()
+                                                                                        ->find(id: $data[static::FORM_FIELD_GROUP]) : null)
+            ->setName(name: $data[static::FORM_FIELD_NAME])
+            ->setIntervalType(intervalType: $data[static::FORM_FIELD_INTERVAL_TYPE] ? \DoEveryApp\Definition\IntervalType::from(value: $data[static::FORM_FIELD_INTERVAL_TYPE])->value : null)
+            ->setIntervalValue(intervalValue: $data[static::FORM_FIELD_INTERVAL_VALUE])
+            ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data[static::FORM_FIELD_PRIORITY])->value)
+            ->setNotify(notify: '1' === $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS])
+            ->setType(type: \DoEveryApp\Definition\TaskType::from($data[static::FORM_FIELD_TASK_TYPE]))
+            ->setRemindDate(remindDate: null === $data[static::FORM_FIELD_REMIND_DATE] ? null : new \DateTime($data[static::FORM_FIELD_REMIND_DATE]))
+            ->setDueDate(dueDate: null === $data[static::FORM_FIELD_DUE_DATE] ? null : new \DateTime($data[static::FORM_FIELD_DUE_DATE]))
+            ->setNote(note: $data[static::FORM_FIELD_NOTE])
+        ;
+
+        if (\DoEveryApp\Definition\TaskType::ONE_TIME === $task->getType()) {
+            $task
+                ->setIntervalType(intervalType: null)
+                ->setIntervalValue(intervalValue: null)
+            ;
+        }
+        if (\DoEveryApp\Definition\TaskType::ONE_TIME !== $task->getType()) {
+            $task
+                ->setRemindDate(remindDate: null)
+                ->setDueDate(dueDate: null)
+            ;
+        }
+
+        return $this;
     }
 }

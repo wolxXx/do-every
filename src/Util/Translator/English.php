@@ -1283,4 +1283,22 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'one time';
     }
+
+    #[\Override]
+    public function clone(): string
+    {
+        return 'clone';
+    }
+
+    #[\Override]
+    public function dueDate(): string
+    {
+        return 'due date';
+    }
+
+    #[\Override]
+    public function remindDate(): string
+    {
+        return 'remind date';
+    }
 }

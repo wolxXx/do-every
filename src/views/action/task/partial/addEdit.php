@@ -17,10 +17,34 @@ declare(strict_types=1);
 $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
 ?>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>').addEventListener('change', function() {
+            document.getElementById('forFixedType').style.display = 'none';
+            document.getElementById('forNonFixedType').style.display = 'grid';
+            if (this.value == '<?= \DoEveryApp\Definition\TaskType::ONE_TIME->value ?>') {
+                document.getElementById('forFixedType').style.display = 'grid';
+                document.getElementById('forNonFixedType').style.display = 'none';
+            }
+        })
+        document.getElementById('<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>').dispatchEvent(new Event('change'));
+    })
+
+</script>
+
 <form action="" method="post" novalidate>
     <div class="row">
         <div class="column">
             <div class="grid">
+                <div class="column">
+                    <div>
+                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" class="required">
+                            <?= $translator->name() ?>
+                        </label>
+                        <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" type="text" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME] : '' ?>"/>
+                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME)]) ?>
+                    </div>
+                </div>
                 <?php if(0 !== count(value: $groups)): ?>
                     <div class="column">
                         <div>
@@ -41,16 +65,6 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                         </div>
                     </div>
                 <?php endif ?>
-
-                <div class="column">
-                    <div>
-                        <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" class="required">
-                            <?= $translator->name() ?>
-                        </label>
-                        <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" type="text" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME] : '' ?>"/>
-                        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_NAME)]) ?>
-                    </div>
-                </div>
             </div>
 
             <div class="grid">
@@ -88,6 +102,21 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                         <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ENABLE_NOTIFICATIONS)]) ?>
                     </div>
                 </div>
+            </div>
+            <div class="grid">
+                <div class="column">
+                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
+                        <?= $translator->taskType() ?>
+                    </label>
+                    <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
+                        <?php foreach(\DoEveryApp\Definition\TaskType::cases() as $taskTypeCase): ?>
+                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE] == $taskTypeCase->value ? 'selected' : '' ?>  value="<?= $taskTypeCase->value ?>">
+                                <?= \DoEveryApp\Util\View\IntervalHelper::getType(type: $taskTypeCase) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE)]) ?>
+                </div>
                 <div class="column">
                     <div>
                         <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_PRIORITY ?>">
@@ -104,8 +133,23 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </div>
                 </div>
             </div>
-
-            <div class="grid">
+            <div class="grid" id="forFixedType" style="display: none;">
+                <div class="column">
+                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_DUE_DATE ?>">
+                        <?= $translator->dueDate() ?>
+                    </label>
+                    <input type="datetime-local" value="<?= $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_DUE_DATE] ?? null ?>" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_DUE_DATE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_DUE_DATE ?>">
+                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_DUE_DATE)]) ?>
+                </div>
+                <div class="column">
+                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_REMIND_DATE ?>">
+                        <?= $translator->remindDate() ?>
+                    </label>
+                    <input type="datetime-local" value="<?= $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_REMIND_DATE] ?? null ?>" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_REMIND_DATE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_REMIND_DATE ?>">
+                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_REMIND_DATE)]) ?>
+                </div>
+            </div>
+            <div class="grid" id="forNonFixedType" style="display: none;">
                 <div class="column">
                     <div>
                         <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_TYPE ?>">
@@ -130,19 +174,6 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
                     </label>
                     <input id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" type="number" name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE, array: $data) ? $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE] : '' ?>"/>
                     <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_INTERVAL_VALUE)]) ?>
-                </div>
-                <div class="column">
-                    <label for="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
-                        <?= $translator->taskType() ?>
-                    </label>
-                    <select name="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>" id="<?= \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE ?>">
-                        <?php foreach(\DoEveryApp\Definition\TaskType::cases() as $taskTypeCase): ?>
-                            <option <?= array_key_exists(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE, array: $data) && $data[\DoEveryApp\Action\Task\AddAction::FORM_FIELD_TASK_TYPE] == $taskTypeCase->value ? 'selected' : '' ?>  value="<?= $taskTypeCase->value ?>">
-                                <?= \DoEveryApp\Util\View\IntervalHelper::getType(type: $taskTypeCase) ?>
-                            </option>
-                        <?php endforeach ?>
-                    </select>
-                    <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Task\AddAction::FORM_FIELD_ELAPSING_CRON_TYPE)]) ?>
                 </div>
             </div>
         </div>
@@ -226,9 +257,4 @@ $groups = \DoEveryApp\Entity\Group::getRepository()->findIndexed();
     <div class="form-footer">
         <input class="primaryButton" type="submit" value="<?= $translator->save() ?>">
     </div>
-
 </form>
-
-<script>
-
-</script>

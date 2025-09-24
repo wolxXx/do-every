@@ -127,6 +127,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
                                         (<?= $translator->isCurrentlyWorkingOn(who: \DoEveryApp\Util\View\Worker::get(worker: $workingOnTask->getWorkingOn())) ?>)
                                     <?php endif ?>
                                 <?php endforeach ?>
+                                (<?= \DoEveryApp\Util\View\IntervalHelper::getType(type: $task->getType()) ?>)
                             </a>
                         </nobr>
                     </div>

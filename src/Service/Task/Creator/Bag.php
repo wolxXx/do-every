@@ -29,6 +29,8 @@ class Bag
     protected ?\DoEveryApp\Entity\Worker           $workingOn        = null;
 
     protected ?string                              $note             = null;
+    protected ?string                              $dueDate          = null;
+    protected ?string                              $remindDate       = null;
 
     public function getGroup(): ?\DoEveryApp\Entity\Group
     {
@@ -159,6 +161,30 @@ class Bag
     public function setNote(?string $note): static
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getDueDate(): ?string
+    {
+        return $this->dueDate;
+    }
+
+    public function setDueDate(?string $dueDate): static
+    {
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    public function getRemindDate(): ?string
+    {
+        return $this->remindDate;
+    }
+
+    public function setRemindDate(?string $remindDate): static
+    {
+        $this->remindDate = $remindDate;
 
         return $this;
     }

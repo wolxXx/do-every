@@ -605,4 +605,10 @@ interface Translator
     public function taskType(): string;
 
     public function intervalTypeOneTime(): string;
+
+    public function clone(): string;
+
+    public function dueDate(): string;
+
+    public function remindDate(): string;
 }

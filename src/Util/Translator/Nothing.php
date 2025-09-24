@@ -1274,4 +1274,22 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function clone(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function dueDate(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function remindDate(): string
+    {
+        return $this->debug();
+    }
 }

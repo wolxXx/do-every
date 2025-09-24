@@ -59,21 +59,9 @@ class CloneAction extends
                 ->getParsedBody()
             ;
             $data = $this->filterAndValidate(data: $data);
-            $task = new \DoEveryApp\Entity\Task()
-                ->setAssignee(assignee: $data[static::FORM_FIELD_ASSIGNEE] ? \DoEveryApp\Entity\Worker::getRepository()
-                                                                                                      ->find(id: $data[static::FORM_FIELD_ASSIGNEE]) : null)
-                ->setGroup(group: $data[static::FORM_FIELD_GROUP] ? \DoEveryApp\Entity\Group::getRepository()
-                                                                                            ->find(id: $data[static::FORM_FIELD_GROUP]) : null)
-                ->setName(name: $data[static::FORM_FIELD_NAME])
-                ->setIntervalType(intervalType: $data[static::FORM_FIELD_INTERVAL_TYPE] ? \DoEveryApp\Definition\IntervalType::from(value: $data[static::FORM_FIELD_INTERVAL_TYPE])->value : null)
-                ->setIntervalValue(intervalValue: $data[static::FORM_FIELD_INTERVAL_VALUE])
-                ->setPriority(priority: \DoEveryApp\Definition\Priority::from(value: $data[static::FORM_FIELD_PRIORITY])->value)
-                ->setNotify(notify: '1' === $data[static::FORM_FIELD_ENABLE_NOTIFICATIONS])
-                ->setType(type: \DoEveryApp\Definition\TaskType::from($data[static::FORM_FIELD_TASK_TYPE]))
-                ->setNote(note: $data[static::FORM_FIELD_NOTE])
-            ;
+            $this->handleEditOrClone(task: $task = new \DoEveryApp\Entity\Task(), data: $data);
             $task::getRepository()
-                 ->update(entity: $task)
+                 ->create(entity: $task)
             ;
 
             $this->handleCheckListItems(task: $task, data: $data);
