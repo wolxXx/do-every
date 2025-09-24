@@ -67,6 +67,27 @@ declare(strict_types=1);
     <div class="row">
         <div class="column">
             <div>
+                <label for="backupDelay">
+                    <?= $translator->backupDelay() ?>
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_BACKUP_DELAY ?>" id="keepBackups">
+                    <?php foreach(range(start: 1, end: 72) as $delay): ?>
+                        <option <?= array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_BACKUP_DELAY, array: $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_BACKUP_DELAY] == ''.$delay ? 'selected' : '' ?>  value="<?= $delay ?>">
+                            <?= $delay ?>
+                        </option>
+                    <?php endforeach ?>
+                </select>
+                <div class="errors">
+                    <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_BACKUP_DELAY) as $error): ?>
+                        <?= $error ?><br/>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <div>
                 <label for="keepBackups">
                     <?= $translator->keepBackupDays() ?>
                 </label>

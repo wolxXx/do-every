@@ -1271,4 +1271,10 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'running timer';
     }
+
+    #[\Override]
+    public function backupDelay(): string
+    {
+        return 'backup interval (in hours)';
+    }
 }

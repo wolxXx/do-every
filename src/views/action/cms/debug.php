@@ -88,6 +88,10 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isNotifierRunning()) ?>
+                    <a href="<?= \DoEveryApp\Action\Cms\ResetNotifierAction::getRoute() ?>" class="dangerButton">
+                        <?= \DoEveryApp\Util\View\Icon::refresh() ?>
+                        <?= $translator->reset() ?>
+                    </a>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
@@ -113,6 +117,17 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    backup interval:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\Registry::getInstance()->backupDelay() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_BACKUP_DELAY) ?>
                 </td>
             </tr>
             <tr>

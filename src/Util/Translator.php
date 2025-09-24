@@ -601,4 +601,6 @@ interface Translator
     public function now(): string;
 
     public function runningTimer(): string;
+
+    public function backupDelay(): string;
 }

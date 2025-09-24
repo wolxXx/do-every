@@ -16,6 +16,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
     use \DoEveryApp\Action\Share\SimpleRoute;
 
     public const string FORM_FIELD_KEEP_BACKUPS     = 'keepBackups';
+    public const string FORM_FIELD_BACKUP_DELAY     = 'backupDelay';
 
     public const string FORM_FIELD_FILL_TIME_LINE   = 'fillTimeLine';
 
@@ -30,6 +31,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
         $registry = \DoEveryApp\Util\Registry::getInstance();
         if (true === $this->isGetRequest()) {
             $data = [
+                static::FORM_FIELD_BACKUP_DELAY     => $registry->backupDelay(),
                 static::FORM_FIELD_KEEP_BACKUPS     => $registry->getKeepBackupDays(),
                 static::FORM_FIELD_FILL_TIME_LINE   => $registry->doFillTimeLine(),
                 static::FORM_FIELD_PRECISION_DUE    => $registry->getPrecisionDue(),
@@ -50,6 +52,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
             $registry
                 ->setKeepBackupDays(days: $data[static::FORM_FIELD_KEEP_BACKUPS])
+                ->setBackupDelay(delay: $data[static::FORM_FIELD_BACKUP_DELAY])
                 ->setDoFillTimeLine(fillTimeLine: '1' === $data[static::FORM_FIELD_FILL_TIME_LINE])
                 ->enableTimer(useTimer: '1' === $data[static::FORM_FIELD_USE_TIMER])
                 ->setPrecisionDue(precisionDue: $data[static::FORM_FIELD_PRECISION_DUE])
@@ -77,6 +80,11 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_KEEP_BACKUPS))
         ;
+        $data[static::FORM_FIELD_BACKUP_DELAY]     = (new \Laminas\Filter\FilterChain())
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToInt())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_BACKUP_DELAY))
+        ;
         $data[static::FORM_FIELD_FILL_TIME_LINE]   = (new \Laminas\Filter\FilterChain())
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
@@ -100,6 +108,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
                                                                                           static::FORM_FIELD_KEEP_BACKUPS     => [
+                                                                                          ],
+                                                                                          static::FORM_FIELD_BACKUP_DELAY     => [
                                                                                           ],
                                                                                           static::FORM_FIELD_FILL_TIME_LINE   => [
                                                                                           ],

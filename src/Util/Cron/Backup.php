@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Cron;
 
@@ -8,13 +8,12 @@ class Backup
 {
     public function __construct()
     {
-        $now     = \Carbon\Carbon::now();
-        $lastRun = \DoEveryApp\Util\Registry::getInstance()
-                                            ->getLastBackup()
-        ;
+        $now      = \Carbon\Carbon::now();
+        $registry = \DoEveryApp\Util\Registry::getInstance();
+        $lastRun  = $registry->getLastBackup();
         if (null !== $lastRun) {
             $lastRun = \Carbon\Carbon::create(year: $lastRun);
-            $lastRun->addHours(2);
+            $lastRun->addHours(value: $registry->backupDelay());
             if ($lastRun->gt($now)) {
                 return;
             }
@@ -25,7 +24,22 @@ class Backup
 
         $now = \Carbon\Carbon::now();
 
-        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad(string: '' . $now->month, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad(string: '' . $now->day, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
+        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad(string  : '' . $now->month, length: 2, pad_string: '0',
+                                                                                                                                 pad_type: STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad(string    : '' . $now->day,
+                                                                                                                                                                                         length    : 2,
+                                                                                                                                                                                         pad_string: '0',
+
+                                                                                                                                                                                         pad_type  : STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
+        $path = implode(
+            separator: DIRECTORY_SEPARATOR,
+            array    : [
+                           \ROOT_DIR,
+                           'backups',
+                           $now->year,
+                           str_pad(string: '' . $now->month, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
+                           str_pad(string: '' . $now->day, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
+                       ],
+        );
         if (false === \is_dir(filename: $path)) {
             mkdir(directory: $path, permissions: 0777, recursive: true);
         }
@@ -34,8 +48,6 @@ class Backup
 
         exec(command: $command);
 
-        \DoEveryApp\Util\Registry::getInstance()
-                                 ->setLastBackup(lastBackup: \Carbon\Carbon::now())
-        ;
+        $registry->setLastBackup(lastBackup: \Carbon\Carbon::now());
     }
 }

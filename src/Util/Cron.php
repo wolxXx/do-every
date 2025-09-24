@@ -10,7 +10,6 @@ class Cron
 {
     public function __construct()
     {
-        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'start cron object');
         if (true === Registry::getInstance()->isCronRunning()) {
             if (null !== Registry::getInstance()->getCronStarted() && \Carbon\Carbon::instance(Registry::getInstance()->getCronStarted())->addMinutes(value: 30)->lt(Carbon::now())) {
                 try {
@@ -23,7 +22,6 @@ class Cron
                         ->setNotifierRunning(notifierRunning: false)
                 ;
             }
-            DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron is already running.');
 
             return;
         }
@@ -35,7 +33,6 @@ class Cron
             $lastCron = \Carbon\Carbon::create(year: $lastCron);
             $lastCron->addMinutes(5);
             if ($lastCron->gt($now)) {
-                DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron has no due...');
 
                 return;
             }
@@ -44,18 +41,6 @@ class Cron
                 ->setCronRunning(cronRunning: true)
                 ->setCronStarted(cronStarted: \Carbon\Carbon::now())
         ;
-
-        \DoEveryApp\Util\DependencyContainer::getInstance()
-                                            ->getLogger()
-                                            ->debug(message: 'bar')
-        ;
-
-        echo "foo";
-        echo "foo";
-        echo "foo";
-        echo "foo";
-
-        \DoEveryApp\Util\Debugger::debug('asdf');
 
         \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\Backup();
@@ -71,7 +56,7 @@ class Cron
 
         Registry::getInstance()
                 ->setLastCron(lastCron: \Carbon\Carbon::now())
+                ->setCronRunning(cronRunning: false)
         ;
-        Registry::getInstance()->setCronRunning(cronRunning: false);
     }
 }

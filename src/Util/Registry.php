@@ -14,6 +14,8 @@ final class Registry
 
     public const string KEY_FILL_TIME_LINE              = '49a4421b-b6f4-458e-a7cd-5253a78305db';
 
+    public const string KEY_BACKUP_DELAY                = 'f6b5ea472-1fc6-47e2-8f3b-89fbf41c4a49';
+
     public const string KEY_KEEP_BACKUP_DAYS            = 'fbc976e8-629c-4f49-b17c-88a82482def3';
 
     public const string KEY_LAST_BACKUP                 = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
@@ -91,7 +93,7 @@ final class Registry
         if (false === $this->rowExists(key: $key)) {
             \DoEveryApp\Entity\Registry::getRepository()
                                        ->create(entity: $registry = new \DoEveryApp\Entity\Registry()
-                                           ->setKey(key: $key)
+                                           ->setKey(key: $key),
                                        )
             ;
 
@@ -433,6 +435,22 @@ final class Registry
             registry: $this
                           ->getOrCreateRow(key: self::KEY_MARKDOWN_TRANSFORMER_ACTIVE)
                           ->setBoolValue(boolValue: $active),
+        );
+    }
+
+    public function backupDelay(): int
+    {
+        return $this
+            ->getRow(key: self::KEY_BACKUP_DELAY)
+            ?->getIntValue() ?: 2;
+    }
+
+    public function setBackupDelay(?int $delay): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_BACKUP_DELAY)
+                          ->setIntValue(intValue: $delay),
         );
     }
 }
