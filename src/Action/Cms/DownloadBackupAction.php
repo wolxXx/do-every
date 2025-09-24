@@ -24,6 +24,7 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
+        \DoEveryApp\Util\QueryLogger::$disabled = true;
         $requestedFile = \base64_decode(string: $this->getArgumentSafe(argumentName: 'path'));
         if ('all' === $requestedFile) {
             try {
