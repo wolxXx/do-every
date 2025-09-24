@@ -17,5 +17,6 @@ declare(strict_types=1);
     <?= $translator->help() ?>
 </h1>
 
-klappt was nicht? Mail an  do-every@kwatsh.de schicken! Wir helfen dir gerne :)
+Klappt was nicht? Mail an do-every@kwatsh.de schicken! Wir helfen dir gerne :)<br />
+do every* ist open source auf <a target="_blank" href="https://github.com/wolxXx/do-every/issues">GitHub</a>, du kannst auch dort ein Issue erstellen. Oder einen Wunsch äußern, was dir noch fehlt.<br />
 
