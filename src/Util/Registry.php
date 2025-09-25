@@ -14,6 +14,8 @@ final class Registry
 
     public const string KEY_FILL_TIME_LINE              = '49a4421b-b6f4-458e-a7cd-5253a78305db';
 
+    public const string KEY_BACKUP_DELAY                = 'f6b5ea472-1fc6-47e2-8f3b-89fbf41c4a49';
+
     public const string KEY_KEEP_BACKUP_DAYS            = 'fbc976e8-629c-4f49-b17c-88a82482def3';
 
     public const string KEY_LAST_BACKUP                 = 'e16ede03-9703-4ce3-a075-88d4a64706cb';
@@ -39,6 +41,8 @@ final class Registry
     public const string KEY_DAV_PASSWORD                = '52ea3f65-81f2-4347-86b9-5a9fce56cfdd';
 
     public const string KEY_MARKDOWN_TRANSFORMER_ACTIVE = '941dd2a5-b648-4ce1-9403-cc88b8a22793';
+
+    public const string KEY_PASSWORD_CHANGE_INTERVAL    = '3615d010-1f86-4b3d-a936-4c2139ae70f0';
 
     private static Registry $instance;
 
@@ -91,7 +95,7 @@ final class Registry
         if (false === $this->rowExists(key: $key)) {
             \DoEveryApp\Entity\Registry::getRepository()
                                        ->create(entity: $registry = new \DoEveryApp\Entity\Registry()
-                                           ->setKey(key: $key)
+                                           ->setKey(key: $key),
                                        )
             ;
 
@@ -433,6 +437,38 @@ final class Registry
             registry: $this
                           ->getOrCreateRow(key: self::KEY_MARKDOWN_TRANSFORMER_ACTIVE)
                           ->setBoolValue(boolValue: $active),
+        );
+    }
+
+    public function backupDelay(): int
+    {
+        return $this
+            ->getRow(key: self::KEY_BACKUP_DELAY)
+            ?->getIntValue() ?? 2;
+    }
+
+    public function setBackupDelay(?int $delay): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_BACKUP_DELAY)
+                          ->setIntValue(intValue: $delay),
+        );
+    }
+
+    public function passwordChangeInterval(): int
+    {
+        return $this
+            ->getRow(key: self::KEY_PASSWORD_CHANGE_INTERVAL)
+            ?->getIntValue() ?? 3;
+    }
+
+    public function setPasswordChangeInterval(?int $interval): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_PASSWORD_CHANGE_INTERVAL)
+                          ->setIntValue(intValue: $interval),
         );
     }
 }

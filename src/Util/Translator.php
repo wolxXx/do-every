@@ -611,4 +611,8 @@ interface Translator
     public function dueDate(): string;
 
     public function remindDate(): string;
+
+    public function backupDelay(): string;
+
+    public function passwordChangeInterval(): string;
 }

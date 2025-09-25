@@ -1292,4 +1292,16 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function backupDelay(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passwordChangeInterval(): string
+    {
+        return $this->debug();
+    }
 }

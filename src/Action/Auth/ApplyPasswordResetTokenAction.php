@@ -12,8 +12,7 @@ namespace DoEveryApp\Action\Auth;
     ],
     authRequired: false
 )]
-class ApplyPasswordResetTokenAction extends
-    \DoEveryApp\Action\AbstractAction
+class ApplyPasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
@@ -22,10 +21,7 @@ class ApplyPasswordResetTokenAction extends
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         if (true === $this->isGetRequest()) {
-            return $this->render(
-                script: 'action/auth/applyPasswordResetToken',
-                data  : ['data' => []],
-            );
+            return $this->render(script: 'action/auth/applyPasswordResetToken');
         }
         $data = [];
         try {
@@ -70,19 +66,19 @@ class ApplyPasswordResetTokenAction extends
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_TOKEN] = new \Laminas\Filter\FilterChain()
-            ->attach(callback: new \Laminas\Filter\StringTrim())
-            ->attach(callback: new \Laminas\Filter\ToNull())
-            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_TOKEN))
-        ;
+        $fields = [];
+        {
+            $data[static::FORM_FIELD_TOKEN]   = new \Laminas\Filter\FilterChain()
+                ->attach(callback: new \Laminas\Filter\StringTrim())
+                ->attach(callback: new \Laminas\Filter\ToNull())
+                ->filter(value: $this->getFromBody(key: static::FORM_FIELD_TOKEN))
+            ;
+            $fields[static::FORM_FIELD_TOKEN] = [
+                new \Symfony\Component\Validator\Constraints\NotBlank(),
+            ];
+        }
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
-                                                                                          static::FORM_FIELD_TOKEN => [
-                                                                                              new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                          ],
-                                                                                      ]);
-
-        $this->validate(data: $data, validators: $validators);
+        $this->validate(data: $data, validators: new \Symfony\Component\Validator\Constraints\Collection(fields: $fields));
 
         return $data;
     }

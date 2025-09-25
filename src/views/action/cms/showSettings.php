@@ -33,7 +33,7 @@ declare(strict_types=1);
                 <?= $translator->value() ?>
             </th>
             <th>
-                <?= $translator->actions() ?>
+                <?= $translator->actions() ?> / <?= $translator->note() ?>
             </th>
         </tr>
     </thead>
@@ -53,6 +53,17 @@ declare(strict_types=1);
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
             </td>
+            <td>
+                Nachkommastellen
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->backupDelay() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->backupDelay() ?>
+            </td>
         </tr>
         <tr>
             <td>
@@ -60,6 +71,17 @@ declare(strict_types=1);
             </td>
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->passwordChangeInterval() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->passwordChangeInterval() ?>
+            </td>
+            <td>
+                0 bedeutet keine
             </td>
         </tr>
         <tr>
@@ -87,10 +109,10 @@ declare(strict_types=1);
             </td>
             <td>
                 <a href="<?= \DoEveryApp\Action\Cms\DisableDavAction::getRoute() ?>">
-                    delete
+                    <?= $translator->delete() ?>
                 </a>
                 <a href="<?= \DoEveryApp\Action\Cms\ResetDavAction::getRoute() ?>">
-                    reset
+                    <?= $translator->reset() ?>
                 </a>
                 <br />
                 <?= $translator->davUser() ?>: <?= \DoEveryApp\Util\Registry::getInstance()->getDavUser() ?><br />

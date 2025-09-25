@@ -1304,4 +1304,16 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Erinnerungsdatum';
     }
+
+    #[\Override]
+    public function backupDelay(): string
+    {
+        return 'Backup-Interval (in Stunden)';
+    }
+
+    #[\Override]
+    public function passwordChangeInterval(): string
+    {
+        return 'Passwortänderungsintervall (in Monaten)';
+    }
 }
