@@ -52,7 +52,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="replaceMe" id="executionList">
                 <?php foreach($executions as $execution): ?>
                     <tr>
                         <td>
@@ -86,7 +86,7 @@ $durations = \DoEveryApp\Definition\Durations::FactoryForGlobal();
         </table>
 
     </div>
-    <div class="column">
+    <div class="column replaceMe" id="statistics">
         <?= $this->fetchTemplate(template: 'partial/durations.php', data: ['durations' => $durations]) ?>
         <div>
             <table class="table">

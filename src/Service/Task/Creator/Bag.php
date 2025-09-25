@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Service\Task\Creator;
 
@@ -9,6 +9,8 @@ class Bag
     protected ?\DoEveryApp\Entity\Group            $group            = null;
 
     protected string                               $name;
+
+    protected \DoEveryApp\Definition\TaskType      $taskType         = \DoEveryApp\Definition\TaskType::RELATIVE;
 
     protected ?\DoEveryApp\Definition\IntervalType $intervalType     = null;
 
@@ -27,6 +29,8 @@ class Bag
     protected ?\DoEveryApp\Entity\Worker           $workingOn        = null;
 
     protected ?string                              $note             = null;
+    protected ?string                              $dueDate          = null;
+    protected ?string                              $remindDate       = null;
 
     public function getGroup(): ?\DoEveryApp\Entity\Group
     {
@@ -51,6 +55,19 @@ class Bag
 
         return $this;
     }
+
+    public function getTaskType(): \DoEveryApp\Definition\TaskType
+    {
+        return $this->taskType;
+    }
+
+    public function setTaskType(\DoEveryApp\Definition\TaskType $taskType): static
+    {
+        $this->taskType = $taskType;
+
+        return $this;
+    }
+
 
     public function getIntervalType(): ?\DoEveryApp\Definition\IntervalType
     {
@@ -148,14 +165,26 @@ class Bag
         return $this;
     }
 
-    public function isElapsingCronType(): bool
+    public function getDueDate(): ?string
     {
-        return $this->elapsingCronType;
+        return $this->dueDate;
     }
 
-    public function setElapsingCronType(bool $elapsingCronType): static
+    public function setDueDate(?string $dueDate): static
     {
-        $this->elapsingCronType = $elapsingCronType;
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    public function getRemindDate(): ?string
+    {
+        return $this->remindDate;
+    }
+
+    public function setRemindDate(?string $remindDate): static
+    {
+        $this->remindDate = $remindDate;
 
         return $this;
     }

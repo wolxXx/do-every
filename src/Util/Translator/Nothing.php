@@ -1264,6 +1264,36 @@ class Nothing implements \DoEveryApp\Util\Translator
     }
 
     #[\Override]
+    public function taskType(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function intervalTypeOneTime(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function clone(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function dueDate(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function remindDate(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
     public function backupDelay(): string
     {
         return $this->debug();

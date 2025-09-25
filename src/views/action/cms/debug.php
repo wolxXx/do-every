@@ -19,7 +19,7 @@ declare(strict_types=1);
 <h1>
     Debug
 </h1>
-<fieldset>
+<fieldset id="settings" class="replaceMe">
     <legend>
         <?= $translator->settings() ?>
     </legend>
@@ -180,6 +180,17 @@ declare(strict_types=1);
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    markdown nutzen:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isMarkdownTransformerActive()) ?>
                 </td>
                 <td>
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>

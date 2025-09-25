@@ -6,19 +6,23 @@ namespace DoEveryApp\Util\View;
 
 class IntervalHelper
 {
-    public static function getElapsingTypeByTask(\DoEveryApp\Entity\Task $task): string
+    public static function getTypeByTask(\DoEveryApp\Entity\Task $task): string
     {
-        return static::getElapsingTypeByBoolean($task->isElapsingCronType());
+        return static::getType($task->getType());
     }
 
-    public static function getElapsingTypeByBoolean(bool $elapsing): string
+    public static function getTypeByTaskString(string $taskType): string
     {
-        $translator = \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator();
-        if (true === $elapsing) {
-            return $translator->intervalTypeRelative();
-        }
+        return static::getType(\DoEveryApp\Definition\TaskType::from(value: $taskType));
+    }
 
-        return $translator->intervalTypeCyclic();
+    public static function getType(\DoEveryApp\Definition\TaskType $type): string
+    {
+        return match($type->value) {
+            \DoEveryApp\Definition\TaskType::CYCLIC->value => \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->intervalTypeCyclic(),
+            \DoEveryApp\Definition\TaskType::RELATIVE->value => \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->intervalTypeRelative(),
+            \DoEveryApp\Definition\TaskType::ONE_TIME->value => \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->intervalTypeOneTime(),
+        };
     }
 
     public static function get(\DoEveryApp\Entity\Task $task): string
