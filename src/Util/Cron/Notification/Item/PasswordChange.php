@@ -14,7 +14,7 @@ class PasswordChange implements ItemInterface
     #[\Override]
     public function getContent(): string
     {
-        $message = 'Du solltest dein Passwort ändern.';
+        $message = 'Du solltest dein Passwort ändern.' . \PHP_EOL;
         if (null !== $this->lastChange) {
             $message .= 'Das letzte mal war am ' . $this->lastChange->format('d.m.Y');
         }
