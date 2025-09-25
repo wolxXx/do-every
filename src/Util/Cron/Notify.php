@@ -58,6 +58,9 @@ class Notify
             if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $worker)) {
                 $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\PasswordChange(lastChange: $worker->getLastPasswordChange()));
             }
+            if (null === $worker->getTwoFactorSecret()) {
+                $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\TwoFactorAdd());
+            }
         }
         $tasks = \DoEveryApp\Entity\Task::getRepository()->findAll();
         $tasks = \array_filter(array: $tasks, callback: function(\DoEveryApp\Entity\Task $task) {
