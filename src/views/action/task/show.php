@@ -52,9 +52,11 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\EditAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::edit() ?>
+        <?= $translator->edit() ?>
     </a>
     <a class="primaryButton" href="<?= \DoEveryApp\Action\Task\CloneAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::clone() ?>
+        <?= $translator->clone() ?>
     </a>
     <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTask(name: $task->getName()))  ?>" href="<?= \DoEveryApp\Action\Task\ResetAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::refresh() ?>
@@ -75,6 +77,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
 
     <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteTask(name: $task->getName())) ?>" href="<?= \DoEveryApp\Action\Task\DeleteAction::getRoute(id: $task->getId()) ?>">
         <?= \DoEveryApp\Util\View\Icon::trash() ?>
+        <?= $translator->delete() ?>
     </a>
 </div>
 
@@ -92,7 +95,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
 
             <?= $translator->interval() ?>: <?= \DoEveryApp\Util\View\IntervalHelper::get(task: $task) ?>
             <?php if(null !== $task->getIntervalType()): ?>
-                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask(task: $task) ?>)
+                (<?= \DoEveryApp\Util\View\IntervalHelper::getTypeByTask(task: $task) ?>)
             <?php endif ?>
             |
 

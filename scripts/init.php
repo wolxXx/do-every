@@ -12,7 +12,7 @@ if (true === $hasSomething) {
 }
 
 $you     = \DoEveryApp\Service\Worker\Creator::execute(
-    bag: (new \DoEveryApp\Service\Worker\Creator\Bag())
+    bag: new \DoEveryApp\Service\Worker\Creator\Bag()
         ->setName(name: 'Mazel Tov')
         ->setIsAdmin(admin: true)
         ->setEmail(email: 'do-every@kwatsh.de')
@@ -21,7 +21,7 @@ $you     = \DoEveryApp\Service\Worker\Creator::execute(
 $workers = [];
 foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
     $workers[] = \DoEveryApp\Service\Worker\Creator::execute(
-        bag: (new \DoEveryApp\Service\Worker\Creator\Bag())
+        bag: new \DoEveryApp\Service\Worker\Creator\Bag()
             ->setName(name: 'worker' . $counter)
     );
 }
@@ -29,7 +29,7 @@ foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
 $groups = [];
 foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
     $group    = \DoEveryApp\Service\Task\Group\Creator::execute(
-        bag: (new \DoEveryApp\Service\Task\Group\Creator\Bag())
+        bag: new \DoEveryApp\Service\Task\Group\Creator\Bag()
             ->setName(name: 'group' . $counter)
             ->setColor(color: rand(min: 0, max: 100) > 80 ? \Faker\Factory::create()->hexColor() : null)
     );
@@ -46,11 +46,12 @@ $types = [
 
 foreach (range(start: 0, end: 20) as $counter) {
     $task = \DoEveryApp\Service\Task\Creator::execute(
-        bag: (new \DoEveryApp\Service\Task\Creator\Bag())
+        bag: new \DoEveryApp\Service\Task\Creator\Bag()
             ->setGroup(group: rand(min: 0, max: 100) > 50 ? $groups[array_rand(array: $groups)] : null)
             ->setAssignee(assignee: rand(min: 0, max: 100) > 50 ? $workers[array_rand(array: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
             ->setWorkingOn(workingOn: rand(min: 0, max: 100) > 50 ? $workers[array_rand(array: $workers)] : (rand(min: 0, max: 100) > 50 ? $you : null))
             ->setName(name: 'task' . $counter)
+            ->setTaskType(taskType: \DoEveryApp\Definition\TaskType::RELATIVE)
             ->setIntervalValue(intervalValue: rand(min: 1, max: 50))
             ->setIntervalType(intervalType: $types[array_rand(array: $types)])
             ->enableNotifications(notify: false)
@@ -60,7 +61,7 @@ foreach (range(start: 0, end: 20) as $counter) {
         continue;
     }
     \DoEveryApp\Service\Task\Execution\Creator::execute(
-        bag: (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
+        bag: new \DoEveryApp\Service\Task\Execution\Creator\Bag()
             ->setTask(task: $task)
             ->setDate(date: \Faker\Factory::create()->dateTime)
             ->setWorker(worker: $workers[array_rand(array: $workers)])

@@ -473,7 +473,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function days(): string
     {
-        return 'Tagen';
+        return 'Tage';
     }
 
 
@@ -499,7 +499,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function months(): string
     {
-        return 'Monaten';
+        return 'Monate';
     }
 
     #[\Override]
@@ -511,7 +511,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function years(): string
     {
-        return 'Jahren';
+        return 'Jahre';
     }
 
     #[\Override]
@@ -1273,5 +1273,35 @@ class German implements \DoEveryApp\Util\Translator
     public function runningTimer(): string
     {
         return 'laufende Stoppuhr';
+    }
+
+    #[\Override]
+    public function taskType(): string
+    {
+        return 'Aufgabentyp';
+    }
+
+    #[\Override]
+    public function intervalTypeOneTime(): string
+    {
+        return 'einmalig';
+    }
+
+    #[\Override]
+    public function clone(): string
+    {
+        return 'duplizieren';
+    }
+
+    #[\Override]
+    public function dueDate(): string
+    {
+        return 'Fälligkeitsdatum';
+    }
+
+    #[\Override]
+    public function remindDate(): string
+    {
+        return 'Erinnerungsdatum';
     }
 }

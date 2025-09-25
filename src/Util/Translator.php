@@ -601,4 +601,14 @@ interface Translator
     public function now(): string;
 
     public function runningTimer(): string;
+
+    public function taskType(): string;
+
+    public function intervalTypeOneTime(): string;
+
+    public function clone(): string;
+
+    public function dueDate(): string;
+
+    public function remindDate(): string;
 }

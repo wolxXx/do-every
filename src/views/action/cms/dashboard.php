@@ -28,42 +28,10 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
 </h1>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        setInterval(function () {
-            fetch('/', {
-                method: 'GET',
-            })
-                .then(response => {
-                    return response.text();
-                })
-                .then(data => {
-                    const parser = new DOMParser()
-                    const doc = parser.parseFromString(data, "text/html")
-                    let replaces = [
-                        'passwordChange',
-                        'twoFactor',
-                        'workingOn',
-                        'dueTasks',
-                        'tasks',
-                        'executions',
-                    ];
-                    replaces.forEach(id => {
-                        let replace = ''
-                        if (doc.getElementById(id)) {
-                            replace = doc.getElementById(id).innerHTML
-                        }
-                        document.getElementById(id).innerHTML = replace
-                    })
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                });
-        }, 10000);
-    });
-
+    const local_timeout = 3000;
 </script>
 
-<div id="passwordChange">
+<div id="passwordChange" class="replaceMe">
     <?php if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $currentUser)): ?>
         <fieldset>
             <legend>
@@ -79,7 +47,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
         </fieldset>
     <?php endif ?>
 </div>
-<div id="twoFactor">
+<div id="twoFactor" class="replaceMe">
     <?php if (null === $currentUser->getTwoFactorSecret()): ?>
         <fieldset>
             <legend>
@@ -92,7 +60,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
         </fieldset>
     <?php endif ?>
 </div>
-<div id="workingOn">
+<div id="workingOn" class="replaceMe">
     <?php if (0 !== count(value: $workingOn)): ?>
         <fieldset>
             <legend>
@@ -137,7 +105,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
         </fieldset>
     <?php endif ?>
 </div>
-<div id="dueTasks">
+<div id="dueTasks" class="replaceMe">
     <?php if (0 !== count(value: $dueTasks)): ?>
         <fieldset>
             <legend>
@@ -159,6 +127,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
                                         (<?= $translator->isCurrentlyWorkingOn(who: \DoEveryApp\Util\View\Worker::get(worker: $workingOnTask->getWorkingOn())) ?>)
                                     <?php endif ?>
                                 <?php endforeach ?>
+                                (<?= \DoEveryApp\Util\View\IntervalHelper::getType(type: $task->getType()) ?>)
                             </a>
                         </nobr>
                     </div>
@@ -167,7 +136,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
         </fieldset>
     <?php endif ?>
 </div>
-<div id="tasks">
+<div id="tasks" class="replaceMe">
     <?php if (0 !== count(value: $tasks)): ?>
         <fieldset>
             <legend>
@@ -237,7 +206,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
                         <td>
                             <?= \DoEveryApp\Util\View\IntervalHelper::get(task: $task) ?>
                             <?php if(null !== $task->getIntervalType()): ?>
-                                (<?= \DoEveryApp\Util\View\IntervalHelper::getElapsingTypeByTask(task: $task) ?>)
+                                (<?= \DoEveryApp\Util\View\IntervalHelper::getTypeByTask(task: $task) ?>)
                             <?php endif ?>
                         </td>
                         <td class="pullRight">
@@ -266,7 +235,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
 
 <hr>
 
-<div id="executions">
+<div id="executions" class="replaceMe">
     <div class="row">
         <div class="column">
             <fieldset>
@@ -336,7 +305,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
     </div>
 </div>
 
-<div id="disabledTasks">
+<div id="disabledTasks" class="replaceMe">
     <?php if (0 !== count(value: $disabledTasks)): ?>
         <fieldset>
             <legend>

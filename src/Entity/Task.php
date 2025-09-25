@@ -91,16 +91,6 @@ class Task
     protected ?int              $intervalValue    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
-        name    : 'is_elapsing_cron_type',
-        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
-        nullable: false,
-        options : [
-            "default" => 1,
-        ],
-    )]
-    protected bool              $elapsingCronType = true;
-
-    #[\Doctrine\ORM\Mapping\Column(
         name    : 'priority',
         type    : \Doctrine\DBAL\Types\Types::INTEGER,
         nullable: false
@@ -133,6 +123,36 @@ class Task
         nullable: true
     )]
     protected ?string $note   = null;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'type',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        options : [
+            "default" => \DoEveryApp\Definition\TaskType::RELATIVE->value,
+        ],
+    )]
+    protected string $type;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'due_date',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $dueDate = null;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'remind_date',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $remindDate = null;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'is_done',
+        type    : \Doctrine\DBAL\Types\Types::BOOLEAN,
+        nullable: true
+    )]
+    protected ?bool $done = null;
 
     public function __construct()
     {
@@ -191,6 +211,13 @@ class Task
 
     public function getDueValue(): int|float|null
     {
+        if (\DoEveryApp\Definition\TaskType::ONE_TIME === $this->getType()) {
+            if(null === $this->getDueDate()) {
+                return $this->calculateDue(due: \Carbon\Carbon::now());
+            }
+            return $this->calculateDue(due: \Carbon\Carbon::create($this->getDueDate()));
+        }
+
         if (true === isset($this->dueCacheValue)) {
             return $this->dueCacheValue;
         }
@@ -211,7 +238,6 @@ class Task
             return $this->dueCacheValue;
         }
         $due = \Carbon\Carbon::create(year: $lastExecution->getDate());
-        $now = \Carbon\Carbon::now();
         switch ($this->getIntervalType()) {
             case \DoEveryApp\Definition\IntervalType::MINUTE->value:
             {
@@ -437,16 +463,51 @@ class Task
         return $this;
     }
 
-    public function isElapsingCronType(): bool
+    public function getType(): \DoEveryApp\Definition\TaskType
     {
-        return $this->elapsingCronType;
+        return \DoEveryApp\Definition\TaskType::from($this->type);
     }
 
-    public function setElapsingCronType(bool $elapsingCronType): static
+    public function setType(\DoEveryApp\Definition\TaskType $type): static
     {
-        $this->elapsingCronType = $elapsingCronType;
+        $this->type = $type->value;
 
         return $this;
     }
 
+    public function getDueDate(): ?\DateTime
+    {
+        return $this->dueDate;
+    }
+
+    public function setDueDate(?\DateTime $dueDate): static
+    {
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    public function getRemindDate(): ?\DateTime
+    {
+        return $this->remindDate;
+    }
+
+    public function setRemindDate(?\DateTime $remindDate): static
+    {
+        $this->remindDate = $remindDate;
+
+        return $this;
+    }
+
+    public function isDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(?bool $done): static
+    {
+        $this->done = $done;
+
+        return $this;
+    }
 }
