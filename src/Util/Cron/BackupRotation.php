@@ -8,16 +8,16 @@ class BackupRotation
 {
     public function __construct()
     {
-        $now = \Carbon\Carbon::now();
-        \DoEveryApp\Util\DependencyContainer::getInstance()
-                                            ->getLogger()
-                                            ->debug(message: 'backup rotation')
-        ;
-        $path      = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
-        $Directory = new \RecursiveDirectoryIterator(directory: $path);
-        $Iterator  = new \RecursiveIteratorIterator(iterator: $Directory);
-        $Regex     = new \RegexIterator(iterator: $Iterator, pattern: '/^.+\.sql/i', mode: \RegexIterator::GET_MATCH);
-        foreach ($Regex as $files) {
+        $now           = \Carbon\Carbon::now();
+        $path          = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR;
+        $Directory     = new \RecursiveDirectoryIterator(directory: $path);
+        $Iterator      = new \RecursiveIteratorIterator(iterator: $Directory);
+        $regexIterator = new \RegexIterator(
+            iterator: $Iterator,
+            pattern : '/^.+\.sql/i',
+            mode    : \RegexIterator::GET_MATCH,
+        );
+        foreach ($regexIterator as $files) {
             foreach ($files as $file) {
                 $realPath     = \realpath(path: $file);
                 $fileName     = basename(path: $realPath);
@@ -46,7 +46,7 @@ class BackupRotation
             if (false === \rmdir(directory: $path)) {
                 \DoEveryApp\Util\DependencyContainer::getInstance()
                                                     ->getLogger()
-                                                    ->error(message: 'Failed to delete empty directory: ' . $path)
+                                                    ->error(message: 'Failed to delete directory: ' . $path)
                 ;
             }
 

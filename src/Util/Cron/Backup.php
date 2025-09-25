@@ -22,14 +22,7 @@ class Backup
         $dbParams = require \ROOT_DIR . \DIRECTORY_SEPARATOR . 'doctrineConfiguration.php';
         $command  = 'mysqldump --column-statistics=0 -u%s -p%s -P%s -h%s --triggers --routines --single-transaction %s > %s';
 
-        $now = \Carbon\Carbon::now();
-
-        $path = \ROOT_DIR . \DIRECTORY_SEPARATOR . 'backups' . \DIRECTORY_SEPARATOR . $now->year . DIRECTORY_SEPARATOR . str_pad(string  : '' . $now->month, length: 2, pad_string: '0',
-                                                                                                                                 pad_type: STR_PAD_LEFT) . DIRECTORY_SEPARATOR . str_pad(string    : '' . $now->day,
-                                                                                                                                                                                         length    : 2,
-                                                                                                                                                                                         pad_string: '0',
-
-                                                                                                                                                                                         pad_type  : STR_PAD_LEFT) . \DIRECTORY_SEPARATOR;
+        $now  = \Carbon\Carbon::now();
         $path = implode(
             separator: DIRECTORY_SEPARATOR,
             array    : [
@@ -38,7 +31,7 @@ class Backup
                            $now->year,
                            str_pad(string: '' . $now->month, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
                            str_pad(string: '' . $now->day, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
-                ''
+                           ''
                        ],
         );
         if (false === \is_dir(filename: $path)) {
