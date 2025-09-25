@@ -22,8 +22,6 @@ class Cron
                         ->setNotifierRunning(notifierRunning: false)
                 ;
             }
-
-            return;
         }
         $now      = \Carbon\Carbon::now();
         $lastCron = \DoEveryApp\Util\Registry::getInstance()
@@ -34,25 +32,31 @@ class Cron
             $lastCron->addMinutes(5);
             if ($lastCron->gt($now)) {
 
+                DependencyContainer::getInstance()->getLogger()->debug(message: 'cron has no due');
                 return;
             }
         }
+        DependencyContainer::getInstance()->getLogger()->debug(message: 'Cron started');
         Registry::getInstance()
                 ->setCronRunning(cronRunning: true)
                 ->setCronStarted(cronStarted: \Carbon\Carbon::now())
         ;
-
+        \Amp\async(closure: function (): void {
+            new \DoEveryApp\Util\Cron\Notify();
+        });
         \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\Backup();
         });
         \Amp\async(closure: function (): void {
             new \DoEveryApp\Util\Cron\BackupRotation();
         });
-        \Amp\async(closure: function (): void {
-            new \DoEveryApp\Util\Cron\Notify();
-        });
+
 
         \Revolt\EventLoop::run();
+
+        DependencyContainer::getInstance()
+            ->getLogger()
+            ->debug(message: 'Cron finished');;
 
         Registry::getInstance()
                 ->setLastCron(lastCron: \Carbon\Carbon::now())

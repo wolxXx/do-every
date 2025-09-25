@@ -13,6 +13,8 @@ class Notify
 
     public function __construct()
     {
+        $alive = 0;
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++);
         $now = \Carbon\Carbon::now();
         $notifierLastRun = \DoEveryApp\Util\Registry::getInstance()
                                                     ->getNotifierLastRun()
@@ -24,15 +26,20 @@ class Notify
             $force = true;
         }
 
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++);
         if (
             true === \DoEveryApp\Util\Registry::getInstance()
                                               ->isNotifierRunning()
         ) {
             if (true !== $force) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()
+                    ->getLogger()
+                    ->info(message: 'notifier already running')
+                    ;
                 return;
             }
         }
-
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         \DoEveryApp\Util\Registry::getInstance()
                                  ->setNotifierRunning(notifierRunning: true)
         ;
@@ -44,6 +51,7 @@ class Notify
         $workers = \DoEveryApp\Entity\Worker::getRepository()
                                             ->findAll()
         ;
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         $workers = \array_filter(array: $workers, callback: function(\DoEveryApp\Entity\Worker $worker) use ($now) {
             if (null === $worker->getEmail() || false === $worker->doNotify()) {
                 return false;
@@ -63,17 +71,18 @@ class Notify
 
             return $diff->d > 0 || $diff->h > 22;
         });
-
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         foreach ($workers as $worker) {
             $this->containers[$worker->getId()] = new \DoEveryApp\Util\Cron\Notification\Container(worker: $worker);
             if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $worker)) {
                 $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\PasswordChange(lastChange: $worker->getLastPasswordChange()));
             }
         }
-
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         $tasks = \DoEveryApp\Entity\Task::getRepository()
                                         ->findAll()
         ;
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         $tasks = \array_filter(array: $tasks, callback: function(\DoEveryApp\Entity\Task $task) {
             if (false === $task->isActive()) {
                 return false;
@@ -99,7 +108,9 @@ class Notify
                 $container->addItem(item: new \DoEveryApp\Util\Cron\Notification\Item\TaskDue(task: $task));
             }
         }
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         $this->notify();
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
         \DoEveryApp\Util\Registry::getInstance()
                                  ->setNotifierRunning(notifierRunning: false)
                                  ->setNotifierLastRun(notifierLastRun: \Carbon\Carbon::now())
@@ -114,8 +125,10 @@ class Notify
     {
         foreach ($this->containers as $container) {
             if (0 === $container->count()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
                 continue;
             }
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'alive: ' . $alive++ . __FILE__ . ':' . __LINE__);
             try {
                 \DoEveryApp\Util\Mailing\Notify::send(container: $container);
             } catch (\Throwable $exception) {

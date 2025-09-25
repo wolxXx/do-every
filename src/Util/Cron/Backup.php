@@ -38,6 +38,7 @@ class Backup
                            $now->year,
                            str_pad(string: '' . $now->month, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
                            str_pad(string: '' . $now->day, length: 2, pad_string: '0', pad_type: STR_PAD_LEFT),
+                ''
                        ],
         );
         if (false === \is_dir(filename: $path)) {

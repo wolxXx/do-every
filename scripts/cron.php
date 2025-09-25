@@ -3,4 +3,8 @@ defined(constant_name: 'DISABLE_DOCTRINE_TOOLS') || define(constant_name: 'DISAB
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 new \DoEveryApp\Util\Cron();
-exec(command: 'rm /tmp/__CG*');
+try {
+    exec(command: 'rm /tmp/__CG*', output: $output, result_code: $resultCode);
+} catch (\Throwable) {
+
+}
