@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoEveryApp\Util\Cron\Notification;
 
-class Container implements \Countable, \Iterable
+class Container
 {
     /**
      * @var \DoEveryApp\Util\Cron\Notification\Item\ItemInterface[]
