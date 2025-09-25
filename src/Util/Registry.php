@@ -42,6 +42,8 @@ final class Registry
 
     public const string KEY_MARKDOWN_TRANSFORMER_ACTIVE = '941dd2a5-b648-4ce1-9403-cc88b8a22793';
 
+    public const string KEY_PASSWORD_CHANGE_INTERVAL    = '3615d010-1f86-4b3d-a936-4c2139ae70f0';
+
     private static Registry $instance;
 
     private array           $map = [];
@@ -442,7 +444,7 @@ final class Registry
     {
         return $this
             ->getRow(key: self::KEY_BACKUP_DELAY)
-            ?->getIntValue() ?: 2;
+            ?->getIntValue() ?? 2;
     }
 
     public function setBackupDelay(?int $delay): static
@@ -451,6 +453,22 @@ final class Registry
             registry: $this
                           ->getOrCreateRow(key: self::KEY_BACKUP_DELAY)
                           ->setIntValue(intValue: $delay),
+        );
+    }
+
+    public function passwordChangeInterval(): int
+    {
+        return $this
+            ->getRow(key: self::KEY_PASSWORD_CHANGE_INTERVAL)
+            ?->getIntValue() ?? 3;
+    }
+
+    public function setPasswordChangeInterval(?int $interval): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: self::KEY_PASSWORD_CHANGE_INTERVAL)
+                          ->setIntValue(intValue: $interval),
         );
     }
 }

@@ -23,6 +23,12 @@ class Worker
         if (null === $worker->getPassword()) {
             return false;
         }
+        $passwordChangeInterval = \DoEveryApp\Util\Registry::getInstance()
+                                                           ->passwordChangeInterval()
+        ;
+        if (0 === $passwordChangeInterval) {
+            return false;
+        }
         if (null === $worker->getLastPasswordChange()) {
             return true;
         }
@@ -30,7 +36,7 @@ class Worker
         return \Carbon\Carbon::now()
                              ->greaterThan(
                                  date: \Carbon\Carbon::create(year: $worker->getLastPasswordChange())
-                                                     ->addMonths(value: 3),
+                                                     ->addMonths(value: $passwordChangeInterval),
                              )
         ;
     }

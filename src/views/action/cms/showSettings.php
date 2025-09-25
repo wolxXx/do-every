@@ -53,6 +53,9 @@ declare(strict_types=1);
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
             </td>
+            <td>
+                Nachkommastellen
+            </td>
         </tr>
         <tr>
             <td>
@@ -68,6 +71,17 @@ declare(strict_types=1);
             </td>
             <td>
                 <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->passwordChangeInterval() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->passwordChangeInterval() ?>
+            </td>
+            <td>
+                0 bedeutet keine
             </td>
         </tr>
         <tr>

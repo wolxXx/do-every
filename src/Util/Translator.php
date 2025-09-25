@@ -603,4 +603,6 @@ interface Translator
     public function runningTimer(): string;
 
     public function backupDelay(): string;
+
+    public function passwordChangeInterval(): string;
 }

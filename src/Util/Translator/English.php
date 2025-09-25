@@ -1277,4 +1277,10 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'backup interval (in hours)';
     }
+
+    #[\Override]
+    public function passwordChangeInterval(): string
+    {
+        return 'password change interval (in months)';
+    }
 }

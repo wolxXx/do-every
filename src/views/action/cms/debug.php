@@ -51,6 +51,17 @@ declare(strict_types=1);
             </tr>
             <tr>
                 <td>
+                    passwortänderungsinterval :<br />
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\Registry::getInstance()->passwordChangeInterval() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_PASSWORD_CHANGE_INTERVAL) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     cron läuft:
                 </td>
                 <td>
