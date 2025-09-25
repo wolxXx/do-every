@@ -43,7 +43,7 @@ class Container
         return $this->items;
     }
 
-    public function count(): int
+    public function itemCount(): int
     {
         return count($this->items);
     }
