@@ -35,6 +35,13 @@ class Worker
     #[\Doctrine\ORM\Mapping\OrderBy(["name" => "ASC"])]
     protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $tasksWorkingOn;
 
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \DoEveryApp\Entity\Worker\Credential::class,
+        mappedBy    : 'worker',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["id" => "DESC"])]
+    protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $credentials;
+
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'name',
         type    : \Doctrine\DBAL\Types\Types::STRING,
@@ -56,12 +63,6 @@ class Worker
     )]
     protected ?string                                                                         $email                       = null;
 
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'password',
-        type    : \Doctrine\DBAL\Types\Types::STRING,
-        nullable: true
-    )]
-    protected ?string                                                                         $password                    = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'is_admin',
@@ -114,64 +115,10 @@ class Worker
     )]
     protected bool                                                                            $notifyLogin                 = true;
 
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'last_password_change',
-        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
-        nullable: true
-    )]
-    protected ?\DateTime                                                                      $lastPasswordChange          = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_secret',
-        type    : \Doctrine\DBAL\Types\Types::STRING,
-        nullable: true
-    )]
-    protected ?string                                                                         $twoFactorSecret             = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_1',
-        type    : \Doctrine\DBAL\Types\Types::STRING,
-        nullable: true
-    )]
-    protected ?string                                                                         $twoFactorRecoverCode1       = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_1_used_at',
-        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
-        nullable: true
-    )]
-    protected ?\DateTime                                                                      $twoFactorRecoverCode1UsedAt = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_2',
-        type    : \Doctrine\DBAL\Types\Types::STRING,
-        nullable: true
-    )]
-    protected ?string                                                                         $twoFactorRecoverCode2       = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_2_used_at',
-        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
-        nullable: true
-    )]
-    protected ?\DateTime                                                                      $twoFactorRecoverCode2UsedAt = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_3',
-        type    : \Doctrine\DBAL\Types\Types::STRING,
-        nullable: true
-    )]
-    protected ?string                                                                         $twoFactorRecoverCode3       = null;
-
-    #[\Doctrine\ORM\Mapping\Column(
-        name    : 'two_factor_recover_code_3_used_at',
-        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
-        nullable: true
-    )]
-    protected ?\DateTime                                                                      $twoFactorRecoverCode3UsedAt = null;
 
     public function __construct()
     {
+        $this->credentials    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tasksWorkingOn = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -212,24 +159,6 @@ class Worker
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setHashedPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function setPassword(?string $password): static
-    {
-        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash(password: $password);
-
-        return $this;
-    }
 
     public function isAdmin(): bool
     {
@@ -291,18 +220,6 @@ class Worker
         return $this;
     }
 
-    public function getLastPasswordChange(): ?\DateTime
-    {
-        return $this->lastPasswordChange;
-    }
-
-    public function setLastPasswordChange(?\DateTime $lastPasswordChange): static
-    {
-        $this->lastPasswordChange = $lastPasswordChange;
-
-        return $this;
-    }
-
     public function doNotifyLogin(): bool
     {
         return $this->notifyLogin;
@@ -311,90 +228,6 @@ class Worker
     public function setNotifyLogin(bool $notifyLogin): static
     {
         $this->notifyLogin = $notifyLogin;
-
-        return $this;
-    }
-
-    public function getTwoFactorSecret(): ?string
-    {
-        return $this->twoFactorSecret;
-    }
-
-    public function setTwoFactorSecret(?string $twoFactorSecret): static
-    {
-        $this->twoFactorSecret = $twoFactorSecret;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode1(): ?string
-    {
-        return $this->twoFactorRecoverCode1;
-    }
-
-    public function setTwoFactorRecoverCode1(?string $twoFactorRecoverCode1): static
-    {
-        $this->twoFactorRecoverCode1 = $twoFactorRecoverCode1;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode1UsedAt(): ?\DateTime
-    {
-        return $this->twoFactorRecoverCode1UsedAt;
-    }
-
-    public function setTwoFactorRecoverCode1UsedAt(?\DateTime $twoFactorRecoverCode1UsedAt): static
-    {
-        $this->twoFactorRecoverCode1UsedAt = $twoFactorRecoverCode1UsedAt;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode2(): ?string
-    {
-        return $this->twoFactorRecoverCode2;
-    }
-
-    public function setTwoFactorRecoverCode2(?string $twoFactorRecoverCode2): static
-    {
-        $this->twoFactorRecoverCode2 = $twoFactorRecoverCode2;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode2UsedAt(): ?\DateTime
-    {
-        return $this->twoFactorRecoverCode2UsedAt;
-    }
-
-    public function setTwoFactorRecoverCode2UsedAt(?\DateTime $twoFactorRecoverCode2UsedAt): static
-    {
-        $this->twoFactorRecoverCode2UsedAt = $twoFactorRecoverCode2UsedAt;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode3(): ?string
-    {
-        return $this->twoFactorRecoverCode3;
-    }
-
-    public function setTwoFactorRecoverCode3(?string $twoFactorRecoverCode3): static
-    {
-        $this->twoFactorRecoverCode3 = $twoFactorRecoverCode3;
-
-        return $this;
-    }
-
-    public function getTwoFactorRecoverCode3UsedAt(): ?\DateTime
-    {
-        return $this->twoFactorRecoverCode3UsedAt;
-    }
-
-    public function setTwoFactorRecoverCode3UsedAt(?\DateTime $twoFactorRecoverCode3UsedAt): static
-    {
-        $this->twoFactorRecoverCode3UsedAt = $twoFactorRecoverCode3UsedAt;
 
         return $this;
     }

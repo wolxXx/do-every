@@ -54,6 +54,7 @@ class LoginAction extends
                 ;
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
+
             if (false === \DoEveryApp\Util\Password::verify(password: $data[static::FORM_FIELD_PASSWORD], hash: $existing->getPassword())) {
                 $this
                     ->getErrorStore()
