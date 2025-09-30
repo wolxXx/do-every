@@ -31,7 +31,7 @@ set -e
 $DOCKER_COMPOSE_CMD up -d --build --force-recreate --pull always
 docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar install"
 docker exec -it do-every-$INSTANCE-web bash -c "./install.sh"
-docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar dbFull"
+docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar db"
 set +e
 docker exec -it do-every-$INSTANCE-web bash -c "rm /tmp/__CG__*"
 docker exec -it do-every-$INSTANCE-web bash -c "echo '' > app.log"

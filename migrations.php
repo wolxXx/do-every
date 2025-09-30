@@ -15,8 +15,8 @@ return [
         'DoctrineMigrations' => '/migrations',
     ],
 
-    'all_or_nothing'          => true,
-    'transactional'           => true,
+    'all_or_nothing'          => false,
+    'transactional'           => false,
     'check_database_platform' => true,
     'organize_migrations'     => 'none',
     'connection'              => null,
