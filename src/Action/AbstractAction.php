@@ -104,9 +104,7 @@ abstract class AbstractAction
             }
         }
 
-        $this->run();
-
-        return $this;
+        return $this->setResponse($this->run());
     }
 
     abstract public function run(): \Psr\Http\Message\ResponseInterface;

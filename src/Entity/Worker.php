@@ -127,6 +127,26 @@ class Worker
         return static::getRepositoryByClassName();
     }
 
+    public function getPasswordCredential(): ?\DoEveryApp\Entity\Worker\Credential
+    {
+        return \DoEveryApp\Entity\Worker\Credential::getRepository()->findPasswordForWorker($this);
+    }
+
+    public function getPasskeyCredential(): ?\DoEveryApp\Entity\Worker\Credential
+    {
+        return \DoEveryApp\Entity\Worker\Credential::getRepository()->findPasskeyForWorker($this);
+    }
+
+    public function getLastPasswordChange(): ?\DateTime
+    {
+        return $this->getPasswordCredential()?->getLastPasswordChange();
+    }
+
+    public function getTwoFactorSecret():?string
+    {
+        return $this->getPasswordCredential()?->getTwoFactorSecret();
+    }
+
     /**
      * @return \DoEveryApp\Entity\Task[]
      */

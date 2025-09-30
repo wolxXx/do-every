@@ -20,7 +20,8 @@ class Worker
 
     public static function isTimeForPasswordChange(\DoEveryApp\Entity\Worker $worker): bool
     {
-        if (null === $worker->getPassword()) {
+        $credential = $worker->getPasswordCredential();
+        if (false === $credential instanceof \DoEveryApp\Entity\Worker\Credential) {
             return false;
         }
         $passwordChangeInterval = \DoEveryApp\Util\Registry::getInstance()
@@ -29,13 +30,13 @@ class Worker
         if (0 === $passwordChangeInterval) {
             return false;
         }
-        if (null === $worker->getLastPasswordChange()) {
+        if (null === $credential->getLastPasswordChange()) {
             return true;
         }
 
         return \Carbon\Carbon::now()
                              ->greaterThan(
-                                 date: \Carbon\Carbon::create(year: $worker->getLastPasswordChange())
+                                 date: \Carbon\Carbon::create(year: $credential->getLastPasswordChange())
                                                      ->addMonths(value: $passwordChangeInterval),
                              )
         ;

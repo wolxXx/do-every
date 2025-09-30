@@ -9,6 +9,31 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+
+    public function findPasswordForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Worker\Credential
+    {
+        return $this
+            ->createQueryBuilder(alias: 'c')
+            ->andWhere('c.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->andWhere('c.password IS NOT NULL')
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    public function findPasskeyForWorker(\DoEveryApp\Entity\Worker $worker): ?\DoEveryApp\Entity\Worker\Credential
+    {
+        return $this
+            ->createQueryBuilder(alias: 'c')
+            ->andWhere('c.worker = :worker')
+            ->setParameter('worker', $worker)
+            ->andWhere('c.passkeySecret IS NOT NULL')
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     public function create(\DoEveryApp\Entity\Worker\Credential $entity): static
     {
         $this

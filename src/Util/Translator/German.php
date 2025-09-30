@@ -1316,4 +1316,70 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Passwortänderungsintervall (in Monaten)';
     }
+
+    #[\Override]
+    public function itIsNotYou(): string
+    {
+        return 'Das bist nicht du!';
+    }
+
+    #[\Override]
+    public function hasPasskeyQuestion(): string
+    {
+        return 'hat Passkey?';
+    }
+
+    #[\Override]
+    public function reallyWantToDeletePasskey(string $name): string
+    {
+        return 'Willst du wirklich den Passkey für ' . $name . ' löschen?';
+    }
+
+    #[\Override]
+    public function removePasskey(): string
+    {
+        return 'Passkey entfernen';
+    }
+
+    #[\Override]
+    public function addPasskey(): string
+    {
+        return '+PK';
+    }
+
+    #[\Override]
+    public function passkeyDeleted(): string
+    {
+        return 'Passkey entfernt';
+    }
+
+    #[\Override]
+    public function loginWithPasskey(): string
+    {
+        return 'mit Passkey einloggen';
+    }
+
+    #[\Override]
+    public function passkeyAdded(): string
+    {
+        return 'Passkey hinzugefügt';
+    }
+
+    #[\Override]
+    public function passkeyLoginError(): string
+    {
+        return 'Passkey konnte nicht authentifiziert werden.';
+    }
+
+    #[\Override]
+    public function twoFactorValidation(): string
+    {
+        return 'Zwei-Faktor-Validierung';
+    }
+
+    #[\Override]
+    public function orUseRecoveryCode(): string
+    {
+        return 'oder Recovery-Code';
+    }
 }

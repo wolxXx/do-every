@@ -12,20 +12,22 @@ declare(strict_types=1);
  */
 ?>
 <h1>
-    Zwei-Faktor-Validierung
+    <?= $translator->twoFactorValidation() ?>
 </h1>
 <form action="" method="post" novalidate>
     <div>
-        <label for="token">
-            Code
+        <label for="<?= \DoEveryApp\Action\Auth\AuthenticateAction::FORM_FIELD_CODE ?>">
+            <?= $translator->code() ?>
         </label>
-        <input id="token" type="text" name="<?= \DoEveryApp\Action\Auth\AuthenticateAction::FORM_FIELD_CODE ?>" />
+        <input id="<?= \DoEveryApp\Action\Auth\AuthenticateAction::FORM_FIELD_CODE ?>" type="text" name="<?= \DoEveryApp\Action\Auth\AuthenticateAction::FORM_FIELD_CODE ?>" />
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD)]) ?>
     </div>
     <div>
         <label for="recoveryCode">
-            oder Recovery-Code
+            <?= $translator->orUseRecoveryCode() ?>
         </label>
         <input id="recoveryCode" type="text" name="<?= \DoEveryApp\Action\Auth\AuthenticateAction::FORM_FIELD_RECOVERY_CODE ?>" />
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::FORM_FIELD_PASSWORD)]) ?>
     </div>
 
     <div class="form-footer">

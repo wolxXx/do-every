@@ -16,7 +16,6 @@ $you     = \DoEveryApp\Service\Worker\Creator::execute(
         ->setName(name: 'Mazel Tov')
         ->setIsAdmin(admin: true)
         ->setEmail(email: 'do-every@kwatsh.de')
-        ->setPassword(password: 'Passwort')
 );
 $workers = [];
 foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {

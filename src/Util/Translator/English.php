@@ -883,7 +883,7 @@ class English implements \DoEveryApp\Util\Translator
     #[\Override]
     public function willNotBeNotified(): string
     {
-        return 'will not be not notified';
+        return 'will not be notified';
     }
 
     #[\Override]
@@ -949,7 +949,7 @@ class English implements \DoEveryApp\Util\Translator
     #[\Override]
     public function intervalMode(): string
     {
-        return 'intervall mode';
+        return 'interval mode';
     }
 
     #[\Override]
@@ -985,7 +985,7 @@ class English implements \DoEveryApp\Util\Translator
     #[\Override]
     public function addGroup(): string
     {
-        return 'mew group';
+        return 'new group';
     }
 
     #[\Override]
@@ -1312,5 +1312,71 @@ Then click the "Save" button to complete the process and digitally secure the da
     public function passwordChangeInterval(): string
     {
         return 'password change interval (in months)';
+    }
+
+    #[\Override]
+    public function itIsNotYou(): string
+    {
+        return 'this is not you!';
+    }
+
+    #[\Override]
+    public function hasPasskeyQuestion(): string
+    {
+        return 'has passkey?';
+    }
+
+    #[\Override]
+    public function reallyWantToDeletePasskey(string $name): string
+    {
+        return 'Do you really want to delete the passkey for ' . $name . '?';
+    }
+
+    #[\Override]
+    public function removePasskey(): string
+    {
+        return 'remove passkey';
+    }
+
+    #[\Override]
+    public function addPasskey(): string
+    {
+        return '+ PK';
+    }
+
+    #[\Override]
+    public function passkeyDeleted(): string
+    {
+        return 'passkey deleted';
+    }
+
+    #[\Override]
+    public function loginWithPasskey(): string
+    {
+        return 'login with passkey';
+    }
+
+    #[\Override]
+    public function passkeyAdded(): string
+    {
+        return 'passkey added';
+    }
+
+    #[\Override]
+    public function passkeyLoginError(): string
+    {
+        return 'passkey login error';
+    }
+
+    #[\Override]
+    public function twoFactorValidation(): string
+    {
+        return 'two-factor validation';
+    }
+
+    #[\Override]
+    public function orUseRecoveryCode(): string
+    {
+        return 'or use recovery code';
     }
 }

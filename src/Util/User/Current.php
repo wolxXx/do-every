@@ -42,7 +42,7 @@ class Current
         static::getAuthSession()->clear(what: \DoEveryApp\Util\Session::NAMESPACE_AUTH);
     }
 
-    public static function login(\DoEveryApp\Entity\Worker $user): void
+    public static function login(\DoEveryApp\Entity\Worker $user, string $method): void
     {
         $userToStore           = new \stdClass();
         $userToStore->user     = new \stdClass();
@@ -50,7 +50,7 @@ class Current
         static::getAuthSession()->write(what: \DoEveryApp\Util\Session::NAMESPACE_AUTH, data: $userToStore);
 
         if (true === $user->doNotifyLogin()) {
-            \DoEveryApp\Util\Mailing\Login::send(worker: $user);
+            \DoEveryApp\Util\Mailing\Login::send(worker: $user, method: $method);
         }
         $user->setLastLogin(lastLogin: \Carbon\Carbon::now());
         $user::getRepository()->update(entity: $user);

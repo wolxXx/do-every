@@ -23,12 +23,8 @@ declare(strict_types=1);
         <label for="token">
             Code
         </label>
-        <input id="token" type="text" name="<?= \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN, array: $data) ? $data[\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN] : '' ?>"/>
-        <div class="errors">
-            <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN) as $error): ?>
-                <?= $error ?><br/>
-            <?php endforeach ?>
-        </div>
+        <input id="token" type="text" name="<?= \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN ?>" value="<?= $data[\DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN] ?? '' ?>"/>
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::FORM_FIELD_TOKEN)]) ?>
     </div>
 
     <div class="form-footer">

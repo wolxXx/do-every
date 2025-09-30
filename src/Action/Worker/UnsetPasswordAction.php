@@ -20,16 +20,13 @@ class UnsetPasswordAction extends \DoEveryApp\Action\AbstractAction
         if (false === ($worker = $this->getWorker()) instanceof \DoEveryApp\Entity\Worker) {
             return $worker;
         }
-        if ($worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
+        if (null === $worker->getPasskeyCredential() && $worker->getId() === \DoEveryApp\Util\User\Current::get()->getId()) {
             \DoEveryApp\Util\FlashMessenger::addDanger(message: $this->translator->itIsYou());
 
             return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
         }
-        $worker
-            ->setPassword(password: null)
-            ->setLastPasswordChange(lastPasswordChange: null)
-        ;
-        $worker::getRepository()->update(entity: $worker);
+        $credential = $worker->getPasswordCredential();
+        $credential::getRepository()->delete($credential);
         $this
             ->entityManager
             ->flush()

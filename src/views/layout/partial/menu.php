@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @var \DoEveryApp\Entity\Worker|null $currentUser
  * @var \DoEveryApp\Util\Translator    $translator
  */
-$menuItem = (new \DoEveryApp\Util\View\MenuItem())
+$menuItem = new \DoEveryApp\Util\View\MenuItem()
     ->setCurrentRoute(currentRoute: $currentRoute)
     ->setCurrentRoutePattern(currentRoutePattern: $currentRoutePattern)
 ;
@@ -78,7 +78,7 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                               ])
             ->setName(name: 'Log')
         ?>
-        <? if (true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
+        <?php if (true === \DoEveryApp\Util\Registry::getInstance()->doUseTimer()): ?>
             <?= $menuItem
                 ->setTarget(target: \DoEveryApp\Action\Task\Timer\IndexAction::getRoute())
                 ->setActiveRoutes(activeRoutes: [
@@ -86,7 +86,7 @@ $menuItem = (new \DoEveryApp\Util\View\MenuItem())
                                   ])
                 ->setName(name: $translator->timer())
             ?>
-        <? endif ?>
+        <?php endif ?>
         <?= $menuItem
             ->setTarget(target: \DoEveryApp\Action\Worker\IndexAction::getRoute())
             ->setActiveRoutes(activeRoutes: [

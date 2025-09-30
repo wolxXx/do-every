@@ -105,6 +105,12 @@ class Credential
     )]
     protected ?string                                                                         $passkeySecret                    = null;
 
+    public static function getRepository(): Credential\Repository
+    {
+        return static::getRepositoryByClassName();
+    }
+
+
     public function getPasskeySecret(): ?string
     {
         return $this->passkeySecret;
