@@ -17,6 +17,11 @@ $you     = \DoEveryApp\Service\Worker\Creator::execute(
         ->setIsAdmin(admin: true)
         ->setEmail(email: 'do-every@kwatsh.de')
 );
+\DoEveryApp\Entity\Worker\Credential::getRepository()->create(
+    new \DoEveryApp\Entity\Worker\Credential()
+        ->setWorker(worker: $you)
+        ->setPassword(password: 'Passwort')
+);
 $workers = [];
 foreach (range(start: 2, end: rand(min: 3, max: 10)) as $counter) {
     $workers[] = \DoEveryApp\Service\Worker\Creator::execute(
