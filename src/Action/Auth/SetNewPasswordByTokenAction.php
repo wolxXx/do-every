@@ -85,12 +85,12 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_PASSWORD]         = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD]         = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD))
         ;
-        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CONFIRM))

@@ -112,7 +112,7 @@ class Mailer
         if (false === is_dir(filename: $directoryName)) {
             mkdir(directory: $directoryName, permissions: 0777, recursive: true);
         }
-        file_put_contents(filename: $directoryName . (new \DateTime())->format(format: 'Y-m-d_H:i:s') . uniqid() . '.html', data: $this->getInstance()->Body);
+        file_put_contents(filename: $directoryName . new \DateTime()->format(format: 'Y-m-d_H:i:s') . uniqid() . '.html', data: $this->getInstance()->Body);
         if (true === $this->skipSend) {
             return true;
         }

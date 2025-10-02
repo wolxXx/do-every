@@ -11,7 +11,7 @@ class Nothing implements \DoEveryApp\Util\Translator
     protected function debug(): string
     {
         #return '.';
-        return (new \InvalidArgumentException())->getTrace()[1]['function'] . '()';
+        return new \InvalidArgumentException()->getTrace()[1]['function'] . '()';
 
         return \Faker\Factory::create()
                              ->word()

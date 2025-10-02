@@ -29,7 +29,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $data     = $this->getRequest()->getParsedBody();
             $data     = $this->filterAndValidate(data: $data);
             $newGroup = \DoEveryApp\Service\Task\Group\Creator::execute(
-                bag: (new \DoEveryApp\Service\Task\Group\Creator\Bag())
+                bag: new \DoEveryApp\Service\Task\Group\Creator\Bag()
                     ->setName(name: $data[static::FORM_FIELD_NAME])
                     ->setColor(color: $data[static::FORM_FIELD_COLOR])
             );
@@ -49,12 +49,12 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_NAME]  = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_NAME]  = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_NAME))
         ;
-        $data[static::FORM_FIELD_COLOR] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_COLOR] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_COLOR))

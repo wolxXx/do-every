@@ -55,7 +55,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[self::FORM_FIELD_EMAIL] = (new \Laminas\Filter\FilterChain())
+        $data[self::FORM_FIELD_EMAIL] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: self::FORM_FIELD_EMAIL))

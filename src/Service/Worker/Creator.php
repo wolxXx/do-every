@@ -8,7 +8,7 @@ class Creator
 {
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Worker
     {
-        $defaultWorker = (new \DoEveryApp\Entity\Worker())
+        $defaultWorker = new \DoEveryApp\Entity\Worker()
             ->setName(name: $bag->getName())
             ->setIsAdmin(admin: $bag->isAdmin())
             ->enableNotifications(notify: $bag->doNotify())

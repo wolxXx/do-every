@@ -8,7 +8,7 @@ class Creator
 {
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Execution
     {
-        $execution = (new \DoEveryApp\Entity\Execution())
+        $execution = new \DoEveryApp\Entity\Execution()
             ->setTask(task: $bag->getTask())
             ->setWorker(worker: $bag->getWorker())
             ->setDate(date: $bag->getDate())

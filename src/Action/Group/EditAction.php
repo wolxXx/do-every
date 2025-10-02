@@ -66,12 +66,12 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data['name']  = (new \Laminas\Filter\FilterChain())
+        $data['name']  = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: 'name'))
         ;
-        $data['color'] = (new \Laminas\Filter\FilterChain())
+        $data['color'] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: 'color'))

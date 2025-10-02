@@ -8,7 +8,7 @@ class Creator
 {
     public static function execute(Creator\Bag $bag): \DoEveryApp\Entity\Group
     {
-        $group = (new \DoEveryApp\Entity\Group())
+        $group = new \DoEveryApp\Entity\Group()
             ->setName(name: $bag->getName())
             ->setColor(color: $bag->getColor())
         ;

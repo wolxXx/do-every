@@ -18,7 +18,7 @@ class DependencyContainer
     {
         $this
             ->setContainer(
-                container: (new \DI\ContainerBuilder())
+                container: new \DI\ContainerBuilder()
                     ->useAutowiring(bool: false)
                     ->useAttributes(bool: false)
                     ->build()
@@ -68,7 +68,7 @@ class DependencyContainer
         if (true === $this->container->has(id: \Monolog\Logger::class)) {
             return $this->container->get(id: \Monolog\Logger::class);
         }
-        $logger = (new \Monolog\Logger(name: 'logger'))
+        $logger = new \Monolog\Logger(name: 'logger')
             ->pushHandler(handler: new \Monolog\Handler\StreamHandler(stream: ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log', level: \Monolog\Level::Debug))
         ;
         $this->container->set(name: \Monolog\Logger::class, value: $logger);

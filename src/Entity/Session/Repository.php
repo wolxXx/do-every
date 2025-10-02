@@ -17,7 +17,7 @@ class Repository extends \Doctrine\ORM\EntityRepository
     public function garbageCollection(int $maxLifeTime): static
     {
         $sub = \DateInterval::createFromDateString(datetime: $maxLifeTime . ' Seconds');
-        $max = (new \DateTime())
+        $max = new \DateTime()
             ->sub(interval: $sub)
             ->format(format: 'Y-m-d H:i:s')
         ;

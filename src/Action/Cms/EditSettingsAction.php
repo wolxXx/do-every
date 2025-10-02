@@ -80,37 +80,37 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_KEEP_BACKUPS]             = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_KEEP_BACKUPS]             = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_KEEP_BACKUPS))
         ;
-        $data[static::FORM_FIELD_BACKUP_DELAY]             = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_BACKUP_DELAY]             = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_BACKUP_DELAY))
         ;
-        $data[static::FORM_FIELD_FILL_TIME_LINE]           = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_FILL_TIME_LINE]           = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_FILL_TIME_LINE))
         ;
-        $data[static::FORM_FIELD_USE_TIMER]                = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_USE_TIMER]                = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_USE_TIMER))
         ;
-        $data[static::FORM_FIELD_PRECISION_DUE]            = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PRECISION_DUE]            = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PRECISION_DUE))
         ;
-        $data[static::FORM_FIELD_MARKDOWN_ENABLED]         = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_MARKDOWN_ENABLED]         = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_MARKDOWN_ENABLED))
         ;
-        $data[static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL))

@@ -47,7 +47,7 @@ class CheckListItemTest extends \DoEveryAppTest\TestBase
     public function testByExecutionCheckListItemUnchecked()
     {
         $expected = '<span title="omg asdf"><span style="color: #f00;"><i class="fa-solid fa-xmark"></i></span> foobar</span>';
-        $item     = (new \DoEveryApp\Entity\Execution\CheckListItem())
+        $item     = new \DoEveryApp\Entity\Execution\CheckListItem()
             ->setName(name: 'foobar')
             ->setNote(note: 'omg asdf')
             ->setChecked(checked: false)
@@ -59,7 +59,7 @@ class CheckListItemTest extends \DoEveryAppTest\TestBase
     public function testByExecutionCheckListItemChecked()
     {
         $expected = '<span title="omg asdf aaaaaaaa"><span style="color: #154709;"><i class="fa-solid fa-check"></i></span> foobar asdf</span>';
-        $item     = (new \DoEveryApp\Entity\Execution\CheckListItem())
+        $item     = new \DoEveryApp\Entity\Execution\CheckListItem()
             ->setName(name: 'foobar asdf')
             ->setNote(note: 'omg asdf aaaaaaaa')
             ->setChecked(checked: true)
