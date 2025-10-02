@@ -4,18 +4,11 @@ declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
-use DoEveryApp\Util\Debugger;
-
 class Nothing implements \DoEveryApp\Util\Translator
 {
     protected function debug(): string
     {
-        #return '.';
         return new \InvalidArgumentException()->getTrace()[1]['function'] . '()';
-
-        return \Faker\Factory::create()
-                             ->word()
-        ;
     }
 
     #[\Override]

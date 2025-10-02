@@ -78,7 +78,7 @@ class EditAction extends
                                                                                                      ->taskEdited());
 
             return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/task/edit',

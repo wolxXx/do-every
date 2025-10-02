@@ -53,7 +53,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerEdited());
 
             return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(

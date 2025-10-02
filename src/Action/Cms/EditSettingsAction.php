@@ -72,7 +72,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                                                                                                      ->settingsSaved());
 
             return $this->redirect(to: ShowSettingsAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/cms/editSettings', data: ['data' => $data]);

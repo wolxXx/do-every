@@ -87,6 +87,7 @@
     "ext-simplexml": "*",
     "ext-openssl": "*",
     "ext-sodium": "*",
+    "ext-zend-opcache": "*",
     "ext-zip": "*",
     "amphp/amp": "*",
     "beberlei/assert": "*",

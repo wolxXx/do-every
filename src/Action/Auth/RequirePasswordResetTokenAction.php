@@ -47,7 +47,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
 
             return $this->redirect(to: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/auth/requirePasswordResetToken', data: ['data' => $data]);

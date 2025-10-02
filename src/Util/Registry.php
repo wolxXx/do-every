@@ -61,9 +61,7 @@ final class Registry
 
     final private function __construct()
     {
-        $this->map = [];
-        foreach (\DoEveryApp\Entity\Registry::getRepository()
-                                            ->findAll() as $registry) {
+        foreach (\DoEveryApp\Entity\Registry::getRepository()->findAll() as $registry) {
             $this->map[$registry->getKey()] = $registry;
         }
     }

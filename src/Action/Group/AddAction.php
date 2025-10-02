@@ -41,7 +41,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->groupAdded());
 
             return $this->redirect(to: \DoEveryApp\Action\Group\ShowAction::getRoute(id: $newGroup->getId()));
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/group/add', data: ['data' => $data]);

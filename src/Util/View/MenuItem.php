@@ -26,8 +26,8 @@ class MenuItem
 
         return <<<HTML
             <li class="nav-item">
-                <a href="{$this->target}" class="{$class}">
-                    {$this->name}
+                <a href="$this->target" class="{$class}">
+                    $this->name
                 </a>
             </li>
             HTML;

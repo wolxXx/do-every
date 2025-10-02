@@ -64,7 +64,7 @@ declare(strict_types=1);
                         <?= ord($char) ?>,
                     <?php endforeach ?>
                 ]),
-                rpId: "<?= false === strstr($_SERVER['HTTP_HOST'], 'localhost')? $_SERVER['HTTP_HOST'] : 'localhost' ?>",
+                rpId: "<?= false === str_contains(haystack: $_SERVER['HTTP_HOST'], needle: 'localhost') ? $_SERVER['HTTP_HOST'] : 'localhost' ?>",
             }
             try {
                 const credential = await navigator.credentials.get({ publicKey: publicKey })
