@@ -1382,4 +1382,28 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'oder Recovery-Code';
     }
+
+    #[\Override]
+    public function passwordAdded(): string
+    {
+        return 'Passwort hinzugefügt';
+    }
+
+    #[\Override]
+    public function addPassword(): string
+    {
+        return 'Passwort hinzufügen';
+    }
+
+    #[\Override]
+    public function passwordRepeat(): string
+    {
+        return 'Passwort wiederholen';
+    }
+
+    #[\Override]
+    public function proposePassword(): string
+    {
+        return 'Passwort vorschlagen';
+    }
 }

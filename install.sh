@@ -21,5 +21,6 @@ cd public
 npm install
 cp -vR node_modules/@wolxxx/completer/dist/completer.js vendor/completer.js
 cp -vR node_modules/html5sortable/dist/html5sortable.js vendor/sortable.js
+cp -vR node_modules/chelsea/chelsea.js vendor/chelsea.js
 
 exit 0;

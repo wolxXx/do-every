@@ -1370,4 +1370,28 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function passwordAdded(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function addPassword(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passwordRepeat(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function proposePassword(): string
+    {
+        return $this->debug();
+    }
 }

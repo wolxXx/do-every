@@ -14,7 +14,7 @@ class Login
             Jemand (hoffentlich du!) hat sich gerade bei do-every* eingeloggt!
             Wenn das nicht du warst, vergebe bitte ein neues Passwort.
             
-            Es wurde folgender Login-Methode verwendet: {$method}
+            Es wurde folgende Login-Methode verwendet: {$method}
             
             Binäre Grüße aus dem Maschinenraum
             do-every* 

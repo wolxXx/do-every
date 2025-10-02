@@ -637,4 +637,12 @@ interface Translator
     public function twoFactorValidation(): string;
 
     public function orUseRecoveryCode(): string;
+
+    public function passwordAdded(): string;
+
+    public function addPassword(): string;
+
+    public function passwordRepeat(): string;
+
+    public function proposePassword(): string;
 }

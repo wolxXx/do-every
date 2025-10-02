@@ -89,8 +89,28 @@ declare(strict_types=1);
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\UnsetPasswordAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>
+                        <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPasswordCredential()) ?>
+                        <br />
+                        <?php if (null === $worker->getPasswordCredential()->getTwoFactorSecret()): ?>
+                            <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
+                                <?= $translator->addTwoFactor() ?>
+                            </a>
+                        <?php endif ?>
+                        <?php if (null !== $worker->getPasswordCredential()->getTwoFactorSecret()): ?>
+                            <a class="dangerButton confirm" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
+                                <?= \DoEveryApp\Util\View\Icon::trash() ?>
+                                <?= $translator->removeTwoFactor() ?>
+                            </a>
+                        <?php endif ?>
                     <?php endif ?>
-                    <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPasswordCredential()) ?>
+
+
+                    <?php if (null === $worker->getPasswordCredential()): ?>
+                        <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPasswordCredential()) ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\AddPasswordAction::getRoute(id: $worker->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Icon::add() ?>
+                        </a>
+                    <?php endif ?>
                 </td>
                 <td>
                     <?php if (null !== $worker->getPasskeyCredential()): ?>
@@ -99,6 +119,11 @@ declare(strict_types=1);
                         </a>
                     <?php endif ?>
                     <?= \DoEveryApp\Util\View\Boolean::get(value: null !== $worker->getPasskeyCredential()) ?>
+                    <?php if (null === $worker->getPasskeyCredential()): ?>
+                        <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EnablePasskeyAction::getRoute(id: $worker->getId()) ?>">
+                            <?= \DoEveryApp\Util\View\Icon::add() ?>
+                        </a>
+                    <?php endif ?>
                 </td>
                 <td>
                     <?php if(true === $worker->isAdmin()): ?>
@@ -134,30 +159,6 @@ declare(strict_types=1);
                         <a class="primaryButton" href="<?= \DoEveryApp\Action\Worker\EditAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::edit() ?>
                         </a>
-                        <?php if (null === $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Icon::on() ?>
-                                <?= $translator->addTwoFactor() ?>
-                            </a>
-                        <?php endif ?>
-                        <?php if (null !== $worker->getTwoFactorSecret()): ?>
-                            <a class="warningButton confirm" data-messge="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToResetTwoFactor(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DisableTwoFactorAction::getRoute(id: $worker->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Icon::off() ?>
-                                <?= $translator->removeTwoFactor() ?>
-                            </a>
-                        <?php endif ?>
-                        <?php if (null === $worker->getPasskeyCredential()): ?>
-                            <a class="warningButton" href="<?= \DoEveryApp\Action\Worker\EnablePasskeyAction::getRoute(id: $worker->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Icon::on() ?>
-                                <?= $translator->addPasskey() ?>
-                            </a>
-                        <?php endif ?>
-                        <?php if (null !== $worker->getPasskeyCredential()): ?>
-                            <a class="dangerButton confirm" data-messge="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeletePasskey(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\UnsetPasskeyAction::getRoute(id: $worker->getId()) ?>">
-                                <?= \DoEveryApp\Util\View\Icon::trash() ?>
-                                <?= $translator->removePasskey() ?>
-                            </a>
-                        <?php endif ?>
                         <a class="dangerButton confirm" data-message="<?= \DoEveryApp\Util\View\Escaper::escape(value: $translator->reallyWantToDeleteWorker(name: $worker->getName())) ?>" href="<?= \DoEveryApp\Action\Worker\DeleteAction::getRoute(id: $worker->getId()) ?>">
                             <?= \DoEveryApp\Util\View\Icon::trash() ?>
                         </a>

@@ -1379,4 +1379,28 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'or use recovery code';
     }
+
+    #[\Override]
+    public function passwordAdded(): string
+    {
+        return 'password added';
+    }
+
+    #[\Override]
+    public function addPassword(): string
+    {
+        return 'ass password';
+    }
+
+    #[\Override]
+    public function passwordRepeat(): string
+    {
+        return 'repeat password';
+    }
+
+    #[\Override]
+    public function proposePassword(): string
+    {
+        return 'propose password';
+    }
 }
