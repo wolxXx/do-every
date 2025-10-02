@@ -22,6 +22,11 @@ echo "updating instance $INSTANCE"
 echo "web port: $WEB_PORT"
 echo "dn port: $DB_PORT"
 
+git branch
+git describe --tags --abbrev=0 2>/dev/null || echo "No tags found"
+
+
+
 git pull
 ./docker.sh
 set +e
