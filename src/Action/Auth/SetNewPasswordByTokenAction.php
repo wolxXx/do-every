@@ -41,7 +41,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             if (\Carbon\Carbon::createFromDate(year: $started)->addMinutes(value: 10) < \Carbon\Carbon::now()) {
                 throw new \RuntimeException(message: 'took too long');
             }
-        } catch (\Throwable $exception) {
+        } catch (\Throwable) {
             \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeNotValid());
             $session->reset();
 
@@ -77,7 +77,7 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->passwordChanged());
 
             return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/auth/applyNewPassword', data: ['data' => $data]);
@@ -85,12 +85,12 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_PASSWORD]         = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD]         = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD))
         ;
-        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = (new \Laminas\Filter\FilterChain())
+        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CONFIRM))

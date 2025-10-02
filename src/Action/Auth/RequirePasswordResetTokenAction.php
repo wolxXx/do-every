@@ -47,7 +47,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
 
             return $this->redirect(to: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(script: 'action/auth/requirePasswordResetToken', data: ['data' => $data]);
@@ -55,7 +55,7 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[self::FORM_FIELD_EMAIL] = (new \Laminas\Filter\FilterChain())
+        $data[self::FORM_FIELD_EMAIL] = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: self::FORM_FIELD_EMAIL))

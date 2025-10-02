@@ -31,7 +31,6 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                     static::FORM_FIELD_IS_ADMIN         => $worker->isAdmin() ? '1' : '0',
                     static::FORM_FIELD_DO_NOTIFY        => $worker->doNotify() ? '1' : '0',
                     static::FORM_FIELD_DO_NOTIFY_LOGINS => $worker->doNotifyLogin() ? '1' : '0',
-                    static::FORM_FIELD_PASSWORD         => '',
                 ],
             ]);
         }
@@ -46,12 +45,6 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
                 ->setNotifyLogin(notifyLogin: '1' === $data[static::FORM_FIELD_DO_NOTIFY_LOGINS])
                 ->setEmail(email: $data[static::FORM_FIELD_EMAIL])
             ;
-            if (null !== $data[static::FORM_FIELD_PASSWORD]) {
-                $worker
-                    ->setPassword(password: $data[static::FORM_FIELD_PASSWORD])
-                    ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
-                ;
-            }
 
             $this
                 ->entityManager
@@ -60,7 +53,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerEdited());
 
             return $this->redirect(to: \DoEveryApp\Action\Worker\IndexAction::getRoute());
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(

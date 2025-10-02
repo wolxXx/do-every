@@ -4,18 +4,11 @@ declare(strict_types = 1);
 
 namespace DoEveryApp\Util\Translator;
 
-use DoEveryApp\Util\Debugger;
-
 class Nothing implements \DoEveryApp\Util\Translator
 {
     protected function debug(): string
     {
-        #return '.';
-        return (new \InvalidArgumentException())->getTrace()[1]['function'] . '()';
-
-        return \Faker\Factory::create()
-                             ->word()
-        ;
+        return new \InvalidArgumentException()->getTrace()[1]['function'] . '()';
     }
 
     #[\Override]
@@ -1301,6 +1294,96 @@ class Nothing implements \DoEveryApp\Util\Translator
 
     #[\Override]
     public function passwordChangeInterval(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function itIsNotYou(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function hasPasskeyQuestion(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function reallyWantToDeletePasskey(string $name): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function removePasskey(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function addPasskey(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passkeyDeleted(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function loginWithPasskey(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passkeyAdded(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passkeyLoginError(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function twoFactorValidation(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function orUseRecoveryCode(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passwordAdded(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function addPassword(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function passwordRepeat(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function proposePassword(): string
     {
         return $this->debug();
     }

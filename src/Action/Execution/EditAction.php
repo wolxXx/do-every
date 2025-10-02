@@ -85,7 +85,7 @@ class EditAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionEdited());
 
             return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $execution->getTask()->getId()));
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(

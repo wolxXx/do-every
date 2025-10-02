@@ -37,7 +37,7 @@ declare(strict_types=1);
         </tr>
     </thead>
     <tbody>
-        <? foreach ($timers as $timer): ?>
+    <?php foreach ($timers as $timer): ?>
             <tr>
                 <td>
                     <?= \DoEveryApp\Util\View\Boolean::get(false === $timer->isStopped()) ?>
@@ -45,20 +45,20 @@ declare(strict_types=1);
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute($timer->getTask()->getId()) ?>">
                         <?= $timer->getTask()->getName() ?>
-                        <? if(null !== $timer->getTask()->getGroup()): ?>
+                        <?php if(null !== $timer->getTask()->getGroup()): ?>
                             (<?= $timer->getTask()->getGroup()->getName() ?>)
-                        <? endif ?>
+                        <?php endif ?>
                     </a>
                 </td>
                 <td>
                     <?= $timer->getWorker()->getName() ?>
                 </td>
                 <td>
-                    <? foreach ($timer->getSections() as $section): ?>
+                    <?php foreach ($timer->getSections() as $section): ?>
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getStart()) ?> -
                         <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: $section->getEnd()) ?>
                         <br />
-                    <? endforeach  ?>
+                    <?php endforeach  ?>
                 </td>
                 <td>
                     <a href="<?= \DoEveryApp\Action\Task\Timer\DeleteAction::getRoute(id: $timer->getId()) ?>" class="dangerButton confirm" data-message="<?= $translator->reallyWantToDeleteTimer() ?>">
@@ -66,6 +66,6 @@ declare(strict_types=1);
                     </a>
                 </td>
             </tr>
-        <? endforeach ?>
+    <?php endforeach ?>
     </tbody>
 </table>

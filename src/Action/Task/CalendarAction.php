@@ -21,6 +21,7 @@ class CalendarAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
+    #[\JetBrains\PhpStorm\NoReturn]
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         \DoEveryApp\Util\QueryLogger::$disabled = true;

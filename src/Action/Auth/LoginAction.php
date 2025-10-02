@@ -54,7 +54,22 @@ class LoginAction extends
                 ;
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
-            if (false === \DoEveryApp\Util\Password::verify(password: $data[static::FORM_FIELD_PASSWORD], hash: $existing->getPassword())) {
+
+            $credential = $existing->getPasswordCredential();
+            if (false === $credential instanceof \DoEveryApp\Entity\Worker\Credential) {
+                $this
+                    ->getErrorStore()
+                    ->addError(
+                        key    : static::FORM_FIELD_EMAIL,
+                        message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                     ->getTranslator()
+                                                                     ->userNotFound()
+                    )
+                ;
+                throw new \DoEveryApp\Exception\FormValidationFailed();
+            }
+
+            if (false === \DoEveryApp\Util\Password::verify(password: $data[static::FORM_FIELD_PASSWORD], hash: $credential->getPassword())) {
                 $this
                     ->getErrorStore()
                     ->addError(
@@ -66,14 +81,14 @@ class LoginAction extends
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
-            if (null !== $existing->getTwoFactorSecret()) {
+            if (null !== $credential->getTwoFactorSecret()) {
                 $session = \DoEveryApp\Util\Session::Factory(namespace: '2faValidate');
                 $session->write(what: 'user', data: $existing->getId());
 
                 return $this->redirect(to: \DoEveryApp\Action\Auth\AuthenticateAction::getRoute());
             }
 
-            \DoEveryApp\Util\User\Current::login(user: $existing);
+            \DoEveryApp\Util\User\Current::login(user: $existing, method: 'password');
 
             return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed) {

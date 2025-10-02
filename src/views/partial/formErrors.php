@@ -16,7 +16,7 @@ declare(strict_types=1);
 ?>
 
 <div class="errors">
-    <?php foreach($errors as $error): ?>
+    <?php foreach ($errors as $error): ?>
         <span class="error">
             <?= $error ?>
         </span>

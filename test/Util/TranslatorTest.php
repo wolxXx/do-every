@@ -118,7 +118,6 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
                             }
                         }
                         throw new \RuntimeException(message: 'Union types "'. implode(separator: ', ', array: $unionTypes) .'" are not supported');
-                        break;
                     }
 
                     case \ReflectionIntersectionType::class:

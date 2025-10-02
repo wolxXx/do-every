@@ -615,4 +615,34 @@ interface Translator
     public function backupDelay(): string;
 
     public function passwordChangeInterval(): string;
+
+    public function itIsNotYou(): string;
+
+    public function hasPasskeyQuestion(): string;
+
+    public function reallyWantToDeletePasskey(string $name): string;
+
+    public function removePasskey(): string;
+
+    public function addPasskey(): string;
+
+    public function passkeyDeleted(): string;
+
+    public function loginWithPasskey(): string;
+
+    public function passkeyAdded(): string;
+
+    public function passkeyLoginError(): string;
+
+    public function twoFactorValidation(): string;
+
+    public function orUseRecoveryCode(): string;
+
+    public function passwordAdded(): string;
+
+    public function addPassword(): string;
+
+    public function passwordRepeat(): string;
+
+    public function proposePassword(): string;
 }

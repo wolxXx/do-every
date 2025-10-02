@@ -21,7 +21,8 @@ class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
             return $worker;
         }
 
-        $worker
+        $credential = $worker
+            ->getPasswordCredential()
             ->setTwoFactorSecret(twoFactorSecret: null)
             ->setTwoFactorRecoverCode1(twoFactorRecoverCode1: null)
             ->setTwoFactorRecoverCode2(twoFactorRecoverCode2: null)
@@ -30,7 +31,7 @@ class DisableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
             ->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: null)
             ->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: null)
         ;
-        $worker::getRepository()->update(entity: $worker);
+        $credential::getRepository()->update(entity: $credential);
         $this
             ->entityManager
             ->flush()

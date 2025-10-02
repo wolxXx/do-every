@@ -38,10 +38,19 @@
     "lintVendor": "./vendor/bin/parallel-lint --colors --short -j 100 --exclude vendor/nikic/fast-route/test vendor",
     "rector": "./vendor/bin/rector",
     "css": "php vendor/bin/pscss public/css/app.scss public/css/app.css",
-    "dbFull": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose && php bin/doctrine orm:schema-tool:update --force --verbose",
-    "dbDry": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
+    "_dbFull": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose && php bin/doctrine orm:schema-tool:update --force --verbose",
+    "_dbDry": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
+    "db": ["@dbSyncMetaData", "@listMigrations", "@executeMigrations", "@dbChanges"],
+    "dbFull": ["@dbChanges", "@dbMigrateLazy", "@markMigrationsExecuted", "@dbSyncMetaData"],
+    "dbDry": ["@dbChanges", "@listMigrations"],
+    "dbSyncMetaData": "./vendor/bin/doctrine-migrations migrations:sync-metadata-storage",
+    "dbMigrateLazy": "php bin/doctrine orm:schema-tool:update --force --verbose",
+    "dbChanges": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
+    "executeMigrations": "./vendor/bin/doctrine-migrations migrations:migrate --no-interaction",
+    "listMigrations": "./vendor/bin/doctrine-migrations migrations:list",
+    "generateMigration": "./vendor/bin/doctrine-migrations migrations:generate",
+    "markMigrationsExecuted": "php scripts/markMigrationsExecuted.php",
     "validateSchema": "php bin/doctrine orm:validate-schema --verbose",
-    "fixtures": "php scripts/fixtures.php",
     "health": [
       "@paratestNoCoverage",
       "@validateSchema",
@@ -78,6 +87,7 @@
     "ext-simplexml": "*",
     "ext-openssl": "*",
     "ext-sodium": "*",
+    "ext-zend-opcache": "*",
     "ext-zip": "*",
     "amphp/amp": "*",
     "beberlei/assert": "*",
@@ -103,6 +113,7 @@
     "laminas/laminas-paginator": "*",
     "laminas/laminas-session": "*",
     "laminas/laminas-validator": "*",
+    "lbuchs/webauthn": "*",
     "moment/moment": "*",
     "monolog/monolog": "*",
     "mouf/nodejs-installer": "*",
@@ -134,6 +145,8 @@
     "symfony/http-kernel": "*",
     "symfony/validator": "*",
     "symfony/yaml": "*",
-    "tarikweiss/slim-attribute-router": "*"
+    "tarikweiss/slim-attribute-router": "*",
+    "web-auth/cose-lib": "*",
+    "web-auth/webauthn-lib": "*"
   }
 }

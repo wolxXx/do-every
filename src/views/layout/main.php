@@ -35,6 +35,7 @@ declare(strict_types=1);
     <script src="/vendor/moment/locales.js?t=<?= filemtime(filename: 'public/vendor/moment/locales.js') ?>"></script>
 
     <script src="/vendor/sortable.js?t=<?= filemtime(filename: 'public/vendor/sortable.js') ?>"></script>
+    <script src="/vendor/chelsea.js?t=<?= filemtime(filename: 'public/vendor/chelsea.js') ?>"></script>
     <title>
        Do Every
         <?php if(true === isset($pageTitle)): ?>

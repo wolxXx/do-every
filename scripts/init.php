@@ -16,6 +16,10 @@ $you     = \DoEveryApp\Service\Worker\Creator::execute(
         ->setName(name: 'Mazel Tov')
         ->setIsAdmin(admin: true)
         ->setEmail(email: 'do-every@kwatsh.de')
+);
+\DoEveryApp\Entity\Worker\Credential::getRepository()->create(
+    new \DoEveryApp\Entity\Worker\Credential()
+        ->setWorker(worker: $you)
         ->setPassword(password: 'Passwort')
 );
 $workers = [];

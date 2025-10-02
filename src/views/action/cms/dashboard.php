@@ -48,7 +48,7 @@ $tasks     = \DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks);
     <?php endif ?>
 </div>
 <div id="twoFactor" class="replaceMe">
-    <?php if (null === $currentUser->getTwoFactorSecret()): ?>
+    <?php if (null !== $currentUser->getPasswordCredential() && null === $currentUser->getTwoFactorSecret()): ?>
         <fieldset>
             <legend>
                 <?= $translator->attention() ?>

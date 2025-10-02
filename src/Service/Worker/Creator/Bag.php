@@ -12,8 +12,6 @@ class Bag
 
     protected ?string $email        = null;
 
-    protected ?string $password     = null;
-
     protected bool    $notify       = false;
 
     protected bool    $notifyLogins = false;
@@ -50,25 +48,6 @@ class Bag
     public function setEmail(?string $email): static
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setHashedPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function setPassword(?string $password): static
-    {
-        $this->password = null === $password ? $password : \DoEveryApp\Util\Password::hash(password: $password);
 
         return $this;
     }

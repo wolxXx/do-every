@@ -40,6 +40,16 @@ class AuthenticateAction extends
         $worker = \DoEveryApp\Entity\Worker::getRepository()
                                            ->find(id: $userId)
         ;
+        $credential = $worker->getPasswordCredential();
+        if (false === $credential instanceof \DoEveryApp\Entity\Worker\Credential) {
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                    ->getTranslator()
+                                                                                                    ->defaultErrorMessage(),
+            );
+            $session->reset();
+
+            return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
+        }
         if (true === $this->isGetRequest()) {
             return $this->render(
                 script: 'action/auth/authenticate',
@@ -57,7 +67,7 @@ class AuthenticateAction extends
 
             if (null !== $code) {
                 $twoFactorUtility = \DoEveryApp\Util\TwoFactorAuthenticator::Factory();
-                $verified         = $twoFactorUtility->verify(token: $code, secret: $worker->getTwoFactorSecret());
+                $verified         = $twoFactorUtility->verify(token: $code, secret: $credential->getTwoFactorSecret());
                 if (false === $verified) {
                     $session->reset();
                     \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
@@ -68,58 +78,58 @@ class AuthenticateAction extends
                     return $this->redirect(to: \DoEveryApp\Action\Auth\LoginAction::getRoute());
                 }
 
-                \DoEveryApp\Util\User\Current::login(user: $worker);
+                \DoEveryApp\Util\User\Current::login(user: $worker, method: 'password + 2fa');;
 
                 return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
             }
 
             if (null !== $recoveryCode) {
                 try {
-                    if ($recoveryCode === $worker->getTwoFactorRecoverCode1()) {
-                        if (null !== $worker->getTwoFactorRecoverCode1UsedAt()) {
+                    if ($recoveryCode === $credential->getTwoFactorRecoverCode1()) {
+                        if (null !== $credential->getTwoFactorRecoverCode1UsedAt()) {
                             throw new \InvalidArgumentException();
                         }
-                        $worker->setTwoFactorRecoverCode1UsedAt(twoFactorRecoverCode1UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()
-                               ->update(entity: $worker)
+                        $credential->setTwoFactorRecoverCode1UsedAt(twoFactorRecoverCode1UsedAt: \Carbon\Carbon::now());
+                        $credential::getRepository()
+                               ->update(entity: $credential)
                         ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
                         ;
-                        \DoEveryApp\Util\User\Current::login(user: $worker);
+                        \DoEveryApp\Util\User\Current::login(user: $worker, method: 'password + 2fa + recovery code 1');;
 
                         return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
                     }
-                    if ($recoveryCode === $worker->getTwoFactorRecoverCode2()) {
-                        if (null !== $worker->getTwoFactorRecoverCode2UsedAt()) {
+                    if ($recoveryCode === $credential->getTwoFactorRecoverCode2()) {
+                        if (null !== $credential->getTwoFactorRecoverCode2UsedAt()) {
                             throw new \InvalidArgumentException();
                         }
-                        $worker->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()
-                               ->update(entity: $worker)
+                        $credential->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: \Carbon\Carbon::now());
+                        $credential::getRepository()
+                               ->update(entity: $credential)
                         ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
                         ;
-                        \DoEveryApp\Util\User\Current::login(user: $worker);
+                        \DoEveryApp\Util\User\Current::login(user: $worker, method: 'password + 2fa + recovery code 2');;
 
                         return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
                     }
-                    if ($recoveryCode === $worker->getTwoFactorRecoverCode3()) {
-                        if (null !== $worker->getTwoFactorRecoverCode3UsedAt()) {
+                    if ($recoveryCode === $credential->getTwoFactorRecoverCode3()) {
+                        if (null !== $credential->getTwoFactorRecoverCode3UsedAt()) {
                             throw new \InvalidArgumentException();
                         }
-                        $worker->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: \Carbon\Carbon::now());
-                        $worker::getRepository()
-                               ->update(entity: $worker)
+                        $credential->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: \Carbon\Carbon::now());
+                        $credential::getRepository()
+                               ->update(entity: $credential)
                         ;
                         \DoEveryApp\Util\DependencyContainer::getInstance()
                                                             ->getEntityManager()
                                                             ->flush()
                         ;
-                        \DoEveryApp\Util\User\Current::login(user: $worker);
+                        \DoEveryApp\Util\User\Current::login(user: $worker, method: 'password + 2fa + recovery code 3');;
 
                         return $this->redirect(to: \DoEveryApp\Action\Cms\IndexAction::getRoute());
                     }

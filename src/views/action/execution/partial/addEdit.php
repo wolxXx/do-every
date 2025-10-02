@@ -242,7 +242,7 @@ declare(strict_types=1);
             fetchStatus()
         });
     </script>
-<? endif ?>
+<?php endif ?>
 <div>
     <a href="<?= \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()) ?>">
         <?= $translator->task() ?>: <?= \DoEveryApp\Util\View\Escaper::escape(value: $task->getName()) ?>
@@ -349,7 +349,6 @@ declare(strict_types=1);
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                <??>
             <?php endif ?>
         </div>
         <div class="column">

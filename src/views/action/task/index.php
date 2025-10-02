@@ -26,10 +26,10 @@ declare(strict_types=1);
             </a>
         </div>
         <div>
-            <? if (0 === count(value: $tasks)): ?>
+            <?php if (0 === count(value: $tasks)): ?>
                 <?= $translator->noTasksFound() ?>
-            <? endif ?>
-            <? if (0 !== count(value: $tasks)): ?>
+            <?php endif ?>
+            <?php if (0 !== count(value: $tasks)): ?>
                 <table>
                     <thead>
                         <tr>
@@ -136,7 +136,7 @@ declare(strict_types=1);
                         <?php endforeach ?>
                     </tbody>
                 </table>
-            <? endif ?>
+            <?php endif ?>
         </div>
     </div>
 
@@ -150,10 +150,10 @@ declare(strict_types=1);
             </a>
         </div>
         <div>
-            <? if (0 === count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
+            <?php if (0 === count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
                 <?= $translator->noGroupsFound() ?>
-            <? endif ?>
-            <? if (0 !== count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
+            <?php endif ?>
+            <?php if (0 !== count(value: \DoEveryApp\Entity\Group::getRepository()->findIndexed())): ?>
 
                 <table>
                     <thead>
@@ -189,7 +189,7 @@ declare(strict_types=1);
                         <?php endforeach ?>
                     </tbody>
                 </table>
-            <? endif ?>
+            <?php endif ?>
         </div>
     </div>
 </div>

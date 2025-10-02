@@ -44,7 +44,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
                     'execution' => null,
                     'task'      => $task,
                     'data'      => [
-                        static::FORM_FIELD_DATE             => (new \DateTime())->format(format: 'Y-m-d H:i:s'),
+                        static::FORM_FIELD_DATE             => new \DateTime()->format(format: 'Y-m-d H:i:s'),
                         static::FORM_FIELD_WORKER           => \DoEveryApp\Util\User\Current::get()->getId(),
                         static::FORM_FIELD_CHECK_LIST_ITEMS => $checkListItemData,
                     ],
@@ -58,7 +58,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             $data = $this->filterAndValidate(data: $data);
 
             $execution = \DoEveryApp\Service\Task\Execution\Creator::execute(
-                bag: (new \DoEveryApp\Service\Task\Execution\Creator\Bag())
+                bag: new \DoEveryApp\Service\Task\Execution\Creator\Bag()
                     ->setTask(task: $task)
                     ->setDuration(duration: $data[static::FORM_FIELD_DURATION])
                     ->setDate(date: new \DateTime(datetime: $data[static::FORM_FIELD_DATE]))
@@ -81,7 +81,7 @@ class AddAction extends \DoEveryApp\Action\AbstractAction
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->executionAdded());
 
             return $this->redirect(to: \DoEveryApp\Action\Task\ShowAction::getRoute(id: $task->getId()));
-        } catch (\DoEveryApp\Exception\FormValidationFailed $exception) {
+        } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
         return $this->render(

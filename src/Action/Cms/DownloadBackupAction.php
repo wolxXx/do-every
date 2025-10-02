@@ -60,7 +60,7 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
                 \unlink(filename: $filename);
 
                 return $this->getResponse();
-            } catch (\Exception $exception) {
+            } catch (\Exception) {
                 \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
 
                 return $this->redirect(to: IndexAction::getRoute());
@@ -89,7 +89,7 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
             $this->setResponse(response: $response);
 
             return $this->getResponse();
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
 
             return $this->redirect(to: IndexAction::getRoute());

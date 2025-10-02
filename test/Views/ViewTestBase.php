@@ -26,7 +26,6 @@ abstract class ViewTestBase extends \DoEveryAppTest\TestBase
     ): ViewTestResult
     {
         \DoEveryApp\Util\User\Current::$forcedLoggedInUser = $worker;
-        $response    = (new \Slim\Psr7\Response());
         $phpRenderer = \DoEveryApp\Util\DependencyContainer::getInstance()->getRenderer();
         $phpRenderer->setAttributes(attributes: [
                                                     'errorStore'          => new \DoEveryApp\Util\ErrorStore(),

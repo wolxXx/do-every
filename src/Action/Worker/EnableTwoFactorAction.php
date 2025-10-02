@@ -48,7 +48,8 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
 
                 return $this->redirect(to: \DoEveryApp\Action\Worker\EnableTwoFactorAction::getRoute(id: $worker->getId()));
             }
-            $worker
+            $credential = $worker
+                ->getPasswordCredential()
                 ->setTwoFactorSecret(twoFactorSecret: $stored2Fa)
                 ->setTwoFactorRecoverCode1(twoFactorRecoverCode1: $stored2FaCode1)
                 ->setTwoFactorRecoverCode2(twoFactorRecoverCode2: $stored2FaCode2)
@@ -57,7 +58,7 @@ class EnableTwoFactorAction extends \DoEveryApp\Action\AbstractAction
                 ->setTwoFactorRecoverCode2UsedAt(twoFactorRecoverCode2UsedAt: null)
                 ->setTwoFactorRecoverCode3UsedAt(twoFactorRecoverCode3UsedAt: null)
             ;
-            $worker::getRepository()->update(entity: $worker);
+            $credential::getRepository()->update(entity: $credential);
             $this
                 ->entityManager
                 ->flush()

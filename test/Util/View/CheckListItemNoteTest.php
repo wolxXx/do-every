@@ -52,24 +52,24 @@ safsafsaf',
         return [
             [
                 '',
-                (new \DoEveryApp\Entity\Execution\CheckListItem())
+                new \DoEveryApp\Entity\Execution\CheckListItem()
                     ->setNote(note: null),
             ],
             [
                 '<div class="checkListItemNote"></div>',
-                (new \DoEveryApp\Entity\Execution\CheckListItem())
+                new \DoEveryApp\Entity\Execution\CheckListItem()
                     ->setNote(note: ''),
             ],
             [
                 '<div class="checkListItemNote">omg 1234</div>',
-                (new \DoEveryApp\Entity\Execution\CheckListItem())
+                new \DoEveryApp\Entity\Execution\CheckListItem()
                     ->setNote(note: 'omg 1234'),
             ],
             [
                 '<div class="checkListItemNote">omg 1234<br />
 safsfafaf<br />
 asfsafsaf</div>',
-                (new \DoEveryApp\Entity\Execution\CheckListItem())
+                new \DoEveryApp\Entity\Execution\CheckListItem()
                     ->setNote(note: 'omg 1234
 safsfafaf
 asfsafsaf'),
@@ -90,24 +90,24 @@ asfsafsaf'),
         return [
             [
                 '',
-                (new \DoEveryApp\Entity\Task\CheckListItem())
+                new \DoEveryApp\Entity\Task\CheckListItem()
                     ->setNote(note: null),
             ],
             [
                 '<div class="checkListItemNote"></div>',
-                (new \DoEveryApp\Entity\Task\CheckListItem())
+                new \DoEveryApp\Entity\Task\CheckListItem()
                     ->setNote(note: ''),
             ],
             [
                 '<div class="checkListItemNote">omg 1234</div>',
-                (new \DoEveryApp\Entity\Task\CheckListItem())
+                new \DoEveryApp\Entity\Task\CheckListItem()
                     ->setNote(note: 'omg 1234'),
             ],
             [
                 '<div class="checkListItemNote">omg 1234<br />
 safsfafaf<br />
 asfsafsaf</div>',
-                (new \DoEveryApp\Entity\Task\CheckListItem())
+                new \DoEveryApp\Entity\Task\CheckListItem()
                     ->setNote(note: 'omg 1234
 safsfafaf
 asfsafsaf'),

@@ -20,15 +20,11 @@ declare(strict_types=1);
     <div class="row">
         <div class="column">
             <div>
-                <label for="name">
+                <label for="<?= \DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME ?>">
                     <?= $translator->name() ?>
                 </label>
-                <input id="name" type="text" name="name" value="<?= array_key_exists(key: 'name', array: $data) ? $data['name'] : '' ?>"/>
-                <div class="errors">
-                    <?php foreach ($errorStore->getErrors(key: 'name') as $error): ?>
-                        <?= $error ?><br/>
-                    <?php endforeach ?>
-                </div>
+                <input id="<?= \DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME ?>" type="text" name="<?= \DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME ?>" value="<?= $data[\DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME] ?? '' ?>"/>
+                <?= $this->fetchTemplate(template:'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME)]) ?>
             </div>
         </div>
         <div class="column">
@@ -44,22 +40,6 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
-        <div class="column">
-            <div>
-                <label for="password">
-                    <?= $translator->password() ?>
-                </label>
-                <input id="password" type="password" name="password" value="<?= array_key_exists(key: 'password', array: $data) ? $data['password'] : '' ?>"/>
-                <div class="errors">
-                    <?php foreach ($errorStore->getErrors(key: 'password') as $error): ?>
-                        <?= $error ?><br/>
-                    <?php endforeach ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="column">
             <div>
                 <label for="is_admin">
@@ -80,6 +60,8 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="column">
             <div>
                 <label for="do_notify_logins">
@@ -100,6 +82,8 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="column">
             <div>
                 <label for="do_notify">

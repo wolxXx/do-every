@@ -36,3 +36,6 @@ in index.php
 \DoEveryApp\Util\QueryLogger::$disabled = false; 
 -> get insights
 
+## 
+mark initial migration executed:
+./vendor/bin/doctrine-migrations migrations:version -n --add DoctrineMigrations\\Version20250926134222

@@ -82,8 +82,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
             $existing
                 ->setName(name: $id)
                 ->setContent(content: $data)
-                ->setExpires(expires: (new \DateTime())->add(interval: new \DateInterval(duration: 'PT1H'))->format(format: 'Y-m-d H:i:s'))
-                ->setExpires(expires: (new \DateTime())->format(format: 'Y-m-d H:i:s'))
+                ->setExpires(expires: new \DateTime()
+                                          ->add(interval: new \DateInterval(duration: 'PT1H'))->format(format: 'Y-m-d H:i:s'))
+                ->setExpires(expires: new \DateTime()->format(format: 'Y-m-d H:i:s'))
             ;
             $existing::getRepository()->update(entity: $existing);
             $this

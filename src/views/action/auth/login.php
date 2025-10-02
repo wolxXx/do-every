@@ -36,12 +36,56 @@ declare(strict_types=1);
         </label>
         <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD, array: $data) ? $data[\DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD] : '' ?>"/>
         <div class="errors">
-            <?foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD) as $error): ?>
+            <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD) as $error): ?>
                 <?= $error ?><br/>
             <?php endforeach ?>
         </div>
     </div>
+    <div id="status">
+
+    </div>
     <div class="form-footer">
         <input class="primaryButton" type="submit" value="<?= $translator->go() ?>">
+        <button class="primaryButton" id="passkeyLogin">
+            <?= $translator->loginWithPasskey() ?>
+        </button>
     </div>
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('passkeyLogin').addEventListener('click', async (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const publicKey = {
+                challenge: new Uint8Array([
+                    <?php foreach(str_split(bin2hex(random_bytes(10))) as $char): ?>
+                        <?= ord($char) ?>,
+                    <?php endforeach ?>
+                ]),
+                rpId: "<?= false === str_contains(haystack: $_SERVER['HTTP_HOST'], needle: 'localhost') ? $_SERVER['HTTP_HOST'] : 'localhost' ?>",
+            }
+            try {
+                const credential = await navigator.credentials.get({ publicKey: publicKey })
+
+                const response = await fetch('<?= \DoEveryApp\Action\Auth\PasskeyLoginAction::getRoute() ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        <?= \DoEveryApp\Action\Auth\PasskeyLoginAction::FORM_FIELD_PUBLIC_KEY ?>: credential.id,
+                        <?= \DoEveryApp\Action\Auth\PasskeyLoginAction::FORM_FIELD_LOGIN ?>: document.getElementById('email').value,
+                    })
+                });
+
+                window.location = '<?= \DoEveryApp\Action\Cms\IndexAction::getRoute() ?>';
+            } catch (err) {
+                console.error("Error creating credential:", err);
+                alert('<?= $translator->passkeyLoginError() ?>');
+            }
+            return false;
+        })
+    });
+</script>

@@ -44,7 +44,7 @@ class MarkWorkingAction extends \DoEveryApp\Action\AbstractAction
             $task->setWorkingOn(workingOn: $worker);
             \DoEveryApp\Entity\Task::getRepository()->update(entity: $task);
             \DoEveryApp\Util\FlashMessenger::addSuccess(message: $this->translator->workerAssigned());
-        } catch (\DoEveryApp\Exception\ArgumentNoSet $exception) {
+        } catch (\DoEveryApp\Exception\ArgumentNoSet) {
             // ok, argument was not set...
             $task->setWorkingOn(workingOn: null);
             \DoEveryApp\Entity\Task::getRepository()->update(entity: $task);
