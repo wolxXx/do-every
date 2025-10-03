@@ -180,6 +180,16 @@ trait AddEdit
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_TASK_TYPE))
         ;
+        $data[static::FORM_FIELD_DUE_DATE]            = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_DUE_DATE))
+        ;
+        $data[static::FORM_FIELD_REMIND_DATE]            = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_REMIND_DATE))
+        ;
         $data[static::FORM_FIELD_INTERVAL_VALUE]       = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
