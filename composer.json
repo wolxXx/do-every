@@ -20,6 +20,7 @@
     "optimize-autoloader": true,
     "secure-http": false,
     "allow-plugins": {
+      "carthage-software/mago": true,
       "composer/installers": true,
       "infection/extension-installer": true,
       "mouf/nodejs-installer": true,
@@ -93,6 +94,7 @@
     "beberlei/assert": "*",
     "beberlei/doctrineextensions": "*",
     "brianium/paratest": "*",
+    "carthage-software/mago": "*",
     "codeception/codeception": "*",
     "doctrine/migrations": "*",
     "doctrine/orm": "*",
