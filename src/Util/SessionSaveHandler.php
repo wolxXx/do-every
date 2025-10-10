@@ -24,12 +24,14 @@ class SessionSaveHandler implements \SessionHandlerInterface
     }
 
 
+    #[\Override]
     public function close(): bool
     {
         return true;
     }
 
 
+    #[\Override]
     public function destroy(string $id): bool
     {
         $entity = $this->findByName(name: $id);
@@ -45,6 +47,7 @@ class SessionSaveHandler implements \SessionHandlerInterface
     }
 
 
+    #[\Override]
     public function gc(int $max_lifetime): int|false
     {
         \DoEveryApp\Entity\Session::getRepository()->garbageCollection(maxLifeTime: $max_lifetime);
@@ -53,11 +56,14 @@ class SessionSaveHandler implements \SessionHandlerInterface
     }
 
 
+    #[\Override]
     public function open(string $path, string $name): bool
     {
         return true;
     }
 
+
+    #[\Override]
     public function read(string $id): string|false
     {
         $existing = $this->findByName(name: $id);
