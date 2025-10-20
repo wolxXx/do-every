@@ -20,6 +20,16 @@ class IndexAction extends \DoEveryApp\Action\AbstractAction
         if (false === \DoEveryApp\Util\User\Current::isAuthenticated()) {
             return $this->render(script: 'action/cms/index');
         }
+        if (false === $this->isAjaxRequest()) {
+            return $this->render(script: 'action/cms/dashboard', data: [
+                'executions'    => [],
+                'dueTasks'      => [],
+                'tasks'         => [],
+                'disabledTasks' => [],
+                'workingOn'     => [],
+                'workers'       => [],
+            ]);
+        }
 
         return $this->render(script: 'action/cms/dashboard', data: [
             'executions'    => \DoEveryApp\Entity\Execution::getRepository()

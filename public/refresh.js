@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(function () {
         fetch(currentUrl, {
             method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
             .then(response => {
                 return response.text();
