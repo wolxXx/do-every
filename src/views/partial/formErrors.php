@@ -14,11 +14,12 @@ declare(strict_types=1);
  * @var string[] $errors
  */
 ?>
-
-<div class="errors">
-    <?php foreach ($errors as $error): ?>
-        <span class="error">
-            <?= $error ?>
-        </span>
-    <?php endforeach ?>
-</div>
+<?php if (false === empty($errors)): ?>
+    <div class="errors">
+        <?php foreach ($errors as $error): ?>
+            <span class="error">
+                <?= $error ?>
+            </span>
+        <?php endforeach ?>
+    </div>
+<?php endif ?>
