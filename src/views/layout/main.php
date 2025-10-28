@@ -43,8 +43,8 @@ declare(strict_types=1);
         <?php endif ?>
     </title>
     <style>
-        :root {
-
+        @view-transition {
+            navigation: auto;
         }
     </style>
 </head>
