@@ -52,14 +52,16 @@ class Notify
 
             return $diff->d > 0 || $diff->h > 22;
         });
-        foreach ($workers as $worker) {
-            $container                          = new \DoEveryApp\Util\Cron\Notification\Container(worker: $worker);
-            $this->containers[$worker->getId()] = $container;
-            if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $worker)) {
-                $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\PasswordChange(lastChange: $worker->getLastPasswordChange()));
-            }
-            if (null !== $worker->getPasswordCredential() && null === $worker->getTwoFactorSecret()) {
-                $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\TwoFactorAdd());
+        if (true === $registry->mailContentSecurityNote()) {
+            foreach ($workers as $worker) {
+                $container                          = new \DoEveryApp\Util\Cron\Notification\Container(worker: $worker);
+                $this->containers[$worker->getId()] = $container;
+                if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $worker)) {
+                    $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\PasswordChange(lastChange: $worker->getLastPasswordChange()));
+                }
+                if (null !== $worker->getPasswordCredential() && null === $worker->getTwoFactorSecret()) {
+                    $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\TwoFactorAdd());
+                }
             }
         }
         $tasks = \DoEveryApp\Entity\Task::getRepository()->findAll();

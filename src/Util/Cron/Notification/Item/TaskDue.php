@@ -24,8 +24,10 @@ class TaskDue implements ItemInterface
         if (null !== $task->getNote()) {
             $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape(value: $task->getNote());
         }
-        foreach ($task->getCheckListItems() as $checkListItem) {
-            $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName());
+        if (\DoEveryApp\Util\Registry::getInstance()->mailContentSteps()) {
+            foreach ($task->getCheckListItems() as $checkListItem) {
+                $message .= \PHP_EOL . \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName());
+            }
         }
         return $message;
     }

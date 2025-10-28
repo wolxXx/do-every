@@ -33,6 +33,9 @@ declare(strict_types=1);
             </th>
             <th>
                 <?= $translator->actions() ?>
+                <a href="<?= \DoEveryApp\Action\Task\Timer\DeleteAllAction::getRoute() ?>" class="dangerButton confirm" data-message="<?= $translator->reallyWantToDeleteAllTimers() ?>">
+                    <?= \DoEveryApp\Util\View\Icon::trash() ?>
+                </a>
             </th>
         </tr>
     </thead>

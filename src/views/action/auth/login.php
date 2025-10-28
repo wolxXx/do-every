@@ -24,22 +24,14 @@ declare(strict_types=1);
             <?= $translator->eMail() ?>
         </label>
         <input id="email" type="email" name="<?= \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_EMAIL ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_EMAIL, array: $data) ? $data[\DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_EMAIL] : '' ?>"/>
-        <div class="errors">
-            <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_EMAIL) as $error): ?>
-                <?= $error ?><br/>
-            <?php endforeach ?>
-        </div>
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_EMAIL)]) ?>
     </div>
     <div>
         <label for="password">
             <?= $translator->password() ?>
         </label>
         <input id="password" type="password" name="<?= \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD ?>" value="<?= array_key_exists(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD, array: $data) ? $data[\DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD] : '' ?>"/>
-        <div class="errors">
-            <?php foreach ($errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD) as $error): ?>
-                <?= $error ?><br/>
-            <?php endforeach ?>
-        </div>
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Auth\LoginAction::FORM_FIELD_PASSWORD)]) ?>
     </div>
     <div id="status">
 

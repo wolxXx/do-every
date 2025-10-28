@@ -102,6 +102,22 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
+                <?= $translator->mailContentIncludeSecurityNote() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->mailContentSecurityNote()) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?= $translator->mailContentIncludeSteps() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->mailContentSteps()) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <?= $translator->davEnabled() ?>
             </td>
             <td>

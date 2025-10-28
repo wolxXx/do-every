@@ -24,11 +24,7 @@ declare(strict_types=1);
             E-Mail
         </label>
         <input id="email" type="email" name="email" value="<?= array_key_exists(key: 'email', array: $data) ? $data['email'] : '' ?>"/>
-        <div class="errors">
-            <?php foreach ($errorStore->getErrors(key: 'email') as $error): ?>
-                <?= $error ?><br/>
-            <?php endforeach ?>
-        </div>
+        <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: 'email')]) ?>
     </div>
 
     <div class="form-footer">

@@ -9,6 +9,18 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \DoEveryApp\Entity\Share\Timestampable;
     use \DoEveryApp\Entity\Share\Blameable;
 
+    public function deleteAll(): static
+    {
+        $this
+            ->createQueryBuilder(alias: 't')
+            ->delete()
+            ->getQuery()
+            ->execute()
+            ;
+
+        return $this;
+    }
+
     public function create(\DoEveryApp\Entity\Task\Timer $entity): static
     {
         $this

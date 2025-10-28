@@ -46,7 +46,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Worker::get(worker: \DoEveryApp\Util\Registry::getInstance()->getAdminUser()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_ADMIN_USER) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_ADMIN_USER->value) ?>
                 </td>
             </tr>
             <tr>
@@ -57,7 +57,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->passwordChangeInterval() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_PASSWORD_CHANGE_INTERVAL) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_PASSWORD_CHANGE_INTERVAL->value) ?>
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isCronRunning()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_CRON_LOCK) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_CRON_LOCK->value) ?>
                 </td>
             </tr>
             <tr>
@@ -79,7 +79,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getCronStarted()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_CRON_STARTED) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_CRON_STARTED->value) ?>
                 </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getLastCron()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_LAST_CRON) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_LAST_CRON->value) ?>
                 </td>
             </tr>
             <tr>
@@ -105,7 +105,7 @@ declare(strict_types=1);
                     </a>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_NOTIFIER_RUNNING) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_NOTIFIER_RUNNING->value) ?>
                 </td>
             </tr>
             <tr>
@@ -116,7 +116,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getNotifierLastRun()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_NOTIFIER_LAST_RUN) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_NOTIFIER_LAST_RUN->value) ?>
                 </td>
             </tr>
             <tr>
@@ -127,7 +127,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: \DoEveryApp\Util\Registry::getInstance()->getLastBackup()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_LAST_BACKUP) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_LAST_BACKUP->value) ?>
                 </td>
             </tr>
             <tr>
@@ -138,7 +138,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->backupDelay() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_BACKUP_DELAY) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_BACKUP_DELAY->value) ?>
                 </td>
             </tr>
             <tr>
@@ -149,7 +149,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->getKeepBackupDays() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_KEEP_BACKUP_DAYS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_KEEP_BACKUP_DAYS->value) ?>
                 </td>
             </tr>
             <tr>
@@ -160,7 +160,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\Registry::getInstance()->getPrecisionDue() ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_PRECISION_DUE) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_PRECISION_DUE->value) ?>
                 </td>
             </tr>
             <tr>
@@ -171,7 +171,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doFillTimeLine()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_FILL_TIME_LINE) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_FILL_TIME_LINE->value) ?>
                 </td>
             </tr>
             <tr>
@@ -182,7 +182,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->doUseTimer()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_USE_TIMER->value) ?>
                 </td>
             </tr>
             <tr>
@@ -193,7 +193,29 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->isMarkdownTransformerActive()) ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_USE_TIMER) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_USE_TIMER->value) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $translator->mailContentIncludeSecurityNote() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->mailContentSecurityNote()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_EMAIL_CONTENT_SECURITY_NOTES->value) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $translator->mailContentIncludeSteps() ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Boolean::get(value: \DoEveryApp\Util\Registry::getInstance()->mailContentSteps()) ?>
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_EMAIL_CONTENT_STEPS->value) ?>
                 </td>
             </tr>
             <tr>
@@ -204,7 +226,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxWorkers(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_WORKERS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_MAX_WORKERS->value) ?>
                 </td>
             </tr>
             <tr>
@@ -215,7 +237,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxTasks(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_TASKS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_MAX_TASKS->value) ?>
                 </td>
             </tr>
             <tr>
@@ -226,7 +248,7 @@ declare(strict_types=1);
                     <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::getInstance()->getMaxGroups(), nullRepresenting: '-') ?>
                 </td>
                 <td>
-                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry::KEY_MAX_GROUPS) ?>
+                    <?= \DoEveryApp\Util\View\Escaper::escape(value: \DoEveryApp\Util\Registry\Key::KEY_MAX_GROUPS->value) ?>
                 </td>
             </tr>
             <tr>

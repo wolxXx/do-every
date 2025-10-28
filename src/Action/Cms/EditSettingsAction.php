@@ -29,6 +29,10 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
     public const string FORM_FIELD_PASSWORD_CHANGE_INTERVAL = 'passwordChangeInterval';
 
+    public const string FORM_FIELD_CONTENT_SECURITY         = 'contentSecurity';
+
+    public const string FORM_FIELD_CONTENT_STEPS            = 'contentSteps';
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $registry = \DoEveryApp\Util\Registry::getInstance();
@@ -41,6 +45,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                 static::FORM_FIELD_USE_TIMER                => $registry->doUseTimer(),
                 static::FORM_FIELD_MARKDOWN_ENABLED         => $registry->isMarkdownTransformerActive(),
                 static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL => $registry->passwordChangeInterval(),
+                static::FORM_FIELD_CONTENT_SECURITY         => $registry->mailContentSecurityNote(),
+                static::FORM_FIELD_CONTENT_STEPS            => $registry->mailContentSteps(),
             ];
 
             return $this->render(script: 'action/cms/editSettings', data: ['data' => $data]);
@@ -62,6 +68,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                 ->setPrecisionDue(precisionDue: $data[static::FORM_FIELD_PRECISION_DUE])
                 ->setMarkdownTransformerActive(active: '1' === $data[static::FORM_FIELD_MARKDOWN_ENABLED])
                 ->setPasswordChangeInterval(interval: $data[static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL])
+                ->setMailContentSecurityNote(active: '1' === $data[static::FORM_FIELD_CONTENT_SECURITY])
+                ->setMailContentSteps(active: '1' === $data[static::FORM_FIELD_CONTENT_STEPS])
             ;
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
@@ -115,6 +123,16 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL))
         ;
+        $data[static::FORM_FIELD_CONTENT_SECURITY]        = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CONTENT_SECURITY))
+        ;
+        $data[static::FORM_FIELD_CONTENT_STEPS]        = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CONTENT_STEPS))
+        ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
                                                                                           static::FORM_FIELD_KEEP_BACKUPS             => [
@@ -130,6 +148,10 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                                                                                           static::FORM_FIELD_MARKDOWN_ENABLED         => [
                                                                                           ],
                                                                                           static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL => [
+                                                                                          ],
+                                                                                          static::FORM_FIELD_CONTENT_SECURITY         => [
+                                                                                          ],
+                                                                                          static::FORM_FIELD_CONTENT_STEPS            => [
                                                                                           ],
                                                                                       ]);
 

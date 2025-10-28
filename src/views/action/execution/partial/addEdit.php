@@ -112,7 +112,7 @@ declare(strict_types=1);
             clearInterval(interval)
             interval = setInterval(function () {
                 document.querySelector('#now').innerHTML = '<?= $translator->now() ?>: ' + moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
-            }, 200)
+            }, 100)
 
             if (true === info.running) {
                 hideStartButton()
@@ -120,7 +120,7 @@ declare(strict_types=1);
                 showStopButton()
                 showResetButton()
                 showTakeButton()
-                timerAreaElement.innerHTML += '<br><?= $translator->runningTimer() ?>running timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
+                timerAreaElement.innerHTML += '<br><?= $translator->runningTimer() ?> ' + info.minutes + ' <?= $translator->minutesAbbrev() ?>, ' + info.seconds + ' <?= $translator->seconds() ?>'
                 return;
             }
             if (true === info.paused) {
@@ -129,7 +129,7 @@ declare(strict_types=1);
                 showStopButton()
                 showResetButton()
                 showTakeButton()
-                timerAreaElement.innerHTML += '<br>paused timer ' + info.minutes + ' min, ' + info.seconds + ' seconds'
+                timerAreaElement.innerHTML += '<br>paused timer ' + info.minutes + ' <?= $translator->minutesAbbrev() ?>, ' + info.seconds + ' <?= $translator->seconds() ?>'
                 return;
             }
 
@@ -139,7 +139,7 @@ declare(strict_types=1);
                 hideTakeButton()
             }
             if(null !== info.last) {
-                timerAreaElement.innerHTML += '<br>last time: ' + info.last + ' min'
+                timerAreaElement.innerHTML += '<br>last time: ' + info.last + ' <?= $translator->minutesAbbrev() ?>'
                 showTakeButton()
             }
 
