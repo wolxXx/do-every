@@ -205,10 +205,8 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                             <?= \DoEveryApp\Util\View\Duration::byExecution(execution: $execution) ?>
                         </td>
                         <?php if(0 !== count(value: $task->getCheckListItems())): ?>
-                            <td style="position: relative">
-
+                            <td>
                                 <?php foreach($execution->getCheckListItems() as $checkListItem): ?>
-
                                     <div class="row">
                                         <div class="column">
                                             <?= \DoEveryApp\Util\View\CheckListItem::byExecutionCheckListItem(item: $checkListItem) ?>
@@ -221,7 +219,7 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                             </td>
                         <?php endif ?>
 
-                        <td style="position: relative;">
+                        <td>
                             <?= \DoEveryApp\Util\View\ExecutionNote::byExecution(execution: $execution) ?>
                         </td>
                         <td class="pullRight">
