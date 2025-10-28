@@ -645,4 +645,16 @@ interface Translator
     public function passwordRepeat(): string;
 
     public function proposePassword(): string;
+
+    public function mailContentIncludeSecurityNote(): string;
+
+    public function mailContentIncludeSteps(): string;
+
+    public function minutesAbbrev(): string;
+
+    public function seconds(): string;
+
+    public function allTimersDeleted(): string;
+
+    public function reallyWantToDeleteAllTimers(): string;
 }

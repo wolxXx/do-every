@@ -1406,4 +1406,40 @@ class German implements \DoEveryApp\Util\Translator
     {
         return 'Passwort vorschlagen';
     }
+
+    #[\Override]
+    public function mailContentIncludeSecurityNote(): string
+    {
+        return 'Sicherheitshinweis in e-Mail einbetten.';
+    }
+
+    #[\Override]
+    public function mailContentIncludeSteps(): string
+    {
+        return 'Schritte in e-Mail einbetten.';
+    }
+
+    #[\Override]
+    public function minutesAbbrev(): string
+    {
+        return 'Min';
+    }
+
+    #[\Override]
+    public function seconds(): string
+    {
+        return 'Sekunden';
+    }
+
+    #[\Override]
+    public function allTimersDeleted(): string
+    {
+        return 'alle Stoppuhren gelöscht';
+    }
+
+    #[\Override]
+    public function reallyWantToDeleteAllTimers(): string
+    {
+        return 'Willst du wirklich alle Stoppuhren löschen?';
+    }
 }

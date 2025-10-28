@@ -1403,4 +1403,40 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'propose password';
     }
+
+    #[\Override]
+    public function mailContentIncludeSecurityNote(): string
+    {
+        return 'Include security notes in e-mail.';
+    }
+
+    #[\Override]
+    public function mailContentIncludeSteps(): string
+    {
+        return 'Include steps in e-mail.';
+    }
+
+    #[\Override]
+    public function minutesAbbrev(): string
+    {
+        return 'min';
+    }
+
+    #[\Override]
+    public function seconds(): string
+    {
+        return 'seconds';
+    }
+
+    #[\Override]
+    public function allTimersDeleted(): string
+    {
+        return 'all timers deleted';
+    }
+
+    #[\Override]
+    public function reallyWantToDeleteAllTimers(): string
+    {
+        return 'Do you really want to delete all timers?';
+    }
 }

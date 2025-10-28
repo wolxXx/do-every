@@ -1387,4 +1387,40 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function mailContentIncludeSecurityNote(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function mailContentIncludeSteps(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function minutesAbbrev(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function seconds(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function allTimersDeleted(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function reallyWantToDeleteAllTimers(): string
+    {
+        return $this->debug();
+    }
 }
