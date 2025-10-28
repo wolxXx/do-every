@@ -440,16 +440,22 @@ h1:before, h1:after {
 .executionNote {
     border: solid 1px var(--dark30Mixin);
     max-height: 1.1em;
+    border-radius: 10px;
+    padding: 5px;
     overflow: hidden;
+    transition: max-height 0.1s ease-in-out, width 3.0s ease-in-out, border-radius 5.0s ease-in-out;
 }
 
 .executionNote:hover {
     max-height: 300px;
     overflow: auto;
     position: absolute;
-    width: 300px;
-    background: #333;
-    color: #eee;
+    width: 500px;
+    background: #111;
+    color: #efefef;
+    border-radius: 0;
+    line-height: 1.9em;
+    transition: max-height 0.4s ease-in-out, width 0.4s ease-in-out, border-radius 4.0s ease-in-out;
 }
 
 .taskNote {
