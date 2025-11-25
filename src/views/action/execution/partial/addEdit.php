@@ -333,6 +333,7 @@ declare(strict_types=1);
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][checked]" value="0">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][reference]" value="<?= $checkListItem['reference'] ?>">
                                     <input type="hidden" readonly checked name="checkListItems[<?= $index ?>][id]" value="<?= $checkListItem['id'] ?>">
+                                    <?= $this->fetchTemplate(template: 'partial/copyToClipBoard.php', data: ['text' => $checkListItem['name']]) ?>
                                 </td>
                                 <td>
                                     <input id="clid<?= $checkListItem['reference'] ?>" type="checkbox" <?= '1' === $checkListItem['checked'] ? 'checked' : '' ?> name="checkListItems[<?= $index ?>][checked]" value="1">
@@ -341,6 +342,7 @@ declare(strict_types=1);
                                     <label for="clid<?= $checkListItem['reference'] ?>">
                                         <?= \DoEveryApp\Util\View\CheckListItemNote::byValue(note: $checkListItem['referenceNote']) ?>
                                     </label>
+                                    <?= $this->fetchTemplate(template: 'partial/copyToClipBoard.php', data: ['text' => $checkListItem['referenceNote']]) ?>
                                 </td>
                                 <td>
                                     <textarea rows="1000" cols="1000" name="checkListItems[<?= $index ?>][note]"><?= $checkListItem['note'] ?></textarea>
