@@ -88,12 +88,16 @@ class Notify
             );
         });
 
+        $hasTasks = false;
         foreach (\DoEveryApp\Util\View\TaskSortByDue::sort(tasks: $tasks) as $task) {
             foreach ($this->containers as $container) {
                 $container->addItem(item: new \DoEveryApp\Util\Cron\Notification\Item\TaskDue(task: $task));
+                $hasTasks = true;
             }
         }
-        $this->notify();
+        if (true === $hasTasks) {
+            $this->notify();
+        }
         $registry
             ->setNotifierRunning(notifierRunning: false)
             ->setNotifierLastRun(notifierLastRun: \Carbon\Carbon::now())
