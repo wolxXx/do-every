@@ -25,6 +25,11 @@ class Icon
         return '<i class="fa-solid fa-clone"></i>';
     }
 
+    public static function copy(): string
+    {
+        return '<i class="fa-regular fa-clipboard"></i>';
+    }
+
     public static function cross(): string
     {
         return '<i class="fa-solid fa-xmark"></i>';

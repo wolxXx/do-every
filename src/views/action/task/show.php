@@ -147,9 +147,11 @@ $durations     = \DoEveryApp\Definition\Durations::FactoryByTask(task: $task);
                             <tr>
                                 <td>
                                     <?= \DoEveryApp\Util\View\Escaper::escape(value: $checkListItem->getName()) ?>
+                                    <?= $this->fetchTemplate(template: 'partial/copyToClipBoard.php', data: ['text' => $checkListItem->getName()]) ?>
                                 </td>
                                 <td>
                                     <?= \DoEveryApp\Util\View\CheckListItemNote::byTaskCheckListItem(item: $checkListItem) ?>
+                                    <?= $this->fetchTemplate(template: 'partial/copyToClipBoard.php', data: ['text' => $checkListItem->getNote()]) ?>
                                 </td>
                             </tr>
                         <?php endforeach ?>
