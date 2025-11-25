@@ -16,6 +16,6 @@ return [
     'port'          => '3306',
     'charset'       => 'utf8',
     'driverOptions' => [
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+        \PDO\Mysql::ATTR_INIT_COMMAND => 'SET NAMES utf8',
     ],
 ];
