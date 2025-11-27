@@ -14,6 +14,8 @@ class PasswordChanged
             Jemand (hoffentlich du!) hat ein neues Passwort für do-every* gesetzt.
             Wenn das nicht du warst, vergebe bitte ein neues Passwort.
             
+            Alle deine Zugangsdaten wurden gelöscht: Passkey und Passwort.
+            
             Binäre Grüße aus dem Maschinenraum
             do-every* 
             TEXT;

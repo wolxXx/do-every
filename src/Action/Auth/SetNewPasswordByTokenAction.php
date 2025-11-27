@@ -61,9 +61,21 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
                 throw new \DoEveryApp\Exception\FormValidationFailed();
             }
 
-            $existing
-                ->setPassword(password: $data[static::FORM_FIELD_PASSWORD])
+            if (true === $existing->getPasskeyCredential() instanceof \DoEveryApp\Entity\Worker\Credential) {
+                $existing->getPasskeyCredential()::getRepository()->delete($existing->getPasskeyCredential());
+            }
+            if (true === $existing->getPasswordCredential() instanceof \DoEveryApp\Entity\Worker\Credential) {
+                $existing->getPasswordCredential()::getRepository()->delete($existing->getPasswordCredential());
+            }
+
+            $newCredential = new \DoEveryApp\Entity\Worker\Credential()
+                ->setWorker(worker: $existing)
+                ->setPassword(password: '' . $data[static::FORM_FIELD_PASSWORD])
                 ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
+                ;
+            $newCredential::getRepository()->create($newCredential);
+
+            $existing
                 ->setTokenValidUntil(tokenValidUntil: null)
                 ->setPasswordResetToken(passwordResetToken: null)
             ;
@@ -80,30 +92,38 @@ class SetNewPasswordByTokenAction extends \DoEveryApp\Action\AbstractAction
         } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
-        return $this->render(script: 'action/auth/applyNewPassword', data: ['data' => $data]);
+        return $this->render(
+            script: 'action/auth/applyNewPassword',
+            data:   [
+                'data' => $data
+            ]
+        );
     }
 
     protected function filterAndValidate(array &$data): array
     {
-        $data[static::FORM_FIELD_PASSWORD]         = new \Laminas\Filter\FilterChain()
-            ->attach(callback: new \Laminas\Filter\StringTrim())
-            ->attach(callback: new \Laminas\Filter\ToNull())
-            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD))
-        ;
-        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = new \Laminas\Filter\FilterChain()
-            ->attach(callback: new \Laminas\Filter\StringTrim())
-            ->attach(callback: new \Laminas\Filter\ToNull())
-            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CONFIRM))
-        ;
+        $validators        = [];
+        $notBlankValidator = new \Symfony\Component\Validator\Constraints\NotBlank();
+        $stringTrimFilter  = new \Laminas\Filter\StringTrim();
+        $toNullFilter      = new \Laminas\Filter\ToNull();
 
-        $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
-                                                                                  static::FORM_FIELD_PASSWORD         => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                                  static::FORM_FIELD_PASSWORD_CONFIRM => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                              ]);
+        $data[static::FORM_FIELD_PASSWORD]         = new \Laminas\Filter\FilterChain()
+            ->attach(callback: $stringTrimFilter)
+            ->attach(callback: $toNullFilter)
+            ->filter(value: $data[static::FORM_FIELD_PASSWORD] ?? null)
+        ;
+        $validators[static::FORM_FIELD_PASSWORD] = [
+            $notBlankValidator
+        ];
+
+        $data[static::FORM_FIELD_PASSWORD_CONFIRM] = new \Laminas\Filter\FilterChain()
+            ->attach(callback: $stringTrimFilter)
+            ->attach(callback: $toNullFilter)
+            ->filter(value: $data[static::FORM_FIELD_PASSWORD_CONFIRM] ?? null)
+        ;
+        $validators[static::FORM_FIELD_PASSWORD_CONFIRM] = [
+            $notBlankValidator
+        ];
 
         $this->validate(data: $data, validators: $validators);
 
