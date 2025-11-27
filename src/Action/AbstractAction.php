@@ -228,8 +228,12 @@ abstract class AbstractAction
         return 'XMLHttpRequest' === $this->getRequest()->getHeaderLine(name: 'X-Requested-With');
     }
 
-    protected function validate(array $data, \Symfony\Component\Validator\Constraints\Collection $validators): static
+    protected function validate(array $data, \Symfony\Component\Validator\Constraints\Collection|array $validators): static
     {
+        if (false === $validators instanceof \Symfony\Component\Validator\Constraints\Collection) {
+            $validators                   = new \Symfony\Component\Validator\Constraints\Collection(fields: $validators);
+            $validators->allowExtraFields = false;
+        }
         $validator = \DoEveryApp\Util\DependencyContainer::getInstance()->getValidator();
         $hasErrors = false;
         foreach ($validator->validate(value: $data, constraints: $validators) as $error) {
