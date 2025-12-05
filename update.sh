@@ -25,8 +25,6 @@ echo "dn port: $DB_PORT"
 git branch
 git describe --tags --abbrev=0 2>/dev/null || echo "No tags found"
 
-
-
 git pull
 ./docker.sh
 set +e
@@ -40,8 +38,6 @@ docker exec -it do-every-$INSTANCE-web bash -c "php composer.phar db"
 set +e
 docker exec -it do-every-$INSTANCE-web bash -c "rm /tmp/__CG__*"
 docker exec -it do-every-$INSTANCE-web bash -c "echo '' > app.log"
-docker stop do-every-$INSTANCE-ofelia
-docker rm do-every-$INSTANCE-ofelia
 set -e
 $DOCKER_COMPOSE_CMD up -d --build --force-recreate --pull always
 

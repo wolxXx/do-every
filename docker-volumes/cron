@@ -1,1 +1,1 @@
-0 * * * * php /var/www/scripts/cron.php
+*/30 * * * * * * php /var/www/scripts/cron.php
