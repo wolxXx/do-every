@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 HERE=$(dirname $(readlink -f "$0"));
 cd "$HERE";
@@ -60,7 +61,7 @@ if [ ${#missing_vars[@]} -ne 0 ]; then
     exit 1
 fi
 
-docker compose up -d --build --force-recreate --pull always
+docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
 
 echo "web running under http://localhost:$WEB_PORT"
 echo "db running under port $DB_PORT"
