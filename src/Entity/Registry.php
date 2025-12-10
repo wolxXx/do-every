@@ -8,12 +8,8 @@ namespace DoEveryApp\Entity;
     repositoryClass: Registry\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : TableNames::REGISTRY->value,
+    options: Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 #[\Doctrine\ORM\Mapping\UniqueConstraint(
     name   : 'key_name',
@@ -21,12 +17,7 @@ namespace DoEveryApp\Entity;
 )]
 class Registry
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'registry';
+    use Share\DefaultModelTraits;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'key_name',

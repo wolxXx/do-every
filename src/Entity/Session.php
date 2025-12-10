@@ -8,19 +8,13 @@ namespace DoEveryApp\Entity;
     repositoryClass: Session\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : TableNames::SESSION->value,
+    options: Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 class Session
 {
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-
-    public const string TABLE_NAME = 'session';
+    use Share\Id;
+    use Share\Repository;
 
     #[\Doctrine\ORM\Mapping\Column(
         type: \Doctrine\DBAL\Types\Types::STRING

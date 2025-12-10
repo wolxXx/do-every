@@ -8,22 +8,13 @@ namespace DoEveryApp\Entity\Task;
     repositoryClass: CheckListItem\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : \DoEveryApp\Entity\TableNames::TASK_CHECK_LIST_ITEM->value,
+    options: \DoEveryApp\Entity\Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 
 class CheckListItem
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'task_check_list_item';
+    use \DoEveryApp\Entity\Share\DefaultModelTraits;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task::class

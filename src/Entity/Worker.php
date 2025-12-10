@@ -8,35 +8,28 @@ namespace DoEveryApp\Entity;
     repositoryClass: Worker\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : TableNames::WORKER->value,
+    options: Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 #[\Doctrine\ORM\Mapping\UniqueConstraint(
     name   : 'email',
-    columns: ['email']
+    columns: [
+        'email',
+    ]
 )]
 class Worker
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'worker';
+    use Share\DefaultModelTraits;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
-        targetEntity: \DoEveryApp\Entity\Task::class,
+        targetEntity: Task::class,
         mappedBy    : 'workingOn',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["name" => "ASC"])]
     protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $tasksWorkingOn;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
-        targetEntity: \DoEveryApp\Entity\Worker\Credential::class,
+        targetEntity: Worker\Credential::class,
         mappedBy    : 'worker',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["id" => "DESC"])]
@@ -127,14 +120,14 @@ class Worker
         return static::getRepositoryByClassName();
     }
 
-    public function getPasswordCredential(): ?\DoEveryApp\Entity\Worker\Credential
+    public function getPasswordCredential(): ?Worker\Credential
     {
-        return \DoEveryApp\Entity\Worker\Credential::getRepository()->findPasswordForWorker($this);
+        return Worker\Credential::getRepository()->findPasswordForWorker($this);
     }
 
-    public function getPasskeyCredential(): ?\DoEveryApp\Entity\Worker\Credential
+    public function getPasskeyCredential(): ?Worker\Credential
     {
-        return \DoEveryApp\Entity\Worker\Credential::getRepository()->findPasskeyForWorker($this);
+        return Worker\Credential::getRepository()->findPasskeyForWorker($this);
     }
 
     public function getLastPasswordChange(): ?\DateTime
@@ -148,7 +141,7 @@ class Worker
     }
 
     /**
-     * @return \DoEveryApp\Entity\Task[]
+     * @return Task[]
      */
     public function getTasksWorkingOn(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
     {

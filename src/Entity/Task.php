@@ -8,21 +8,12 @@ namespace DoEveryApp\Entity;
     repositoryClass: Task\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : TableNames::TASK->value,
+    options: Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 class Task
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'task';
+    use Share\DefaultModelTraits;
 
     protected int|float|null    $dueCacheValue;
 
@@ -56,14 +47,14 @@ class Task
     protected ?Worker           $assignee         = null;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
-        targetEntity: \DoEveryApp\Entity\Task\CheckListItem::class,
+        targetEntity: Task\CheckListItem::class,
         mappedBy    : 'task',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
     protected                   $checkListItems;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
-        targetEntity: \DoEveryApp\Entity\Execution::class,
+        targetEntity: Execution::class,
         mappedBy    : 'task',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["id" => "DESC"])]

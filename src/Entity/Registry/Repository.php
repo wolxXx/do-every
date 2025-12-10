@@ -6,8 +6,7 @@ namespace DoEveryApp\Entity\Registry;
 
 class Repository extends \Doctrine\ORM\EntityRepository
 {
-    use \DoEveryApp\Entity\Share\Timestampable;
-    use \DoEveryApp\Entity\Share\Blameable;
+    use \DoEveryApp\Entity\Share\DefaultRepositoryTraits;
 
     public function getByKey(string $key): ?\DoEveryApp\Entity\Registry
     {

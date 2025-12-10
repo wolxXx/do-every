@@ -6,8 +6,7 @@ namespace DoEveryApp\Entity\Execution\CheckListItem;
 
 class Repository extends \Doctrine\ORM\EntityRepository
 {
-    use \DoEveryApp\Entity\Share\Timestampable;
-    use \DoEveryApp\Entity\Share\Blameable;
+    use \DoEveryApp\Entity\Share\DefaultRepositoryTraits;
 
     public function create(\DoEveryApp\Entity\Execution\CheckListItem $entity): static
     {

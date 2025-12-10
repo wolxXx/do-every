@@ -8,22 +8,13 @@ namespace DoEveryApp\Entity;
     repositoryClass: Execution\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : TableNames::TASK_EXECUTION->value,
+    options: Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 
 class Execution
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'task_execution';
+    use Share\DefaultModelTraits;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: Task::class
@@ -35,7 +26,7 @@ class Execution
     protected Task $task;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
-        targetEntity: \DoEveryApp\Entity\Execution\CheckListItem::class,
+        targetEntity: Task\CheckListItem::class,
         mappedBy    : 'execution',
     )]
     #[\Doctrine\ORM\Mapping\OrderBy(["position" => "ASC"])]
@@ -83,7 +74,7 @@ class Execution
     }
 
     /**
-     * @return \DoEveryApp\Entity\Execution\CheckListItem[]
+     * @return Execution\CheckListItem[]
      */
     public function getCheckListItems(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
     {
