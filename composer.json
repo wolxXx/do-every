@@ -23,12 +23,11 @@
       "carthage-software/mago": true,
       "composer/installers": true,
       "infection/extension-installer": true,
-      "mouf/nodejs-installer": true,
       "oomphinc/composer-installers-extender": true
     }
   },
   "scripts": {
-    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest -p 50 --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations",
+    "paratest": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/bin/paratest -p 20 --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations",
     "paratestNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/bin/paratest -p 50 --configuration test/phpunit.xml --display-incomplete --display-skipped --display-deprecations",
     "test": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox-html test/testdocs.html --testdox --cache-result",
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
@@ -67,17 +66,8 @@
       "DoEveryAppTest\\": "test/"
     }
   },
-  "extra": {
-    "mouf": {
-      "nodejs": {
-        "version": "22.*",
-        "targetDir": "vendor/nodejs/nodejs",
-        "forceLocal": true
-      }
-    }
-  },
   "require": {
-    "php": "~8.5",
+    "php": "8.5.*",
     "ext-curl": "*",
     "ext-dom": "*",
     "ext-fileinfo": "*",
@@ -109,6 +99,7 @@
     "guzzlehttp/guzzle": "*",
     "guzzlehttp/promises": "*",
     "guzzlehttp/psr7": "*",
+    "html2text/html2text": "*",
     "infection/infection": "*",
     "laminas/laminas-filter": "*",
     "laminas/laminas-json": "*",
@@ -118,7 +109,6 @@
     "lbuchs/webauthn": "*",
     "moment/moment": "*",
     "monolog/monolog": "*",
-    "mouf/nodejs-installer": "*",
     "nesbot/carbon": "*",
     "opis/string": "*",
     "phing/phing": "*",
