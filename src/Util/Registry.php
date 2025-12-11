@@ -58,6 +58,7 @@ final class Registry
                                            ->setKey(key: $key),
                                        )
             ;
+            $this->map[$key] = $registry;
 
             return $registry;
         }
