@@ -10,10 +10,6 @@ class Icon
     {
         return '<i class="fa fa-plus"></i>';
     }
-    public static function save(): string
-    {
-        return '<i class="fa-solid fa-floppy-disk"></i>';
-    }
 
     public static function check(): string
     {
@@ -63,6 +59,11 @@ class Icon
     public static function refresh(): string
     {
         return '<i class="fa-solid fa-arrows-rotate"></i>';
+    }
+
+    public static function save(): string
+    {
+        return '<i class="fa-solid fa-floppy-disk"></i>';
     }
 
     public static function show(): string
