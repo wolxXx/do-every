@@ -51,8 +51,8 @@ declare(strict_types=1);
 <body>
     <div id="app">
         <div id="menu">
-            <div style="text-align: right">
-                <img src="/bee.png" alt="logo" style="max-width: 100px; max-height: 100px;">
+            <div style="text-align: center">
+                <img src="/bee.png" alt="logo" style="max-width: 200px; max-height: 200px;">
             </div>
 
             <div id="appTitle">

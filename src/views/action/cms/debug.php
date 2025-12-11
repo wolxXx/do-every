@@ -62,6 +62,17 @@ declare(strict_types=1);
             </tr>
             <tr>
                 <td>
+                    jetzt ist es:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateMediumTime(dateTime: new \DateTime()) ?>
+                </td>
+                <td>
+                    -
+                </td>
+            </tr>
+            <tr>
+                <td>
                     cron läuft:
                 </td>
                 <td>
