@@ -464,4 +464,23 @@ final class Registry
                           ->setBoolValue(boolValue: $active),
         );
     }
+
+    public function setTheme(?\DoEveryApp\Definition\AppTheme $theme = null): static
+    {
+        return $this->updateRow(
+            registry: $this
+                          ->getOrCreateRow(key: \DoEveryApp\Util\Registry\Key::KEY_THEME->value)
+                          ->setStringValue(stringValue: $theme?->value),
+        );
+    }
+
+    public function getTheme(): \DoEveryApp\Definition\AppTheme
+    {
+        $setting = $this->getRow(key: \DoEveryApp\Util\Registry\Key::KEY_THEME->value);
+        if (null === $setting || null === $setting->getStringValue()) {
+            return \DoEveryApp\Definition\AppTheme::DEFAULT;
+        }
+
+        return \DoEveryApp\Definition\AppTheme::tryFrom($setting->getStringValue()) ?? \DoEveryApp\Definition\AppTheme::DEFAULT;
+    }
 }

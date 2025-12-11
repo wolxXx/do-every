@@ -1423,4 +1423,22 @@ class Nothing implements \DoEveryApp\Util\Translator
     {
         return $this->debug();
     }
+
+    #[\Override]
+    public function theme(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function default(): string
+    {
+        return $this->debug();
+    }
+
+    #[\Override]
+    public function noTimersFound(): string
+    {
+        return $this->debug();
+    }
 }

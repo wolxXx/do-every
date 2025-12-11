@@ -17,7 +17,7 @@ declare(strict_types=1);
 ?>
 
 <form action="" method="post" novalidate>
-    <div class="row">
+    <div class="grid">
         <div class="column">
             <div>
                 <label for="<?= \DoEveryApp\Action\Worker\EditAction::FORM_FIELD_NAME ?>">
@@ -60,8 +60,6 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="column">
             <div>
                 <label for="do_notify_logins">
@@ -82,8 +80,6 @@ declare(strict_types=1);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="column">
             <div>
                 <label for="do_notify">

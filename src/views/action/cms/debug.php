@@ -165,6 +165,17 @@ declare(strict_types=1);
             </tr>
             <tr>
                 <td>
+                    Theme:
+                </td>
+                <td>
+                    <?= \DoEveryApp\Util\Registry::getInstance()->getTheme()->value ?>
+                </td>
+                <td>
+                    -
+                </td>
+            </tr>
+            <tr>
+                <td>
                     Fälligkeitpräzision:
                 </td>
                 <td>

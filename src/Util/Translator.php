@@ -657,4 +657,10 @@ interface Translator
     public function allTimersDeleted(): string;
 
     public function reallyWantToDeleteAllTimers(): string;
+
+    public function theme(): string;
+
+    public function default(): string;
+
+    public function noTimersFound(): string;
 }

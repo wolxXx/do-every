@@ -14,9 +14,10 @@ declare(strict_types=1);
  * @var string $pageTitle
  * @var string $content
  */
+$theme = \DoEveryApp\Util\Registry::getInstance()->getTheme()?->value ?: 'default';
 ?>
 <!DOCTYPE HTML>
-<html lang="de">
+<html lang="de" data-theme="<?= $theme ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,8 +52,8 @@ declare(strict_types=1);
 <body>
     <div id="app">
         <div id="menu">
-            <div style="text-align: center">
-                <img src="/bee.png" alt="logo" style="max-width: 200px; max-height: 200px;">
+            <div id="logoContainer">
+                <img id="logo" src="/bee.png" alt="logo">
             </div>
 
             <div id="appTitle">

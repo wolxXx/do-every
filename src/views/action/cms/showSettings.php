@@ -48,6 +48,14 @@ declare(strict_types=1);
         </tr>
         <tr>
             <td>
+                <?= $translator->theme() ?>
+            </td>
+            <td>
+                <?= \DoEveryApp\Util\Registry::getInstance()->getTheme()?->value ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <?= $translator->duePrecision() ?>
             </td>
             <td>
