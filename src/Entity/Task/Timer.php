@@ -8,22 +8,13 @@ namespace DoEveryApp\Entity\Task;
     repositoryClass: Timer\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
-    options: [
-        'collate' => 'utf8_general_ci',
-        'charset' => 'utf8',
-        'engine'  => 'InnoDB',
-    ],
+    name   : \DoEveryApp\Entity\TableNames::TASK_TIMER->value,
+    options: \DoEveryApp\Entity\Share\DefaultModelOptions::DEFAULT_OPTIONS,
 )]
 
 class Timer
 {
-    use \DoEveryApp\Entity\Share\Blame;
-    use \DoEveryApp\Entity\Share\Id;
-    use \DoEveryApp\Entity\Share\Repository;
-    use \DoEveryApp\Entity\Share\Timestamp;
-
-    public const string TABLE_NAME = 'task_timer';
+    use \DoEveryApp\Entity\Share\DefaultModelTraits;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \DoEveryApp\Entity\Task::class

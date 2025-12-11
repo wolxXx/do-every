@@ -46,24 +46,34 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
         call_user_func_array(callback: array($translator, $method), args: $randomParameters);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
-    public function testNothingTranslations($method, $parameters)
+    public function testNothingTranslations()
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\Nothing(), $method, $parameters);
+        $translator = new \DoEveryApp\Util\Translator\Nothing();
+        foreach ($this->getMethods() as $methodItem) {
+            $this->executeTranslation($translator, $methodItem[0], $methodItem[1]);
+        }
+
         $this->assertTrue(condition: true);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
-    public function testGermanTranslations($method, $parameters)
+    public function testGermanTranslations()
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\German(), $method, $parameters);
+        $translator = new \DoEveryApp\Util\Translator\German();
+        foreach ($this->getMethods() as $methodItem) {
+            $this->executeTranslation($translator, $methodItem[0], $methodItem[1]);
+        }
+
         $this->assertTrue(condition: true);
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
-    public function testEnglishTranslations($method, $parameters)
+
+    public function testEnglishTranslations()
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\English(), $method, $parameters);
+        $translator = new \DoEveryApp\Util\Translator\English();
+        foreach ($this->getMethods() as $methodItem) {
+            $this->executeTranslation($translator, $methodItem[0], $methodItem[1]);
+        }
+
         $this->assertTrue(condition: true);
     }
 
@@ -73,7 +83,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
      *
      * @return array An array of method names along with their parameters and respective types, or null for untyped parameters.
      */
-    public static function translationsTestDataProvider(): array
+    protected function getMethods(): array
     {
         $methods = [];
         $reflection = new \ReflectionClass(objectOrClass: \DoEveryApp\Util\Translator::class);
