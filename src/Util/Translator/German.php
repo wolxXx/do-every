@@ -18,6 +18,10 @@ class German implements \DoEveryApp\Util\Translator
             {
                 return 'Es wird eine Eingabe benötigt.';
             }
+            case 'This field was not expected.':
+            {
+                return 'Unerwartetes Feld.';
+            }
             case 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.':
             {
                 return str_replace(search: '{{ limit }}', replace: $args[0]['{{ limit }}'], subject: 'Der Wert ist zu lang. Er sollte {{ limit }} Zeichen oder weniger haben.');
@@ -1441,5 +1445,23 @@ class German implements \DoEveryApp\Util\Translator
     public function reallyWantToDeleteAllTimers(): string
     {
         return 'Willst du wirklich alle Stoppuhren löschen?';
+    }
+
+    #[\Override]
+    public function theme(): string
+    {
+        return 'Theme';
+    }
+
+    #[\Override]
+    public function default(): string
+    {
+        return 'Standard';
+    }
+
+    #[\Override]
+    public function noTimersFound(): string
+    {
+        return 'Keine Stoppuhren gefunden.';
     }
 }

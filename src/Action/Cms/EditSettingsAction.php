@@ -33,6 +33,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
 
     public const string FORM_FIELD_CONTENT_STEPS            = 'contentSteps';
 
+    public const string FORM_FIELD_THEME                    = 'theme';
+
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         $registry = \DoEveryApp\Util\Registry::getInstance();
@@ -47,6 +49,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                 static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL => $registry->passwordChangeInterval(),
                 static::FORM_FIELD_CONTENT_SECURITY         => $registry->mailContentSecurityNote(),
                 static::FORM_FIELD_CONTENT_STEPS            => $registry->mailContentSteps(),
+                static::FORM_FIELD_THEME                    => $registry->getTheme()->value,
             ];
 
             return $this->render(script: 'action/cms/editSettings', data: ['data' => $data]);
@@ -70,6 +73,7 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                 ->setPasswordChangeInterval(interval: $data[static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL])
                 ->setMailContentSecurityNote(active: '1' === $data[static::FORM_FIELD_CONTENT_SECURITY])
                 ->setMailContentSteps(active: '1' === $data[static::FORM_FIELD_CONTENT_STEPS])
+                ->setTheme(theme: null === $data[static::FORM_FIELD_THEME] ? null : \DoEveryApp\Definition\AppTheme::from(value: $data[static::FORM_FIELD_THEME]))
             ;
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
@@ -133,6 +137,11 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CONTENT_STEPS))
         ;
+        $data[static::FORM_FIELD_THEME]        = new \Laminas\Filter\FilterChain()
+            ->attach(callback: new \Laminas\Filter\StringTrim())
+            ->attach(callback: new \Laminas\Filter\ToNull())
+            ->filter(value: $this->getFromBody(key: static::FORM_FIELD_THEME))
+        ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
                                                                                           static::FORM_FIELD_KEEP_BACKUPS             => [
@@ -152,6 +161,8 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
                                                                                           static::FORM_FIELD_CONTENT_SECURITY         => [
                                                                                           ],
                                                                                           static::FORM_FIELD_CONTENT_STEPS            => [
+                                                                                          ],
+                                                                                          static::FORM_FIELD_THEME                    => [
                                                                                           ],
                                                                                       ]);
 

@@ -1439,4 +1439,22 @@ Then click the "Save" button to complete the process and digitally secure the da
     {
         return 'Do you really want to delete all timers?';
     }
+
+    #[\Override]
+    public function theme(): string
+    {
+        return 'theme';
+    }
+
+    #[\Override]
+    public function default(): string
+    {
+        return 'default';
+    }
+
+    #[\Override]
+    public function noTimersFound(): string
+    {
+        return 'no timers found';
+    }
 }

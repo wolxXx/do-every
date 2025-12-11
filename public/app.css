@@ -1,11 +1,287 @@
 :root {
+    /* Base semantic colors */
     --fontColorMain: #eee;
     --backgroundColorMain: #111;
     --mixin: #333;
+
+    /* Derived mix variants */
     --dark90Mixin: color-mix(in srgb, var(--fontColorMain) 90%, var(--mixin));
     --dark80Mixin: color-mix(in srgb, var(--fontColorMain) 80%, var(--mixin));
     --dark60Mixin: color-mix(in srgb, var(--fontColorMain) 60%, var(--mixin));
     --dark30Mixin: color-mix(in srgb, var(--fontColorMain) 30%, var(--mixin));
+
+    /* Common palette (no direct use of hex below; use these vars) */
+    --white: #fff;
+    --black: #000;
+    --gray-333: #333;
+    --gray-999: #999;
+    --gray-ccc: #ccc;
+    --gray-overlay: #33333366;
+    --shadow-strong: #ffffff77;
+    --text-shadow-accent: #f8dfe0;
+    --near-white: #efefef;
+
+    /* Neutral RGBA utilities */
+    --rg-10: rgba(200, 200, 200, 0.1);
+    --rg-20: rgba(200, 200, 200, 0.2);
+    --rg-40: rgba(200, 200, 200, 0.4);
+
+    /* Buttons */
+    --btn-text: var(--black);
+    --btn-bg: var(--gray-999);
+    --btn-border: var(--white);
+    --btn-bg-hover: var(--gray-ccc);
+    --btn-text-hover: var(--gray-333);
+
+    --btn-danger-border: #f00;
+    --btn-danger-bg: #f66;
+    --btn-danger-hover-text: var(--white);
+    --btn-danger-hover-bg: #f00;
+    --btn-danger-hover-border: #833;
+
+    --btn-warning-border: #e8c92f;
+    --btn-warning-bg: #a19126;
+    --btn-warning-hover-text: var(--black);
+    --btn-warning-hover-bg: #ff0;
+    --btn-warning-hover-border: #ae9809;
+
+    --btn-success-border: #44930d;
+    --btn-success-bg: #295908;
+    --btn-success-hover-text: var(--black);
+    --btn-success-hover-bg: #73dc2a;
+    --btn-success-hover-border: #193906;
+
+    /* Alerts */
+    --alert-danger-text: #ff0000;
+    --alert-success-text: #154709;
+    --alert-warning-text: #ae9809;
+    --alert-info-text: var(--gray-333);
+
+    /* Misc */
+    --errors-text: #f22;
+
+    /* Blocks and panels */
+    --fieldset-border: var(--rg-40);
+    --legend-border: var(--white);
+    --legend-bg: var(--gray-999);
+    --legend-text: var(--black);
+    --legend-shadow: var(--shadow-strong);
+
+    --hr-border: var(--rg-20);
+    --hr-color: var(--rg-10);
+    --hr-bg: var(--rg-10);
+
+    --menu-bg: var(--gray-overlay);
+    --content-bg: var(--gray-overlay);
+    --card-hover-bg: var(--gray-333);
+    --task-group-border: var(--white);
+
+    --message-border: var(--white);
+    --message-shadow: red;
+    --message-bg: var(--gray-ccc);
+
+    --exec-hover-bg: #111;
+    --exec-hover-text: var(--near-white);
+
+    --debug-bg: var(--black);
+
+    /* Inputs (high-contrast, theme-aware) */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 80%, var(--mixin) 20%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 35%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 55%, var(--mixin));
+
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 65%, var(--mixin) 35%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--dark80Mixin);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+
+    --input-disabled-bg: color-mix(in srgb, var(--backgroundColorMain) 85%, var(--mixin) 15%);
+    --input-disabled-text: color-mix(in srgb, var(--fontColorMain) 70%, var(--mixin));
+    --input-invalid-border: #e53e3e;
+}
+
+/*
+  THEME SUPPORT
+  -------------
+  You can switch themes by setting a data-theme attribute on the root element (html) or body, e.g.:
+    <html data-theme="blue">
+    <html data-theme="red">
+    <html data-theme="green">
+    <html data-theme="pink">
+    <html data-theme="light">  // Schwarz auf Weiss
+    <html data-theme="light-gray">
+    <html data-theme="dark-gray">
+    <html data-theme="yellow">
+    <html data-theme="orange">
+
+  The following theme blocks only override the base CSS variables.
+*/
+
+/* Blue theme */
+:root[data-theme="blue"],
+body[data-theme="blue"] {
+    --fontColorMain: #eaf3ff; /* light bluish text */
+    --backgroundColorMain: #0b1220; /* deep blue-black background */
+    --mixin: #2b6cb0; /* primary blue accent */
+
+    /* Inputs tuned for contrast on blue theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 70%, var(--fontColorMain) 30%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 45%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 65%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 55%, var(--fontColorMain) 45%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Red theme */
+:root[data-theme="red"],
+body[data-theme="red"] {
+    --fontColorMain: #ffeaea; /* light rose text */
+    --backgroundColorMain: #200b0b; /* deep red-black background */
+    --mixin: #c53030; /* primary red accent */
+
+    /* Inputs tuned for contrast on red theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 70%, var(--fontColorMain) 30%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 45%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 65%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 55%, var(--fontColorMain) 45%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Green theme */
+:root[data-theme="green"],
+body[data-theme="green"] {
+    --fontColorMain: #eaffea; /* light mint text */
+    --backgroundColorMain: #0b2012; /* deep green-black background */
+    --mixin: #2f855a; /* primary green accent */
+
+    /* Inputs tuned for contrast on green theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 70%, var(--fontColorMain) 30%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 45%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 65%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 55%, var(--fontColorMain) 45%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Pink theme */
+:root[data-theme="pink"],
+body[data-theme="pink"] {
+    --fontColorMain: #ffeaf4; /* light pinkish text */
+    --backgroundColorMain: #200b19; /* deep pink-black background */
+    --mixin: #d53f8c; /* primary pink accent */
+
+    /* Inputs tuned for contrast on pink theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 70%, var(--fontColorMain) 30%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 45%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 65%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 55%, var(--fontColorMain) 45%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Light theme — Schwarz auf Weiss */
+:root[data-theme="light"],
+body[data-theme="light"] {
+    --fontColorMain: #000; /* Schwarz */
+    --backgroundColorMain: #fff; /* Weiss */
+    --mixin: #666; /* neutral gray accent */
+
+    /* Ensure crisp input readability on light theme */
+    --input-bg: var(--white);
+    --input-text: var(--black);
+    --input-border: var(--gray-333);
+    --input-placeholder: var(--gray-999);
+    --input-focus-bg: var(--white);
+    --input-focus-text: var(--black);
+    --input-focus-border: var(--gray-333);
+    --input-focus-outline: color-mix(in srgb, var(--black) 20%, var(--mixin));
+    --input-disabled-bg: var(--gray-ccc);
+    --input-disabled-text: var(--gray-333);
+}
+
+/* Light Gray theme */
+:root[data-theme="light-gray"],
+body[data-theme="light-gray"] {
+    --fontColorMain: #111; /* near black text */
+    --backgroundColorMain: #f5f5f5; /* light gray bg */
+    --mixin: #888; /* neutral gray accent */
+
+    /* Inputs: similar to light but a tad stronger borders for separation */
+    --input-bg: var(--white);
+    --input-text: var(--black);
+    --input-border: #666;
+    --input-placeholder: #777;
+    --input-focus-bg: var(--white);
+    --input-focus-text: var(--black);
+    --input-focus-border: #444;
+    --input-focus-outline: color-mix(in srgb, var(--black) 25%, var(--mixin));
+    --input-disabled-bg: #e6e6e6;
+    --input-disabled-text: #666;
+}
+
+/* Dark Gray theme */
+:root[data-theme="dark-gray"],
+body[data-theme="dark-gray"] {
+    --fontColorMain: #e9e9e9; /* light gray text */
+    --backgroundColorMain: #121212; /* very dark gray */
+    --mixin: #3a3a3a; /* mid gray accent */
+
+    /* Inputs tuned for contrast on dark gray */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 70%, var(--fontColorMain) 30%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 45%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 65%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 55%, var(--fontColorMain) 45%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Yellow theme */
+:root[data-theme="yellow"],
+body[data-theme="yellow"] {
+    --fontColorMain: #fffbe6; /* warm light text */
+    --backgroundColorMain: #1f1a00; /* deep warm dark */
+    --mixin: #eab308; /* primary yellow accent (amber) */
+
+    /* Inputs tuned for contrast on yellow theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 68%, var(--fontColorMain) 32%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 40%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 60%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 53%, var(--fontColorMain) 47%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
+}
+
+/* Orange theme */
+:root[data-theme="orange"],
+body[data-theme="orange"] {
+    --fontColorMain: #fff3e6; /* soft warm light text */
+    --backgroundColorMain: #1f1400; /* deep orange-brown dark */
+    --mixin: #f97316; /* primary orange accent */
+
+    /* Inputs tuned for contrast on orange theme */
+    --input-bg: color-mix(in srgb, var(--backgroundColorMain) 68%, var(--fontColorMain) 32%);
+    --input-text: var(--fontColorMain);
+    --input-border: color-mix(in srgb, var(--fontColorMain) 42%, var(--mixin));
+    --input-placeholder: color-mix(in srgb, var(--fontColorMain) 62%, var(--mixin));
+    --input-focus-bg: color-mix(in srgb, var(--backgroundColorMain) 52%, var(--fontColorMain) 48%);
+    --input-focus-text: var(--fontColorMain);
+    --input-focus-border: var(--fontColorMain);
+    --input-focus-outline: color-mix(in srgb, var(--fontColorMain) 25%, var(--mixin));
 }
 
 body, html {
@@ -20,20 +296,54 @@ a {
     color: var(--dark80Mixin);
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
-    background: var(--dark30Mixin);
-    color: var(--fontColorMain);
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    background: var(--input-focus-bg);
+    color: var(--input-focus-text);
+    border-color: var(--input-focus-border);
+    outline: 3px solid var(--input-focus-outline);
+    outline-offset: 1px;
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
-    background: var(--dark60Mixin);
-    color: var(--fontColorMain);
-    border: solid 3px var(--dark30Mixin);
-    border-radius: 5px;
+    background: var(--input-bg);
+    color: var(--input-text);
+    border: solid 2px var(--input-border);
+    border-radius: 6px;
     text-align: center;
     max-width: 400px;
+    caret-color: var(--input-text);
 }
-textarea{
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--input-placeholder);
+    opacity: 1; /* ensure consistent contrast */
+}
+
+input[disabled],
+textarea[disabled],
+select[disabled],
+input[readonly],
+textarea[readonly] {
+    background: var(--input-disabled-bg);
+    color: var(--input-disabled-text);
+}
+
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid,
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+    border-color: var(--input-invalid-border);
+}
+
+textarea {
     text-align: left;
 }
 
@@ -89,23 +399,24 @@ td {
 }
 
 fieldset {
-    border: solid 1px rgba(200, 200, 200, 0.4);
+    border: solid 1px var(--fieldset-border);
+    border-radius: 20px;
     margin-bottom: 30px;
 }
 
-fieldset > legend{
+fieldset > legend {
     margin-left: 10px;
-    border: solid 1px #fff;
+    border: solid 1px var(--legend-border);
     border-radius: 4px;
     padding-left: 20px;
     padding-right: 20px;
-    background: #999;
-    color: #000;
-    box-shadow: 0 0 10px #fff;
+    background: var(--legend-bg);
+    color: var(--legend-text);
+    box-shadow: 0 0 10px var(--legend-shadow);
 }
 
-hr{
-    box-shadow: 0 0 10px #fff;
+hr {
+    box-shadow: 0 0 10px var(--shadow-strong);
 }
 
 
@@ -123,20 +434,20 @@ table.keyValue tr td:first-child {
 h1, h2, h3 {
     margin: 0;
     margin-bottom: 20px;
-    border-bottom: solid 1px rgba(200, 200, 200, 0.1);
+    border-bottom: solid 1px var(--rg-10);
 }
 
 hr {
     margin-top: 20px;
     margin-bottom: 40px;
-    border: solid 1px rgba(200, 200, 200, 0.2);
-    color: rgba(200, 200, 200, 0.1);
-    background: rgba(200, 200, 200, 0.1);
+    border: solid 1px var(--hr-border);
+    color: var(--hr-color);
+    background: var(--hr-bg);
     display: block;
 }
 
 .errors {
-    color: #f22;
+    color: var(--errors-text);
     margin: 5px;
 }
 
@@ -162,11 +473,11 @@ hr {
     padding: 5px;
     margin: 5px;
     text-align: center;
-    color: #000;
+    color: var(--btn-text);
     cursor: pointer;
 
     align-self: center;
-    background-color: #fff;
+    background-color: var(--white);
     background-image: none;
     box-sizing: border-box;
     display: inline-block;
@@ -178,48 +489,49 @@ hr {
 }
 
 .primaryButton, .btn-close, .rowAdder {
-    border: solid 3px #fff;
-    background: #999999;
+    border: solid 3px var(--btn-border);
+    background: var(--btn-bg);
 }
 
 .primaryButton:hover {
-    color: #333;
-    background: #ccc;
+    color: var(--btn-text-hover);
+    background: var(--btn-bg-hover);
 }
+
 .primaryButton:focus {
 }
 
 .dangerButton {
-    border: solid 3px #f00;
-    background: #f66;
+    border: solid 3px var(--btn-danger-border);
+    background: var(--btn-danger-bg);
 }
 
 .dangerButton:hover {
-    color: #fff;
-    background: #f00;
-    border: solid 3px #833;
+    color: var(--btn-danger-hover-text);
+    background: var(--btn-danger-hover-bg);
+    border: solid 3px var(--btn-danger-hover-border);
 }
 
 .warningButton {
-    border: solid 3px #e8c92f;
-    background: #a19126;
+    border: solid 3px var(--btn-warning-border);
+    background: var(--btn-warning-bg);
 }
 
 .warningButton:hover {
-    color: #000;
-    background: #ff0;
-    border: solid 3px #ae9809;
+    color: var(--btn-warning-hover-text);
+    background: var(--btn-warning-hover-bg);
+    border: solid 3px var(--btn-warning-hover-border);
 }
 
 .successButton {
-    border: solid 3px #44930d;
-    background: #295908;
+    border: solid 3px var(--btn-success-border);
+    background: var(--btn-success-bg);
 }
 
 .successButton:hover {
-    color: #000;
-    background: #73dc2a;
-    border: solid 3px #193906;
+    color: var(--btn-success-hover-text);
+    background: var(--btn-success-hover-bg);
+    border: solid 3px var(--btn-success-hover-border);
 }
 
 .rowRemover {
@@ -279,8 +591,8 @@ hr {
     margin-top: 40px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: solid 2px rgba(200, 200, 200, 0.1);
-    border-bottom: solid 2px rgba(200, 200, 200, 0.1);
+    border-top: solid 2px var(--rg-10);
+    border-bottom: solid 2px var(--rg-10);
 }
 
 .pageButtons {
@@ -293,7 +605,7 @@ form > .row {
 }
 
 #app {
-    margin: 20px;
+    margin: 10px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -302,7 +614,6 @@ form > .row {
 #app > * {
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 30ch;
     gap: 1rem;
 
 }
@@ -311,17 +622,14 @@ form > .row {
     position: relative;
     top: -20px;
     left: 0;
-    width: 300px;
     -webkit-transition: top 0.4s ease-out;
     margin-top: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-left: 20px;
-    border-right: solid 1px rgba(200, 200, 200, 0.1);
+    padding: 20px;
+    border-right: solid 1px var(--rg-10);
     border-radius: 20px;
-    flex-basis: 10rem;
+    flex-basis: 250px;
     flex-grow: 1;
-    background: #33333366;
+    background: var(--menu-bg);
     max-height: 90vh;
 }
 
@@ -356,26 +664,37 @@ form > .row {
     flex-basis: 0;
     flex-grow: 999;
     min-inline-size: 50%;
-
+    background: var(--content-bg);
+    padding: 20px;
+    border-radius: 20px;
 }
 
 #appTitle {
     margin-bottom: 10px;
-    text-align: right;
+    text-align: center;
     font-size: 2em;
-    border-bottom: solid 1px rgba(200, 200, 200, 0.1);
-    text-shadow: #f8dfe0 1px 0 10px;
+    border-bottom: solid 1px var(--rg-10);
+    text-shadow: var(--text-shadow-accent) 1px 0 10px;
 }
 
+#logo {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 15px;
+}
+
+#logoContainer {
+    text-align: center;
+}
 
 .card {
-    border: solid 1px rgba(200, 200, 200, 0.2);
+    border: solid 1px var(--rg-20);
     border-radius: 5px;
     padding: 10px;
 }
 
 .card:hover {
-    background: #333;
+    background: var(--card-hover-bg);
 }
 
 .taskContainer, .groupContainer {
@@ -383,7 +702,7 @@ form > .row {
     max-width: 300px;
     overflow: hidden;
     margin: 5px;
-    border: solid 1px #fff;
+    border: solid 1px var(--task-group-border);
     border-radius: 5px;
     padding: 5px;
 }
@@ -394,8 +713,8 @@ form > .row {
 
 #messageContainer {
     z-index: 1;
-    border: solid 3px #fff;
-    box-shadow: 3px 3px red, -3px 0 3px red;
+    border: solid 3px var(--message-border);
+    box-shadow: 3px 3px var(--message-shadow), -3px 0 3px var(--message-shadow);
     border-radius: 5px;
     margin-bottom: 10px;
     padding: 5px 5px;
@@ -403,23 +722,23 @@ form > .row {
     top: 20px;
     left: 1%;
     width: 96%;
-    background: #ccc;
+    background: var(--message-bg);
 }
 
 .alert.alert-danger {
-    color: #ff0000;
+    color: var(--alert-danger-text);
 }
 
 .alert.alert-success {
-    color: #154709;
+    color: var(--alert-success-text);
 }
 
 .alert.alert-warning {
-    color: #ae9809;
+    color: var(--alert-warning-text);
 }
 
 .alert.alert-info {
-    color: #333;
+    color: var(--alert-info-text);
 }
 
 .btn-close:before {
@@ -440,8 +759,8 @@ form > .row {
     overflow: auto;
     position: absolute;
     width: 500px;
-    background: #111;
-    color: #efefef;
+    background: var(--exec-hover-bg);
+    color: var(--exec-hover-text);
     border-radius: 0;
     line-height: 1.9em;
     transition: max-height 0.4s ease-in-out, width 0.4s ease-in-out, border-radius 4.0s ease-in-out;
@@ -454,7 +773,7 @@ form > .row {
 }
 
 #debug {
-    background: #000;
+    background: var(--debug-bg);
     z-index: 1000;
     position: absolute;
     border-top: solid 3px var(--dark30Mixin);

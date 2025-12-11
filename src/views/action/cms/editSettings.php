@@ -24,6 +24,23 @@ declare(strict_types=1);
     <div class="row">
         <div class="column">
             <div>
+                <label for="theme">
+                    <?= $translator->theme() ?>
+                </label>
+                <select name="<?= \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_THEME ?>" id="theme">
+                    <?php foreach(\DoEveryApp\Definition\AppTheme::cases() as $theme): ?>
+                        <option <?= array_key_exists(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_THEME, array: $data) && $data[\DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_THEME] == $theme->value ? 'selected' : '' ?>  value="<?= $theme->value ?>">
+                            <?= $theme->value ?>
+                        </option>
+                    <?php endforeach ?>
+                </select>
+                <?= $this->fetchTemplate(template: 'partial/formErrors.php', data: ['errors' => $errorStore->getErrors(key: \DoEveryApp\Action\Cms\EditSettingsAction::FORM_FIELD_FILL_TIME_LINE)]) ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <div>
                 <label for="fillTimeLine">
                     <?= $translator->fillTimeLineQuestion() ?>
                 </label>
