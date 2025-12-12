@@ -61,6 +61,8 @@ if [ ${#missing_vars[@]} -ne 0 ]; then
     exit 1
 fi
 
+./docker.sh
+
 docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
 
 echo "web running under http://localhost:$WEB_PORT"

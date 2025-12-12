@@ -4,7 +4,7 @@ volumes:
 
 services:
   mysql:
-    image: mariadb:11.8
+    image: mariadb:11
     platform: linux/amd64
     security_opt:
       - "seccomp=unconfined"
@@ -51,8 +51,6 @@ services:
       - ./docker-volumes/logs/xdebug:/tmp/xdebug/
     ports:
       - "127.0.0.1:__WEB_PORT__:80"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - do-every-network
 
