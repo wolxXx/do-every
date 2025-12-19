@@ -1,7 +1,3 @@
-volumes:
-  vol-database-mariadb:
-    name: "do-every-__INSTANCE__-db-mariadb-volume"
-
 services:
   mysql:
     image: mariadb:11
@@ -55,10 +51,7 @@ services:
       - do-every-network
 
   cron:
-    build:
-      no_cache: true
-      dockerfile: CronDockerfile
-      context: .
+    image: wolxxxy/php85-cron:latest
     restart: always
     container_name: "do-every-__INSTANCE__-cron"
     depends_on:
@@ -74,3 +67,7 @@ services:
 networks:
   do-every-network:
     name: "do-every-__INSTANCE__-network"
+
+volumes:
+  vol-database-mariadb:
+    name: "do-every-__INSTANCE__-db-mariadb-volume"
