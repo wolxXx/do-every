@@ -66,4 +66,5 @@ fi
 docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
 
 echo "web running under http://localhost:$WEB_PORT"
+echo "prod running under http://localhost:$PROD_PORT"
 echo "db running under port $DB_PORT"

@@ -50,6 +50,29 @@ services:
     networks:
       - do-every-network
 
+
+  prod:
+    image: wolxxxy/php85-noxdebug:latest
+    restart: always
+    container_name: "do-every-__INSTANCE__-prod"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./docker-volumes/backups:/var/www/backups
+      - ./docker-volumes/home:/home/docker
+      - ./docker-volumes/scripts/init-app:/usr/local/bin/init-app
+      - ./docker-volumes/mysql/imports:/var/imports
+      - ./docker-volumes/mysql/exports:/var/exports
+      - ./docker-volumes/mysql/client.cnf:/etc/mysql/conf.d/client.cnf
+      - ./docker-volumes/apache/conf:/etc/apache2/sites-available/000-default.conf
+      - ./:/var/www
+      - ./docker-volumes/logs/xdebug:/tmp/xdebug/
+    ports:
+      - "127.0.0.1:__PROD_PORT__:80"
+    networks:
+      - do-every-network
+
   cron:
     image: wolxxxy/php85-cron:latest
     restart: always
