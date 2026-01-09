@@ -20,6 +20,7 @@ source .env
 
 echo "updating instance $INSTANCE"
 echo "web port: $WEB_PORT"
+echo "prod port: $PROD_PORT"
 echo "dn port: $DB_PORT"
 
 git branch
