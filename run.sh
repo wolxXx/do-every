@@ -47,7 +47,7 @@ check_env_file
 source .env
 
 
-required_vars=("INSTANCE" "COMPOSE_PROJECT_NAME" "DB_PORT" "WEB_PORT")
+required_vars=("INSTANCE" "COMPOSE_PROJECT_NAME" "DB_PORT" "WEB_PORT" "PROD_PORT")
 missing_vars=()
 
 for var_name in "${required_vars[@]}"; do
@@ -64,6 +64,9 @@ fi
 ./docker.sh
 
 docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
+
+curl -s -o /dev/null http://localhost:"$WEB_PORT"
+curl -s -o /dev/null http://localhost:"$PROD_PORT"
 
 echo "web running under http://localhost:$WEB_PORT"
 echo "prod running under http://localhost:$PROD_PORT"
