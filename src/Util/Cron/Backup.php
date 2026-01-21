@@ -20,7 +20,7 @@ class Backup
         }
 
         $dbParams = require \ROOT_DIR . \DIRECTORY_SEPARATOR . 'doctrineConfiguration.php';
-        $command  = 'mysqldump --column-statistics=0 -u%s -p%s -P%s -h%s --triggers --routines --single-transaction %s > %s';
+        $command  = 'mysqldump -u%s -p%s -P%s -h%s --triggers --routines --single-transaction %s > %s';
 
         $now  = \Carbon\Carbon::now();
         $path = implode(
