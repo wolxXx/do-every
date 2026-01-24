@@ -64,6 +64,8 @@ fi
 ./docker.sh
 
 docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
+docker compose --env-file .env --file docker-compose.yml exec web php composer.phar install
+docker compose --env-file .env --file docker-compose.yml exec web php composer.phar lint
 
 curl -s -o /dev/null http://localhost:"$WEB_PORT"
 curl -s -o /dev/null http://localhost:"$PROD_PORT"
