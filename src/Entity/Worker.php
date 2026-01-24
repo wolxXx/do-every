@@ -29,6 +29,13 @@ class Worker
     protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $tasksWorkingOn;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: Task::class,
+        mappedBy    : 'assignee',
+    )]
+    #[\Doctrine\ORM\Mapping\OrderBy(["name" => "ASC"])]
+    protected \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection $tasksAssigned;
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
         targetEntity: Worker\Credential::class,
         mappedBy    : 'worker',
     )]
@@ -113,6 +120,7 @@ class Worker
     {
         $this->credentials    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tasksWorkingOn = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tasksAssigned  = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public static function getRepository(): Worker\Repository
@@ -146,6 +154,14 @@ class Worker
     public function getTasksWorkingOn(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
     {
         return $this->tasksWorkingOn;
+    }
+
+    /**
+     * @return Task[]
+     */
+    public function getTasksAssigned(): \Doctrine\Common\Collections\ArrayCollection|\Doctrine\ORM\PersistentCollection|array
+    {
+        return $this->tasksAssigned;
     }
 
     public function getName(): string
