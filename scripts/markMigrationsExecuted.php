@@ -4,7 +4,7 @@ require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . 
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 $application = new \Symfony\Component\Console\Application('markMigrationsExecuted', '1.0.0');
-$application->add(new class extends \Symfony\Component\Console\Command\Command
+$application->addCommand(new class extends \Symfony\Component\Console\Command\Command
 {
     protected function configure(): void
     {
