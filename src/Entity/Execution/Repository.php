@@ -8,7 +8,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
 {
     use \DoEveryApp\Entity\Share\DefaultRepositoryTraits;
 
-    public function findForWorker(\DoEveryApp\Entity\Worker $worker)
+    /**
+     * @return \DoEveryApp\Entity\Execution[]
+     */
+    public function findForWorker(\DoEveryApp\Entity\Worker $worker): array
     {
         return $this
             ->createQueryBuilder(alias: 'e')
@@ -20,7 +23,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-    public function findForIndex(?int $limit = null)
+    /**
+     * @return \DoEveryApp\Entity\Execution[]
+     */
+    public function findForIndex(?int $limit = null): array
     {
         $queryBuilder = $this
             ->createQueryBuilder(alias: 'e')
@@ -38,7 +44,10 @@ class Repository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
-    public function findIndexed(\DoEveryApp\Entity\Task $param)
+    /**
+     * @return \DoEveryApp\Entity\Execution[]
+     */
+    public function findIndexed(\DoEveryApp\Entity\Task $param): array
     {
         return $this
             ->createQueryBuilder(alias: 'e')
