@@ -156,6 +156,11 @@ class Task
         return static::getRepositoryByClassName();
     }
 
+    public function display(): string
+    {
+        return $this->getName() .' ('. ($this->getGroup()?->getName() ?? '-') .')';
+    }
+
     public function toVCalendarEvent(): array
     {
         $task = $this;
