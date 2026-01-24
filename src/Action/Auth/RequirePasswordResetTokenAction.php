@@ -29,8 +29,9 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
             $data     = $this->filterAndValidate(data: $data);
             $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail(email: $data[self::FORM_FIELD_EMAIL]);
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->warning(message: 'unknown email used for password reset: ' . $data[self::FORM_FIELD_EMAIL]);
                 \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
-
+                sleep(seconds: 2);
                 return $this->redirect(to: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
             }
 
