@@ -13,6 +13,7 @@ class TaskListCommand extends \Symfony\Component\Console\Command\Command
         $table->setHeaders(headers: [
                                         'id',
                                         'active',
+                                        'notify',
                                         'group',
                                         'name',
                                         'interval type',
@@ -43,6 +44,7 @@ class TaskListCommand extends \Symfony\Component\Console\Command\Command
                 row: [
                          $task->getId(),
                          $task->isActive() ? 'yes' : 'no',
+                         $task->isNotify() ? 'yes' : 'no',
                          $task->getGroup()?->getName() ?? '-',
                          $task->getName(),
                          $task->getIntervalType() ?? '-',
