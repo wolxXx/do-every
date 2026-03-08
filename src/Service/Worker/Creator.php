@@ -18,13 +18,6 @@ class Creator
             $defaultWorker->setEmail(email: $bag->getEmail());
         }
 
-        if (null !== $bag->getPassword()) {
-            $defaultWorker
-                ->setHashedPassword(password: $bag->getPassword())
-                ->setLastPasswordChange(lastPasswordChange: \Carbon\Carbon::now())
-            ;
-        }
-
         $defaultWorker::getRepository()->create(entity: $defaultWorker);
 
         return $defaultWorker;
