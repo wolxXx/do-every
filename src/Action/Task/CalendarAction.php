@@ -21,8 +21,7 @@ class CalendarAction extends \DoEveryApp\Action\AbstractAction
 {
     use \DoEveryApp\Action\Share\SimpleRoute;
 
-    #[\JetBrains\PhpStorm\NoReturn]
-    public function run(): \Psr\Http\Message\ResponseInterface
+    public function run(): never
     {
         \DoEveryApp\Util\QueryLogger::$disabled = true;
         \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug('CalendarAction');
@@ -55,6 +54,6 @@ class CalendarAction extends \DoEveryApp\Action\AbstractAction
 
         echo $calendar->serialize();
 
-        die();
+        exit;
     }
 }
