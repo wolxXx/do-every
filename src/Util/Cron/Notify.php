@@ -36,24 +36,34 @@ class Notify
         $entityManager->flush();
 
         $workers = \DoEveryApp\Entity\Worker::getRepository()->findAll();
+        foreach ($workers as $worker) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking worker: ' . $worker->getId());
+        }
         $workers = \array_filter(array: $workers, callback: function(\DoEveryApp\Entity\Worker $worker) use ($now) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': filtering worker: ' . $worker->getId());
             if (null === $worker->getEmail() || false === $worker->doNotify()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': skipping worker: ' . $worker->getId());
                 return false;
             }
             $lastNotification = \DoEveryApp\Entity\Notification::getRepository()
                                                                ->getLastForWorker(worker: $worker)
             ;
             if (null === $lastNotification) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': using worker: ' . $worker->getId());
                 return true;
             }
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking worker: ' . $worker->getId());
             $notificationDate = $lastNotification->getDate();
             $date             = \Carbon\Carbon::create(year: $notificationDate);
             $diff             = $date->diff(date: $now, absolute: true, skip: [
                 'y',
                 'm',
             ]);
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking worker: ' . $worker->getId());
+            $use = $diff->d > 0 || $diff->h > 22;
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': using worker: ' . $worker->getId() . ': ' . ($use ? 'true' : 'false'));
 
-            return $diff->d > 0 || $diff->h > 22;
+            return $use;
         });
         if (true === $registry->mailContentSecurityNote()) {
             foreach ($workers as $worker) {
@@ -68,27 +78,36 @@ class Notify
             }
         }
         $tasks = \DoEveryApp\Entity\Task::getRepository()->findAll();
+        foreach ($tasks as $task) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking task: ' . $task->getId());
+        }
         $tasks = \array_filter(array: $tasks, callback: function(\DoEveryApp\Entity\Task $task) {
             if (false === $task->isActive()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': skipping task: ' . $task->getId());
                 return false;
             }
             if (false === $task->isNotify()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': skipping task: ' . $task->getId());
                 return false;
             }
             if (null === $task->getDueValue()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': using task: ' . $task->getId());
                 return true;
             }
             if ($task->getDueValue() < 0) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': using task: ' . $task->getId());
                 return true;
             }
 
-            return true === \in_array(
-                needle: $task->getDueUnit(),
-                haystack: [
-                    \DoEveryApp\Definition\IntervalType::HOUR->value,
-                    \DoEveryApp\Definition\IntervalType::MINUTE->value,
-                ]
-            );
+            $use = true === \in_array(
+                    needle: $task->getDueUnit(),
+                    haystack: [
+                        \DoEveryApp\Definition\IntervalType::HOUR->value,
+                        \DoEveryApp\Definition\IntervalType::MINUTE->value,
+                    ]
+                );
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': using task: ' . $task->getId() . ': ' . ($use ? 'true' : 'false') . '');
+            return $use;
         });
 
         $hasTasks = false;
