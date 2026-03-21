@@ -26,6 +26,10 @@ class Notify
             do-every* 
             TEXT;
 
+        \DoEveryApp\Util\DependencyContainer::getInstance()
+            ->getLogger()->debug(
+                message: __FILE__.'::'.__LINE__.': notifying worker: ' . $container->worker->getEmail() . ': ' . $container->worker->getName() . ': ' . $taskMessage);
+
         \DoEveryApp\Util\Mailer::Factory()
                                ->addRecipient(address: $container->worker->getEmail(), name: $container->worker->getName())
                                ->setSubject(subject: 'Fälligkeiten von Tasks auf do-every*')

@@ -13,6 +13,7 @@ class Notify
 
     public function __construct()
     {
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: 'cron notifier started');
         $now             = \Carbon\Carbon::now();
         $registry        = \DoEveryApp\Util\Registry::getInstance();
         $entityManager   = \DoEveryApp\Util\DependencyContainer::getInstance()->getEntityManager();
@@ -21,11 +22,13 @@ class Notify
         $lastCron        = \Carbon\Carbon::create(year: $notifierLastRun);
         $lastCron->addHours(23);
         if ($lastCron->gt($now)) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': setting force to true');
             $force = true;
         }
 
         if (true === $registry->isNotifierRunning()) {
             if (true !== $force) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': notifier running, skipping');
                 return;
             }
         }
@@ -95,7 +98,9 @@ class Notify
                 $hasTasks = true;
             }
         }
+        \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': has tasks: ' . ($hasTasks ? 'true' : 'false') . '');
         if (true === $hasTasks) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': notifying');
             $this->notify();
         }
         $registry
@@ -109,6 +114,7 @@ class Notify
     {
         foreach ($this->containers as $container) {
             if (0 === $container->itemCount()) {
+                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': skipping empty container');
                 continue;
             }
             try {

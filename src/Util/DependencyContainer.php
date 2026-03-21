@@ -8,7 +8,7 @@ class DependencyContainer
 {
     protected static DependencyContainer $instance;
 
-    protected \DI\Container              $container {
+    protected \DI\Container $container {
         get {
             return $this->container;
         }
@@ -22,17 +22,7 @@ class DependencyContainer
                     ->useAutowiring(bool: false)
                     ->useAttributes(bool: false)
                     ->build()
-            )
-        ;
-    }
-
-    public static function getInstance(): static
-    {
-        if (false === isset(static::$instance)) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
+            );
     }
 
     private function setContainer(\DI\Container $container): static
@@ -68,21 +58,30 @@ class DependencyContainer
         if (true === $this->container->has(id: \Monolog\Logger::class)) {
             return $this->container->get(id: \Monolog\Logger::class);
         }
+
+        $formatter = new \Monolog\Formatter\LineFormatter(
+            null, // Format of message in log, default [%datetime%] %channel%.%level_name%: %message% %context% %extra%\n
+            null, // Datetime format
+            true, // allowInlineLineBreaks option, default false
+            true  // ignoreEmptyContextAndExtra option, default false
+        );
         $logger = new \Monolog\Logger(name: 'logger')
-            ->pushHandler(handler: new \Monolog\Handler\StreamHandler(stream: ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log', level: \Monolog\Level::Debug))
-        ;
+            ->pushHandler(
+                handler: new \Monolog\Handler\RotatingFileHandler(
+                    filename: ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log',
+                    maxFiles: 10,
+                    level: \Monolog\Level::Debug,
+                )
+                    ->setFormatter(formatter: $formatter)
+
+            )
+            ->pushHandler(
+                handler: new \Monolog\Handler\StreamHandler('php://stdout', level: \Monolog\Level::Debug)
+                    ->setFormatter(formatter: $formatter)
+            );
         $this->container->set(name: \Monolog\Logger::class, value: $logger);
 
         return $this->getLogger();
-    }
-
-    public function getTranslator(): Translator
-    {
-        return match (\DoEveryApp\Util\User\Current::getLanguage()) {
-            Translator::LANGUAGE_GERMAN  => new \DoEveryApp\Util\Translator\German(),
-            Translator::LANGUAGE_ENGLISH => new \DoEveryApp\Util\Translator\English(),
-            Translator::LANGUAGE_MAORI   => new \DoEveryApp\Util\Translator\Nothing(),
-        };
     }
 
     public function getValidator(): \Symfony\Component\Validator\Validator\RecursiveValidator
@@ -93,9 +92,8 @@ class DependencyContainer
                     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
                     {
                         return DependencyContainer::getInstance()
-                                                  ->getTranslator()
-                                                  ->translate($id, $parameters, $domain, $locale)
-                        ;
+                            ->getTranslator()
+                            ->translate($id, $parameters, $domain, $locale);
                     }
 
                     public function getLocale(): string
@@ -107,5 +105,23 @@ class DependencyContainer
             metadataFactory: new \Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory(loader: new \Symfony\Component\Validator\Mapping\Loader\StaticMethodLoader()),
             validatorFactory: new \Symfony\Component\Validator\ConstraintValidatorFactory(),
         );
+    }
+
+    public function getTranslator(): Translator
+    {
+        return match (\DoEveryApp\Util\User\Current::getLanguage()) {
+            Translator::LANGUAGE_GERMAN => new \DoEveryApp\Util\Translator\German(),
+            Translator::LANGUAGE_ENGLISH => new \DoEveryApp\Util\Translator\English(),
+            Translator::LANGUAGE_MAORI => new \DoEveryApp\Util\Translator\Nothing(),
+        };
+    }
+
+    public static function getInstance(): static
+    {
+        if (false === isset(static::$instance)) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
     }
 }

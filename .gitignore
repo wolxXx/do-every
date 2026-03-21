@@ -2,7 +2,7 @@
 /docs/Writerside/.idea
 /docs/Writerside/webHelpDE2-all.zip
 /.env
-/app.log
+/app*.log
 /docker-compose.yml
 /doctrineConfiguration.php
 /mailConfiguration.php
