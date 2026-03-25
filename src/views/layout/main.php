@@ -19,6 +19,14 @@ $theme = \DoEveryApp\Util\Registry::getInstance()->getTheme()?->value ?: 'defaul
 <!DOCTYPE HTML>
 <html lang="de" data-theme="<?= $theme ?>">
 <head>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>-->
+    <script src="/anime.umd.js"></script>
+    <script>
+        const { engine, animate, utils, stagger } = anime;
+        engine.defaults.delay = 500;
+
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/app.css?t=<?= filemtime(filename: 'public/app.css') ?>" media="screen" rel="stylesheet" type="text/css"/>
@@ -70,5 +78,23 @@ $theme = \DoEveryApp\Util\Registry::getInstance()->getTheme()?->value ?: 'defaul
             <?= $content ?>
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        animate('span.error', {
+            translateY: [100, 0],          // Startet 20px tiefer und gleitet auf 0
+            opacity: [0, 1],              // Von unsichtbar zu sichtbar
+            delay: stagger(100),    // Jedes Element wartet 150ms länger als das vorherige
+            duration: 1000,
+            ease: 'outExpo'
+        });
+        animate('#messageContainer', {
+            translateY: [2000, 0],          // Startet 20px tiefer und gleitet auf 0
+            opacity: [0, 1],              // Von unsichtbar zu sichtbar
+            delay: stagger(100),    // Jedes Element wartet 150ms länger als das vorherige
+            duration: 1000,
+            ease: 'outExpo'
+        });
+    });
+</script>
 </body>
 </html>
