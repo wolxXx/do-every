@@ -65,10 +65,12 @@ class Notify
 
             return $use;
         });
+        foreach ($workers as $worker) {
+            $container                          = new \DoEveryApp\Util\Cron\Notification\Container(worker: $worker);
+            $this->containers[$worker->getId()] = $container;
+        }
         if (true === $registry->mailContentSecurityNote()) {
             foreach ($workers as $worker) {
-                $container                          = new \DoEveryApp\Util\Cron\Notification\Container(worker: $worker);
-                $this->containers[$worker->getId()] = $container;
                 if (true === \DoEveryApp\Util\View\Worker::isTimeForPasswordChange(worker: $worker)) {
                     $this->containers[$worker->getId()]->addItem(new \DoEveryApp\Util\Cron\Notification\Item\PasswordChange(lastChange: $worker->getLastPasswordChange()));
                 }
@@ -78,10 +80,8 @@ class Notify
             }
         }
         $tasks = \DoEveryApp\Entity\Task::getRepository()->findAll();
-        foreach ($tasks as $task) {
-            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking task: ' . $task->getId());
-        }
         $tasks = \array_filter(array: $tasks, callback: function(\DoEveryApp\Entity\Task $task) {
+            \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': checking task: ' . $task->getId());
             if (false === $task->isActive()) {
                 \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->debug(message: __FILE__.'::'.__LINE__.': skipping task: ' . $task->getId());
                 return false;
