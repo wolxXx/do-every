@@ -68,7 +68,7 @@ class DependencyContainer
         $logger = new \Monolog\Logger(name: 'logger')
             ->pushHandler(
                 handler: new \Monolog\Handler\RotatingFileHandler(
-                    filename: ROOT_DIR . DIRECTORY_SEPARATOR . 'app.log',
+                    filename: ROOT_DIR . DIRECTORY_SEPARATOR.'logs' .DIRECTORY_SEPARATOR. 'app.log',
                     maxFiles: 10,
                     level: \Monolog\Level::Debug,
                 )
