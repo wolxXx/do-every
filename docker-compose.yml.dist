@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mariadb:11
+    image: mariadb
     platform: linux/amd64
     security_opt:
       - "seccomp=unconfined"
