@@ -63,7 +63,7 @@ class LoginAction extends
                         key    : static::FORM_FIELD_EMAIL,
                         message: \DoEveryApp\Util\DependencyContainer::getInstance()
                                                                      ->getTranslator()
-                                                                     ->userNotFound()
+                                                                     ->userNotFound(),
                     )
                 ;
                 throw new \DoEveryApp\Exception\FormValidationFailed();
@@ -85,7 +85,7 @@ class LoginAction extends
                 $session = \DoEveryApp\Util\Session::Factory(namespace: '2faValidate');
                 $session->write(what: 'user', data: $existing->getId());
 
-                return $this->redirect(to: \DoEveryApp\Action\Auth\AuthenticateAction::getRoute());
+                return $this->redirect(to: AuthenticateAction::getRoute());
             }
 
             \DoEveryApp\Util\User\Current::login(user: $existing, method: 'password');
