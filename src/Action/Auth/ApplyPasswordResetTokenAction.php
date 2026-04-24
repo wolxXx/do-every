@@ -57,7 +57,7 @@ class ApplyPasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
                                                                                  ->format(format: 'Y-m-d H:i:s'))
             ;
 
-            return $this->redirect(to: \DoEveryApp\Action\Auth\SetNewPasswordByTokenAction::getRoute());
+            return $this->redirect(to: SetNewPasswordByTokenAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
