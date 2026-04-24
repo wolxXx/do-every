@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Auth;
 
@@ -25,29 +25,44 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
         }
         $data = [];
         try {
-            $data     = $this->getRequest()->getParsedBody();
+            $data     = $this
+                ->getRequest()
+                ->getParsedBody()
+            ;
             $data     = $this->filterAndValidate(data: $data);
-            $existing = \DoEveryApp\Entity\Worker::getRepository()->findOneByEmail(email: $data[self::FORM_FIELD_EMAIL]);
+            $existing = \DoEveryApp\Entity\Worker::getRepository()
+                                                 ->findOneByEmail(email: $data[self::FORM_FIELD_EMAIL])
+            ;
             if (false === $existing instanceof \DoEveryApp\Entity\Worker) {
-                \DoEveryApp\Util\DependencyContainer::getInstance()->getLogger()->warning(message: 'unknown email used for password reset: ' . $data[self::FORM_FIELD_EMAIL]);
-                \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
+                \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                    ->getLogger()
+                                                    ->warning(message: 'unknown email used for password reset: ' . $data[self::FORM_FIELD_EMAIL])
+                ;
+                \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                         ->getTranslator()
+                                                                                                         ->codeSent());
                 sleep(seconds: 2);
-                return $this->redirect(to: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
+
+                return $this->redirect(to: ApplyPasswordResetTokenAction::getRoute());
             }
 
             $existing
                 ->setPasswordResetToken(passwordResetToken: \DoEveryApp\Util\TokenGenerator::getUserPasswordReset())
                 ->setTokenValidUntil(tokenValidUntil: \DoEveryApp\Util\TokenGenerator::getUserPasswordResetValidUntil())
             ;
-            $existing::getRepository()->update(entity: $existing);
+            $existing::getRepository()
+                     ->update(entity: $existing)
+            ;
             \DoEveryApp\Util\DependencyContainer::getInstance()
                                                 ->getEntityManager()
                                                 ->flush()
             ;
             \DoEveryApp\Util\Mailing\RequirePasswordResetToken::send(worker: $existing);
-            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->codeSent());
+            \DoEveryApp\Util\FlashMessenger::addSuccess(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                     ->getTranslator()
+                                                                                                     ->codeSent());
 
-            return $this->redirect(to: \DoEveryApp\Action\Auth\ApplyPasswordResetTokenAction::getRoute());
+            return $this->redirect(to: ApplyPasswordResetTokenAction::getRoute());
         } catch (\DoEveryApp\Exception\FormValidationFailed) {
         }
 
@@ -63,10 +78,10 @@ class RequirePasswordResetTokenAction extends \DoEveryApp\Action\AbstractAction
         ;
 
         $validators = new \Symfony\Component\Validator\Constraints\Collection(fields: [
-                                                                                  self::FORM_FIELD_EMAIL => [
-                                                                                      new \Symfony\Component\Validator\Constraints\NotBlank(),
-                                                                                  ],
-                                                                              ]);
+                                                                                          self::FORM_FIELD_EMAIL => [
+                                                                                              new \Symfony\Component\Validator\Constraints\NotBlank(),
+                                                                                          ],
+                                                                                      ]);
 
         $this->validate(data: $data, validators: $validators);
 
