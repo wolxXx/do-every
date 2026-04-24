@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Cms;
 
@@ -16,7 +16,10 @@ class DisableDavAction extends \DoEveryApp\Action\AbstractAction
 
     public function run(): \Psr\Http\Message\ResponseInterface
     {
-        if (false === \DoEveryApp\Util\User\Current::get()->isAdmin()) {
+        if (
+            false === \DoEveryApp\Util\User\Current::get()
+                                                   ->isAdmin()
+        ) {
             \DoEveryApp\Util\FlashMessenger::addDanger('You are not allowed to do this');
 
             return $this->redirect(to: ShowSettingsAction::getRoute());

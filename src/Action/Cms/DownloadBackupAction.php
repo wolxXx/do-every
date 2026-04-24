@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace DoEveryApp\Action\Cms;
 
@@ -12,23 +12,13 @@ namespace DoEveryApp\Action\Cms;
 )]
 class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
 {
-    public static function getRoute(string $path): string
-    {
-        $reflection = new \ReflectionClass(objectOrClass: __CLASS__);
-        foreach ($reflection->getAttributes(name: \DoEveryApp\Attribute\Action\Route::class) as $attribute) {
-            return \str_replace(search: '{path}', replace: $path, subject: $attribute->getArguments()['path']);
-        }
-
-        throw new \RuntimeException(message: 'Could not determine route path');
-    }
-
     public function run(): \Psr\Http\Message\ResponseInterface
     {
         \DoEveryApp\Util\QueryLogger::$disabled = true;
-        $requestedFile = \base64_decode(string: $this->getArgumentSafe(argumentName: 'path'), strict: true);
+        $requestedFile                          = \base64_decode(string: $this->getArgumentSafe(argumentName: 'path'), strict: true);
         if ('all' === $requestedFile) {
             try {
-                $zip = new \ZipArchive();;
+                $zip      = new \ZipArchive();
                 $filename = \tempnam(directory: sys_get_temp_dir(), prefix: 'backup_') . '.zip';
                 if (true !== $zip->open(filename: $filename, flags: \ZipArchive::CREATE)) {
                     throw new \RuntimeException(message: 'Could not open temp file');
@@ -47,7 +37,10 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
                 $zip->close();
                 $fileContent = file_get_contents(filename: $filename);
                 $stream      = \GuzzleHttp\Psr7\Utils::streamFor(resource: $fileContent);
-                $response    = $this->getResponse()->withBody(body: $stream);
+                $response    = $this
+                    ->getResponse()
+                    ->withBody(body: $stream)
+                ;
                 $response    = $response
                     ->withAddedHeader(name: 'Content-Type', value: \mime_content_type(filename: $filename))
                     ->withAddedHeader(name: 'Content-Transfer-Encoding', value: 'binary')
@@ -61,7 +54,9 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
 
                 return $this->getResponse();
             } catch (\Exception) {
-                \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+                \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                        ->getTranslator()
+                                                                                                        ->defaultErrorMessage());
 
                 return $this->redirect(to: IndexAction::getRoute());
             }
@@ -69,7 +64,9 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
 
         $filePath = \ROOT_DIR . $requestedFile;
         if (false === \file_exists(filename: $filePath)) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                    ->getTranslator()
+                                                                                                    ->defaultErrorMessage());
 
             return $this->redirect(to: IndexAction::getRoute());
         }
@@ -77,7 +74,10 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
         try {
             $fileContent = file_get_contents(filename: $filePath);
             $stream      = \GuzzleHttp\Psr7\Utils::streamFor(resource: $fileContent);
-            $response    = $this->getResponse()->withBody(body: $stream);
+            $response    = $this
+                ->getResponse()
+                ->withBody(body: $stream)
+            ;
             $response    = $response
                 ->withAddedHeader(name: 'Content-Type', value: \mime_content_type(filename: $filePath))
                 ->withAddedHeader(name: 'Content-Transfer-Encoding', value: 'binary')
@@ -90,9 +90,21 @@ class DownloadBackupAction extends \DoEveryApp\Action\AbstractAction
 
             return $this->getResponse();
         } catch (\Exception) {
-            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()->getTranslator()->defaultErrorMessage());
+            \DoEveryApp\Util\FlashMessenger::addDanger(message: \DoEveryApp\Util\DependencyContainer::getInstance()
+                                                                                                    ->getTranslator()
+                                                                                                    ->defaultErrorMessage());
 
             return $this->redirect(to: IndexAction::getRoute());
         }
+    }
+
+    public static function getRoute(string $path): string
+    {
+        $reflection = new \ReflectionClass(objectOrClass: __CLASS__);
+        foreach ($reflection->getAttributes(name: \DoEveryApp\Attribute\Action\Route::class) as $attribute) {
+            return \str_replace(search: '{path}', replace: $path, subject: $attribute->getArguments()['path']);
+        }
+
+        throw new \RuntimeException(message: 'Could not determine route path');
     }
 }

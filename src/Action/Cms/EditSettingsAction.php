@@ -127,17 +127,17 @@ class EditSettingsAction extends \DoEveryApp\Action\AbstractAction
             ->attach(callback: new \Laminas\Filter\ToInt())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_PASSWORD_CHANGE_INTERVAL))
         ;
-        $data[static::FORM_FIELD_CONTENT_SECURITY]        = new \Laminas\Filter\FilterChain()
+        $data[static::FORM_FIELD_CONTENT_SECURITY]         = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CONTENT_SECURITY))
         ;
-        $data[static::FORM_FIELD_CONTENT_STEPS]        = new \Laminas\Filter\FilterChain()
+        $data[static::FORM_FIELD_CONTENT_STEPS]            = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_CONTENT_STEPS))
         ;
-        $data[static::FORM_FIELD_THEME]        = new \Laminas\Filter\FilterChain()
+        $data[static::FORM_FIELD_THEME]                    = new \Laminas\Filter\FilterChain()
             ->attach(callback: new \Laminas\Filter\StringTrim())
             ->attach(callback: new \Laminas\Filter\ToNull())
             ->filter(value: $this->getFromBody(key: static::FORM_FIELD_THEME))
