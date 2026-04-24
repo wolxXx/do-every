@@ -38,6 +38,14 @@ check_env_file() {
   fi
 }
 
+ensure_dir_with_mode() {
+  local dir="$1"
+  local mode="$2"
+
+  [ -d "$dir" ] || mkdir -p "$dir"
+  sudo chmod -R "$mode" "$dir"
+}
+
 
 check_docker
 check_docker_compose
@@ -62,6 +70,18 @@ if [ ${#missing_vars[@]} -ne 0 ]; then
 fi
 
 ./docker.sh
+
+
+MODE="777"
+DIRS=(
+  "logs"
+  "cache"
+)
+
+for dir in "${DIRS[@]}"; do
+  ensure_dir_with_mode "$dir" "$MODE"
+done
+
 
 docker compose --env-file .env --file docker-compose.yml  up -d --build --force-recreate --pull always
 docker compose --env-file .env --file docker-compose.yml exec web php composer.phar install
