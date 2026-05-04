@@ -14,12 +14,14 @@
 /test/coverage
 /.infection.log
 
+/backups
 /cache
 /docs/.idea
 /docs/webHelpDE2-all
 /docs/webHelpDE2-all.zip
 /docker-volumes/backups
 /logs
+/log
 /public/vendor
 /public/node_modules
 /vendor
