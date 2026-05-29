@@ -23,7 +23,8 @@
       "carthage-software/mago": true,
       "composer/installers": true,
       "infection/extension-installer": true,
-      "oomphinc/composer-installers-extender": true
+      "oomphinc/composer-installers-extender": true,
+      "wolxxx/composer-version-register-plugin": true
     }
   },
   "scripts": {
