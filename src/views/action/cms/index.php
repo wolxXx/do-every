@@ -11,4 +11,6 @@ declare(strict_types=1);
  * @var \DoEveryApp\Util\Translator    $translator
  */
 ?>
-hallo!
+
+Hey na :)<br />
+Bitte <a href="<?= \DoEveryApp\Action\Auth\LoginAction::getRoute() ?>">logge dich ein</a>!
