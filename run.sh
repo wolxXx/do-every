@@ -71,6 +71,7 @@ fi
 
 ./docker.sh
 
+rm -rf cache
 
 MODE="777"
 DIRS=(
