@@ -18,6 +18,9 @@ ini_set(option: 'opcache.max_file_size', value: 1000);
 ini_set(option: 'opcache.file_cache_only', value: 1);
 ini_set(option: 'opcache.file_cache', value: ROOT_DIR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . '.opcache');
 
+ini_set(option: 'error_reporting', value: E_ALL & !E_DEPRECATED & !E_USER_DEPRECATED );
+ini_set(option: 'display_errors', value: false);
+
 //\DoEveryApp\Util\QueryLogger::$disabled = false;
 \DoEveryApp\Util\QueryLogger::$disabled = true;
 
