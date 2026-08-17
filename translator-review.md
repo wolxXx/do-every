@@ -8,17 +8,17 @@ Reihenfolge = Vorschlag für die Abarbeitung (grob nach Dringlichkeit / Risiko).
 
 ## 1. Klare Fehler (Bugs / Tippfehler)
 
-- [ ] **1.1 `English.php::addPassword()` – Tippfehler**
+- [x] **1.1 `English.php::addPassword()` – Tippfehler**
   - Datei/Zeile: `src/Util/Translator/English.php:1392`
   - Ist: `return 'ass password';`
   - Soll: `return 'add password';`
 
-- [ ] **1.2 `German.php::workerDidNothing()` – Akkusativ fehlt**
+- [x] **1.2 `German.php::workerDidNothing()` – Akkusativ fehlt**
   - Datei/Zeile: `src/Util/Translator/German.php:1062`
   - Ist: `'- ' . … . ' hat bisher kein Beitrag geleistet -'`
   - Soll: `'- ' . … . ' hat bisher keinen Beitrag geleistet -'`
 
-- [ ] **1.3 `German.php::dashboardLastPasswordChange()` – Groß-/Kleinschreibung + unvollständiger Satz**
+- [x] **1.3 `German.php::dashboardLastPasswordChange()` – Groß-/Kleinschreibung + unvollständiger Satz**
   - Datei/Zeile: `src/Util/Translator/German.php:120`
   - Ist: `'Du hast dein Passwort lange nicht geändert. Das letzte mal ' . …`
   - Probleme:
@@ -26,12 +26,12 @@ Reihenfolge = Vorschlag für die Abarbeitung (grob nach Dringlichkeit / Risiko).
     - Satz endet offen; EN hat vollen Satz `'The last time was …'`
   - Vorschlag Soll: `'Du hast dein Passwort lange nicht geändert. Das letzte Mal war am ' . … . '.'`
 
-- [ ] **1.4 `German.php::welcomeUser()` – doppeltes Leerzeichen**
+- [x] **1.4 `German.php::welcomeUser()` – doppeltes Leerzeichen**
   - Datei/Zeile: `src/Util/Translator/German.php:1141`
   - Ist: `'Willkommen,  ' . $useName . '!'`
   - Soll: `'Willkommen, ' . $useName . '!'`
 
-- [ ] **1.5 `English.php::dashboardChangePassword()` – Kontext passt nicht**
+- [x] **1.5 `English.php::dashboardChangePassword()` – Kontext passt nicht**
   - DE ist Hinweistext (`'Du solltest dein Passwort ändern.'`), EN ist Button-Label (`'change password'`).
   - Soll (EN): `'You should change your password.'`
 
@@ -41,18 +41,18 @@ Reihenfolge = Vorschlag für die Abarbeitung (grob nach Dringlichkeit / Risiko).
 
 Im Deutschen mit doppel-L.
 
-- [ ] **2.1 `German.php::intervalType()`** – Ist: `'Interval-Typ'` → Soll: `'Intervall-Typ'`
-- [ ] **2.2 `German.php::intervalValue()`** – Ist: `'Interval-Wert'` → Soll: `'Intervall-Wert'`
-- [ ] **2.3 `German.php::backupDelay()`** – Ist: `'Backup-Interval …'` → Soll: `'Backup-Intervall …'`
+- [x] **2.1 `German.php::intervalType()`** – Ist: `'Interval-Typ'` → Soll: `'Intervall-Typ'`
+- [x] **2.2 `German.php::intervalValue()`** – Ist: `'Interval-Wert'` → Soll: `'Intervall-Wert'`
+- [x] **2.3 `German.php::backupDelay()`** – Ist: `'Backup-Interval …'` → Soll: `'Backup-Intervall …'`
 - (bereits korrekt: `intervalMode()` = `'Intervall-Modus'`)
 
 ---
 
 ## 3. Fehlende Übersetzungen (DE hat noch EN drin)
 
-- [ ] **3.1 `German.php::reset()`** – Ist: `'reset'` → Soll: `'zurücksetzen'` (vgl. `taskReset()` = „Aufgabe zurückgesetzt.“)
-- [ ] **3.2 `German.php::log()`** – Ist: `'log'` → Soll: `'Protokoll'` (oder `'Log'`, aber dann konsistent Substantiv-Großschreibung)
-- [ ] **3.3 `German.php::timerReset()`** – Ist: `'Neu'` → Soll: `'Zurücksetzen'`
+- [x] **3.1 `German.php::reset()`** – Ist: `'reset'` → Soll: `'zurücksetzen'` (vgl. `taskReset()` = „Aufgabe zurückgesetzt.“)
+- [x] **3.2 `German.php::log()`** – Ist: `'log'` → Soll: `'Protokoll'` (oder `'Log'`, aber dann konsistent Substantiv-Großschreibung)
+- [x] **3.3 `German.php::timerReset()`** – Ist: `'Neu'` → Soll: `'Zurücksetzen'`
   - Grund: `new()` ist bereits `'neu'`; `'Neu'` für Reset ist semantisch irreführend.
 
 ---
@@ -65,12 +65,12 @@ Im Deutschen mit doppel-L.
   - **Entscheidung nötig [?]**: EN überall auf `bee(s)` vereinheitlichen ODER DE auf „Worker/Arbeiter“?
   - Empfehlung: EN auf `bee(s)` angleichen, um die verspielte Terminologie beizubehalten.
 
-- [ ] **4.2 `+2fa` / `-2fa` (DE) → `+2FA` / `-2FA`**
+- [x] **4.2 `+2fa` / `-2fa` (DE) → `+2FA` / `-2FA`**
   - Datei: `German.php`, Methoden `addTwoFactor()` / `removeTwoFactor()`
 
-- [ ] **4.3 `iAmWorkingOn()` (EN)** – Ist: `'i am working on it'` → Soll: `'I am working on it'`
+- [x] **4.3 `iAmWorkingOn()` (EN)** – Ist: `'i am working on it'` → Soll: `'I am working on it'`
 
-- [ ] **4.4 `fillTimeLineQuestion()` (EN)** – Ist: `'do fill time line?'` → Soll: `'Fill time line?'`
+- [x] **4.4 `fillTimeLineQuestion()` (EN)** – Ist: `'do fill time line?'` → Soll: `'Fill time line?'`
 
 - [ ] **4.5 EN Frage-Strings mit Kleinbuchstaben [?]**
   - `hasPasswordQuestion()` `'has password?'`, `isAdminQuestion()` `'is admin?'`, `hasPasskeyQuestion()` `'has passkey?'`
@@ -118,3 +118,7 @@ Im Deutschen mit doppel-L.
 ## Status-Log
 
 - 2026-08-14: Review erstellt (initial). Noch keine Änderungen am Code.
+- 2026-08-17: Abschnitt 1 (Bugs 1.1–1.5) umgesetzt.
+- 2026-08-17: Abschnitt 2 (Intervall 2.1–2.3) umgesetzt.
+- 2026-08-17: Abschnitt 3 (fehlende DE-Übersetzungen 3.1–3.3) umgesetzt.
+- 2026-08-17: Abschnitt 4 (4.2 2FA-Groß-/Kleinschreibung, 4.3, 4.4) umgesetzt. 4.1, 4.5, 4.6 offen (Klärung nötig).
