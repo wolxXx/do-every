@@ -117,7 +117,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function dashboardLastPasswordChange(\DateTime $dateTime): string
     {
-        return 'Du hast dein Passwort lange nicht geändert. Das letzte mal ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(dateTime: $dateTime) . '.';
+        return 'Du hast dein Passwort lange nicht geändert. Das letzte Mal war am ' . \DoEveryApp\Util\View\DateTime::getDateTimeMediumDateShortTime(dateTime: $dateTime) . '.';
     }
 
     #[\Override]
@@ -839,7 +839,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function reset(): string
     {
-        return 'reset';
+        return 'zurücksetzen';
     }
 
     #[\Override]
@@ -941,13 +941,13 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function intervalType(): string
     {
-        return 'Interval-Typ';
+        return 'Intervall-Typ';
     }
 
     #[\Override]
     public function intervalValue(): string
     {
-        return 'Interval-Wert';
+        return 'Intervall-Wert';
     }
 
     #[\Override]
@@ -1035,19 +1035,19 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function log(): string
     {
-        return 'log';
+        return 'Protokoll';
     }
 
     #[\Override]
     public function addTwoFactor(): string
     {
-        return '+2fa';
+        return '+2FA';
     }
 
     #[\Override]
     public function removeTwoFactor(): string
     {
-        return '-2fa';
+        return '-2FA';
     }
 
     #[\Override]
@@ -1059,7 +1059,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function workerDidNothing(string $who): string
     {
-        return '- ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' hat bisher kein Beitrag geleistet -';
+        return '- ' . \DoEveryApp\Util\View\Escaper::escape(value: $who) . ' hat bisher keinen Beitrag geleistet -';
     }
 
     #[\Override]
@@ -1138,7 +1138,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function welcomeUser(string $useName): string
     {
-        return 'Willkommen,  ' . $useName . '!';
+        return 'Willkommen, ' . $useName . '!';
     }
 
     #[\Override]
@@ -1162,7 +1162,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function timerReset(): string
     {
-        return 'Neu';
+        return 'Zurücksetzen';
     }
 
     #[\Override]
@@ -1312,7 +1312,7 @@ class German implements \DoEveryApp\Util\Translator
     #[\Override]
     public function backupDelay(): string
     {
-        return 'Backup-Interval (in Stunden)';
+        return 'Backup-Intervall (in Stunden)';
     }
 
     #[\Override]

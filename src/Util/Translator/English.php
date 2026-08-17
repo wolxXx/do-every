@@ -347,7 +347,7 @@ class English implements \DoEveryApp\Util\Translator
     #[\Override]
     public function fillTimeLineQuestion(): string
     {
-        return 'do fill time line?';
+        return 'Fill time line?';
     }
 
     #[\Override]
@@ -823,7 +823,7 @@ class English implements \DoEveryApp\Util\Translator
     #[\Override]
     public function iAmWorkingOn(): string
     {
-        return 'i am working on it';
+        return 'I am working on it';
     }
 
     #[\Override]
@@ -1389,7 +1389,7 @@ Then click the "Save" button to complete the process and digitally secure the da
     #[\Override]
     public function addPassword(): string
     {
-        return 'ass password';
+        return 'add password';
     }
 
     #[\Override]
